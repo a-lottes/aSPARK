@@ -145,7 +145,7 @@ aSPARK is under active construction. This README always reflects the current sta
 - [x] Repo scaffold, plugin manifest, license
 - [x] README with concept, team and usage guide
 - [x] Artifact templates (`templates/`) — spec, plan, review-report, qa-report, release-notes, each with its gate checklist
-- [ ] The six team agents (`agents/`) — 3/6 done: product-owner, designer, engineering-manager
+- [ ] The six team agents (`agents/`) — 4/6 done: product-owner, designer, engineering-manager, reviewer
 - [ ] The seven ceremony skills (`skills/`)
 - [ ] The `/spark` orchestrator
 - [ ] End-to-end test on a sample project
