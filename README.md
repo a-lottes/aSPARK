@@ -72,14 +72,14 @@ Requirements: [Claude Code](https://claude.com/claude-code), Git. For `/demo-day
 **As a plugin (recommended):**
 
 ```
-/plugin marketplace add <your-git-host>/aSPARK
+/plugin marketplace add a-lottes/aSPARK
 /plugin install aspark
 ```
 
 **Local development install:**
 
 ```bash
-git clone <your-git-host>/aSPARK.git
+git clone https://github.com/a-lottes/aSPARK.git
 claude --plugin-dir /path/to/aSPARK
 ```
 
