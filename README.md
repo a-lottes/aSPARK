@@ -67,21 +67,59 @@ Each phase **reads the artifact of the previous phase** and refuses to start if 
 
 ## Installation
 
-Requirements: [Claude Code](https://claude.com/claude-code), Git. For `/demo-day` you additionally need a browser integration (Claude in Chrome, or a Playwright/Chrome DevTools MCP server).
+**Requirements:** [Claude Code](https://claude.com/claude-code) and Git. For `/demo-day` you additionally need a browser integration (Claude in Chrome, or a Playwright / Chrome DevTools MCP server).
 
-**As a plugin (recommended):**
+### The easy way — inside an interactive Claude Code session (recommended)
+
+Do this in a **normal** (interactive) `claude` terminal session, using the built-in `/plugin` command. Dummy-proof version:
+
+**1. Open Claude Code** in your terminal:
+
+```
+claude
+```
+
+**2. Add the marketplace** (the "shop" where the plugin lives — you only ever do this once):
 
 ```
 /plugin marketplace add a-lottes/aSPARK
-/plugin install aspark
 ```
 
-**Local development install:**
+**3. Install the plugin** — read it as `pluginname@marketplacename`:
+
+```
+/plugin install aspark@aspark
+```
+
+**4. Restart Claude Code** — close and reopen your session (or `/exit`, then `claude` again). Plugins only activate after a restart.
+
+**5. Check it worked:**
+
+```
+/plugin
+```
+
+This opens a menu of your installed plugins — you should see **aspark** listed and enabled.
+
+### The non-interactive way — from a plain terminal
+
+The `/plugin` menu command only works in an interactive session. In scripts, CI, or a non-interactive shell, use the full CLI equivalents — they do exactly the same thing:
+
+```bash
+claude plugin marketplace add a-lottes/aSPARK
+claude plugin install aspark@aspark
+```
+
+### Local development install
+
+To hack on aSPARK itself, point Claude Code at a local clone:
 
 ```bash
 git clone https://github.com/a-lottes/aSPARK.git
 claude --plugin-dir /path/to/aSPARK
 ```
+
+> **One-line takeaway:** in a normal terminal → `/plugin marketplace add a-lottes/aSPARK` → `/plugin install aspark@aspark` → restart. Done. ✅
 
 ---
 
