@@ -5,8 +5,6 @@
   </picture>
 </div>
 
-# ⚡ aSPARK
-
 > **An agile AI product team for Claude Code.**
 > One person plus aSPARK works like a whole team: a Product Owner who challenges your idea, a Designer who spots bad design, an Engineering Manager who locks the architecture, a Reviewer who finds your bugs, a QA Tester who clicks through your app in a real browser, and a Release Manager who ships it.
 
