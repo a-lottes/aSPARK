@@ -5,8 +5,6 @@
 
 aSPARK turns Claude Code from a coding copilot into a **gated delivery process**. Every feature travels through five phases — **S**pecify, **P**lan, **A**ct, **R**eview, **K**eep — and may only move forward when the previous phase's quality gate is green.
 
-Inspired by [gstack](https://github.com/garrytan/gstack), rebuilt from scratch with an agile mindset.
-
 ---
 
 ## The SPARK Loop
@@ -140,7 +138,7 @@ Reading order for newcomers: this README → `docs/workflow.md` → one template
 
 ## Project Status
 
-aSPARK v0.1.0 is feature-complete. This README always reflects the current state.
+aSPARK v0.1.0 is feature-complete and has passed a full end-to-end dry run. This README always reflects the current state.
 
 - [x] Repo scaffold, plugin manifest, license
 - [x] README with concept, team and usage guide
@@ -150,12 +148,10 @@ aSPARK v0.1.0 is feature-complete. This README always reflects the current state
 - [x] The `/spark` orchestrator — full loop with gate stops, resume support and feedback-loop escalation
 - [x] Workflow deep-dive ([docs/workflow.md](docs/workflow.md)) — artifact chain, gate invariants, feedback loops, role boundaries
 - [x] Plugin structure validated (`claude plugin validate` ✔, skill/agent naming consistent)
-- [ ] End-to-end test on a sample project
+- [x] End-to-end test on a sample project — full loop run on a vanilla-JS `quick-todo` app: PO→Designer→EM→build→review→real-browser QA→release, all five gates enforced, shipped as `v0.1.0`
 
 ---
 
-## Credits & License
-
-Concept inspired by [garrytan/gstack](https://github.com/garrytan/gstack) — rebuilt independently, not forked.
+## License
 
 [MIT](LICENSE) © 2026 Andreas Lottes
