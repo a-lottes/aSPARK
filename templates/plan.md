@@ -27,12 +27,12 @@
 ## 3. Task Breakdown
 
 <!-- Ordered. Every task maps to a story from the spec and has its own definition of done.
-     /increment works through this table top to bottom — nothing else. -->
+     /increment works through this table top to bottom — nothing else — and keeps Status current. -->
 
-| # | Task | Story | Depends on | Definition of Done |
-|---|---|---|---|---|
-| T1 | | US-1 | – | |
-| T2 | | US-1 | T1 | |
+| # | Task | Story | Depends on | Status | Definition of Done |
+|---|---|---|---|---|---|
+| T1 | | US-1 | – | `todo` | |
+| T2 | | US-1 | T1 | `todo` | |
 
 ## 4. Test Strategy
 
