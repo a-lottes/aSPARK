@@ -140,7 +140,7 @@ Reading order for newcomers: this README → `docs/workflow.md` → one template
 
 ## Project Status
 
-aSPARK is under active construction. This README always reflects the current state.
+aSPARK v0.1.0 is feature-complete. This README always reflects the current state.
 
 - [x] Repo scaffold, plugin manifest, license
 - [x] README with concept, team and usage guide
@@ -148,6 +148,8 @@ aSPARK is under active construction. This README always reflects the current sta
 - [x] The six team agents (`agents/`) — product-owner, designer, engineering-manager, reviewer, qa-tester, release-manager
 - [x] The seven ceremony skills (`skills/`) — story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live
 - [x] The `/spark` orchestrator — full loop with gate stops, resume support and feedback-loop escalation
+- [x] Workflow deep-dive ([docs/workflow.md](docs/workflow.md)) — artifact chain, gate invariants, feedback loops, role boundaries
+- [x] Plugin structure validated (`claude plugin validate` ✔, skill/agent naming consistent)
 - [ ] End-to-end test on a sample project
 
 ---

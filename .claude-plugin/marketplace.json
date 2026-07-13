@@ -1,5 +1,6 @@
 {
   "name": "aspark",
+  "description": "Marketplace for aSPARK — an agile AI product team for Claude Code (Specify, Plan, Act, Review, Keep).",
   "owner": {
     "name": "Andreas Lottes",
     "email": "andreas.lottes@adesso.de"
