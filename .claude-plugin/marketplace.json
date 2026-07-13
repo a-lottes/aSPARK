@@ -1,0 +1,14 @@
+{
+  "name": "aspark",
+  "owner": {
+    "name": "Andreas Lottes",
+    "email": "andreas.lottes@adesso.de"
+  },
+  "plugins": [
+    {
+      "name": "aspark",
+      "source": "./",
+      "description": "An agile AI product team for Claude Code — Specify, Plan, Act, Review, Keep."
+    }
+  ]
+}
