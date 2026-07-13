@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="assets/aspark-logo.png" alt="aSPARK — an agile AI product team for Claude Code" width="440" />
+</div>
+
 # ⚡ aSPARK
 
 > **An agile AI product team for Claude Code.**
