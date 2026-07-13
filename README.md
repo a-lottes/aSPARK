@@ -1,5 +1,8 @@
 <div align="center">
-  <img src="assets/aspark-logo.png" alt="aSPARK — an agile AI product team for Claude Code" width="440" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/aspark-logo-dark.png" />
+    <img src="assets/aspark-logo.png" alt="aSPARK — an agile AI product team for Claude Code" width="440" />
+  </picture>
 </div>
 
 # ⚡ aSPARK
