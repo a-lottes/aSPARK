@@ -147,7 +147,7 @@ aSPARK is under active construction. This README always reflects the current sta
 - [x] Artifact templates (`templates/`) — spec, plan, review-report, qa-report, release-notes, each with its gate checklist
 - [x] The six team agents (`agents/`) — product-owner, designer, engineering-manager, reviewer, qa-tester, release-manager
 - [x] The seven ceremony skills (`skills/`) — story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live
-- [ ] The `/spark` orchestrator
+- [x] The `/spark` orchestrator — full loop with gate stops, resume support and feedback-loop escalation
 - [ ] End-to-end test on a sample project
 
 ---
