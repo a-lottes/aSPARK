@@ -182,7 +182,7 @@ Reading order for newcomers: this README → `docs/workflow.md` → one template
 
 ## Project Status
 
-aSPARK v0.1.0 is feature-complete and has passed a full end-to-end dry run. This README always reflects the current state.
+aSPARK is feature-complete: the v0.1.0 loop has passed a full end-to-end dry run, and the spec-driven layer added on top (constitution, Clarify pass, NFRs, traceability) has been dry-run-validated through the Plan phase. This README always reflects the current state.
 
 - [x] Repo scaffold, plugin manifest, license
 - [x] README with concept, team and usage guide
@@ -194,6 +194,7 @@ aSPARK v0.1.0 is feature-complete and has passed a full end-to-end dry run. This
 - [x] Workflow deep-dive ([docs/workflow.md](docs/workflow.md)) — constitution, artifact chain, gate invariants, traceability, feedback loops, role boundaries
 - [x] Plugin structure validated (`claude plugin validate` ✔, skill/agent naming consistent)
 - [x] End-to-end test on a sample project — full loop run on a vanilla-JS `quick-todo` app: PO→Designer→EM→build→review→real-browser QA→release, all five gates enforced, shipped as `v0.1.0`
+- [x] Spec-driven dry run on a sample project — `/charter`→`/story-time` (with Clarify pass)→`/look-and-feel`→`/sprint-plan` on a vanilla-JS `quicknote` app: constitution bound every phase, NFRs and `US-`/`AC-`/`NFR-` traceability flowed spec→plan with full Must-AC coverage, spec and plan gates enforced. Live review/QA traceability tables pending a full `/increment` build.
 
 ---
 
