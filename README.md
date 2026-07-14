@@ -14,15 +14,12 @@ aSPARK turns Claude Code from a coding copilot into a **gated delivery process**
 
 ## The SPARK Loop
 
-```
- ┌───────────┐   ┌───────────┐   ┌───────────┐   ┌───────────┐   ┌───────────┐
- │  SPECIFY  │──▶│   PLAN    │──▶│    ACT    │──▶│  REVIEW   │──▶│   KEEP    │
- └───────────┘   └───────────┘   └───────────┘   └───────────┘   └───────────┘
-  /story-time     /sprint-plan    /increment      /peer-review    /go-live
-  /look-and-feel                                  /demo-day
-       ▲                                               │
-       └───────────── feedback loops ◀─────────────────┘
-```
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/aspark-loop-dark.png" />
+    <img src="assets/aspark-loop.png" alt="The SPARK loop: Specify → Plan → Act → Review → Keep, with feedback loops" width="720" />
+  </picture>
+</div>
 
 | Phase | What happens | Gate to pass |
 |---|---|---|
