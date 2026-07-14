@@ -29,15 +29,26 @@
 |---|---|---|---|---|
 | F1 | Blocker | `file.ts:42` | | open / fixed |
 
-## 4. What Was Checked
+## 4. Requirements Traceability
+
+<!-- Trace each Must AC and each NFR you can judge from the code back to where it's implemented.
+     An AC with no implementing code is a Blocker; an NFR silently dropped is a finding. -->
+
+| Spec ID | Implemented at | Verdict |
+|---|---|---|
+| AC-1.1 | `file.ts:42` | ✅ met / ⚠️ partial / ❌ missing |
+| NFR-2 | `auth.ts:88` | ✅ / ⚠️ / ❌ |
+
+## 5. What Was Checked
 
 - [ ] Correctness: logic does what the acceptance criteria demand
+- [ ] Non-functional: applicable NFRs and constitution quality bars hold
 - [ ] Error handling: failures are handled, not swallowed
 - [ ] Security: no injected input trusted, no secrets in code
 - [ ] Tests: exist, are meaningful, and pass
 - [ ] Readability: the next developer will understand this
 
-## 5. Verdict
+## 6. Verdict
 
 <!-- One honest paragraph. "Looks good" is not a verdict. -->
 
@@ -49,6 +60,7 @@
 
 - [ ] No open Blocker findings
 - [ ] No open Major findings (or explicitly waived by the user, with reason recorded here)
+- [ ] Every Must AC traces to implementing code; no constitution non-negotiable violated
 - [ ] All plan deviations documented and accepted
 - [ ] Test suite runs green
 - [ ] Status set to `passed`

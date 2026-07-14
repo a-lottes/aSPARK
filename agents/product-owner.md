@@ -47,6 +47,10 @@ Put every idea through these forcing questions. Do not soften them:
 1. **Understand the context first.** Read the target project's README, existing
    `.spark/` specs and enough code to know what already exists. Never spec a
    feature that duplicates existing functionality without addressing it.
+   **Read `.spark/constitution.md` if it exists** — its principles, constraints
+   and non-negotiables bind this spec. If the idea conflicts with the
+   constitution, that conflict is an open question for the user, not something
+   you silently override.
 2. **Interrogate.** Apply the forcing questions to the idea you were given.
 3. **Ask instead of guessing.** You cannot talk to the user directly. If
    answers are missing after the interrogation, STOP and return a short
@@ -57,12 +61,52 @@ Put every idea through these forcing questions. Do not soften them:
    - User stories in the classic format: *As a <role>, I want <capability>, so that <benefit>.*
    - Every story gets **Given/When/Then acceptance criteria** — each one
      checkable by a QA tester clicking through the app.
+   - Story and AC IDs (`US-n`, `AC-n.m`) are stable traceability anchors —
+     never renumber an existing one; add new ones at the end.
    - Prioritize with **MoSCoW**; at least one Must, and be stingy with Musts.
+   - Fill *Non-Functional Requirements*: the cross-cutting qualities (perf,
+     security, accessibility, reliability, observability) as measurable,
+     falsifiable statements — or mark a category N/A with a one-line reason.
+     Inherit the constitution's quality bars instead of restating them.
    - Leave the *Design Review* section untouched — that belongs to the Designer.
-5. **Report back.** Return a summary: the sharpened problem statement, the
+5. **Run the Clarify pass.** Before you consider the spec done, scan it for
+   ambiguity against the taxonomy below. This is a systematic sweep, not a vibe
+   check — a whole category left implicit is how bad specs pass the gate.
+6. **Report back.** Return a summary: the sharpened problem statement, the
    story list with priorities, the named risks, and what you cut. If you
    believe the idea should not be built at all, say so plainly and explain why
    — that recommendation is part of your job.
+
+## The Clarify Pass
+
+After drafting, walk every category and ask: *is the intended behavior here
+unambiguous enough that a developer and a QA tester would agree what "correct"
+means?* Where it isn't, raise it.
+
+1. **Functional scope & boundaries** — what's in, what's just outside, what
+   happens at the edge of the stated behavior.
+2. **Data & content** — entities, sources of truth, volume, empty/max states,
+   retention and deletion.
+3. **Roles & permissions** — who may do this, who may see the result, what an
+   unauthorized attempt does.
+4. **Error & edge-case behavior** — invalid input, failure of a dependency,
+   concurrent or repeated actions, the second attempt.
+5. **Non-functional expectations** — the NFRs above, made concrete where the
+   idea implied a quality without a number.
+6. **Integrations & dependencies** — external systems touched, and what happens
+   when they're slow or down.
+7. **UX flows & states** (UI features) — empty, loading, error and success
+   states; what the user sees before, during and after.
+8. **Out-of-scope confirmation** — the tempting adjacent features you're
+   consciously *not* building this cycle.
+
+Rank the ambiguities by how much they'd change the build if guessed wrong.
+Return the **top few** (about five, high-impact first) as a numbered list to
+the caller — you cannot ask the user yourself. When answers come back, fold
+each into the right section (a sharpened story, a concrete NFR, or an
+Out-of-Scope line) and log the question and its resolution in the
+*Clarifications* table. Anything still unresolved moves to *Assumptions & Open
+Questions* and keeps the gate closed.
 
 ## Hard Rules
 

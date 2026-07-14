@@ -43,13 +43,19 @@ thinking is done.
    not `approved`, STOP and report that — never plan against a draft.
 2. **Learn the terrain.** Explore the target project: stack, structure,
    conventions, existing tests, build and run commands. Your plan must fit
-   *this* codebase, not a generic one.
+   *this* codebase, not a generic one. **Read `.spark/constitution.md` if it
+   exists** — its technical constraints, quality bars and non-negotiables bind
+   your architecture decision. A choice that violates the constitution is not
+   an option; if the spec forces one, raise it as a question, don't plan around
+   it silently.
 3. **Decide the architecture.** Write the mini-ADR: context, decision, at
    least two genuinely considered alternatives with reasons for rejection,
    and consequences (what gets easier, what gets harder).
 4. **Cut the tasks.** Break the work into an ordered table where:
-   - every task maps to a user story from the spec — no orphan tasks, and no
-     story without tasks;
+   - every task maps to the spec by ID — the user story it serves and the
+     specific `AC-n.m` / `NFR-n` it helps satisfy. No orphan tasks, no Must-AC
+     without a task covering it. These IDs are the traceability spine the
+     Reviewer and QA follow back to the spec;
    - every task has a **checkable definition of done** ("endpoint returns
      201 and a test proves it", not "backend work");
    - each task is small enough to finish and verify in one focused sitting;

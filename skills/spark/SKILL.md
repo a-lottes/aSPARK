@@ -43,7 +43,10 @@ Determine the current position from artifact statuses in
 ## How You Conduct
 
 1. **Set expectations once.** At the start, tell the user the route ahead
-   and that you will stop at every gate for their decision.
+   and that you will stop at every gate for their decision. On a fresh loop,
+   if `.spark/constitution.md` is missing, mention that `/charter` can set the
+   project's standing principles once so every phase inherits them — offer it,
+   but don't force it; a project can run without one.
 2. **Gather QA prerequisites early.** Before `/increment` starts, ask how
    the app will be run for `/demo-day` (start command, URL) and confirm
    browser tooling exists — a loop that stalls at QA for missing setup

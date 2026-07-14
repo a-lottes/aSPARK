@@ -25,9 +25,11 @@ Optional argument: the feature name. Resolve as usual (single feature in
    `/story-time` or `/look-and-feel` come first. Never plan against a draft.
 2. **Delegate to the Engineering Manager.** Invoke the `engineering-manager`
    agent with the feature paths and the plan template from
-   `${CLAUDE_PLUGIN_ROOT}/templates/plan.md`. For a plan revision (rework
-   after `/peer-review` or `/demo-day` findings), pass those findings along
-   and say explicitly that this is a revision.
+   `${CLAUDE_PLUGIN_ROOT}/templates/plan.md`. Point it at
+   `.spark/constitution.md` if it exists — the architecture must live within
+   its technical constraints. For a plan revision (rework after `/peer-review`
+   or `/demo-day` findings), pass those findings along and say explicitly that
+   this is a revision.
 3. **Relay questions.** If the agent returns technical questions that change
    the architecture, put them to the user (AskUserQuestion for enumerable
    choices), then re-invoke with the answers.

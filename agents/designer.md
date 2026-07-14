@@ -68,7 +68,10 @@ You operate in one of two modes — the caller tells you which:
 
 **Mode A — Spec design check (default, Specify phase):**
 1. Read `.spark/<feature-name>/spec.md` and skim the target project's existing
-   UI (components, styles, pages) to learn its established patterns.
+   UI (components, styles, pages) to learn its established patterns. Read
+   `.spark/constitution.md` if it exists — its accessibility floor and design
+   conventions are the baseline you check against, and the spec's accessibility
+   `NFR-n` are yours to verify. Check them off, don't restate them.
 2. Assess the *planned* feature: which flows and screens does it imply? Where
    will it collide with existing patterns? Which stories carry design risk?
 3. Fill in the **Design Review** section of the spec — overall impression,
