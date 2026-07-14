@@ -23,7 +23,7 @@ aSPARK turns Claude Code from a coding copilot into a **gated delivery process**
 
 | Phase | What happens | Gate to pass |
 |---|---|---|
-| **S**pecify | The idea is challenged, turned into user stories with acceptance criteria, and design-checked. | Spec approved: stories are testable, design risks named. |
+| **S**pecify | The idea is challenged, clarified against a coverage taxonomy, turned into user stories with acceptance criteria and non-functional requirements, and design-checked. | Spec approved: stories testable, NFRs measurable, ambiguity resolved, design risks named. |
 | **P**lan | Architecture is decided, the work is cut into ordered tasks. | Plan approved: every task maps to a story, risks addressed. |
 | **A**ct | The increment is built — strictly following the plan. | All planned tasks done, project builds and tests pass. |
 | **R**eview | Code review by a senior eye, then hands-on QA in a real browser against the acceptance criteria. | No blocking findings, all acceptance criteria verified. |
@@ -35,7 +35,8 @@ aSPARK turns Claude Code from a coding copilot into a **gated delivery process**
 
 | Command | Role | What they do |
 |---|---|---|
-| `/story-time` | 🧭 **Product Owner** | Interrogates your idea with hard questions — no yes-man. Writes user stories with acceptance criteria into `spec.md`. |
+| `/charter` | 📜 **Constitution** | Sets the project's standing principles and constraints once, in `constitution.md` — the ground rules every phase inherits. |
+| `/story-time` | 🧭 **Product Owner** | Interrogates your idea with hard questions — no yes-man. Runs a Clarify pass, writes user stories, acceptance criteria and NFRs into `spec.md`. |
 | `/look-and-feel` | 🎨 **Designer** | Detects bad design: usability heuristics, visual consistency, accessibility. Adds a design section to the spec. |
 | `/sprint-plan` | 🏗️ **Engineering Manager** | Locks the architecture, makes the technical decisions, cuts the work into an ordered task breakdown in `plan.md`. |
 | `/increment` | 💻 **Developer** | Builds a potentially shippable increment — strictly following the plan, no scope creep. |
@@ -55,6 +56,7 @@ For each feature, a working directory is created:
 ```
 your-project/
 └── .spark/
+    ├── constitution.md   ← written by /charter — project-wide, read by every phase
     └── <feature-name>/
         ├── spec.md       ← written by /story-time (+ /look-and-feel)
         ├── plan.md       ← written by /sprint-plan
@@ -64,6 +66,8 @@ your-project/
 ```
 
 Each phase **reads the artifact of the previous phase** and refuses to start if the gate isn't met. Example: `/go-live` will not release while `qa.md` lists open blocking bugs — it sends you back to `/increment` instead. That's the whole point: the team doesn't just produce code, it makes sure **the product actually works**.
+
+Requirements carry **stable IDs** (`US-`, `AC-`, `NFR-`) from the spec all the way through: the plan cites which AC each task covers, the review traces each Must AC to code, and QA verifies it under the same ID. Nothing silently falls out of the chain. The project-wide `constitution.md` (optional, set once via `/charter`) holds the principles and constraints every feature inherits, so they aren't re-argued each cycle.
 
 ---
 
@@ -168,7 +172,7 @@ If you're new to Claude Code plugins, this is all there is to it:
 
 - **`agents/`** — the team members. Each file defines one persona (a *subagent*): its mindset, its standards, and which tools it may use. Agents are the "who".
 - **`skills/`** — the ceremonies. Each folder holds one slash command (`SKILL.md`): what to do, which agent to involve, which template to fill, and which gate to enforce. Skills are the "how".
-- **`templates/`** — the artifacts. Blueprints for `spec.md`, `plan.md`, `review.md`, `qa.md` and `release.md`, each ending in an explicit gate checklist. Templates are the "what".
+- **`templates/`** — the artifacts. Blueprints for `constitution.md`, `spec.md`, `plan.md`, `review.md`, `qa.md` and `release.md`, each (bar the constitution) ending in an explicit gate checklist. Templates are the "what".
 - **`docs/`** — deep-dives, starting with the workflow and gate hand-over rules.
 - **`.claude-plugin/`** — plugin metadata so Claude Code can discover and install all of the above.
 
@@ -182,11 +186,12 @@ aSPARK v0.1.0 is feature-complete and has passed a full end-to-end dry run. This
 
 - [x] Repo scaffold, plugin manifest, license
 - [x] README with concept, team and usage guide
-- [x] Artifact templates (`templates/`) — spec, plan, review-report, qa-report, release-notes, each with its gate checklist
+- [x] Artifact templates (`templates/`) — constitution, spec, plan, review-report, qa-report, release-notes, each (bar the constitution) with its gate checklist
 - [x] The six team agents (`agents/`) — product-owner, designer, engineering-manager, reviewer, qa-tester, release-manager
-- [x] The seven ceremony skills (`skills/`) — story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live
+- [x] The eight ceremony skills (`skills/`) — charter, story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live
+- [x] Spec-driven core — project constitution (`/charter`), Specify-phase Clarify pass, non-functional requirements, and `US-`/`AC-`/`NFR-` traceability from spec through plan, review and QA
 - [x] The `/spark` orchestrator — full loop with gate stops, resume support and feedback-loop escalation
-- [x] Workflow deep-dive ([docs/workflow.md](docs/workflow.md)) — artifact chain, gate invariants, feedback loops, role boundaries
+- [x] Workflow deep-dive ([docs/workflow.md](docs/workflow.md)) — constitution, artifact chain, gate invariants, traceability, feedback loops, role boundaries
 - [x] Plugin structure validated (`claude plugin validate` ✔, skill/agent naming consistent)
 - [x] End-to-end test on a sample project — full loop run on a vanilla-JS `quick-todo` app: PO→Designer→EM→build→review→real-browser QA→release, all five gates enforced, shipped as `v0.1.0`
 

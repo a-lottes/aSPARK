@@ -16,11 +16,14 @@
 
 ## 2. Acceptance Criteria Verification
 
-<!-- One row per AC from the spec. Every AC gets clicked through in the real browser — no "should work". -->
+<!-- One row per AC from the spec, plus every browser-observable NFR (performance, accessibility,
+     reliability on empty/large data). Same AC-n.m / NFR-n IDs as the spec — that closes the
+     traceability chain. Every row gets clicked through in the real browser — no "should work". -->
 
-| AC | Steps performed | Expected | Observed | Result |
+| Spec ID | Steps performed | Expected | Observed | Result |
 |---|---|---|---|---|
 | AC-1.1 | | | | ✅ pass / ❌ fail |
+| NFR-1 | | | | ✅ pass / ❌ fail |
 
 ## 3. Exploratory Findings
 
@@ -45,6 +48,7 @@
 *All boxes checked → `/go-live` may start. Any box open → back to `/increment`, then re-run `/demo-day`.*
 
 - [ ] Every Must-story acceptance criterion verified in the real browser and passed
+- [ ] Every browser-observable NFR verified and passed
 - [ ] No open Blocker or Major bugs (Minor bugs listed and accepted by the user)
 - [ ] Browser console free of errors on the tested flows
 - [ ] Tested on all agreed viewports

@@ -5,6 +5,22 @@ over between phases, what the gates check, who is allowed to decide what,
 and how the feedback loops work. Read the [README](../README.md) first for
 the big picture.
 
+## Project-Wide Context: the Constitution
+
+Before any single feature, a project may set a **constitution** at
+`.spark/constitution.md` (via `/charter`). It is the one artifact that is *not*
+per-feature: it holds the standing principles, technical constraints, quality
+bars and non-negotiables that bind every phase of every feature. Every agent
+reads it before phase work — so a decision that holds across the whole project
+(the stack, the accessibility floor, "user data is never logged in plaintext")
+is made once and inherited, instead of re-argued in each `/story-time`.
+
+The constitution is optional but recommended: a project runs without one, but
+each feature then carries context the constitution would have supplied for free.
+It is stable, not frozen — `/charter` amends it, and every amendment is dated
+and reasoned. A spec, plan or diff that conflicts with the constitution doesn't
+silently win; the conflict surfaces as an open question or a Blocker.
+
 ## The Artifact Chain
 
 Every feature lives in `.spark/<feature-name>/` inside the target project.
@@ -82,6 +98,29 @@ back through the developer, and the finding phase re-runs:
 
 The separations are the point: the QA tester who patched the app would test
 their own work; the reviewer who waives their own finding reviews nothing.
+
+## Traceability
+
+The spec assigns stable IDs — `US-n` (stories), `AC-n.m` (acceptance criteria)
+and `NFR-n` (non-functional requirements) — and every downstream phase cites
+them, so any requirement can be traced forward to the work that satisfies it
+and any line of work traced back to the requirement that justifies it:
+
+```
+ spec: AC-1.1 ──▶ plan: task "Covers AC-1.1" ──▶ review: AC-1.1 → file.ts:42 ──▶ qa: AC-1.1 ✅
+```
+
+The rules that keep the chain honest: IDs are never renumbered (new ones append
+at the end); the plan gate refuses a Must AC that no task covers; the review
+traces each Must AC to implementing code; and QA verifies each AC and each
+browser-observable NFR under the same ID. A requirement that falls out of the
+chain at any hop is a gate failure, not an oversight to catch later.
+
+Ambiguity is removed *before* the chain starts: the Specify phase runs a
+**Clarify pass** — a structured sweep across functional boundaries, data,
+permissions, error cases, NFRs, integrations and UX states — and records each
+resolution in the spec's *Clarifications* table. An unresolved clarification is
+an open question and keeps the spec gate closed.
 
 ## Conventions
 

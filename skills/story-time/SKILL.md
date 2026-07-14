@@ -26,18 +26,29 @@ was provided, ask for it before doing anything else.
 2. **Delegate to the Product Owner.** Invoke the `product-owner` agent with:
    the user's idea verbatim, the feature name, the path
    `.spark/<feature-name>/spec.md`, and the spec template from
-   `${CLAUDE_PLUGIN_ROOT}/templates/spec.md`.
+   `${CLAUDE_PLUGIN_ROOT}/templates/spec.md`. Point it at
+   `.spark/constitution.md` if that file exists — the spec must live within it.
 3. **Relay, don't guess.** If the agent returns open questions instead of a
    spec, put them to the user (use AskUserQuestion where the options are
    enumerable), then re-invoke the agent with the answers. Repeat until the
    spec is drafted.
-4. **Present the result.** Show the user: the sharpened problem statement,
-   the story list with MoSCoW priorities, the named risks/assumptions, and
-   what was cut to Out of Scope. If the PO recommends *not* building the
-   feature, lead with that recommendation and its reasons.
-5. **Iterate.** Fold the user's feedback back into the spec via the agent
+4. **Run the Clarify pass.** Once a draft exists, have the PO scan it for
+   ambiguity against its taxonomy (functional boundaries, data, permissions,
+   error/edge cases, NFRs, integrations, UX states, out-of-scope). Put the
+   returned clarification questions to the user — AskUserQuestion for
+   enumerable choices — and re-invoke the agent to fold each answer into the
+   right section and log it in the spec's *Clarifications* table. Repeat until
+   no high-impact ambiguity is left unresolved or unparked. Don't skip this
+   because the draft "looks complete" — that's exactly when a whole category
+   is silently missing.
+5. **Present the result.** Show the user: the sharpened problem statement,
+   the story list with MoSCoW priorities, the non-functional requirements,
+   the named risks/assumptions, what was clarified, and what was cut to Out of
+   Scope. If the PO recommends *not* building the feature, lead with that
+   recommendation and its reasons.
+6. **Iterate.** Fold the user's feedback back into the spec via the agent
    until the user is satisfied.
-6. **Walk the gate.** Go through the SPEC GATE checklist at the bottom of
+7. **Walk the gate.** Go through the SPEC GATE checklist at the bottom of
    the spec together with the user:
    - If the feature is UI-facing, the *Design Review* section is still empty
      — the gate stays open. Set status `draft` and hand off to

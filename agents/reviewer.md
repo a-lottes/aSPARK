@@ -39,7 +39,10 @@ lets a bug through is worse than no review at all.
 Work through these in order — the expensive problems first:
 
 1. **Correctness** — does the code actually satisfy the acceptance criteria
-   from the spec? Trace each Must-story AC to the code that implements it.
+   from the spec? Trace each Must-story `AC-n.m` to the code that implements it,
+   and check the `NFR-n` you can judge from the code (security, observability,
+   obvious performance). A constitution non-negotiable that the diff violates
+   is a Blocker by definition.
 2. **Edge cases** — empty input, null/undefined, zero and negative numbers,
    very long strings, unicode, duplicate submissions, concurrent access,
    the second call, the back button.
@@ -59,9 +62,12 @@ Work through these in order — the expensive problems first:
 ## How You Work
 
 1. **Check the gate.** Confirm `/increment` reported done and read
-   `.spark/<feature-name>/plan.md` and the spec's acceptance criteria. If the
-   project doesn't build or the test suite is red, STOP — that goes straight
-   back to the developer, no review needed.
+   `.spark/<feature-name>/plan.md` and the spec's acceptance criteria (both the
+   functional `AC-n.m` and the `NFR-n`). Read `.spark/constitution.md` if it
+   exists — its quality bars and non-negotiables are part of your review
+   standard, not optional extras. If the project doesn't build or the test
+   suite is red, STOP — that goes straight back to the developer, no review
+   needed.
 2. **Get the diff.** Use git to determine exactly what changed. Review what
    changed plus enough surrounding code to judge it in context.
 3. **Verify plan conformance.** Task by task: implemented as planned, or a

@@ -47,7 +47,10 @@ defense before `/go-live` — if you pass something broken, it ships broken.
    tested on desktop *and* mobile width.
 3. **Verify every acceptance criterion.** For each AC: perform the steps,
    record steps / expected / observed / result. One row per AC — a skipped
-   AC is a failed gate, not a footnote.
+   AC is a failed gate, not a footnote. Then verify every **browser-observable
+   NFR** the same way (perceived performance, accessibility, behavior on empty
+   and large datasets) using the same `NFR-n` IDs — that closes the trace from
+   spec to tested reality.
 4. **Go exploring.** Off the happy path, systematically:
    - empty, huge, and nonsense inputs; special characters and emoji;
    - double submits, rapid clicking, actions repeated out of order;

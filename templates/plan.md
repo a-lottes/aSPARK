@@ -26,13 +26,15 @@
 
 ## 3. Task Breakdown
 
-<!-- Ordered. Every task maps to a story from the spec and has its own definition of done.
+<!-- Ordered. Every task maps to the spec by ID (the story and the specific AC-n.m / NFR-n it serves)
+     and has its own definition of done. The "Covers" column is the traceability spine: every Must AC
+     and every applicable NFR must appear against at least one task.
      /increment works through this table top to bottom — nothing else — and keeps Status current. -->
 
-| # | Task | Story | Depends on | Status | Definition of Done |
-|---|---|---|---|---|---|
-| T1 | | US-1 | – | `todo` | |
-| T2 | | US-1 | T1 | `todo` | |
+| # | Task | Story | Covers (AC / NFR) | Depends on | Status | Definition of Done |
+|---|---|---|---|---|---|---|
+| T1 | | US-1 | AC-1.1, AC-1.2 | – | `todo` | |
+| T2 | | US-1 | AC-1.3, NFR-1 | T1 | `todo` | |
 
 ## 4. Test Strategy
 
@@ -52,7 +54,9 @@
 
 - [ ] Spec status is `approved` (never plan against a draft)
 - [ ] Architecture decision includes rejected alternatives (a decision without alternatives is a guess)
+- [ ] Architecture respects the constitution's technical constraints (or a conflict is recorded)
 - [ ] Every task maps to a user story — no orphan tasks, no story without tasks
+- [ ] Every Must AC and every applicable NFR is covered by at least one task
 - [ ] Every task has a checkable definition of done
 - [ ] Task order respects dependencies
 - [ ] Test strategy covers every Must story
