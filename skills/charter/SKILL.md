@@ -22,24 +22,25 @@ one.
 
 ## Steps
 
-1. **Locate.** If `.spark/constitution.md` exists, this is an **amendment** —
-   read it first and preserve everything the user isn't changing. If not, this
-   is a **first draft** from the template at
-   `${CLAUDE_PLUGIN_ROOT}/templates/constitution.md`.
-2. **Learn the terrain.** Read the project's README, existing `.spark/` specs
-   and enough code to infer the real stack, conventions and quality practices.
-   Propose a draft grounded in what the project already is — do not invent
-   principles the code contradicts.
-3. **Interview, don't dictate.** Walk the five sections (product principles,
-   technical constraints, quality bars, conventions, non-negotiables). For
-   each, propose a concrete default from what you found and ask the user to
-   confirm, sharpen, or cut. Use AskUserQuestion where the choices are
-   enumerable. Keep it short — a constitution nobody reads is dead weight.
-4. **Write it.** Save to `.spark/constitution.md` following the template. On an
-   amendment, add a dated row to the *Amendments* log with the reason.
-5. **Confirm.** Show the user the final constitution and remind them it now
-   binds every phase — the PO scopes within it, the EM plans within it, the
-   Reviewer enforces it.
+1. **Delegate to the Facilitator.** Invoke the `facilitator` agent with the
+   path `.spark/constitution.md`, the template from
+   `${CLAUDE_PLUGIN_ROOT}/templates/constitution.md`, and the user's input
+   verbatim. Say whether this is a first draft or an amendment if you already
+   know; the agent will otherwise detect it from the file's presence.
+2. **Relay, don't guess.** The agent grounds a draft in the codebase but cannot
+   talk to the user. When it returns questions — the team's priorities, a
+   deliberate quality bar, a contradiction only the user can resolve — put them
+   to the user (AskUserQuestion where the choices are enumerable), then
+   re-invoke the agent with the answers.
+3. **Present the result.** Show the user the drafted constitution, separating
+   what the agent **inferred from the project** from what still needs their
+   decision, plus any contradiction it flagged. Keep it short — a constitution
+   nobody reads is dead weight.
+4. **Iterate.** Fold the user's edits back in via the agent until they're
+   satisfied. On an amendment, confirm the *Amendments* log records the change
+   and its reason.
+5. **Confirm.** Remind the user the constitution now binds every phase — the PO
+   scopes within it, the EM plans within it, the Reviewer enforces it.
 
 ## Rules
 

@@ -88,6 +88,7 @@ back through the developer, and the finding phase re-runs:
 
 | Role | Owns | Explicitly may not |
 |---|---|---|
+| Facilitator | drafting the constitution; grounding it in reality | approve it; write per-feature requirements into it |
 | Product Owner | the *why* and *what*; scope; stories | write solutions; approve their own spec |
 | Designer | design quality of the spec/UI | invent scope; touch non-design spec sections |
 | Engineering Manager | the *how*; architecture; task cut | change the spec; approve their own plan |

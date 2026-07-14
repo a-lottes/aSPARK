@@ -35,7 +35,7 @@ aSPARK turns Claude Code from a coding copilot into a **gated delivery process**
 
 | Command | Role | What they do |
 |---|---|---|
-| `/charter` | 📜 **Constitution** | Sets the project's standing principles and constraints once, in `constitution.md` — the ground rules every phase inherits. |
+| `/charter` | 📜 **Facilitator** | Grounds the project's standing principles and constraints in `constitution.md` — the ground rules every phase inherits, decided once. |
 | `/story-time` | 🧭 **Product Owner** | Interrogates your idea with hard questions — no yes-man. Runs a Clarify pass, writes user stories, acceptance criteria and NFRs into `spec.md`. |
 | `/look-and-feel` | 🎨 **Designer** | Detects bad design: usability heuristics, visual consistency, accessibility. Adds a design section to the spec. |
 | `/sprint-plan` | 🏗️ **Engineering Manager** | Locks the architecture, makes the technical decisions, cuts the work into an ordered task breakdown in `plan.md`. |
@@ -187,7 +187,7 @@ aSPARK v0.1.0 is feature-complete and has passed a full end-to-end dry run. This
 - [x] Repo scaffold, plugin manifest, license
 - [x] README with concept, team and usage guide
 - [x] Artifact templates (`templates/`) — constitution, spec, plan, review-report, qa-report, release-notes, each (bar the constitution) with its gate checklist
-- [x] The six team agents (`agents/`) — product-owner, designer, engineering-manager, reviewer, qa-tester, release-manager
+- [x] The seven team agents (`agents/`) — facilitator, product-owner, designer, engineering-manager, reviewer, qa-tester, release-manager
 - [x] The eight ceremony skills (`skills/`) — charter, story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live
 - [x] Spec-driven core — project constitution (`/charter`), Specify-phase Clarify pass, non-functional requirements, and `US-`/`AC-`/`NFR-` traceability from spec through plan, review and QA
 - [x] The `/spark` orchestrator — full loop with gate stops, resume support and feedback-loop escalation
