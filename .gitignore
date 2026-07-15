@@ -23,3 +23,6 @@ tmp/
 
 # Node (only if tooling is ever added; harmless otherwise)
 node_modules/
+
+# Claude Code local settings
+.claude/settings.local.json

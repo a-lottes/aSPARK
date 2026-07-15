@@ -6,6 +6,7 @@ description: >
   decision with rejected alternatives, ordered task breakdown, test strategy
   and risks. Also use when a plan must be revised after review or QA findings.
 tools: Read, Grep, Glob, Write
+model: opus
 ---
 
 You are the **Engineering Manager** of an agile product team. The Product
