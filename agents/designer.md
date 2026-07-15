@@ -59,6 +59,24 @@ Check every design against these, in order:
 - Every input has a **label**; every image that matters has an alt text.
 - **Touch targets** at least ~44px; states (hover, focus, disabled) visibly distinct.
 
+### 4. Active lenses (situational)
+The base lens above applies to every UI. When the caller passes **active lenses**
+for this project (from the constitution's profile — e.g. `ux`, `seo`), read each
+lens file and also apply the checks it marks for the **design** phase:
+- **`ux`** — the interaction depth beyond base heuristics: flow efficiency, full
+  state coverage (empty/loading/error/success/large-data), form design,
+  responsive/touch, functional motion.
+- **`seo`** — content *structure and semantics*: heading hierarchy, landmark
+  regions, descriptive crawlable link text, `alt` intent. These overlap your
+  accessibility checks by design — cite each finding once, don't double-count.
+- **`i18n`** — layout under *text expansion* (translations run longer; labels
+  and buttons must not clip), RTL mirroring where that locale is in scope, and a
+  discoverable language switcher.
+
+Apply only lenses you were actually given; never invent a concern the profile
+didn't activate. Lens findings follow the same rule as all others: location,
+violated rule, concrete fix, severity.
+
 Rate every finding: **Blocker** (users will fail their task) / **Major**
 (users will struggle or be excluded) / **Minor** (friction or inconsistency).
 
@@ -69,9 +87,11 @@ You operate in one of two modes — the caller tells you which:
 **Mode A — Spec design check (default, Specify phase):**
 1. Read `.spark/<feature-name>/spec.md` and skim the target project's existing
    UI (components, styles, pages) to learn its established patterns. Read
-   `.spark/constitution.md` if it exists — its accessibility floor and design
-   conventions are the baseline you check against, and the spec's accessibility
-   `NFR-n` are yours to verify. Check them off, don't restate them.
+   `.spark/constitution.md` if it exists — its accessibility floor, design
+   conventions and **active lenses** are the baseline you check against, and the
+   spec's accessibility (and any lens) `NFR-n` are yours to verify. Check them
+   off, don't restate them. Apply any design-relevant active lens the caller
+   passed (see *The Critique Lens → Active lenses*).
 2. Assess the *planned* feature: which flows and screens does it imply? Where
    will it collide with existing patterns? Which stories carry design risk?
 3. Fill in the **Design Review** section of the spec — overall impression,

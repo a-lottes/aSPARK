@@ -23,16 +23,28 @@ was provided, ask for it before doing anything else.
 1. **Name the feature.** Derive a short kebab-case feature name from the idea
    (e.g. `weekly-stats-dashboard`). If `.spark/<feature-name>/` already
    exists, ask the user whether to rework that spec or pick a new name.
-2. **Delegate to the Product Owner.** Invoke the `product-owner` agent with:
+2. **Resolve active lenses.** The constitution is the single source of truth. If
+   `.spark/constitution.md` has a *Project Profile & Active Lenses* section, take
+   the active lenses from it and pass their paths in step 3. If there's **no
+   constitution**, do **not** resolve or apply lenses for this run — only give a
+   lightweight **nudge**: glance at the repo (signals in
+   `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`), name the likely type(s) in one line
+   (e.g. "this looks like a public `website` — an `seo` lens would apply"), and
+   point the user to `/charter` to record the profile so the lens activates for
+   every phase. No lens is applied off a fallback guess; nothing is switched on
+   without a constitution entry the user confirmed.
+3. **Delegate to the Product Owner.** Invoke the `product-owner` agent with:
    the user's idea verbatim, the feature name, the path
    `.spark/<feature-name>/spec.md`, and the spec template from
    `${CLAUDE_PLUGIN_ROOT}/templates/spec.md`. Point it at
    `.spark/constitution.md` if that file exists — the spec must live within it.
-3. **Relay, don't guess.** If the agent returns open questions instead of a
+   Pass the paths of any active lenses (`${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md`)
+   so the PO captures their concerns as measurable NFRs.
+4. **Relay, don't guess.** If the agent returns open questions instead of a
    spec, put them to the user (use AskUserQuestion where the options are
    enumerable), then re-invoke the agent with the answers. Repeat until the
    spec is drafted.
-4. **Run the Clarify pass.** Once a draft exists, have the PO scan it for
+5. **Run the Clarify pass.** Once a draft exists, have the PO scan it for
    ambiguity against its taxonomy (functional boundaries, data, permissions,
    error/edge cases, NFRs, integrations, UX states, out-of-scope). Put the
    returned clarification questions to the user — AskUserQuestion for
@@ -41,14 +53,14 @@ was provided, ask for it before doing anything else.
    no high-impact ambiguity is left unresolved or unparked. Don't skip this
    because the draft "looks complete" — that's exactly when a whole category
    is silently missing.
-5. **Present the result.** Show the user: the sharpened problem statement,
+6. **Present the result.** Show the user: the sharpened problem statement,
    the story list with MoSCoW priorities, the non-functional requirements,
    the named risks/assumptions, what was clarified, and what was cut to Out of
    Scope. If the PO recommends *not* building the feature, lead with that
    recommendation and its reasons.
-6. **Iterate.** Fold the user's feedback back into the spec via the agent
+7. **Iterate.** Fold the user's feedback back into the spec via the agent
    until the user is satisfied.
-7. **Walk the gate.** Go through the SPEC GATE checklist at the bottom of
+8. **Walk the gate.** Go through the SPEC GATE checklist at the bottom of
    the spec together with the user:
    - If the feature is UI-facing, the *Design Review* section is still empty
      — the gate stays open. Set status `draft` and hand off to

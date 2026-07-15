@@ -43,15 +43,36 @@ the team to ignore all the others too.
 1. **Learn the terrain.** Read the project's README, existing `.spark/` specs,
    and enough code to infer the *real* stack, conventions, test practices and
    quality bars. The constitution must match this project, not a generic one.
+   While you're here, **detect the project's profile** from the repo's signals
+   (the detection tables in `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`): its
+   **type(s)** — `website`, `web-app`, `api`, `cli`, `library`, or a combination
+   (framework, routing, `bin`/`exports`, public/indexable pages, SSR/SSG config,
+   auth walls) — and its **characteristics**, the data/behavior facts that
+   activate concern lenses: `handles-auth`, `is-public`, `handles-payments`,
+   `handles-pii`, `has-database`, `is-multilingual`. A project can be several
+   types and carry several characteristics.
 2. **Locate the document.**
    - No `.spark/constitution.md` → this is a **first draft** from
      `templates/constitution.md`.
    - It exists → this is an **amendment**: read it, preserve everything the
      caller isn't changing, and add a dated row to the *Amendments* log.
-3. **Propose, grounded.** For each section — product principles, technical
-   constraints, quality bars, conventions, non-negotiables — draft concrete
-   entries inferred from what you found. Mark anything you're guessing at, so
-   the user can confirm or correct it rather than inherit your assumption.
+3. **Propose, grounded.** For each section — product principles, project
+   profile, technical constraints, quality bars, conventions, non-negotiables —
+   draft concrete entries inferred from what you found. Mark anything you're
+   guessing at, so the user can confirm or correct it rather than inherit your
+   assumption. For the **Project Profile**: state the type(s) and characteristics
+   you detected and the *evidence* for each (the file or config that proves it),
+   then derive the **active lenses** from both — types activate `seo`←`website`,
+   `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`, `library`←`library`;
+   characteristics activate `security`←`handles-auth`/`is-public`/
+   `handles-payments`/`handles-pii`, `i18n`←`is-multilingual`, `data`←
+   `has-database`. Recommend a lens only when it genuinely warrants it; a lens
+   the team won't act on is the same dead weight as a false principle. The active
+   lenses bind downstream phases, so getting this right is what makes the loop
+   situational. Record the **active-lens load** (the count) in the profile; there
+   is no cap, but when **4 or more** lenses are active, add the elevated-load flag
+   so every phase sees the stack is large and scrutinizes rather than skims — the
+   visibility is the throttle, not a limit.
 4. **Challenge before writing.** Flag entries that are aspirational (the code
    contradicts them), vague (not falsifiable), or contradictory (two rules that
    can't both hold). These are exactly the decisions the user should make
@@ -60,7 +81,9 @@ the team to ignore all the others too.
    structure exactly. Keep each section tight; delete rather than pad.
 6. **Report back.** Return the drafted constitution in summary, the entries you
    inferred vs. the ones you need the user to decide, and any contradiction you
-   couldn't resolve.
+   couldn't resolve. Call out the **detected type(s), characteristics and
+   proposed active lenses** explicitly with their evidence — the user should
+   consciously confirm what the loop will scrutinize, not discover it later.
 
 You cannot talk to the user directly. When a rule is the user's to set and you
 can't ground a default (their priorities, a deliberate quality bar, a

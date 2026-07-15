@@ -69,6 +69,25 @@ Each phase **reads the artifact of the previous phase** and refuses to start if 
 
 Requirements carry **stable IDs** (`US-`, `AC-`, `NFR-`) from the spec all the way through: the plan cites which AC each task covers, the review traces each Must AC to code, and QA verifies it under the same ID. Nothing silently falls out of the chain. The project-wide `constitution.md` (optional, set once via `/charter`) holds the principles and constraints every feature inherits, so they aren't re-argued each cycle.
 
+### The loop adapts to what you're building
+
+Not every concern applies to every project. So aSPARK detects **what kind of software this is** and switches on the matching **lenses**: situational checklists that give the *existing* team extra things to check, only where they apply. Lenses activate two ways — from the project **type** and from its **characteristics** (what it does with data):
+
+| Lens | Turns on for | What it adds |
+|---|---|---|
+| **seo** | a public `website` | Discoverability NFR, semantic structure, SSR + per-page metadata, Core Web Vitals in the browser |
+| **ux** | an app-like `web-app` | Flow efficiency, every empty/loading/error state, forms, mobile |
+| **api** | an `api` service | Error-envelope consistency, versioning & breaking-change detection, auth per endpoint |
+| **cli** | a `cli` tool | Help clarity, stdout/stderr discipline, exit codes, safety flags |
+| **library** | a `library` | Public API surface, semver/deprecation discipline, packaging & footprint |
+| **security** | *handles auth · public · payments · PII* | Header hardening, auth lifecycle, the authz matrix, supply chain, PII/privacy — depth beyond the Reviewer's baseline |
+| **i18n** | *multilingual* | Externalized strings, locale-aware formatting, text-expansion & RTL layout |
+| **data** | *has a database* | Migration safety, integrity/transactions, indexing at scale, retention & recovery |
+
+The Facilitator grounds the type and characteristics in the repo during `/charter` and the user confirms them. The constitution is the **single source of truth** — it's the only place a lens is switched on, so no phase can drift from another. Without a constitution, **no lens is applied**: each phase just gives a one-line nudge ("this looks like a `website` — run `/charter` to record it") and nothing more. When 4+ lenses come out active, the profile flags the elevated load — there's no cap, the visibility *is* the throttle.
+
+A lens is **knowledge, not a new role** — the concern rides the same gates and the same `NFR-` traceability as everything else, so it's verified, never just asserted. Adding a new concern is a new file in [`lenses/`](lenses/), nothing more.
+
 ---
 
 ## Installation
@@ -173,6 +192,7 @@ If you're new to Claude Code plugins, this is all there is to it:
 - **`agents/`** — the team members. Each file defines one persona (a *subagent*): its mindset, its standards, and which tools it may use. Agents are the "who".
 - **`skills/`** — the ceremonies. Each folder holds one slash command (`SKILL.md`): what to do, which agent to involve, which template to fill, and which gate to enforce. Skills are the "how".
 - **`templates/`** — the artifacts. Blueprints for `constitution.md`, `spec.md`, `plan.md`, `review.md`, `qa.md` and `release.md`, each (bar the constitution) ending in an explicit gate checklist. Templates are the "what".
+- **`lenses/`** — situational concern checklists (`seo`, `ux`, …). Activated by the project profile in the constitution and applied by the existing agents in the phases they own. Lenses are the "when it applies".
 - **`docs/`** — deep-dives, starting with the workflow and gate hand-over rules.
 - **`.claude-plugin/`** — plugin metadata so Claude Code can discover and install all of the above.
 
@@ -182,7 +202,7 @@ Reading order for newcomers: this README → `docs/workflow.md` → one template
 
 ## Project Status
 
-aSPARK is feature-complete: the v0.1.0 loop has passed a full end-to-end dry run, and the spec-driven layer added on top (constitution, Clarify pass, NFRs, traceability) has been dry-run-validated through the Plan phase. This README always reflects the current state.
+aSPARK is feature-complete: the v0.1.0 loop has passed a full end-to-end dry run, and the spec-driven layer added on top (constitution, Clarify pass, NFRs, traceability) has been dry-run-validated through the Plan phase. The situational-lens layer (project profile with types + characteristics, eight lenses) is wired through every phase and was dogfooded through aSPARK's own `/story-time` — which caught two real design defects before they shipped. This README always reflects the current state.
 
 - [x] Repo scaffold, plugin manifest, license
 - [x] README with concept, team and usage guide
@@ -190,6 +210,9 @@ aSPARK is feature-complete: the v0.1.0 loop has passed a full end-to-end dry run
 - [x] The seven team agents (`agents/`) — facilitator, product-owner, designer, engineering-manager, reviewer, qa-tester, release-manager
 - [x] The eight ceremony skills (`skills/`) — charter, story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live
 - [x] Spec-driven core — project constitution (`/charter`), Specify-phase Clarify pass, non-functional requirements, and `US-`/`AC-`/`NFR-` traceability from spec through plan, review and QA
+- [x] Situational lenses (`lenses/`) — the constitution profile detects project **type** (`website`, `web-app`, `api`, `cli`, `library`) and **characteristics** (auth, PII, public, database, multilingual), activating concern checklists — `seo`, `ux`, `api`, `cli`, `library`, `security`, `i18n`, `data` — that the existing agents apply in the phases they own; the constitution is the single source of truth (no constitution → a nudge, never an applied lens), 4+ active lenses flag elevated load, and new concerns are add-a-file, no agent rewrite
+- [x] Lens layer dogfooded through aSPARK's own loop — `/story-time` on the feature itself ([.spark/situational-lenses/spec.md](.spark/situational-lenses/spec.md)): the PO's Clarify pass caught two real defects in the first cut (per-phase fallback detection was over-built and drift-prone; no lens-load visibility), both fixed before commit
+- [ ] Success signal proven on real projects — the lens layer's own spec defines success as a UI-lens firing and being QA-verified on a `website` **and** a Review-lens firing and being Review-verified on an `api`, both under the same `NFR-n`. Not yet demonstrated by a full loop run on either. Standing caveat: lens compliance is instruction-driven — no test enforces that a lens actually fired
 - [x] The `/spark` orchestrator — full loop with gate stops, resume support and feedback-loop escalation
 - [x] Workflow deep-dive ([docs/workflow.md](docs/workflow.md)) — constitution, artifact chain, gate invariants, traceability, feedback loops, role boundaries
 - [x] Plugin structure validated (`claude plugin validate` ✔, skill/agent naming consistent)

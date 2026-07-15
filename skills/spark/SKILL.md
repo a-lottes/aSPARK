@@ -46,7 +46,15 @@ Determine the current position from artifact statuses in
    and that you will stop at every gate for their decision. On a fresh loop,
    if `.spark/constitution.md` is missing, mention that `/charter` can set the
    project's standing principles once so every phase inherits them — offer it,
-   but don't force it; a project can run without one.
+   but don't force it; a project can run without one. If a constitution already
+   declares active lenses, just confirm which are on — the ceremonies read and
+   pass them from the constitution themselves. If **no** constitution exists,
+   give a one-line **nudge**: glance at the repo (signals in
+   `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`), name the likely type(s)/
+   characteristics you see, and note that `/charter` records them so the matching
+   lenses (`seo`, `ux`, `api`, `cli`, `library`, `security`, `i18n`, `data`)
+   activate for every phase. Without a constitution no lens is applied — the
+   nudge only surfaces the choice; the constitution is the single source of truth.
 2. **Gather QA prerequisites early.** Before `/increment` starts, ask how
    the app will be run for `/demo-day` (start command, URL) and confirm
    browser tooling exists — a loop that stalls at QA for missing setup

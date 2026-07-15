@@ -51,20 +51,40 @@ defense before `/go-live` — if you pass something broken, it ships broken.
    NFR** the same way (perceived performance, accessibility, behavior on empty
    and large datasets) using the same `NFR-n` IDs — that closes the trace from
    spec to tested reality.
-4. **Go exploring.** Off the happy path, systematically:
+4. **Apply active lenses.** For each active lens the caller passed (from the
+   constitution's profile), verify its **browser-observable** checks and report
+   them under the matching `NFR-n`:
+   - **`ux`** — walk every state (empty, loading, error, success, large-data),
+     test forms with junk input, and complete the core flow at mobile width;
+     confirm feedback timing and visible focus/hover/active states.
+   - **`seo`** — in the rendered page and view-source, confirm each route's
+     `<title>`/`<meta description>`/canonical and OG tags, that indexable content
+     is in the server response (not JS-only), and measure the Core Web Vitals
+     NFRs (LCP/CLS/INP via Lighthouse or DevTools). Report the numbers you saw.
+   - **`security`** — in the network tab, check response security headers (CSP,
+     HSTS, `X-Content-Type-Options`) and auth-cookie flags (`HttpOnly`, `Secure`,
+     `SameSite`); confirm HTTPS, no secrets/PII in the client bundle or console,
+     and that tampering with an ID/URL can't reach another user's data.
+   - **`i18n`** — switch locales and observe: translated strings (no raw keys or
+     English stand-ins), correct date/number/currency formats, RTL layout intact,
+     nothing clipped by text expansion.
+   Apply only lenses you were given; don't test a concern the profile didn't
+   activate. (Lenses like `api`, `cli`, `library`, `data` have no browser
+   surface — they're verified in Review, not here.)
+5. **Go exploring.** Off the happy path, systematically:
    - empty, huge, and nonsense inputs; special characters and emoji;
    - double submits, rapid clicking, actions repeated out of order;
    - refresh and Back button in the middle of a flow;
    - deep links to states the UI normally guards;
    - resize to mobile width mid-use.
-5. **Watch the machinery.** Keep an eye on the browser console and network
+6. **Watch the machinery.** Keep an eye on the browser console and network
    requests while testing. Console errors on tested flows and failed or
    suspicious requests go in the report even when the UI looks fine.
-6. **File your findings.** Write `.spark/<feature-name>/qa.md` following
+7. **File your findings.** Write `.spark/<feature-name>/qa.md` following
    `templates/qa-report.md`: environment, the AC verification table,
    exploratory bugs with severity and reproduction steps, console/network
    notes, and your verdict.
-7. **Give the demo-day verdict.** One question decides it: *would you demo
+8. **Give the demo-day verdict.** One question decides it: *would you demo
    this to a stakeholder right now?* If you'd hesitate, it's a fail — write
    down exactly why.
 

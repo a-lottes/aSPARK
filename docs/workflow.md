@@ -21,6 +21,59 @@ It is stable, not frozen — `/charter` amends it, and every amendment is dated
 and reasoned. A spec, plan or diff that conflicts with the constitution doesn't
 silently win; the conflict surfaces as an open question or a Blocker.
 
+## Situational Concerns: the Project Profile & Lenses
+
+Not every quality concern applies to every project. SEO matters for a public
+website and is meaningless for a CLI; deep interaction UX matters for an app-like
+frontend and not for a backend service. aSPARK adapts to this without adding
+roles or ceremonies, through two pieces:
+
+- **The project profile.** The constitution's *Project Profile & Active Lenses*
+  section records two things, grounded by the Facilitator in the repo's real
+  signals and confirmed by the user: the **type(s)** — `website`, `web-app`,
+  `api`, `cli`, `library`, or a combination — and the **characteristics**, the
+  data/behavior facts a type doesn't capture (`handles-auth`, `is-public`,
+  `handles-payments`, `handles-pii`, `has-database`, `is-multilingual`). A
+  project can be several types and carry several characteristics.
+- **Lenses.** A lens (`lenses/<name>.md` in the plugin) is a situational
+  checklist for one concern. It activates two ways: from the **type**
+  (`seo`←`website`, `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`,
+  `library`←`library`) or from a **characteristic** (`security`←auth/public/
+  payments/PII, `i18n`←multilingual, `data`←database) — because a concern like
+  security is a property of what the software does with data, not its shape. A
+  lens is **knowledge, not a role**: it gives the *existing* agents extra checks
+  to run in the phases they own, so the concern flows through the whole loop
+  exactly like accessibility does — written as a measurable NFR in Specify,
+  design-checked, verified in Review and (where it has a browser surface) QA
+  under the same `NFR-n` ID. Nothing is asserted in one phase and never verified.
+  Non-UI lenses (`api`, `cli`, `library`, `data`) have no `/demo-day` surface;
+  their verification is carried by Specify, Review and the increment's own tests.
+
+How a concern travels the loop, using `seo` on a `website` as the example:
+
+```
+ /story-time      /look-and-feel     /peer-review        /demo-day
+ PO writes an  ─▶ Designer checks ─▶ Reviewer checks  ─▶ QA measures LCP/CLS,
+ SEO NFR          heading/semantic   metadata, SSR vs    rendered titles &
+ (NFR-n)          structure          client-only render  meta, in the browser
+```
+
+**Detection vs. decision.** The constitution is the **single source of truth**:
+its *Project Profile* is the only place a lens is switched on, and every phase
+reads the active lenses from there. Without a constitution, the phase skills do
+**not** apply lenses off a guess — they give a one-line **nudge** ("this looks
+like a `website` — an `seo` lens would apply; run `/charter` to record it") and
+nothing more. So a lens is only ever applied from a profile entry the user
+confirmed, never from a fallback and never silently; the nudge just surfaces the
+choice early. This keeps the phases from drifting: there is one profile, not one
+guess per phase. When **4 or more** lenses are active, the profile flags the
+elevated load — there is no cap, but the count is made visible so agents in each
+phase scrutinize the stack rather than skim it. Adding a new concern is a new
+`lenses/<name>.md` file plus a profile entry — no agent or skill is rewritten,
+because the skills pass active lens paths to their agents generically. The full
+contract and the detection signals live in
+[`lenses/README.md`](../lenses/README.md).
+
 ## The Artifact Chain
 
 Every feature lives in `.spark/<feature-name>/` inside the target project.

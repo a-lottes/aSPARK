@@ -23,10 +23,13 @@ Optional argument: the feature name. Resolve as usual.
    red, STOP — that goes back to `/increment` without a review.
 2. **Delegate to the Reviewer.** Invoke the `reviewer` agent with the
    feature paths, the report template from
-   `${CLAUDE_PLUGIN_ROOT}/templates/review-report.md`, and how to determine
-   the diff (commit range or changed files since the increment started).
-   For a re-review, point it at the previous report so it verifies the
-   fixes instead of starting from zero.
+   `${CLAUDE_PLUGIN_ROOT}/templates/review-report.md`, how to determine
+   the diff (commit range or changed files since the increment started), and
+   the paths of any active lenses with review-phase checks (from the
+   constitution's profile — `${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md` for any of
+   `seo`, `api`, `cli`, `library`, `security`, `data`, `i18n` that are active).
+   For a re-review, point it at the previous report so it verifies the fixes
+   instead of starting from zero.
 3. **Present the report.** Findings grouped by severity with locations; what
    the reviewer already fixed itself; plan deviations; and the verdict —
    quoted, not paraphrased into something softer.

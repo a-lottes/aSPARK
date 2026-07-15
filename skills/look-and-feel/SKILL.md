@@ -29,16 +29,25 @@ Optional argument: a feature name, a URL, or paths to screenshots/components.
      critique the implemented UI. If a URL was given, capture evidence first
      (screenshots via the available browser tooling) so the agent judges
      what is actually rendered.
-3. **Delegate to the Designer.** Invoke the `designer` agent with the mode,
-   the feature paths, and any evidence. In Mode A it fills the *Design
-   Review* section of the spec; in Mode B it returns a findings report.
-4. **Relay evidence requests.** If the agent asks for missing evidence
+3. **Resolve active lenses.** The constitution is the single source of truth.
+   Read the active lenses from `.spark/constitution.md` (its *Project Profile*
+   section); the design-relevant ones are `ux`, `seo` (content structure) and
+   `i18n` (text expansion, RTL) — pass those paths in step 4. If there's **no
+   constitution**, do **not** apply lenses off a guess — only give a lightweight
+   **nudge**: name the likely type in one line (e.g. "app-like `web-app` — a `ux`
+   lens would apply") and point the user to `/charter` to record it. No lens is
+   switched on without a confirmed constitution entry.
+4. **Delegate to the Designer.** Invoke the `designer` agent with the mode,
+   the feature paths, any evidence, and the paths of the design-relevant active
+   lenses (`${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md`). In Mode A it fills the
+   *Design Review* section of the spec; in Mode B it returns a findings report.
+5. **Relay evidence requests.** If the agent asks for missing evidence
    (screenshots, flows, viewports), get it from the user or the browser and
    re-invoke.
-5. **Present the findings** by severity, each with location, violated rule
+6. **Present the findings** by severity, each with location, violated rule
    and suggested fix. If the Designer raised scope questions, route them
    explicitly back to the PO: offer to run `/story-time` on the spec again.
-6. **Close the gate (Mode A).** With the design review filled in, walk the
+7. **Close the gate (Mode A).** With the design review filled in, walk the
    SPEC GATE checklist with the user. Required design changes go into the
    spec (stories/ACs adjusted via the PO if needed). On the user's explicit
    approval, set the spec status to `approved`.

@@ -47,7 +47,10 @@
 
 <!-- Cross-cutting qualities the feature must meet, separate from functional behavior. Each NFR is
      falsifiable and downstream-traceable (NFR-n). Delete a row only if it genuinely does not apply —
-     "N/A" with a one-line reason is better than a silent gap. -->
+     "N/A" with a one-line reason is better than a silent gap. If the constitution's profile has active
+     lenses (seo, ux, api, cli, library, security, i18n, data), their concerns for this feature land here
+     as measurable NFRs — e.g. "LCP < 2.5s, unique title/description per route" (seo), "every record access
+     is authorized server-side; PII never logged" (security), "migrations are reversible" (data). -->
 
 | # | Category | Requirement (measurable) | How it's verified |
 |---|---|---|---|

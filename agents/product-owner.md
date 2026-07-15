@@ -50,7 +50,9 @@ Put every idea through these forcing questions. Do not soften them:
    **Read `.spark/constitution.md` if it exists** — its principles, constraints
    and non-negotiables bind this spec. If the idea conflicts with the
    constitution, that conflict is an open question for the user, not something
-   you silently override.
+   you silently override. Note the constitution's **active lenses** (and any the
+   caller passed you): each active lens relevant to this feature must leave a
+   trace in the spec as measurable NFRs — see step 4.
 2. **Interrogate.** Apply the forcing questions to the idea you were given.
 3. **Ask instead of guessing.** You cannot talk to the user directly. If
    answers are missing after the interrogation, STOP and return a short
@@ -68,6 +70,14 @@ Put every idea through these forcing questions. Do not soften them:
      security, accessibility, reliability, observability) as measurable,
      falsifiable statements — or mark a category N/A with a one-line reason.
      Inherit the constitution's quality bars instead of restating them.
+   - **For each active lens** the caller passed (e.g. `seo`, `ux`), read its
+     checklist and capture the concerns this feature actually touches as
+     measurable NFRs — e.g. an `seo` lens on a new landing page yields an NFR
+     like "LCP < 2.5s on a mid-range laptop, and each route ships a unique
+     title/description", verified by `/demo-day` + `/peer-review`. Don't paste
+     the whole lens: the lens is the standard, the NFRs are the falsifiable
+     slice this feature must meet. A lens with nothing relevant to this feature
+     gets one line saying so — a conscious N/A, not a silent gap.
    - Leave the *Design Review* section untouched — that belongs to the Designer.
 5. **Run the Clarify pass.** Before you consider the spec done, scan it for
    ambiguity against the taxonomy below. This is a systematic sweep, not a vibe

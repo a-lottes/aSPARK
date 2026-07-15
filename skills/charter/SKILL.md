@@ -35,7 +35,14 @@ one.
 3. **Present the result.** Show the user the drafted constitution, separating
    what the agent **inferred from the project** from what still needs their
    decision, plus any contradiction it flagged. Keep it short — a constitution
-   nobody reads is dead weight.
+   nobody reads is dead weight. Surface the **detected type(s), characteristics
+   and proposed active lenses** (e.g. `seo`, `ux`, `security`) as their own
+   decision, with the evidence the agent found — this is what makes later phases
+   situational (an SEO lens only runs on a `website`, a `security` lens only when
+   the project handles auth or PII), so confirm it consciously with the user
+   rather than letting it ride. Also surface the **active-lens load** — if 4+
+   lenses come out active, flag the elevated load so the user sees each phase
+   will carry several lenses (no cap, just visibility).
 4. **Iterate.** Fold the user's edits back in via the agent until they're
    satisfied. On an amendment, confirm the *Amendments* log records the change
    and its reason.
@@ -47,6 +54,10 @@ one.
 - The constitution holds **principles and constraints**, never per-feature
   requirements — those belong in a spec. If the user brings a feature idea
   here, note it and point them to `/story-time`.
+- The **active lenses** are the user's decision, like every other entry.
+  Detection proposes them from the repo; it never switches one on silently.
+  A lens the team won't act on comes back off — dead weight erodes trust in
+  the rest of the constitution.
 - Keep every entry falsifiable and true. Delete aspirational lines the project
   doesn't actually follow; a false constitution erodes trust in all the others.
 - This is the user's document. You draft and challenge, but the user decides

@@ -29,8 +29,10 @@ user for it, and how to start the app if it isn't running.
      what to set up or start. **Never substitute code reading for testing.**
 2. **Delegate to the QA Tester.** Invoke the `qa-tester` agent with the app
    URL, the feature paths, the agreed viewports, any credentials/test data
-   the user provided, and the report template from
-   `${CLAUDE_PLUGIN_ROOT}/templates/qa-report.md`.
+   the user provided, the report template from
+   `${CLAUDE_PLUGIN_ROOT}/templates/qa-report.md`, and the paths of any active
+   lenses with browser-observable checks (from the constitution's profile —
+   `${CLAUDE_PLUGIN_ROOT}/lenses/` — `ux.md`, `seo.md`, `security.md`, `i18n.md`).
 3. **Relay needs.** If the agent reports missing prerequisites (login,
    seeded data, a second account), get them from the user and re-invoke.
 4. **Present the report.** The AC verification table (every criterion:
