@@ -22,6 +22,11 @@ transition.
   `.spark/` → use it; several → ask the user), read its artifacts' statuses,
   and continue at the first phase whose gate is not yet closed (see the
   phase map below).
+- **Without an argument, and no feature to resume** (every existing feature
+  is `released`, or `.spark/` is empty) → don't guess an idea. Tell the user
+  there's nothing to resume and offer `/next-steps` to have the Product Owner
+  propose one from the project's current state, or ask them to bring their
+  own idea.
 
 ## The Phase Map
 
@@ -79,7 +84,8 @@ Determine the current position from artifact statuses in
    The user should never wonder where in the loop they are.
 7. **Close the loop.** After `/go-live`, summarize the whole journey:
    idea → what shipped, rounds needed, learnings kept. Then offer
-   `/story-time` for the next idea.
+   `/story-time` for the next idea, or `/next-steps` if the user wants the
+   Product Owner to propose one instead of bringing their own.
 
 ## Rules
 

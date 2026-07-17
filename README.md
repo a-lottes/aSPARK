@@ -36,6 +36,7 @@ aSPARK turns Claude Code from a coding copilot into a **gated delivery process**
 | Command | Role | What they do |
 |---|---|---|
 | `/charter` | 📜 **Facilitator** | Grounds the project's standing principles and constraints in `constitution.md` — the ground rules every phase inherits, decided once. |
+| `/next-steps` | 🧭 **Product Owner** | No idea in hand? Surveys shipped, in-flight and stalled work plus the constitution, and proposes one concrete next feature. Advisory only — nothing is written or approved. |
 | `/story-time` | 🧭 **Product Owner** | Interrogates your idea with hard questions — no yes-man. Runs a Clarify pass, writes user stories, acceptance criteria and NFRs into `spec.md`. |
 | `/look-and-feel` | 🎨 **Designer** | Detects bad design: usability heuristics, visual consistency, accessibility. Adds a design section to the spec. |
 | `/sprint-plan` | 🏗️ **Engineering Manager** | Locks the architecture, makes the technical decisions, cuts the work into an ordered task breakdown in `plan.md`. |
@@ -150,6 +151,15 @@ claude --plugin-dir /path/to/aSPARK
 
 ## Usage
 
+No idea in hand? Let the Product Owner propose one from the project's current state:
+
+```
+You:     /next-steps
+Claude:  [PO surveys shipped/in-flight/stalled work + constitution, proposes a feature]
+
+You:     /story-time <the proposal you picked>
+```
+
 A typical feature, step by step:
 
 ```
@@ -208,7 +218,7 @@ aSPARK is feature-complete: the v0.1.0 loop has passed a full end-to-end dry run
 - [x] README with concept, team and usage guide
 - [x] Artifact templates (`templates/`) — constitution, spec, plan, review-report, qa-report, release-notes, each (bar the constitution) with its gate checklist
 - [x] The seven team agents (`agents/`) — facilitator, product-owner, designer, engineering-manager, reviewer, qa-tester, release-manager
-- [x] The eight ceremony skills (`skills/`) — charter, story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live
+- [x] The nine ceremony skills (`skills/`) — charter, next-steps, story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live
 - [x] Spec-driven core — project constitution (`/charter`), Specify-phase Clarify pass, non-functional requirements, and `US-`/`AC-`/`NFR-` traceability from spec through plan, review and QA
 - [x] Situational lenses (`lenses/`) — the constitution profile detects project **type** (`website`, `web-app`, `api`, `cli`, `library`) and **characteristics** (auth, PII, public, database, multilingual), activating concern checklists — `seo`, `ux`, `api`, `cli`, `library`, `security`, `i18n`, `data` — that the existing agents apply in the phases they own; the constitution is the single source of truth (no constitution → a nudge, never an applied lens), 4+ active lenses flag elevated load, and new concerns are add-a-file, no agent rewrite
 - [x] Lens layer dogfooded through aSPARK's own loop — `/story-time` on the feature itself ([.spark/situational-lenses/spec.md](.spark/situational-lenses/spec.md)): the PO's Clarify pass caught two real defects in the first cut (per-phase fallback detection was over-built and drift-prone; no lens-load visibility), both fixed before commit
