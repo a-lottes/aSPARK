@@ -8,6 +8,11 @@
 | **Status** | `in-review` \| `changes-requested` \| `passed` |
 | **Date** | YYYY-MM-DD |
 
+<!-- Budget: ~150 lines. Findings are rows, not essays: location, what's wrong, why it matters, in a
+     cell. The report is read back at the gate, again in fix-mode, and once more at re-review — a
+     finding that takes three paragraphs to state is a finding nobody rereads. §6 Verdict is the one
+     place prose is worth it. -->
+
 ## 1. Scope
 
 <!-- What was reviewed: commit range / files. What was NOT reviewed, and why. -->

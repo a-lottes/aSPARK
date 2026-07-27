@@ -193,6 +193,8 @@ You:     /spark I want a dashboard where users see their weekly stats
 
 `/spark` pauses at each gate and shows you the artifact before moving on — you stay the decision maker.
 
+After a gate that followed heavy work — Act, QA, or any fix round — `/spark` also points out that you can `/clear` and pick the loop back up with `/spark`. The artifacts on disk *are* the state, so a fresh context resumes exactly where you stood, without carrying everything the last phase read and edited. It only ever offers; clearing is your call.
+
 ---
 
 ## How to Read This Toolbox
@@ -203,6 +205,7 @@ If you're new to Claude Code plugins, this is all there is to it:
 - **`skills/`** — the ceremonies. Each folder holds one slash command (`SKILL.md`): what to do, which agent to involve, which template to fill, and which gate to enforce. Skills are the "how".
 - **`templates/`** — the artifacts. Blueprints for `constitution.md`, `spec.md`, `plan.md`, `review.md`, `qa.md` and `release.md`, each (bar the constitution) ending in an explicit gate checklist. Templates are the "what".
 - **`lenses/`** — situational concern checklists (`seo`, `ux`, …). Activated by the project profile in the constitution and applied by the existing agents in the phases they own. Lenses are the "when it applies".
+- **`tools/`** — guidance for optional external programs a ceremony may use *if you happen to have them installed*. Activated by installation state rather than by the constitution. Tools are the "if it's there".
 - **`docs/`** — deep-dives, starting with the workflow and gate hand-over rules.
 - **`.claude-plugin/`** — plugin metadata so Claude Code can discover and install all of the above.
 
@@ -210,9 +213,42 @@ Reading order for newcomers: this README → `docs/workflow.md` → one template
 
 ---
 
+## Optional Tools
+
+Some ceremonies can go faster when an external program is available. They **never
+require one.** If it isn't installed, the loop behaves exactly as it does
+today — no error, no warning, no mention.
+
+**[`aspark-graph`](https://github.com/a-lottes/aSPARK-graph)** — a deterministic
+graph over your `.spark/` artifacts and source code. When present, `/sprint-plan`
+uses it to ground *Affected Components*, `/peer-review` to scope a diff, and
+`/demo-day` to scope a test plan. It is **optional and install-from-source** —
+not published to PyPI — and nothing in aSPARK installs, builds or runs it on your
+behalf. A result from it is treated as a map, never a verdict: it says where to
+look, and the agent still reads the code and still performs the steps.
+
+See [`tools/README.md`](tools/README.md) for how this works and how to add another.
+
+---
+
 ## Project Status
 
 aSPARK is feature-complete: the v0.1.0 loop has passed a full end-to-end dry run, and the spec-driven layer added on top (constitution, Clarify pass, NFRs, traceability) has been dry-run-validated through the Plan phase. The situational-lens layer (project profile with types + characteristics, eight lenses) is wired through every phase and was dogfooded through aSPARK's own `/story-time` — which caught two real design defects before they shipped. This README always reflects the current state.
+
+The optional-tools layer (`tools/`, wired into `/sprint-plan`, `/peer-review` and `/demo-day`) has now been dogfooded end to end against the *installed* plugin, across two QA rounds ([.spark/graph-gates/qa.md](.spark/graph-gates/qa.md)): the absent case by real ceremony invocations in a graph-less repo, and the available case by direct agent runs against an isolated graph-built scratch copy (the designated real-project venue was left untouched, since it has independent work in flight). **25 of 30 acceptance criteria pass live; zero remain unverified.** Every documented call form, return shape and failure mode was run against the tool itself, and the `files:` note format was validated by running the consuming parser.
+
+**Six criteria ship as a documented `partial`**, each for a specific, named reason rather than an open gap — this was an explicit, informed shipping decision, not an oversight:
+
+| Criterion | What is not (yet) proven, and why |
+|---|---|
+| AC-1.2 | Byte-identical output vs. the pre-change version — needs a direct 0.3.1-vs-0.4.0 artifact diff, one more full ceremony pair |
+| AC-2.2 | MCP-first precedence — no MCP server exists in any environment used so far to test against |
+| AC-2.3 | The installed-but-unbuilt hint firing exactly once, inside a live ceremony transcript (verified at the tool level, not yet caught mid-ceremony) |
+| AC-3.2 | The ceremony's own reaction to a stale graph (say once, then treat as absent) — the underlying `staleness` behaviour itself *is* verified live, twice |
+| AC-3.5 | `/demo-day`'s existing no-browser stop path — this project has no browser surface to re-prove it against, a pre-existing exception, not a new one |
+| AC-5.2 | Omitting a `files:` note for a genuinely unknowable-at-plan-time task — this feature's own plan has no such task to exercise the path on |
+
+All other wiring claims — the tool-file hand-over firing live, the QA slice scoping a real test plan via `story_trace`, a review citing concrete `file:line` evidence, an EM agent correctly classifying an empty `impact` result as "no declared link" rather than "nothing at risk" — are now proven by a real run, not by a walkthrough.
 
 - [x] Repo scaffold, plugin manifest, license
 - [x] README with concept, team and usage guide

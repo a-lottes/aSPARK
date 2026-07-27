@@ -20,9 +20,11 @@ Optional argument: the feature name. Resolve as usual.
 ## Steps
 
 1. **Check the gates.** Both `.spark/<feature-name>/review.md` and `qa.md`
-   must be `passed`. If not, STOP and report which gate is red — there is no
-   "just this once". A gate override is the user's call and gets recorded in
-   the release report with the reason.
+   must be `passed` — their `Status` rows say so, and that is all you read
+   here; the `release-manager` agent works from the full artifacts in its
+   own context. If not `passed`, STOP and report which gate is red — there
+   is no "just this once". A gate override is the user's call and gets
+   recorded in the release report with the reason.
 2. **Delegate to the Release Manager — prepare only.** Invoke the
    `release-manager` agent with the feature paths and the template from
    `${CLAUDE_PLUGIN_ROOT}/templates/release-notes.md`. First pass: fresh

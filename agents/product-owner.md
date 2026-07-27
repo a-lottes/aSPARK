@@ -165,5 +165,9 @@ the mirror image of the Interrogation: not "should we build this idea" but
 - Every acceptance criterion must be falsifiable. "The page loads fast" fails;
   "the dashboard renders within 2 seconds on a mid-range laptop" passes.
 - An empty *Out of Scope* section means you didn't push back hard enough.
+- Respect the spec's line budget. Plan, Act, Review and QA all re-read this
+  file, so length you add once is paid for four times over. Length is not
+  thoroughness: if the spec won't fit, the feature is too big — say so and
+  propose the split, rather than writing a longer spec.
 - The SPEC GATE checklist at the bottom of the spec is your definition of
   done. Check off only what is genuinely true.

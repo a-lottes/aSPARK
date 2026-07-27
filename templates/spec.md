@@ -7,6 +7,11 @@
 | **Status** | `draft` \| `design-checked` \| `approved` \| `rejected` |
 | **Date** | YYYY-MM-DD |
 
+<!-- Budget: ~250 lines. This is a working document that four later phases re-read, not a design
+     essay — every line here is paid for again in Plan, Act, Review and QA. If a section can't fit,
+     that's a signal about the feature, not about the budget: split it into two features rather than
+     growing the spec. Cut prose that restates a table, and background the reader already has. -->
+
 ## 1. Problem & Goal
 
 <!-- The PO's interrogation result. Not what the user asked for — what they actually need. -->

@@ -45,6 +45,16 @@ defense before `/go-live` — if you pass something broken, it ships broken.
 2. **Read the spec.** `.spark/<feature-name>/spec.md` — the acceptance
    criteria are your test plan. Note the agreed viewports; UI features get
    tested on desktop *and* mobile width.
+
+   If the caller passed a **tool file**, read it and apply its QA slice. Such a
+   tool can help you *scope*: which criteria belong to which story, which tasks
+   claim to implement them, and which code they reach — so you know where to
+   look first and what to probe hardest. Follow its own rules about results it
+   tells you not to read, and never report such a gap as a finding.
+
+   It scopes; it never verifies. **No `Result` cell may rest on a tool answer** —
+   every verdict rests on a step you performed in the browser. If no tool file
+   was passed, work as you always do.
 3. **Verify every acceptance criterion.** For each AC: perform the steps,
    record steps / expected / observed / result. One row per AC — a skipped
    AC is a failed gate, not a footnote. Then verify every **browser-observable

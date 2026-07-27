@@ -62,7 +62,41 @@ thinking is done.
    - each task is small enough to finish and verify in one focused sitting;
    - the earliest tasks produce a **walking skeleton** — something runnable
      end-to-end, however thin — so integration risk dies first;
-   - dependencies between tasks are explicit.
+   - dependencies between tasks are explicit;
+   - **every definition of done ends with a `files:` note** naming the files the
+     task is expected to touch, so the task→code link is declared instead of
+     guessed by whoever reads the plan later:
+
+         … and a test proves it — files: src/auth/session.ts, src/auth/session.test.ts
+
+     Four rules:
+     1. Repo-relative POSIX paths, comma-separated.
+     2. The note is the **last** thing in the cell — nothing after the paths.
+     3. **No** trailing punctuation after the last path.
+     4. If the touched files are not knowable at plan time, **omit** the note —
+        never guess.
+
+     Rules 2 and 3 are not style. A tool reading this note matches greedily to
+     the cell's closing pipe and then splits on commas **and whitespace**, so
+     `files: src/a.py.` yields the path `src/a.py.` — which resolves to nothing
+     — and any prose after the paths becomes junk entries. Either way the link
+     is silently dropped: no error, no warning, no edge. Rule 4 matters because
+     a declared link outranks an inferred one downstream, so a wrong note is
+     worse than no note.
+
+   If the caller passed a **tool file**, read it and apply its plan slice. Order
+   matters, and it is the reverse of what you might expect: cut the tasks **with**
+   their path notes first, then ask the caller to run the blast-radius query for
+   the union of those paths — you have no shell of your own, so you request the
+   call and the ceremony makes it. The notes are what make a story-level answer
+   possible at all; ask first and you get nothing back.
+
+   Use the result to ground *Affected Components*. Either cite it, or record that
+   it came back empty and that you scoped by hand — a reader must be able to tell
+   which. An empty story or AC list means **the analysed plan declares no file
+   links**, never that nothing is at risk. A blast radius is a starting point for
+   reading the affected code, not a substitute for it. If no tool file was passed,
+   work as you always do.
 5. **Define the test strategy.** For every Must story: what gets unit tests,
    what gets integration tests, and what is deliberately left to `/demo-day`
    in the real browser. "Manual testing only" needs a reason.
@@ -88,5 +122,10 @@ questions — do not pick silently.
   justification in the plan.
 - Estimate honestly or not at all — a plan full of optimistic guesses is
   worse than a plan with open risks.
+- Respect the plan's line budget. `/increment` works from this file for the
+  whole Act phase and the Reviewer measures against it, so every line is
+  re-read many times. Spend the budget on the task table and the ADR's
+  decision; cut restated background. A plan that badly overruns is describing
+  an increment too large to review in one pass — split the increment.
 - The PLAN GATE checklist at the bottom of the plan is your definition of
   done. Check off only what is genuinely true.

@@ -90,6 +90,17 @@ Work through these in order — the expensive problems first:
    review needed.
 2. **Get the diff.** Use git to determine exactly what changed. Review what
    changed plus enough surrounding code to judge it in context.
+
+   If the caller passed a **tool file**, read it and apply its review slice.
+   Such a tool answers scoping questions — what a change reaches, which stories
+   it serves — faster than grepping by hand. Follow its own rules on stale and
+   empty results. Name in your report which of its results told you where to
+   look, and which locations you read as a consequence.
+
+   A tool result is a map, never a verdict: it tells you where to look and
+   nothing more. It **does not replace reading the code**. A finding that
+   restates a tool's output without a concrete `file:line` and the code behind
+   it is not a finding. If no tool file was passed, work as you always do.
 3. **Verify plan conformance.** Task by task: implemented as planned, or a
    documented deviation?
 4. **Hunt.** Work the list above. Run the test suite yourself; where cheap,
@@ -117,5 +128,9 @@ list it as an open question in the report rather than guessing.
   Your edits are limited to obvious, low-risk fixes of your own findings.
 - A verdict is one honest paragraph. "Looks good" is not a verdict; neither
   is a hedge that avoids saying pass or fail.
+- Respect the report's line budget. A finding is a table row — location,
+  problem, why it matters, fix — not an essay. The report gets read at the
+  gate, again in fix-mode and once more at re-review; findings stated
+  compactly are findings that actually get acted on.
 - The REVIEW GATE checklist at the bottom of the report is your definition
   of done. Check off only what is genuinely true.

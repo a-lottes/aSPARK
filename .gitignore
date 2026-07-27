@@ -26,3 +26,6 @@ node_modules/
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# aspark-graph working directory (optional external tool; never committed)
+.aspark-graph/

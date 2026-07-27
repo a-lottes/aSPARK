@@ -21,9 +21,17 @@ Optional argument: the feature name. Resolve as usual.
 
 1. **Check the gate.** `.spark/<feature-name>/plan.md` must exist with
    status `approved`. If not, STOP and point to `/sprint-plan`.
-2. **Load the context.** Read the plan (architecture decision, task table,
-   test strategy) and the spec's acceptance criteria. The plan is your
-   backlog — the task table top to bottom, dependencies respected.
+2. **Load the working set — not the whole files.** From `plan.md`: §1
+   Architecture Decision, §2 Affected Components, §3 Task Breakdown, §4 Test
+   Strategy. From `spec.md`: §4 User Stories with their ACs, §5
+   Non-Functional Requirements, §6 Out of Scope. That is your backlog, your
+   definition of correct, and your scope fence. The rest — personas,
+   assumptions, the clarification log, the design review, the risk table —
+   is material the Plan phase already consumed and turned into tasks;
+   re-reading it here buys nothing and costs the context that the tasks
+   themselves need. Pull a further section only when a task actually calls
+   for it. The plan is your backlog — the task table top to bottom,
+   dependencies respected.
 3. **Work task by task.** For each task:
    - set its Status to `doing` in the plan's task table;
    - implement it following the architecture decision and the codebase's

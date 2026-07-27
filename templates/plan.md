@@ -8,6 +8,11 @@
 | **Status** | `draft` \| `approved` |
 | **Date** | YYYY-MM-DD |
 
+<!-- Budget: ~300 lines. The plan is /increment's backlog and the Reviewer's yardstick — both read it
+     in full, repeatedly, and a fix round reads it again. Argue the architecture in §1 tightly; the
+     task table earns the space, the prose around it usually doesn't. A plan that needs far more than
+     this is describing an increment too large to review in one pass — cut scope, don't cut detail. -->
+
 ## 1. Architecture Decision
 
 <!-- Mini-ADR. The EM decides — but shows the alternatives that were rejected and why. -->
@@ -29,7 +34,27 @@
 <!-- Ordered. Every task maps to the spec by ID (the story and the specific AC-n.m / NFR-n it serves)
      and has its own definition of done. The "Covers" column is the traceability spine: every Must AC
      and every applicable NFR must appear against at least one task.
-     /increment works through this table top to bottom — nothing else — and keeps Status current. -->
+     /increment works through this table top to bottom — nothing else — and keeps Status current.
+
+     End each Definition of Done with a `files:` note naming the files the task is expected to
+     touch, so the task→code link is declared instead of guessed by whoever reads the plan later:
+
+         … and a test proves it — files: src/auth/session.ts, src/auth/session.test.ts
+
+     Four rules:
+     1. Repo-relative POSIX paths, comma-separated.
+     2. The note is the **last** thing in the cell — nothing after the paths.
+     3. **No** trailing punctuation after the last path.
+     4. If the touched files are not knowable at plan time, **omit** the note —
+        never guess.
+
+     Rules 2 and 3 are not style. A tool reading this note matches greedily to
+     the cell's closing pipe and then splits on commas **and whitespace**, so
+     `files: src/a.py.` yields the path `src/a.py.` — which resolves to nothing
+     — and any prose after the paths becomes junk entries. Either way the link
+     is silently dropped: no error, no warning, no edge. Rule 4 matters because
+     a declared link outranks an inferred one downstream, so a wrong note is
+     worse than no note. -->
 
 | # | Task | Story | Covers (AC / NFR) | Depends on | Status | Definition of Done |
 |---|---|---|---|---|---|---|

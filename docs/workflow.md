@@ -98,6 +98,12 @@ Because the artifacts carry the state, the loop is **resumable**: any later
 session (or `/spark`) reads the statuses and continues at the first gate
 that isn't closed. There is no hidden state outside `.spark/`.
 
+That property is worth spending: after a gate closes on heavy work — Act, QA, or
+a fix round — `/spark` tells the user they can `/clear` and continue with
+`/spark`, because none of what that phase read and edited is needed by the next
+one. It offers, never clears for them, and only once every status on disk is
+current — a resume that reads a stale status resumes into the wrong phase.
+
 ## Gates
 
 Every template ends in a gate checklist. A gate is closed when every box is
