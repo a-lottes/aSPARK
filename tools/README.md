@@ -122,4 +122,4 @@ path, with no agent edited at all.
 
 | Tool | Phases | Requires |
 |---|---|---|
-| [`aspark-graph.md`](aspark-graph.md) | plan, review, qa | `aspark-graph`, install-from-source, with a graph built for the repo |
+| [`aspark-graph.md`](aspark-graph.md) | plan, review, qa | `aspark-graph` (on PyPI), with a graph built for the repo |
