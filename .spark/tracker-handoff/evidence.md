@@ -126,3 +126,18 @@ amendment lands and this feature's own release runs through it:
 be passed on the strength of Entry 1 alone — the positive case must be entered
 here, dated, before this feature's own `/go-live` closes the loop. This is not
 an oversight; it is the sequencing this spec named up front (R8).
+
+---
+
+## Entry 2 — discharged, 2026-08-06
+
+**Status:** *run for real. No longer deferred.*
+
+`.spark/tracker-handoff/release.md` pass 2 (2026-08-06) exercised the positive
+case live: constitution §7 committed (`cc58fec`), PR opened
+(https://github.com/a-lottes/aSPARK/pull/3), Q1/C10 facts established
+read-only (PR-open via `gh pr view`, CI N/A via absent `.github/`), self-review
+attempted and its GitHub-imposed limit recorded honestly, PR merged
+(`0eae0f4`). Full detail — including which boxes still can't close for
+`handed-off` by design (no tag pre-merge) — lives in `release.md`; not
+duplicated here. R9 is no longer open.
