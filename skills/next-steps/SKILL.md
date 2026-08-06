@@ -33,7 +33,7 @@ steer, not a fixed answer.
    - Every `.spark/<feature-name>/` directory: read `spec.md`, `plan.md`,
      `review.md`, `qa.md` where present and note each feature's status field
      (`draft`/`approved`, task completion, `passed`/`failed`, `released`).
-     Classify each feature as **shipped** (released), **in-flight** (mid-loop,
+     Classify each feature as **shipped** (released), **shipped-pending-approval** (`handed-off` — closed for this team, never resumed), **in-flight** (mid-loop,
      no open blocking findings), or **stalled** (open review/QA findings, or
      untouched for a while).
    - Any *unresolved* findings sitting in the newest `review.md` or `qa.md` —
@@ -70,8 +70,7 @@ steer, not a fixed answer.
   recommendation in conversation, not an artifact.
 - Never treat the agent's proposal as chosen. It is a suggestion until the
   user says which one (or their own idea) to run with.
-- If every existing feature is `released` and nothing is stalled, say that
-  explicitly before proposing something new — a clean state is worth naming,
+- If every existing feature is `released` or `handed-off` and nothing is stalled, say that explicitly before proposing something new — a clean state is worth naming,
   not skipped past.
 - If a stalled feature (open review/QA findings, or a plan sitting unbuilt)
   exists, the agent must weigh *finishing it* against *starting something

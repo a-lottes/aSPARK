@@ -5,7 +5,7 @@
 | **Scope** | Project-wide — binds every SPARK phase and every feature |
 | **Owner** | The user (amended via `/charter`) |
 | **Status** | `active` |
-| **Date** | 2026-07-25 |
+| **Date** | 2026-08-06 |
 
 <!-- The constitution is the project's standing context: the principles and constraints that would
      otherwise be re-explained at the start of every feature. Every agent (Product Owner, Designer,
@@ -191,6 +191,43 @@ dependencies and no executable code of its own.
 - **Nothing that must stay private is committed** — this repo is public, `.spark/`
   included.
 
+## 7. Delivery & Handoff
+
+- **Release mode:** `pr` — this repo delivers via a GitHub pull request into `main`,
+  not a direct push. Declared 2026-08-06 so that `tracker-handoff`'s own
+  `handed-off` terminal status has a real venue to prove its positive case at its
+  own `/go-live` (`.spark/tracker-handoff/spec.md`, clarification C8).
+  ⚠ **This is a process commitment, not an enforced one.** `gh api
+  repos/a-lottes/aSPARK/branches/main/protection` returned `404` ("Branch not
+  protected") as of 2026-08-06 — there is no GitHub branch protection on `main`,
+  and nothing in GitHub itself currently stops a direct push. This declaration
+  governs how *aSPARK's own ceremonies* behave (which gate boxes, which terminal
+  status); it does not, by itself, make a direct push impossible. Whether to also
+  configure real branch protection is a separate, later decision — not made here
+  (see amendment note below). Default when absent: `direct`.
+- **Approver:** self-review via PR — the sole maintainer (`a-lottes`) opens a PR,
+  reviews it themself, and approves/merges it, rather than pushing straight to
+  `main`. Grounding: this repo has no `.github/` directory, no `CODEOWNERS` file,
+  and no evidence of a second collaborator (`gh auth status` → authenticated as
+  `a-lottes` only) — it is solo-maintained. Self-review-via-PR is a real but
+  unusual pattern for a solo project; it still gives `handed-off` an honest,
+  non-`released` terminal status by forcing the PR-open/CI-green checkpoint the
+  mechanism exists to name, even without a second human. **Confirmed by the user,
+  2026-08-06.** Default when absent: n/a (mode is `direct`).
+- **Target branch:** `main`. Verified via `git remote -v`
+  (`origin` → `git@github.com:a-lottes/aSPARK.git`) and `.git/config`
+  (`branch "main"` tracks `origin/main`). Default when absent: n/a (mode is
+  `direct`).
+- **Ticket-reference format:** `none` — no ticket tracker is used for this
+  project. `.spark/` is tracked and therefore public on this repo's marketplace
+  listing (§5), so a real ticket ID or PR URL recorded there would be exposed;
+  per `.spark/tracker-handoff/spec.md` NFR-10 this repo's own `spec.md` `Ticket`
+  rows stay `none`. Default when absent: `none`.
+- **Terminal status:** `handed-off` — the loop ends there once a release's PR is
+  open, CI is green and the declared approver is requested; the real merge and
+  tag happen outside aSPARK's control. Default when absent: `released` (direct
+  mode's only terminal status).
+
 ---
 
 ## Amendments
@@ -200,3 +237,4 @@ dependencies and no executable code of its own.
 | 2026-07-25 | Initial constitution | First `/charter` on aSPARK Core itself — closes the dogfooding gap named as R6 in `.spark/situational-lenses/spec.md`, and records the project profile and the cross-repo template contract once instead of per feature |
 | 2026-07-25 | Profile confirmed (`library` only, load 1; `security` off) and status set `active` | The user's decision on the drafted profile: `security`'s checks are 14/15 inapplicable to a repo with no runtime, auth, PII or dependencies; the one live concern is carried as a constraint in §3/§6 instead |
 | 2026-07-25 | `qa-report.md`'s protected columns recorded as `Spec ID` + `Result`, with the consumer defect named | Verified against `aspark-graph`'s `_parse_qa` (`artifacts.py:234`): it demands a header equal to or starting with `ac` and raises `TemplateDriftError` on the shipped template. `Spec ID` is protected because it is what ships and it carries `NFR-<n>` as well as `AC-<n>.<m>`; renaming it back would break that semantics, so the fix is the consuming repo's |
+| 2026-08-06 | Added `## 7. Delivery & Handoff`, declaring `pr` release mode into `main`, terminal status `handed-off`, `none` ticket format, and approver = self-review-via-PR (confirmed by the user) | Deliberate, already-decided switch to PR-first delivery per `.spark/tracker-handoff/spec.md` clarification C8 — this repo needs a real venue to prove `handed-off`'s positive case at its own `/go-live`, ahead of that feature's Keep phase. Mechanics (branch protection, exact approver identity) were explicitly scoped as this amendment's decision, not the spec's (spec §6 Out of Scope). The user confirmed self-review-via-PR as the approver and explicitly chose **not** to set up real GitHub branch protection now (`gh api .../branches/main/protection` → 404 at decision time) — the declaration is a process commitment the team is choosing to adopt, not a description of enforced infrastructure, flagged inline in §7 rather than papered over |

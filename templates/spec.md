@@ -6,6 +6,7 @@
 | **Owner** | Product Owner (`/story-time`), Designer (`/look-and-feel`) |
 | **Status** | `draft` \| `design-checked` \| `approved` \| `rejected` |
 | **Date** | YYYY-MM-DD |
+| **Ticket** | the constitution's declared format (e.g. `PROJ-123`, `#123`, a URL), or `none` |
 
 <!-- Budget: ~250 lines. This is a working document that four later phases re-read, not a design
      essay — every line here is paid for again in Plan, Act, Review and QA. If a section can't fit,

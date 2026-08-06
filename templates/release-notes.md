@@ -5,7 +5,7 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`), `qa.md` (`passed`) |
-| **Status** | `preparing` \| `released` \| `aborted` |
+| **Status** | `preparing` \| `released` \| `aborted` \| `handed-off` |
 | **Version** | vX.Y.Z |
 | **Date** | YYYY-MM-DD |
 
@@ -36,6 +36,10 @@
 
 <!-- What was actually executed, with results. -->
 
+<!-- Direct mode: fill all four. Declared `pr` mode (handed-off): Version bump is
+     *proposed only*, no tag before merge; Deploy and Post-release smoke check
+     are N/A — write "N/A — handed-off, no deploy" rather than leaving them blank. -->
+
 | Action | Result |
 |---|---|
 | Version bump & tag | |
@@ -59,6 +63,10 @@
 
 - [ ] All pre-flight checks passed at release time
 - [ ] Changelog written in user-facing language
-- [ ] Release actions executed and verified (or `aborted` with reason)
+- [ ] Release actions executed and verified (or `aborted` with reason) —
+      in declared `pr` mode: PR open on the target branch, CI green, the
+      declared approver requested, the ticket linked where one is declared,
+      rollback path written; Deploy and Post-release smoke check are N/A
 - [ ] Learnings recorded
-- [ ] Status set to `released`
+- [ ] Status set to `released`, or `handed-off` in declared `pr` mode —
+      naming in one line what remains outstanding and who owns it

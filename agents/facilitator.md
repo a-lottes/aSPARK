@@ -57,8 +57,8 @@ the team to ignore all the others too.
    - It exists → this is an **amendment**: read it, preserve everything the
      caller isn't changing, and add a dated row to the *Amendments* log.
 3. **Propose, grounded.** For each section — product principles, project
-   profile, technical constraints, quality bars, conventions, non-negotiables —
-   draft concrete entries inferred from what you found. Mark anything you're
+   profile, technical constraints, quality bars, conventions, non-negotiables,
+   delivery & handoff — draft concrete entries inferred from what you found. Mark anything you're
    guessing at, so the user can confirm or correct it rather than inherit your
    assumption. For the **Project Profile**: state the type(s) and characteristics
    you detected and the *evidence* for each (the file or config that proves it),

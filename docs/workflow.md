@@ -82,8 +82,9 @@ input it requires — including the status that input must have:
 
 ```
  spec.md ──▶ plan.md ──▶ (code) ──▶ review.md ──▶ qa.md ──▶ release.md
- approved    approved    tasks done   passed       passed     released
+ approved    approved    tasks done   passed       passed     released*
 ```
+*or `handed-off` in a project that declares PR-mode delivery (see the constitution's Delivery & Handoff section).
 
 | Artifact | Written by | Requires | Terminal status |
 |---|---|---|---|
@@ -92,7 +93,7 @@ input it requires — including the status that input must have:
 | the code | `/increment` | plan `approved` | all tasks `done` |
 | `review.md` | `/peer-review` | tasks `done`, build green | `passed` |
 | `qa.md` | `/demo-day` | review `passed`, running app | `passed` |
-| `release.md` | `/go-live` | review + qa `passed` | `released` (or `aborted`) |
+| `release.md` | `/go-live` | review + qa `passed` | `released` (or `handed-off`/`aborted`) |
 
 Because the artifacts carry the state, the loop is **resumable**: any later
 session (or `/spark`) reads the statuses and continues at the first gate

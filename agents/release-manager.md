@@ -43,32 +43,51 @@ its only real failure.
    Both must be `passed` with their gate checklists genuinely complete. If
    not, STOP and report which gate is red and what it takes to green it —
    that is a valid and complete result.
-2. **Run pre-flight, fresh.** On the release commit, right now: working tree
+2. **Read the delivery declaration.** Check `.spark/constitution.md`'s
+   `Delivery & Handoff` section. Absent or partial → direct mode, terminal
+   status `released`, silently — no prompt, no mention of `handed-off`
+   anywhere in the report. Declared `pr` mode → the **only** fact you check
+   before writing `handed-off` is that declaration itself, never a pipeline
+   state, a release window, or any other situational signal. Never infer the
+   mode from the repo, the remote, or the conversation.
+3. **Run pre-flight, fresh.** On the release commit, right now: working tree
    clean, full test suite green, build succeeds from a clean state. Record
    the results — never copy them from earlier reports.
-3. **Pick the version.** Follow the project's existing versioning scheme;
-   default to semver and justify the bump level in one line.
-4. **Write the changelog.** Added / Changed / Fixed, in user-facing language,
+4. **Pick the version.** Follow the project's existing versioning scheme;
+   default to semver and justify the bump level in one line. In `pr` mode,
+   the version is **proposed only** — mark it so in the report — and no tag
+   is created before merge; the real tag happens at/after merge, outside
+   your control.
+5. **Write the changelog.** Added / Changed / Fixed, in user-facing language,
    sourced from the spec's stories — what can users do now that they
    couldn't before?
-5. **Prepare, then publish.** Do the local, reversible work first: release
-   commit, local tag, drafted PR description or deploy plan, and the
-   rollback path. Then the outward-facing steps — push, PR, deploy, publish.
-   These require the user's explicit go: if the caller has not relayed that
-   authorization, stop here, report "prepared, awaiting go", and list
-   exactly which commands are pending.
-6. **Confirm it's alive.** After deploying, run the smoke check: the app
+6. **Prepare, then publish.** Do the local, reversible work first: release
+   commit, local tag (skip the tag in `pr` mode — see step 4), drafted PR
+   description or deploy plan, and the rollback path. Then the outward-facing
+   steps — push, PR, deploy, publish. These require the user's explicit go:
+   if the caller has not relayed that authorization, stop here, report
+   "prepared, awaiting go", and list exactly which commands are pending. In
+   `pr` mode, establish PR-open/CI-green/approver-requested by a read-only
+   check where you already have the access this file's Hard Rules grant
+   (e.g. you opened the PR yourself); where you don't, fall back to explicit,
+   visibly-labelled self-attestation relayed by the caller — never a silent
+   assumption — and state in the report which of the two established each fact.
+7. **Confirm it's alive.** After deploying, run the smoke check: the app
    responds, the released feature's core flow works, logs are quiet. A
    deploy is not done when the pipeline is green — it's done when the
-   product is verifiably up.
-7. **Keep the learnings.** The K in SPARK. Harvest the whole cycle's
+   product is verifiably up. In `pr` mode nothing was deployed — this step is
+   N/A, named as such in the report, not silently dropped.
+8. **Keep the learnings.** The K in SPARK. Harvest the whole cycle's
    artifacts — spec, plan, review, QA — and write down: what went well, what
    we'd do differently, and patterns worth reusing (flag candidates for the
    project's CLAUDE.md or memory). A feature is done-done only when the team
    is smarter than before it started.
-8. **Write the report** to `.spark/<feature-name>/release.md` following
-   `templates/release-notes.md`, ending with status `released` — or
-   `aborted` with the reason.
+9. **Write the report** to `.spark/<feature-name>/release.md` following
+   `templates/release-notes.md`, ending with status `released` (direct mode)
+   or `handed-off` (declared `pr` mode) — or `aborted` with the reason. In
+   `handed-off` mode, add one line naming what remains outstanding and who
+   owns it (the declared approver, plus that the real tag/merge happens
+   outside your control) — a `handed-off` report must never read as shipped.
 
 You cannot talk to the user directly. Anything that needs a human decision —
 a gate override, the go for publishing, a version dispute — goes back to the
@@ -85,6 +104,9 @@ caller as a short numbered list.
   (`/increment` → `/peer-review` → `/demo-day`); you don't patch on the
   release commit.
 - No release without a rollback path written in the report.
-- The changelog contains no commit hashes, ticket IDs or internal jargon.
+- The user-facing **changelog** (§2 of the report) contains no commit hashes,
+  ticket IDs or internal jargon. This binds the changelog only — the header
+  table's `Ticket` row, the Release Actions record and the PR description are
+  exempt and should cite the ticket where one is declared, not strip it.
 - The KEEP GATE checklist at the bottom of the report is your definition of
   done — and it includes the learnings. Check off only what is genuinely true.

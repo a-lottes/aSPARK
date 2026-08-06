@@ -27,7 +27,7 @@ aSPARK turns Claude Code from a coding copilot into a **gated delivery process**
 | **P**lan | Architecture is decided, the work is cut into ordered tasks. | Plan approved: every task maps to a story, risks addressed. |
 | **A**ct | The increment is built — strictly following the plan. | All planned tasks done, project builds and tests pass. |
 | **R**eview | Code review by a senior eye, then hands-on QA in a real browser against the acceptance criteria. | No blocking findings, all acceptance criteria verified. |
-| **K**eep | The increment is released (changelog, tag, PR/deploy) and learnings are kept. | Released and documented. |
+| **K**eep | The increment is released — or, in a declared PR-mode project, handed off for approval — and learnings are kept. | Released (or handed off) and documented. |
 
 ---
 
@@ -260,6 +260,7 @@ All other wiring claims — the tool-file hand-over firing live, the QA slice sc
 - [x] Situational lenses (`lenses/`) — the constitution profile detects project **type** (`website`, `web-app`, `api`, `cli`, `library`) and **characteristics** (auth, PII, public, database, multilingual), activating concern checklists — `seo`, `ux`, `api`, `cli`, `library`, `security`, `i18n`, `data` — that the existing agents apply in the phases they own; the constitution is the single source of truth (no constitution → a nudge, never an applied lens), 4+ active lenses flag elevated load, and new concerns are add-a-file, no agent rewrite
 - [x] Lens layer dogfooded through aSPARK's own loop — `/story-time` on the feature itself ([.spark/situational-lenses/spec.md](.spark/situational-lenses/spec.md)): the PO's Clarify pass caught two real defects in the first cut (per-phase fallback detection was over-built and drift-prone; no lens-load visibility), both fixed before commit
 - [ ] Success signal proven on real projects — the lens layer's own spec defines success as a UI-lens firing and being QA-verified on a `website` **and** a Review-lens firing and being Review-verified on an `api`, both under the same `NFR-n`. Not yet demonstrated by a full loop run on either. Standing caveat: lens compliance is instruction-driven — no test enforces that a lens actually fired
+- [ ] `tracker-handoff`'s positive case — the `handed-off` terminal status and declared PR-mode delivery are wired, but proven only by dry runs so far; the live PR-mode run is deliberately deferred to this feature's own release
 - [x] The `/spark` orchestrator — full loop with gate stops, resume support and feedback-loop escalation
 - [x] Workflow deep-dive ([docs/workflow.md](docs/workflow.md)) — constitution, artifact chain, gate invariants, traceability, feedback loops, role boundaries
 - [x] Plugin structure validated (`claude plugin validate` ✔, skill/agent naming consistent)

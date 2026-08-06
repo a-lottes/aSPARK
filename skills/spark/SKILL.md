@@ -47,8 +47,9 @@ spends them in the context the rest of the loop still has to fit into.
 | `plan.md` `approved`, tasks not all `done` | `/increment` |
 | tasks `done`, `review.md` missing or not `passed` | `/peer-review` |
 | `review.md` `passed`, `qa.md` missing or not `passed` | `/demo-day` |
-| `review.md` + `qa.md` `passed`, no `released` release | `/go-live` |
+| `review.md` + `qa.md` `passed`, no `released`/`handed-off` release | `/go-live` |
 | release `released` | loop closed — tell the user |
+| release `handed-off` | loop closed for this team — tell the user it's handed off, not yet approved elsewhere |
 
 ## How You Conduct
 
