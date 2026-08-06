@@ -84,6 +84,18 @@
 - e.g. User data is never logged in plaintext.
 - e.g. We never ship a Must story with a failing acceptance criterion.
 
+## 7. Delivery & Handoff
+
+<!-- How this project's Keep phase ends. Every field defaults to today's behavior when absent — an
+     undeclared project sees no new prompt, no new terminology, anywhere in /go-live. Declare this
+     only if release actually depends on someone outside the team approving a PR. -->
+
+- **Release mode:** `direct` \| `pr`. Default when absent: `direct`.
+- **Approver:** e.g. `CODEOWNERS`, a named reviewer, or a role — who merges when mode is `pr`. Default when absent: n/a (mode is `direct`).
+- **Target branch:** e.g. `main` — the branch a `pr`-mode release targets. Default when absent: n/a (mode is `direct`).
+- **Ticket-reference format:** e.g. `PROJ-123`, `#123`, a URL, or `none`. Default when absent: `none`.
+- **Terminal status:** the status a `pr`-mode release ends in once handed over — `handed-off`, unless amended. Default when absent: `released` (direct mode's only terminal status).
+
 ---
 
 ## Amendments

@@ -26,8 +26,11 @@ Optional argument: the feature name. Resolve as usual.
    is no "just this once". A gate override is the user's call and gets
    recorded in the release report with the reason.
 2. **Delegate to the Release Manager — prepare only.** Invoke the
-   `release-manager` agent with the feature paths and the template from
-   `${CLAUDE_PLUGIN_ROOT}/templates/release-notes.md`. First pass: fresh
+   `release-manager` agent with the feature paths, the template from
+   `${CLAUDE_PLUGIN_ROOT}/templates/release-notes.md`, and `.spark/constitution.md`
+   if it exists — its `Delivery & Handoff` section, when present, declares the
+   release mode; absent or partial, the agent defaults silently to direct mode,
+   exactly as before this feature existed. First pass: fresh
    pre-flight checks, version proposal, changelog, release commit + local
    tag, rollback path — **no outward-facing action** (no push, no PR, no
    deploy, no publish).
