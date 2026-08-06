@@ -43,7 +43,7 @@ aSPARK turns Claude Code from a coding copilot into a **gated delivery process**
 | `/increment` | 💻 **Developer** | Builds a potentially shippable increment — strictly following the plan, no scope creep. |
 | `/peer-review` | 🔍 **Reviewer** | Reviews the diff with a staff-engineer eye and writes findings into `review.md`. |
 | `/demo-day` | 🧪 **QA Tester** | Clicks through the running app **in a real browser**, verifies every acceptance criterion, files bugs in `qa.md`. |
-| `/go-live` | 🚀 **Release Manager** | Final checks, changelog, version tag, PR/deploy. Blocked while QA has open blockers. |
+| `/go-live` | 🚀 **Release Manager** | Final checks, changelog, version tag, PR/deploy — or, in a declared PR-mode project, hands off for approval (`handed-off`). Blocked while QA has open blockers. |
 | `/spark` | 🤹 **Orchestrator** | Runs the whole loop end-to-end, enforcing every gate on the way. |
 
 ---
@@ -255,12 +255,12 @@ All other wiring claims — the tool-file hand-over firing live, the QA slice sc
 - [x] README with concept, team and usage guide
 - [x] Artifact templates (`templates/`) — constitution, spec, plan, review-report, qa-report, release-notes, each (bar the constitution) with its gate checklist
 - [x] The seven team agents (`agents/`) — facilitator, product-owner, designer, engineering-manager, reviewer, qa-tester, release-manager
-- [x] The nine ceremony skills (`skills/`) — charter, next-steps, story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live
+- [x] The ten ceremony skills (`skills/`) — charter, next-steps, story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live, spark
 - [x] Spec-driven core — project constitution (`/charter`), Specify-phase Clarify pass, non-functional requirements, and `US-`/`AC-`/`NFR-` traceability from spec through plan, review and QA
 - [x] Situational lenses (`lenses/`) — the constitution profile detects project **type** (`website`, `web-app`, `api`, `cli`, `library`) and **characteristics** (auth, PII, public, database, multilingual), activating concern checklists — `seo`, `ux`, `api`, `cli`, `library`, `security`, `i18n`, `data` — that the existing agents apply in the phases they own; the constitution is the single source of truth (no constitution → a nudge, never an applied lens), 4+ active lenses flag elevated load, and new concerns are add-a-file, no agent rewrite
 - [x] Lens layer dogfooded through aSPARK's own loop — `/story-time` on the feature itself ([.spark/situational-lenses/spec.md](.spark/situational-lenses/spec.md)): the PO's Clarify pass caught two real defects in the first cut (per-phase fallback detection was over-built and drift-prone; no lens-load visibility), both fixed before commit
 - [ ] Success signal proven on real projects — the lens layer's own spec defines success as a UI-lens firing and being QA-verified on a `website` **and** a Review-lens firing and being Review-verified on an `api`, both under the same `NFR-n`. Not yet demonstrated by a full loop run on either. Standing caveat: lens compliance is instruction-driven — no test enforces that a lens actually fired
-- [ ] `tracker-handoff`'s positive case — the `handed-off` terminal status and declared PR-mode delivery are wired, but proven only by dry runs so far; the live PR-mode run is deliberately deferred to this feature's own release
+- [x] `tracker-handoff`'s positive case — proven live on this repo's own release: the constitution declares PR-mode delivery, [PR #3](https://github.com/a-lottes/aSPARK/pull/3) was opened, self-reviewed and merged, and `.spark/tracker-handoff/release.md` reached status `handed-off` with no tag created before merge
 - [x] The `/spark` orchestrator — full loop with gate stops, resume support and feedback-loop escalation
 - [x] Workflow deep-dive ([docs/workflow.md](docs/workflow.md)) — constitution, artifact chain, gate invariants, traceability, feedback loops, role boundaries
 - [x] Plugin structure validated (`claude plugin validate` ✔, skill/agent naming consistent)
