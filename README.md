@@ -234,6 +234,8 @@ See [`tools/README.md`](tools/README.md) for how this works and how to add anoth
 
 ## Project Status
 
+> **What's next** is in [ROADMAP.md](ROADMAP.md) — what ships next, what's blocked, and what was deliberately declined. This section is what exists *today*.
+
 aSPARK is feature-complete: the v0.1.0 loop has passed a full end-to-end dry run, and the spec-driven layer added on top (constitution, Clarify pass, NFRs, traceability) has been dry-run-validated through the Plan phase. The situational-lens layer (project profile with types + characteristics, eight lenses) is wired through every phase and was dogfooded through aSPARK's own `/story-time` — which caught two real design defects before they shipped. This README always reflects the current state.
 
 The optional-tools layer (`tools/`, wired into `/sprint-plan`, `/peer-review` and `/demo-day`) has now been dogfooded end to end against the *installed* plugin, across two QA rounds ([.spark/graph-gates/qa.md](.spark/graph-gates/qa.md)): the absent case by real ceremony invocations in a graph-less repo, and the available case by direct agent runs against an isolated graph-built scratch copy (the designated real-project venue was left untouched, since it has independent work in flight). **25 of 30 acceptance criteria pass live; zero remain unverified.** Every documented call form, return shape and failure mode was run against the tool itself, and the `files:` note format was validated by running the consuming parser.
