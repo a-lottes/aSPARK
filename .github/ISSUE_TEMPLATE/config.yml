@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How the loop works
+    url: https://github.com/a-lottes/aSPARK/blob/main/docs/workflow.md
+    about: The phases, gates, artifact chain and hand-over rules — read this before proposing a change to the loop.
+  - name: How to contribute
+    url: https://github.com/a-lottes/aSPARK/blob/main/CONTRIBUTING.md
+    about: What a good PR looks like here, and how to verify a change in a repo with no test suite.

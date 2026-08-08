@@ -1,0 +1,80 @@
+name: Bug report
+description: A ceremony, gate or agent behaves differently than documented.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        aSPARK is prompt material, so "a bug" usually means an agent did something
+        the skill told it not to, or a gate let something through it should have
+        stopped. **A transcript excerpt is worth more than a description** — paste
+        what actually happened.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did the agent or gate do?
+      placeholder: /go-live created a tag even though qa.md still listed an open blocker.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+      description: If it contradicts something documented, link it (README, docs/workflow.md, a SKILL.md).
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: The commands you ran, in order, and the state of `.spark/` when you ran them.
+      placeholder: |
+        1. /story-time add a settings page
+        2. /sprint-plan
+        3. /increment  — stopped after task 3
+        4. /go-live    — expected it to refuse
+    validations:
+      required: true
+
+  - type: textarea
+    id: transcript
+    attributes:
+      label: Transcript excerpt
+      description: The relevant part of the conversation, or the artifact that shows the problem. Redact anything private — this repo is public.
+      render: text
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part
+      multiple: true
+      options:
+        - A skill / slash command
+        - An agent's behaviour
+        - A gate letting something through (or blocking wrongly)
+        - A template or artifact structure
+        - A lens
+        - Installation / plugin loading
+        - Docs contradict the behaviour
+        - Not sure
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: aSPARK version
+      description: From `.claude-plugin/plugin.json`, or "local clone" plus the commit you're on.
+      placeholder: "0.5.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: project-context
+    attributes:
+      label: The project you ran it on
+      description: Type (website / web-app / api / cli / library), and whether it has a `.spark/constitution.md`. Lens behaviour depends on both.

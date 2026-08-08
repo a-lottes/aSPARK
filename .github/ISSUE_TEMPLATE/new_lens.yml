@@ -1,0 +1,87 @@
+name: Propose a lens
+description: A concern that matters for some kinds of project but not all.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A **lens** is a checklist the existing agents pick up when — and only when —
+        the project's profile says the concern applies. Lenses are knowledge, not
+        roles: they add no team member and no ceremony, and a new one is a new file
+        rather than an edit to any agent.
+
+        Read [`lenses/README.md`](https://github.com/a-lottes/aSPARK/blob/main/lenses/README.md)
+        and the *Adding a lens* section of
+        [CONTRIBUTING.md](https://github.com/a-lottes/aSPARK/blob/main/CONTRIBUTING.md)
+        first. **The hardest question is question 3 — please don't skip it.**
+
+  - type: input
+    id: name
+    attributes:
+      label: Lens name
+      description: Lowercase, one word if possible — it becomes `lenses/<name>.md`.
+      placeholder: performance
+    validations:
+      required: true
+
+  - type: textarea
+    id: concern
+    attributes:
+      label: What concern does it cover, and why isn't it already covered?
+      description: Name what a generic code review or the existing agents miss today.
+    validations:
+      required: true
+
+  - type: textarea
+    id: activation
+    attributes:
+      label: What switches it on?
+      description: |
+        A project **type** (`website`, `web-app`, `api`, `cli`, `library`), a **characteristic**
+        (`handles-auth`, `handles-pii`, `is-public`, `has-database`, `is-multilingual`), or both.
+      placeholder: "applies-to: [website, web-app] — anything with a rendered frontend."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suppression
+    attributes:
+      label: Where does it stay silent?
+      description: |
+        **Suppression is a feature.** A check that fires where it doesn't apply teaches users
+        and agents to skim, which erodes trust in every other check. Name the profiles where
+        this lens must not fire, and say so concretely.
+      placeholder: "Off for `library` and `cli` — no render path, no user-perceived latency to measure."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: phases
+    attributes:
+      label: Which phases own its checks?
+      multiple: true
+      options:
+        - Specify (Product Owner — becomes ACs / NFRs)
+        - Specify (Designer — design review)
+        - Plan (Engineering Manager — architecture)
+        - Review (Reviewer — traced in the diff)
+        - Review (QA Tester — verified in the browser)
+    validations:
+      required: true
+
+  - type: textarea
+    id: checks
+    attributes:
+      label: Three example checks
+      description: |
+        Falsifiable ones. "Consider performance" is not a check; "no render-blocking resource
+        above 50 KB on the critical path" is. Three is enough to judge the proposal.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Would you like to write it?
+      options:
+        - label: I'd like to open the PR for this lens myself
