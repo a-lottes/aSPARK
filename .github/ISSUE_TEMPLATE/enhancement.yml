@@ -1,0 +1,65 @@
+name: Enhancement
+description: An idea for the loop, a skill, an agent or the docs.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        aSPARK's design bias is **fewer, sharper ceremonies over more coverage**. A proposal
+        that adds a step has to earn it against the attention it costs every user of every
+        project. Making the case is the point of this form — not bureaucracy.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's the problem?
+      description: The situation where the loop falls short today. Concrete beats abstract — a run where this bit you is ideal.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you change?
+      description: Which skill, agent, template or lens, and how.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: What does it touch?
+      description: |
+        This decides how much process the change needs — see *Two contribution paths* in CONTRIBUTING.md.
+      options:
+        - A lens or docs only (scoped)
+        - An existing skill or agent's behaviour
+        - Gate behaviour or phase hand-over
+        - A template structure
+        - A new skill or agent
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What did you consider and reject?
+      description: Especially — could this be a lens, or a note in an existing skill, instead of new machinery?
+
+  - type: textarea
+    id: breaking
+    attributes:
+      label: Does it break anyone?
+      description: |
+        People have aSPARK installed and running. Renaming a slash command, or a protected
+        template heading, column or ID pattern (§3 of `.spark/constitution.md`) is breaking
+        by definition. Say so if it applies — it doesn't disqualify the idea, it just changes
+        how it ships.
+
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Would you like to build it?
+      options:
+        - label: I'd like to open the PR myself

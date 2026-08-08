@@ -1,0 +1,91 @@
+name: Field report
+description: You ran aSPARK on a real project — tell us how it went.
+labels: ["documentation", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **This is the most useful thing you can send us.** aSPARK's Project Status has exactly
+        one unchecked box: the loop has never been proven end to end on someone else's real
+        project. A report where things went badly is *more* valuable than one where they went
+        well — nobody learns anything from "it worked".
+
+        Nothing here is a support request. Write as much or as little as you have.
+
+  - type: dropdown
+    id: project-type
+    attributes:
+      label: What kind of project?
+      options:
+        - website
+        - web-app
+        - api
+        - cli
+        - library
+        - something else / a mix
+    validations:
+      required: true
+
+  - type: dropdown
+    id: phases
+    attributes:
+      label: How far did you get?
+      multiple: true
+      options:
+        - /charter
+        - /next-steps
+        - /story-time
+        - /look-and-feel
+        - /sprint-plan
+        - /increment
+        - /peer-review
+        - /demo-day
+        - /go-live
+        - /spark (full loop)
+    validations:
+      required: true
+
+  - type: textarea
+    id: worked
+    attributes:
+      label: What worked?
+      description: Anything a gate caught that you'd otherwise have shipped is especially worth naming.
+    validations:
+      required: true
+
+  - type: textarea
+    id: friction
+    attributes:
+      label: Where did it get in the way?
+      description: |
+        Be blunt. Ceremonies that felt like overhead, questions that missed the point, a gate
+        that blocked for the wrong reason, a phase you skipped — and why.
+    validations:
+      required: true
+
+  - type: textarea
+    id: lenses
+    attributes:
+      label: Did a lens fire — and was it right?
+      description: |
+        Which lenses your constitution activated, whether their checks actually showed up in
+        the phases, and whether any fired where it didn't belong. **A lens that fired where it
+        shouldn't have is a defect** — suppression is a feature here.
+
+  - type: textarea
+    id: abandoned
+    attributes:
+      label: Did you stop using it? Where, and why?
+      description: If you dropped out mid-loop, that's the single most informative thing in this form.
+
+  - type: input
+    id: version
+    attributes:
+      label: aSPARK version
+      placeholder: "0.5.0"
+
+  - type: input
+    id: link
+    attributes:
+      label: Link to the project or its `.spark/` directory
+      description: Optional, and only if it's public. Never link anything you can't share.
