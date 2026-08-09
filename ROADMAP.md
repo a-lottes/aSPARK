@@ -48,7 +48,7 @@ reasons its way around one — and a good-sounding reason is, from the agent's o
 Sequenced *after* field reports on purpose: written from imagination, the tables would list excuses no
 agent ever makes while the real ones go unlisted.
 
-**Maturity labels in the architecture handbook** · `handbook-maturity`
+**Maturity labels in the architecture handbook** · `handbook-maturity` · [#18](https://github.com/a-lottes/aSPARK/issues/18)
 `docs/aSPARK_Enterprise_Architecture_Handbook.docx` describes a target platform while its admissions sit
 buried mid-chapter, so readers mistake ambition for delivery. The fix is labelling, not rewriting: a
 visible stage on every chapter that describes a capability, an overview table at the front, and the
@@ -67,7 +67,7 @@ is not challenged until task 12 stands on it. Task-level verification cannot cat
 a wrong assumption passes its own definition of done perfectly. Carries a real risk of making the longest
 phase longer; if it cannot be kept cheap and rare, it should not ship.
 
-**Ticket import and status write-back** · `ticket-import`
+**Ticket import and status write-back** · `ticket-import` · [#19](https://github.com/a-lottes/aSPARK/issues/19)
 Take a ticket number as the sole input to `/story-time`, read the ticket as the brief, and push status
 back to the tracker when a gate closes. One direction only — aSPARK never polls a tracker for its state.
 Unblocked now that PR-mode delivery has shipped the `Ticket` field it builds on. Optional and never
