@@ -1,6 +1,6 @@
 name: Field report
 description: You ran aSPARK on a real project — tell us how it went.
-labels: ["documentation", "help wanted"]
+labels: ["field-report"]
 body:
   - type: markdown
     attributes:
