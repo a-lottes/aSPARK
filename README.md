@@ -234,38 +234,28 @@ See [`tools/README.md`](tools/README.md) for how this works and how to add anoth
 
 ## Project Status
 
-aSPARK is feature-complete: the v0.1.0 loop has passed a full end-to-end dry run, and the spec-driven layer added on top (constitution, Clarify pass, NFRs, traceability) has been dry-run-validated through the Plan phase. The situational-lens layer (project profile with types + characteristics, eight lenses) is wired through every phase and was dogfooded through aSPARK's own `/story-time` — which caught two real design defects before they shipped. This README always reflects the current state.
+aSPARK is feature-complete — everything below ships today. The column that matters
+is **how well each part is proven**, because prompt material has no test suite: the
+only evidence is a documented run, written down. This section always reflects the
+current state.
 
-The optional-tools layer (`tools/`, wired into `/sprint-plan`, `/peer-review` and `/demo-day`) has now been dogfooded end to end against the *installed* plugin, across two QA rounds ([.spark/graph-gates/qa.md](.spark/graph-gates/qa.md)): the absent case by real ceremony invocations in a graph-less repo, and the available case by direct agent runs against an isolated graph-built scratch copy (the designated real-project venue was left untouched, since it has independent work in flight). **25 of 30 acceptance criteria pass live; zero remain unverified.** Every documented call form, return shape and failure mode was run against the tool itself, and the `files:` note format was validated by running the consuming parser.
-
-**Six criteria ship as a documented `partial`**, each for a specific, named reason rather than an open gap — this was an explicit, informed shipping decision, not an oversight:
-
-| Criterion | What is not (yet) proven, and why |
+| Area | State |
 |---|---|
-| AC-1.2 | Byte-identical output vs. the pre-change version — needs a direct 0.3.1-vs-0.4.0 artifact diff, one more full ceremony pair |
-| AC-2.2 | MCP-first precedence — no MCP server exists in any environment used so far to test against |
-| AC-2.3 | The installed-but-unbuilt hint firing exactly once, inside a live ceremony transcript (verified at the tool level, not yet caught mid-ceremony) |
-| AC-3.2 | The ceremony's own reaction to a stale graph (say once, then treat as absent) — the underlying `staleness` behaviour itself *is* verified live, twice |
-| AC-3.5 | `/demo-day`'s existing no-browser stop path — this project has no browser surface to re-prove it against, a pre-existing exception, not a new one |
-| AC-5.2 | Omitting a `files:` note for a genuinely unknowable-at-plan-time task — this feature's own plan has no such task to exercise the path on |
+| The loop — 10 skills, 7 agents, 6 templates, `/spark` | **Proven** — full end-to-end run on a sample app, all five gates enforced, shipped as `v0.1.0` |
+| Spec-driven core — constitution, Clarify pass, NFRs, traceability | **Proven through Plan** — live review/QA traceability awaits a full `/increment` |
+| Situational lenses (`lenses/`) | **Shipped, unproven in the field** — dogfooded on aSPARK itself, never yet run on someone else's project |
+| Optional tools (`tools/`, `aspark-graph`) | **25 of 30 criteria proven live**, six ship as a documented `partial` |
+| PR-mode delivery (`handed-off`) | **Proven** on this repo's own release ([PR #3](https://github.com/a-lottes/aSPARK/pull/3)) |
 
-All other wiring claims — the tool-file hand-over firing live, the QA slice scoping a real test plan via `story_trace`, a review citing concrete `file:line` evidence, an EM agent correctly classifying an empty `impact` result as "no declared link" rather than "nothing at risk" — are now proven by a real run, not by a walkthrough.
+**The one real gap:** the lens layer's success signal is a UI-lens QA-verified on a
+real `website` **and** a Review-lens Review-verified on a real `api`. Neither has
+happened yet. Lens compliance is instruction-driven — no test enforces that a lens
+actually fired, and none can — so a report from a real project is the only evidence
+that counts. If you run aSPARK on yours, [#4](https://github.com/a-lottes/aSPARK/issues/4)
+and [#5](https://github.com/a-lottes/aSPARK/issues/5) are waiting for you.
 
-- [x] Repo scaffold, plugin manifest, license
-- [x] README with concept, team and usage guide
-- [x] Artifact templates (`templates/`) — constitution, spec, plan, review-report, qa-report, release-notes, each (bar the constitution) with its gate checklist
-- [x] The seven team agents (`agents/`) — facilitator, product-owner, designer, engineering-manager, reviewer, qa-tester, release-manager
-- [x] The ten ceremony skills (`skills/`) — charter, next-steps, story-time, look-and-feel, sprint-plan, increment, peer-review, demo-day, go-live, spark
-- [x] Spec-driven core — project constitution (`/charter`), Specify-phase Clarify pass, non-functional requirements, and `US-`/`AC-`/`NFR-` traceability from spec through plan, review and QA
-- [x] Situational lenses (`lenses/`) — the constitution profile detects project **type** (`website`, `web-app`, `api`, `cli`, `library`) and **characteristics** (auth, PII, public, database, multilingual), activating concern checklists — `seo`, `ux`, `api`, `cli`, `library`, `security`, `i18n`, `data` — that the existing agents apply in the phases they own; the constitution is the single source of truth (no constitution → a nudge, never an applied lens), 4+ active lenses flag elevated load, and new concerns are add-a-file, no agent rewrite
-- [x] Lens layer dogfooded through aSPARK's own loop — `/story-time` on the feature itself ([.spark/situational-lenses/spec.md](.spark/situational-lenses/spec.md)): the PO's Clarify pass caught two real defects in the first cut (per-phase fallback detection was over-built and drift-prone; no lens-load visibility), both fixed before commit
-- [ ] Success signal proven on real projects — the lens layer's own spec defines success as a UI-lens firing and being QA-verified on a `website` **and** a Review-lens firing and being Review-verified on an `api`, both under the same `NFR-n`. Not yet demonstrated by a full loop run on either. Standing caveat: lens compliance is instruction-driven — no test enforces that a lens actually fired
-- [x] `tracker-handoff`'s positive case — proven live on this repo's own release: the constitution declares PR-mode delivery, [PR #3](https://github.com/a-lottes/aSPARK/pull/3) was opened, self-reviewed and merged, and `.spark/tracker-handoff/release.md` reached status `handed-off` with no tag created before merge
-- [x] The `/spark` orchestrator — full loop with gate stops, resume support and feedback-loop escalation
-- [x] Workflow deep-dive ([docs/workflow.md](docs/workflow.md)) — constitution, artifact chain, gate invariants, traceability, feedback loops, role boundaries
-- [x] Plugin structure validated (`claude plugin validate` ✔, skill/agent naming consistent)
-- [x] End-to-end test on a sample project — full loop run on a vanilla-JS `quick-todo` app: PO→Designer→EM→build→review→real-browser QA→release, all five gates enforced, shipped as `v0.1.0`
-- [x] Spec-driven dry run on a sample project — `/charter`→`/story-time` (with Clarify pass)→`/look-and-feel`→`/sprint-plan` on a vanilla-JS `quicknote` app: constitution bound every phase, NFRs and `US-`/`AC-`/`NFR-` traceability flowed spec→plan with full Must-AC coverage, spec and plan gates enforced. Live review/QA traceability tables pending a full `/increment` build.
+Full evidence — every run, every `partial` and why it ships that way:
+**[docs/status.md](docs/status.md)**.
 
 ---
 

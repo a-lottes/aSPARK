@@ -27,10 +27,10 @@ the repo is full of `.spark/` directories.
 Look for [`good first issue`](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 if you want something scoped and ready to go.
 
-> **Field reports really are the gap.** The README's Project Status has exactly one
-> unchecked box: the lens layer has never been proven by a full loop run on someone
-> else's real project. A report saying "I ran this on my API and here's where it got
-> annoying" is worth more to aSPARK than most patches.
+> **Field reports really are the gap.** [`docs/status.md`](docs/status.md) lists
+> exactly one thing as unproven: the lens layer has never been through a full loop
+> run on someone else's real project. A report saying "I ran this on my API and
+> here's where it got annoying" is worth more to aSPARK than most patches.
 
 **Before you start on something sizeable,** comment on the issue (or open one).
 Not for permission — so two people don't build the same thing, and so a design
