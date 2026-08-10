@@ -234,6 +234,8 @@ See [`tools/README.md`](tools/README.md) for how this works and how to add anoth
 
 ## Project Status
 
+> **What's next** is in [ROADMAP.md](ROADMAP.md) — what ships next, what's blocked, and what was deliberately declined. This section is what exists *today*.
+
 aSPARK is feature-complete — everything below ships today. The column that matters
 is **how well each part is proven**, because prompt material has no test suite: the
 only evidence is a documented run, written down. This section always reflects the
