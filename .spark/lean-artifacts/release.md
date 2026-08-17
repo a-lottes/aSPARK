@@ -16,8 +16,8 @@
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status` and `Version`).
-- **Summary:** Both gates green (review `passed`, QA `passed` with a recorded, user-accepted waiver on AC-1.7/AC-1.8); pre-flight re-run clean on commit `3d2939d`; a local prep commit now also carries `review.md`/`qa.md`/this report; v0.6.0 is proposed only — no tag, no push, no PR yet. Awaiting the user's explicit go for the outward-facing steps.
-- **Open:** `1 outstanding` — opening the PR into `main`, requesting the declared self-review approver, and (after merge, outside this role's control) the real tag. Owner: the user (`a-lottes`), on explicit go. See §3/§4.
+- **Summary:** Both gates green (review `passed`, QA `passed` with a recorded, user-accepted waiver on AC-1.7/AC-1.8). User's explicit go for outward-facing steps was relayed by the caller on 2026-08-17 (quoted in §3). Branch pushed to `origin/feat/lean-artifacts` — confirmed live. PR creation via `gh pr create` is **blocked in this environment by the local Claude Code permission classifier** (denied even for a read-only `gh pr list` check) — not a decision this role is making, a tool-permission wall this role cannot cross without the user granting it. v0.6.0 remains proposed only — no tag (correct per `pr` mode regardless). PR not yet open.
+- **Open:** `2 outstanding` — (1) the PR itself: either the user grants `gh` permission in this environment so this role can run `gh pr create` with the drafted title/body in §3, or the user opens it manually (title/body drafted, ready to paste, §3); (2) after that, requesting the declared self-review approval and, after merge, the real tag — outside this role's control either way. Owner: the user (`a-lottes`). See §3/§4.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below carry the final ruling.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch as a finding at the next `/go-live` and proceed — don't stop on it.
 
@@ -56,17 +56,55 @@
 
 | Action | Result |
 |---|---|
-| Version bump & tag | **Proposed only, no tag.** `.claude-plugin/plugin.json` already reads `0.6.0` (was `0.5.0`), bumped as part of task T10 and committed in `3d2939d` before this release pass began. Bump level: **minor** — purely additive (new Handoff block + reading/writing rules across 5 templates and 5 consumers), no protected heading/column/ID pattern in constitution §3 renamed, removed or reordered, confirmed independently by both the reviewer (AC-1.4, NFR-1) and QA (§2 NFR-1) against the actual `aspark-graph` parser source. Per constitution §7 (`pr` mode): **no tag is created before merge** — the real tag happens at/after merge, outside this role's control. This pass created **no** local tag. |
-| PR / merge | **Not opened.** Prepared-but-not-published, per this pass's explicit constraint (prepare only). Local release-prep commit created (below) so the branch is ready to push and open as a PR the moment the user gives the go. |
-| Deploy | N/A — no deploy surface exists for this project (Markdown/JSON Claude Code plugin, no runtime, no server). "Deploy" in this repo means the PR merging to `main` and installers subsequently picking up `0.6.0` from the marketplace listing — that only happens after merge, outside this pass. |
-| Post-release smoke check | N/A this pass — nothing was deployed yet (no PR opened, no merge). Named explicitly rather than dropped: once the PR is opened and merged (second pass, after the user's go), the smoke check for this feature is a real, cheap one — reinstall/update the plugin from the marketplace and confirm `claude plugin validate` still passes and one instantiated template (e.g. `templates/review-report.md`) renders its Handoff block correctly in a fresh `.spark/<feature>/review.md`. |
+| Version bump & tag | **Proposed only, no tag.** `.claude-plugin/plugin.json` already reads `0.6.0` (was `0.5.0`), bumped as part of task T10 and committed in `3d2939d`. Bump level: **minor** — purely additive (new Handoff block + reading/writing rules across 5 templates and 5 consumers), no protected heading/column/ID pattern in constitution §3 renamed, removed or reordered, confirmed independently by both the reviewer (AC-1.4, NFR-1) and QA (§2 NFR-1) against the actual `aspark-graph` parser source. Per constitution §7 (`pr` mode): **no tag is created before merge** — the real tag happens at/after merge, outside this role's control. No local tag was created — correct in this mode regardless of PR state. |
+| PR / merge | **Push done, PR blocked in-environment.** `git push -u origin feat/lean-artifacts` ran and is confirmed live: `origin/feat/lean-artifacts` tracks and is up to date with local `eb33b96` (verified via `git log`/`git status` after the push, not assumed). `gh pr create` (and even a read-only `gh pr list` check) was then **denied by this environment's own Claude Code permission classifier** — a tool-permission wall, not a decision made by this role, and not something this role attempted to route around (e.g. via a raw GitHub API call), per the standing instruction not to work around a denial. **No PR is open yet.** Drafted title + body, ready to submit either by the user granting `gh` permission so this role can retry `gh pr create`, or by the user opening it manually (GitHub already offers the compare URL from the push: `https://github.com/a-lottes/aSPARK/pull/new/feat/lean-artifacts`) — full text below. |
+| Deploy | N/A — no deploy surface exists for this project (Markdown/JSON Claude Code plugin, no runtime, no server). "Deploy" in this repo means the PR merging to `main` and installers subsequently picking up `0.6.0` from the marketplace listing — that only happens after merge. |
+| Post-release smoke check | **N/A — nothing to smoke yet, correctly.** No deploy has happened (no merge, no new install) — a real smoke check only exists after merge, outside this role's control, exactly as flagged in the previous pass. What *is* checkable right now, and was checked: the branch is genuinely pushed (`git log`/`git status` against `origin/feat/lean-artifacts`, both confirmed live above) and there is no CI configured in this repo (`.github/workflows/` does not exist) — so "CI green" is **N/A by absence**, not an unchecked box. PR-open and approver-requested are **not yet true** (PR isn't open), so those are left honestly unconfirmed below rather than asserted. |
 
-**Local release-prep commit created this pass** (not pushed): commit `31d1add` on `feat/lean-artifacts`, adding `.spark/lean-artifacts/review.md`, `.spark/lean-artifacts/qa.md` (both previously untracked, unmodified) and this file, `.spark/lean-artifacts/release.md`. Message: `docs: prepare lean-artifacts release (v0.6.0, proposed)`. This is local, reversible, and not outward-facing — no `git push`, no PR, no publish of any kind was performed. Branch is now `feat/lean-artifacts`, several commits ahead of `origin/main` @ `cc89c30` (the feature commit `3d2939d` plus this pass's `.spark/`-only prep commits); exact count will shift again once the PR is opened and squashed/merged, so it isn't pinned here.
+**Local commits this pass (all now pushed):** `31d1add`, `0ee24cd`, `eb33b96` on `feat/lean-artifacts` — adding `.spark/lean-artifacts/review.md`, `.spark/lean-artifacts/qa.md` (both previously untracked, unmodified), and this report with two small self-referential corrections. `git push -u origin feat/lean-artifacts` — **executed**, confirmed live.
 
-**Commands pending explicit go — none run this pass:**
-1. `git push -u origin feat/lean-artifacts`
-2. `gh pr create --base main --head feat/lean-artifacts --title "..." --body "..."` (self-review-via-PR per constitution §7 — the same maintainer opens, reviews and merges)
-3. After merge: the real tag/release, outside this role's direct control per `pr` mode.
+**User's explicit go, as relayed by the caller, 2026-08-17 (this conversation):** authorized exactly steps 1 (`git push`) and 2 (`gh pr create`) below; explicitly excluded tag and merge as outside this role's remit. Recorded here per constitution §6 ("every override is recorded in the artifact with its reason") even though this is an authorization, not a gate override.
+
+**Commands — status after this pass:**
+1. `git push -u origin feat/lean-artifacts` — **done**, confirmed live.
+2. `gh pr create --base main --head feat/lean-artifacts --title "..." --body "..."` — **attempted, denied by the local permission classifier** (not a `gh`/GitHub-side error — the tool call itself was refused before reaching GitHub). Needs either a `gh`/`Bash` permission grant from the user for this role to retry, or the user runs it manually. Draft below.
+3. After merge: the real tag/release — still outside this role's direct control per `pr` mode, unchanged from the previous pass.
+
+**Drafted PR — title and body, ready to submit:**
+
+> **Title:** `feat: add Handoff blocks to spec/plan/review/qa/release templates (v0.6.0, proposed)`
+>
+> **Body:**
+>
+> ## Summary
+>
+> - **Added:** every review, QA, spec, plan and release report now opens with a short **Handoff** block right at the top — status, a one-line verdict, what (if anything) is still open, which section has the final ruling, and what wins if the block and the rest of the report ever disagree. You can tell whether a report is done and what's left without reading the whole thing.
+> - **Changed:** the team members and ceremonies that act on a previous report — the Reviewer doing a re-review, `/increment` closing out findings, `/go-live` checking its two release gates, `/next-steps` scanning for open items across features — now read that new block first, and only read further when they specifically need to (for example, verifying a fix was actually made, or working out a genuine disagreement between the block and the report). Reports written before this change keep working exactly as they did before; nothing about reading them changes.
+> - **Fixed:** nothing — this adds a new capability rather than fixing a defect. No token or byte saving is claimed anywhere: the new block adds lines, it does not shrink anything.
+>
+> Three commits ride together on this branch:
+> - `2f48497` — the feature's spec (`.spark/lean-artifacts/spec.md`)
+> - `acfa3ac` — a constitution amendment recording `review-report.md`'s parser-required findings-table columns (`severity`/`location`/`status`), surfaced during this feature's own spec pass
+> - `3d2939d` — the increment itself: the Handoff block added to all five templates plus the reading/writing rules in every consumer, and the proposed minor version bump (`0.5.0` → `0.6.0`)
+>
+> Full gate trail, evidence and this release's own report: `.spark/lean-artifacts/{spec,plan,review,qa,release}.md`.
+>
+> ## Gates
+>
+> - Review: `passed` (`.spark/lean-artifacts/review.md`) — 0 Blockers/Majors, 2 open Nits.
+> - QA: `passed` (`.spark/lean-artifacts/qa.md`) — 0 Blockers/Majors, 3 open Minors; 2 of 12 Must ACs (AC-1.7, AC-1.8) recorded `partial` with a **user-accepted waiver** (no naturally-occurring specimen in this repo yet to verify the exact rendering/contradiction branch against — mechanism itself exercised live and held).
+> - Version: `0.6.0` is **proposed only** in this PR — per this repo's declared `pr` release mode (constitution §7), no tag is created before merge; the real tag happens at/after merge.
+>
+> ## Approval
+>
+> This repo is solo-maintained (constitution §7): **self-review-via-PR** is the declared approver mode — the same maintainer (`a-lottes`) opens, reviews and merges this PR rather than pushing straight to `main`. There is no GitHub branch protection on `main` (process commitment, not enforced infrastructure, per the same section) and no CI configured for this Markdown/JSON-only plugin.
+>
+> ## Test plan
+>
+> - [x] `claude plugin validate .claude-plugin/plugin.json` — passed
+> - [x] `claude plugin validate .` (marketplace manifest) — passed, 1 pre-existing unrelated warning
+> - [x] Dogfood evidence, negative-case-first, in `.spark/lean-artifacts/evidence.md` (constitution §4 — no automated test suite is possible for prompt material)
+> - [ ] Merge and confirm the plugin still updates/validates cleanly post-merge (post-release smoke check, outside this PR's control)
 
 ## 4. Learnings (Keep!)
 
@@ -95,15 +133,15 @@
 
 - [x] All pre-flight checks passed at release time — see §1; two substitutions (test suite → `claude plugin validate`, build → explicitly N/A) both stated, not silently skipped, per constitution §4.
 - [x] Changelog written in user-facing language — see §2; no commit hashes, ticket IDs or internal jargon; no token/byte-saving claim (NFR-4).
-- [ ] Release actions executed and verified — **not yet, by design this pass.** Local release-prep commit made (reversible); PR not opened, not pushed, no deploy, no tag. Awaiting the user's explicit go, listed in §3, before any outward-facing action runs. Rollback path: see below.
+- [ ] Release actions executed and verified — **partially, and accurately reflected as such.** Push: done, confirmed live (§3). PR: **not open** — `gh pr create` was denied by this environment's own permission classifier, not by any decision this role made; drafted title/body ready in §3, needs either a permission grant to retry or the user to open it manually. CI: N/A by absence (no `.github/workflows/`). Approver request: not yet possible (no PR to request against). No deploy, no tag — correct in this mode/state regardless. This box stays unchecked honestly rather than being marked true on a partial result; see §3 for the exact status of each pending item and the rollback note below for what pushing (without a merged PR) does and doesn't commit this repo to.
 - [x] Learnings recorded — see §4, pulled from this cycle's actual review/QA trail, not boilerplate.
-- [ ] Status set to `released`, or `handed-off` in declared `pr` mode — **left `preparing`.** This is the first (prepare) pass; the terminal `handed-off` status (constitution §7 — this repo does not merge to `main` directly) is set on the second pass, after the user's explicit go and the outward-facing steps in §3 actually run. Outstanding owner: the user (`a-lottes`), who is also the declared self-review approver.
+- [ ] Status set to `released`, or `handed-off` in declared `pr` mode — **left `preparing`, deliberately not `handed-off` yet.** Constitution §7's own definition of `handed-off` requires the PR to be *open*, CI green, and the approver requested — none of those three facts is true yet, only the push is. Marking `handed-off` now would misstate the state this report exists to record accurately. Moves to `handed-off` the moment the PR is actually open (§3) — outstanding owner: the user (`a-lottes`), who is also the declared self-review approver, and who needs to either grant `gh` permission in this environment or open the PR manually using the draft in §3.
 
 ---
 
-## Rollback path (required before any outward-facing action)
+## Rollback path
 
 - **What would need undoing, and how.** The only functional change in this release is commit `3d2939d` (`feat: add handoff blocks to spec/plan/review/qa/release templates`) — 12 modified files (5 templates, 5 consumer agents/skills, `README.md`, `.claude-plugin/plugin.json`) plus 2 new project-local files (`evidence.md`, `plan.md`, non-shipped). A single `git revert 3d2939d` on whatever branch carries it (this branch now, or `main` after merge) restores every protected template structure and every consumer's reading rules to their pre-feature state in one operation, and reverts `plugin.json` back to `0.5.0` in the same commit — **no separate version-rollback step is needed**, since reverting the commit that bumped it un-bumps it.
-- **No tag to roll back.** Per constitution §7 (`pr` mode), no tag exists yet — the version bump is proposed only. If this PR is never merged, nothing outward-facing ever happened and there is nothing to revert; simply not merging (or closing the PR) is the entire rollback.
+- **No tag to roll back.** Per constitution §7 (`pr` mode), no tag exists yet — the version bump is proposed only. If this PR is never opened or never merged, the only outward-facing fact so far is the **push** (`origin/feat/lean-artifacts` now exists on GitHub, publicly visible on this public repo) — reverting that requires nothing beyond not opening/merging a PR against it, or deleting the remote branch (`git push origin --delete feat/lean-artifacts`) if even the branch's existence should be undone. No tag, no merge, no marketplace listing change has happened; there is nothing published to consumers to roll back.
 - **This pass's own local commit** (`31d1add`, review.md/qa.md/release.md housekeeping) is additive-only (new `.spark/` files, no shipped-surface change) and can be reverted independently with `git revert 31d1add`, or simply left as an accurate historical record even if `3d2939d` itself is later reverted — the gate reports remain true statements about what was reviewed and tested, regardless of whether the feature ships.
 - **Prior commits on this branch not in scope for rollback:** `2f48497` (spec) and `acfa3ac` (constitution amendment) are separately accepted ceremonies, already public, and do not touch the shipped/consumed contract — reverting the feature commit does not require touching either.
