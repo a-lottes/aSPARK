@@ -106,6 +106,8 @@
 > - [x] Dogfood evidence, negative-case-first, in `.spark/lean-artifacts/evidence.md` (constitution §4 — no automated test suite is possible for prompt material)
 > - [ ] Merge and confirm the plugin still updates/validates cleanly post-merge (post-release smoke check, outside this PR's control)
 
+**`gh pr create` retried once more, isolated, after the push succeeded — denied again by the same classifier, consistently, not a one-off.** Confirmed across two separate attempts with different invocation shapes (`--body` inline, then `--body-file`) that this is a firm tool-permission wall in this environment, not a transient fluke or a formatting issue on this role's side. Not retried a third time, per the standing instruction not to keep pushing on a denial — this is now handed back to the user.
+
 ## 4. Learnings (Keep!)
 
 <!-- The K in SPARK: what does the team keep from this cycle? -->
