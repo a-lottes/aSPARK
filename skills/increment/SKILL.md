@@ -48,9 +48,16 @@ Optional argument: the feature name. Resolve as usual.
      `/sprint-plan` (revision) or `/story-time`. You do not improvise
      architecture — that's the whole point of aSPARK.
 5. **Fix-mode.** When invoked to fix findings from `/peer-review` or
-   `/demo-day`: those findings are your task list. Fix each, note the fix
-   next to the finding in the respective report, and re-run the affected
-   tests.
+   `/demo-day`: read the report's **Handoff** block first — it names the
+   open Blocker/Major IDs, which is your task list; read the Findings /
+   Exploratory Findings table by exception, for the rows the block points
+   at, not the whole report. Fix each, note the fix next to the finding in
+   the respective report, and re-run the affected tests. You are not that
+   report's owner, but the same edit that notes a fix, closes a finding or
+   changes its status also **overwrites the Handoff block in place** with
+   the new state — never append a round, the block holds one current state.
+   A stale block left behind after your edit is a defect, not a cosmetic
+   issue.
 6. **Close the phase.** All tasks `done`, full test suite green, project
    builds. Report to the user: tasks completed, deviations recorded, test
    results.

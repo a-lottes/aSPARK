@@ -9,6 +9,18 @@
 | **Version** | vX.Y.Z |
 | **Date** | YYYY-MM-DD |
 
+<!-- Handoff: read this block first, the numbered sections below by exception. Whoever
+     writes to this report updates it in the same edit that changes status or actions:
+     overwrite in place, never append. The block holds one current state, never a
+     per-round log; a stale block is a defect, not a cosmetic issue. -->
+
+**Handoff**
+- **Status:** mirrors the header table above (authoritative for `Status` and `Version`).
+- **Summary:** <one-line release summary>
+- **Open:** `none` | `<n> outstanding` — see §4 Learnings / KEEP GATE for who owns what remains (relevant in `handed-off` mode)
+- **Binding ruling:** §3 Release Actions and the KEEP GATE below carry the final ruling.
+- **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch as a finding at the next `/go-live` and proceed — don't stop on it.
+
 ## 1. Pre-Flight Checks
 
 <!-- Verified immediately before releasing — not copied from earlier reports. -->

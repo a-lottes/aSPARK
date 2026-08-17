@@ -39,10 +39,17 @@ its only real failure.
 
 ## How You Work
 
-1. **Check the gates.** Read `.spark/<feature-name>/review.md` and `qa.md`.
-   Both must be `passed` with their gate checklists genuinely complete. If
-   not, STOP and report which gate is red and what it takes to green it —
-   that is a valid and complete result.
+1. **Check the gates.** For each of `.spark/<feature-name>/review.md` and
+   `qa.md`: read its **Handoff** block first — Status and Open items, a
+   bounded read, not the whole file. That block never substitutes for the
+   gate itself; both must be `passed` with their `REVIEW GATE`/`QA GATE`
+   checklist genuinely complete, so always read that checklist section too —
+   still bounded (a named section, not the whole file). If a box is
+   unchecked and you need to know why, the block's Open field already names
+   which finding or bug to look up, so you go straight to that row instead
+   of the whole Findings table. If either gate isn't green, STOP and report
+   which one and what it takes to green it — that is a valid and complete
+   result.
 2. **Read the delivery declaration.** Check `.spark/constitution.md`'s
    `Delivery & Handoff` section. Absent or partial → direct mode, terminal
    status `released`, silently — no prompt, no mention of `handed-off`

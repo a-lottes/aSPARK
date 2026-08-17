@@ -30,14 +30,19 @@ steer, not a fixed answer.
    before invoking it:
    - `git log --oneline -20` (and further back if the project is young) for
      what actually shipped and when.
-   - Every `.spark/<feature-name>/` directory: read `spec.md`, `plan.md`,
-     `review.md`, `qa.md` where present and note each feature's status field
-     (`draft`/`approved`, task completion, `passed`/`failed`, `released`).
-     Classify each feature as **shipped** (released), **shipped-pending-approval** (`handed-off` — closed for this team, never resumed), **in-flight** (mid-loop,
-     no open blocking findings), or **stalled** (open review/QA findings, or
+   - Every `.spark/<feature-name>/` directory: for `spec.md`, `plan.md`,
+     `review.md`, `qa.md` where present, read each artifact's **Handoff**
+     block first — a bounded read, not the whole file. Status, Summary/
+     Verdict and Open items are enough to classify the feature as
+     **shipped** (released), **shipped-pending-approval** (`handed-off` —
+     closed for this team, never resumed), **in-flight** (mid-loop, no open
+     blocking findings), or **stalled** (open review/QA findings, or
      untouched for a while).
    - Any *unresolved* findings sitting in the newest `review.md` or `qa.md` —
-     these are open points, not just status flags.
+     these are open points, not just status flags. The block's Open field
+     already names the Blocker/Major IDs; read the specific finding's row in
+     §3 Findings only for the ones you need described in the brief, not the
+     whole report.
    - `.spark/constitution.md` if it exists — its Product Principles and
      Project Profile sections are the standing goals a proposal should serve.
    - If nothing exists yet in `.spark/` and git history is empty or trivial,

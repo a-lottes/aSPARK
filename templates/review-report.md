@@ -8,6 +8,19 @@
 | **Status** | `in-review` \| `changes-requested` \| `passed` |
 | **Date** | YYYY-MM-DD |
 
+<!-- Handoff: read this block first, the numbered sections below by exception. Whoever
+     writes to this report — including `/increment` in fix-mode, which is not this
+     report's owner — updates it in the same edit that closes or re-rules a finding:
+     overwrite in place, never append. The block holds one current state, never a
+     per-round log; a stale block is a defect, not a cosmetic issue. -->
+
+**Handoff**
+- **Status:** mirrors the header table above (authoritative for `Status`).
+- **Verdict:** <one-line ruling — not "looks good">
+- **Open:** `none` | `<n> open` — Blockers: `<F..>`; Majors: `<F..>` (Minors/Nits: see §3)
+- **Binding ruling:** <§ carrying the binding verdict and REVIEW GATE — the latest round on a re-ruled report>
+- **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
+
 <!-- Budget: ~150 lines. Findings are rows, not essays: location, what's wrong, why it matters, in a
      cell. The report is read back at the gate, again in fix-mode, and once more at re-review — a
      finding that takes three paragraphs to state is a finding nobody rereads. §6 Verdict is the one

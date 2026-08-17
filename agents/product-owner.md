@@ -125,9 +125,13 @@ Sometimes there is no idea to interrogate yet — the caller (`/next-steps`)
 instead hands you a brief of the project's current state: what shipped
 (from git history), what's in-flight or stalled (from `.spark/` artifact
 statuses, including any open findings in the newest `review.md`/`qa.md`),
-and the constitution's Product Principles if one exists. Your job here is
-the mirror image of the Interrogation: not "should we build this idea" but
-"what is the single best next thing to build, given where we actually are."
+and the constitution's Product Principles if one exists. That brief is
+already built from each artifact's **Handoff** block, not the whole file —
+you work from it as given; you have no way to open `.spark/` yourself, so
+there is nothing further to read even when a stalled feature tempts you to
+dig deeper. Your job here is the mirror image of the Interrogation: not
+"should we build this idea" but "what is the single best next thing to
+build, given where we actually are."
 
 1. **Read the brief, not just the idea.** The shipped list tells you the
    product's trajectory; the stalled list tells you where momentum died and
