@@ -35,7 +35,7 @@ dependencies and no executable code of its own.
   labelled as such; a doc that presents an intention as delivered is a defect.
   *Known open exception:* `docs/aSPARK_Enterprise_Architecture_Handbook.docx`
   describes a target platform without per-chapter maturity labels — tracked as
-  `handbook-maturity` in `.spark/BACKLOG.md`.
+  `handbook-maturity` in `ROADMAP.md`.
 
 ## 2. Project Profile & Active Lenses
 

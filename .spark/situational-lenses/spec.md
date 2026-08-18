@@ -4,7 +4,7 @@
 |---|---|
 | **Phase** | Specify |
 | **Owner** | Product Owner (`/story-time`), Designer (`/look-and-feel`) |
-| **Status** | `draft` |
+| **Status** | `approved` |
 | **Date** | 2026-07-15 |
 
 > **Retrospective spec.** This feature is already implemented in the working
@@ -328,7 +328,12 @@ unchecked by design: they are verified by *running* the loop on real projects
 - [x] Out-of-scope section is filled (something was consciously cut)
 - [x] Constitution (`.spark/constitution.md`) respected, or conflicts recorded as open questions — none exists (A2)
 - [x] Design review done for UI-facing features (or marked N/A with reason) — **N/A: feature ships no UI (see §8)**
-- [ ] Status set to `approved` by the user — **awaiting the user's explicit decision**
+- [x] Status set to `approved` by the user — **approved 2026-08-06**, after the
+      orchestrator spot-checked the build-status claims live against the current
+      repo (8 lens files present, nudge-only fallback in `story-time`/
+      `look-and-feel`/`spark`, the 4+-lens load flag present in
+      `templates/constitution.md` and already exercised in this repo's own
+      `.spark/constitution.md`)
 
 > **Note for planning:** the two gaps this spec opened (G1 nudge-slimming, G2
 > 4+-lens load flag) were closed directly in the working tree at the user's

@@ -19,6 +19,7 @@ Desktop.ini
 # Logs & temp
 *.log
 *.tmp
+*.bak
 tmp/
 
 # Node (only if tooling is ever added; harmless otherwise)
