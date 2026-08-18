@@ -8,6 +8,19 @@
 | **Status** | `draft` \| `approved` |
 | **Date** | YYYY-MM-DD |
 
+<!-- Handoff: read this block first, the numbered sections below by exception. Whoever
+     writes to this plan updates it in the same edit that changes a task's status or
+     the plan's own status: overwrite in place, never append. The block holds one
+     current state, never a per-round log; a stale block is a defect, not a cosmetic
+     issue. -->
+
+**Handoff**
+- **Status:** mirrors the header table above (authoritative for `Status`).
+- **Summary:** <one-line architecture-decision digest>
+- **Open:** `none` | `<n> tasks not done` — see §3 Task Breakdown for which
+- **Binding ruling:** §3 Task Breakdown for current task status; a plan revision after review/QA findings updates §1/§3 in place, never a new section
+- **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
+
 <!-- Budget: ~300 lines. The plan is /increment's backlog and the Reviewer's yardstick — both read it
      in full, repeatedly, and a fix round reads it again. Argue the architecture in §1 tightly; the
      task table earns the space, the prose around it usually doesn't. A plan that needs far more than

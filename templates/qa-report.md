@@ -8,6 +8,18 @@
 | **Status** | `in-testing` \| `failed` \| `passed` |
 | **Date** | YYYY-MM-DD |
 
+<!-- Handoff: read this block first, the numbered sections below by exception. Whoever
+     writes to this report updates it in the same edit that closes or re-rules a bug:
+     overwrite in place, never append. The block holds one current state, never a
+     per-round log; a stale block is a defect, not a cosmetic issue. -->
+
+**Handoff**
+- **Status:** mirrors the header table above (authoritative for `Status`).
+- **Verdict:** <one-line ruling — would you demo this right now?>
+- **Open:** `none` | `<n> open` — Blockers: `<B..>`; Majors: `<B..>` (Minors: see §3)
+- **Binding ruling:** <§ carrying the binding verdict and QA GATE — the latest round on a re-tested report>
+- **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/demo-day` and proceed — don't stop on it.
+
 ## 1. Test Environment
 
 - **App URL:**

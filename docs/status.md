@@ -87,6 +87,14 @@ was an explicit, informed shipping decision, not an oversight.
 | **Evidence** | Proven live on this repo's own release: the constitution declares PR-mode delivery, [PR #3](https://github.com/a-lottes/aSPARK/pull/3) was opened, self-reviewed and merged, and `.spark/tracker-handoff/release.md` reached status `handed-off` with **no tag created before merge**. |
 | **State** | Proven |
 
+## Lean artifacts
+
+| | |
+|---|---|
+| **Scope** | A heading-less **Handoff** block (status, one-line verdict/summary, open items, which section binds, conflict precedence) above the first numbered section of all five artifact templates (`review-report.md`, `qa-report.md`, `spec.md`, `plan.md`, `release-notes.md`), so a downstream phase can route off a bounded read instead of the whole file. Reading/writing rules were added to every consumer that acts on a predecessor artifact: `agents/reviewer.md` (re-review), `skills/increment/SKILL.md` (fix-mode write-back — not the report's owner, but overwrites the block in place on every fix), `agents/release-manager.md`, `agents/product-owner.md` and `skills/next-steps/SKILL.md`. |
+| **Evidence** | Dogfooded negative-case-first ([`.spark/lean-artifacts/evidence.md`](../.spark/lean-artifacts/evidence.md)): old-shape artifacts keep working unchanged, a real fix-mode edit overwrote the block in place instead of appending, and the sibling `aspark-graph` parser was read directly and confirmed structurally blind to the block (no new `##` heading, no second `Status`/`Version` row) — independently re-verified by both the Reviewer and the QA Tester against the parser's actual source, not each other's citation of it. |
+| **State** | **Proven**, with a recorded, user-accepted waiver: two Must ACs (the zero-open-items rendering, an exact block/body value-contradiction) are `partial` rather than `pass` — neither has a naturally-occurring specimen in this repo yet, only the mechanism exercised on adjacent/constructed cases. **No token or byte saving is claimed anywhere** — the mechanism is a prompt instruction, not an enforced one. |
+
 ## Browser backends for `/demo-day`
 
 | | |
@@ -113,4 +121,5 @@ was an explicit, informed shipping decision, not an oversight.
 - [x] End-to-end test on a sample project (`quick-todo`)
 - [x] Spec-driven dry run on a sample project (`quicknote`)
 - [x] `tracker-handoff`'s positive case proven on this repo's own release
+- [x] Lean artifacts — a Handoff block in all five templates plus reading/writing rules in every consumer; see *Lean artifacts* above
 - [ ] **Success signal proven on real projects** — see *The open gap* above

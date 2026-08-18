@@ -88,6 +88,15 @@ Work through these in order — the expensive problems first:
    passed so you know its review-phase checks. If the project doesn't build or
    the test suite is red, STOP — that goes straight back to the developer, no
    review needed.
+   - **Re-review.** When the caller points you at a previous `review.md`,
+     read its **Handoff** block first — bounded, not the whole file. That
+     block alone can never tell you a previously open finding was actually
+     fixed; verifying a fix always requires the finding's row in §3 Findings,
+     so treat "confirm each open finding from the previous round" as the one
+     condition that always earns a full read of the body. If the block and
+     the body disagree on anything else, proceed on the location the block's
+     own conflict rule names as authoritative — never stop on the mismatch —
+     and add a new finding recording the disagreement.
 2. **Get the diff.** Use git to determine exactly what changed. Review what
    changed plus enough surrounding code to judge it in context.
 

@@ -8,6 +8,18 @@
 | **Date** | YYYY-MM-DD |
 | **Ticket** | the constitution's declared format (e.g. `PROJ-123`, `#123`, a URL), or `none` |
 
+<!-- Handoff: read this block first, the numbered sections below by exception. Whoever
+     writes to this spec updates it in the same edit that resolves a clarification or
+     changes status: overwrite in place, never append. The block holds one current
+     state, never a per-round log; a stale block is a defect, not a cosmetic issue. -->
+
+**Handoff**
+- **Status:** mirrors the header table above (authoritative for `Status`).
+- **Summary:** <one-line problem + goal digest>
+- **Open:** `none` | `<n> open` — unresolved rows in §3 Assumptions & Open Questions
+- **Binding ruling:** §4 User Stories for the current stories; §7 Clarifications for what changed since the last round and why
+- **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
+
 <!-- Budget: ~250 lines. This is a working document that four later phases re-read, not a design
      essay — every line here is paid for again in Plan, Act, Review and QA. If a section can't fit,
      that's a signal about the feature, not about the budget: split it into two features rather than
