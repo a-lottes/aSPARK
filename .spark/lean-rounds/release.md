@@ -44,8 +44,8 @@
 
 | Action | Result |
 |---|---|
-| Version bump & tag | **Proposed only, no tag.** `.claude-plugin/plugin.json` bumped `0.6.0` → `0.7.0` in the local release commit on branch `feat/lean-rounds` (not pushed). Bump: **minor** — purely additive, no protected template heading/column/ID (constitution §3) renamed or removed, independently verified by the Reviewer against the live `aspark_graph` parser across all 3 review rounds (spec NFR-1). Per constitution §7 (`pr` mode): no tag before merge — the real tag happens at/after merge, outside this role's control. |
-| PR / merge | **Prepared, not opened.** Local commit staged and made on `feat/lean-rounds` (12 feature files + `.claude-plugin/plugin.json` + `.spark/lean-rounds/{spec,plan,review,evidence,release}.md`; handbook `.docx` excluded). Push and `gh pr create` are pending the user's explicit go — see Pending commands below. |
+| Version bump & tag | **Proposed only, no tag.** `.claude-plugin/plugin.json` bumped `0.6.0` → `0.7.0` in local release commit `b0d0761` on branch `feat/lean-rounds` (not pushed). Bump: **minor** — purely additive, no protected template heading/column/ID (constitution §3) renamed or removed, independently verified by the Reviewer against the live `aspark_graph` parser across all 3 review rounds (spec NFR-1). Per constitution §7 (`pr` mode): no tag before merge — the real tag happens at/after merge, outside this role's control. |
+| PR / merge | **Prepared, not opened.** Local commit `b0d0761` made on `feat/lean-rounds` (18 files: 12 feature files + `.claude-plugin/plugin.json` + 5 new `.spark/lean-rounds/*.md` files; handbook `.docx` excluded). Push and `gh pr create` are pending the user's explicit go — see Pending commands below. |
 | Deploy | N/A — handed-off mode, no deploy. |
 | Post-release smoke check | N/A — handed-off mode, no deploy. |
 
@@ -76,5 +76,5 @@
 ## Rollback path
 
 - **What would need undoing:** the single local release commit on `feat/lean-rounds` (12 feature files, `.claude-plugin/plugin.json`, 5 new `.spark/lean-rounds/*.md` files). Nothing is pushed — `git branch -D feat/lean-rounds` (or simply not pushing/merging it) fully undoes this pass with zero outward trace.
-- **If later pushed/merged:** a single `git revert <release-commit-sha>` on `main` restores every protected template structure, all five agents and the plugin manifest to their pre-feature state in one operation, including un-bumping `plugin.json` back to `0.6.0` — no separate version-rollback step needed.
+- **If later pushed/merged:** a single `git revert b0d0761` on `main` restores every protected template structure, all five agents and the plugin manifest to their pre-feature state in one operation, including un-bumping `plugin.json` back to `0.6.0` — no separate version-rollback step needed.
 - **No tag exists** (per `pr` mode) — nothing published to consumers/marketplace to roll back yet.
