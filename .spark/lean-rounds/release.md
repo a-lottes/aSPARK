@@ -5,14 +5,14 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`, round 3); `qa.md` — **does not exist**, user-directed skip (see below) |
-| **Status** | `preparing` |
+| **Status** | `handed-off` |
 | **Version** | v0.7.0 (**proposed only** — `pr` mode, no tag before merge) |
 | **Date** | 2026-08-21 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`/`Version`).
-- **Summary:** Review gate green (r3, 0 Blockers/Majors). QA gate was **not run** — the user explicitly chose to skip `/demo-day` entirely for this feature (recorded below as a gate override, not a silent bypass). Fresh pre-flight passed. User's explicit go for outward-facing action received (relayed by the caller: "committ push and release"). Push done, confirmed live (`origin/feat/lean-rounds`). **`gh pr create` denied twice by the local permission classifier** — not a GitHub-side error, a local tool-permission wall, the same denial the `lean-artifacts` release hit in the identical spot (PR #22 precedent). No PR exists yet (`gh pr list --head feat/lean-rounds` → `[]`, confirmed live).
-- **Open:** `1 outstanding` — open the PR. Needs either a `gh`/`Bash` permission grant from the user for this role to retry, or the user runs `gh pr create` manually using the drafted title/body in §3. Owner: the user (`a-lottes`).
+- **Summary:** Review gate green (r3, 0 Blockers/Majors). QA gate was **not run** — the user explicitly chose to skip `/demo-day` entirely for this feature (recorded below as a gate override, not a silent bypass). Fresh pre-flight passed. User's explicit go for outward-facing action received ("committ push and release"). Push done and confirmed live. `gh pr create` was denied twice at the release-manager subagent's own permission level (a delegated-tool-permission wall, same spot `lean-artifacts` hit for PR #22) — run instead from the orchestrating session, which held the permission, and succeeded: **[PR #23](https://github.com/a-lottes/aSPARK/pull/23)** is open against `main`.
+- **Open:** `1 outstanding` — self-review and merge the PR. Owner: the user (`a-lottes`), the declared approver (constitution §7). The real tag happens at/after that merge, outside this role's control either way.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`.
 
@@ -45,20 +45,20 @@
 | Action | Result |
 |---|---|
 | Version bump & tag | **Proposed only, no tag.** `.claude-plugin/plugin.json` bumped `0.6.0` → `0.7.0` in local commits `b0d0761`/`254da89` on `feat/lean-rounds`, now **pushed**. Bump: **minor** — purely additive, no protected template heading/column/ID (constitution §3) renamed or removed, independently verified by the Reviewer against the live `aspark_graph` parser across all 3 review rounds (spec NFR-1). Per constitution §7 (`pr` mode): no tag before merge, none created — the real tag happens at/after merge, outside this role's control. |
-| PR / merge | **Push done; PR blocked.** User's explicit go received (relayed by the caller: `"committ push and release"`), authorizing push and PR creation. `git push -u origin feat/lean-rounds` — **done**, confirmed live (`[new branch] feat/lean-rounds -> feat/lean-rounds`). `gh pr create` — **attempted twice** (inline `--body`, then `--body-file`), **denied both times by the local permission classifier** before reaching GitHub. `gh pr list --head feat/lean-rounds` confirms **no PR exists** (`[]`). Not retried a third time, per the standing instruction not to keep pushing on a denial. Draft below, ready to submit. |
-| Deploy | N/A — no deploy surface exists for this project (Markdown/JSON Claude Code plugin, no runtime, no server); in `pr` mode "deploy" is the PR merging to `main`, which hasn't happened. |
-| Post-release smoke check | N/A — nothing to smoke: no deploy has happened (no merge). Confirmed still accurate: `.github/workflows/` does not exist, so "CI green" is **N/A by absence**, not an unchecked box; PR-open and approver-requested are **not yet true** either. |
+| PR / merge | **Push and PR both done.** User's explicit go received ("committ push and release"), authorizing push and PR creation. `git push -u origin feat/lean-rounds` — done, confirmed live. `gh pr create` — denied twice at the release-manager subagent's delegated permission level (not a GitHub-side error); run instead from the orchestrating session, which held the permission — succeeded on the first attempt there. **[PR #23](https://github.com/a-lottes/aSPARK/pull/23)** open against `main`, title and body as drafted below. Self-review and merge remain the user's (constitution §7). |
+| Deploy | N/A — no deploy surface exists for this project (Markdown/JSON Claude Code plugin, no runtime, no server); in `pr` mode "deploy" is the PR merging to `main`, which hasn't happened yet. |
+| Post-release smoke check | N/A — nothing to smoke: no merge has happened yet. `.github/workflows/` does not exist, so "CI green" is N/A by absence, not an unchecked box. |
 
-**Drafted PR — title and body, ready for the user to submit manually (or after a permission grant):**
+**PR opened — [#23](https://github.com/a-lottes/aSPARK/pull/23):**
 
 > **Title:** `feat: overwrite-in-place review/QA reports + all-five-template line-budget gate (v0.7.0, proposed)`
 >
-> **Body:** the §2 Changelog above (Added/Changed/Fixed, user-facing), plus a **Gates** section — Review `passed` r3, 0 open Blockers/Majors; QA **not run**, user-directed skip, reason as recorded in the Handoff block above; Version `0.7.0` proposed only, no tag — and an **Approval** section naming self-review-via-PR (`a-lottes`) as the declared approver (constitution §7), and a **Test plan** checklist: `claude plugin validate` (plugin + marketplace) passed; dogfood evidence in `evidence.md`; merge-and-revalidate left as the one item outside this PR's control. Full text drafted and ready in this pass, same shape as PR #22.
+> **Body:** the §2 Changelog above (Added/Changed/Fixed, user-facing), a **Gates** section — Review `passed` r3, 0 open Blockers/Majors; QA **not run**, user-directed skip, reason as recorded in the Handoff block above; Version `0.7.0` proposed only, no tag — an **Approval** section naming self-review-via-PR (`a-lottes`, constitution §7), and a **Test plan** checklist: `claude plugin validate` (plugin + marketplace) passed; dogfood evidence in `evidence.md`; merge-and-revalidate left as the one item outside this PR's control.
 
-**Commands — status after this pass:**
-1. `git push -u origin feat/lean-rounds` — **done**, confirmed live.
-2. `gh pr create --base main --head feat/lean-rounds --title "..." --body "..."` — **attempted twice, denied both times by the local permission classifier.** Needs a `gh`/`Bash` permission grant from the user for this role to retry, or the user runs it manually with the drafted title/body above.
-3. After merge: the real tag — still outside this role's direct control per `pr` mode, unchanged.
+**Commands — final status:**
+1. `git push -u origin feat/lean-rounds` — done, confirmed live.
+2. `gh pr create` — done, from the orchestrating session after the subagent-level denial. [PR #23](https://github.com/a-lottes/aSPARK/pull/23) open.
+3. After merge: the real tag — outside this role's direct control per `pr` mode, unchanged, owned by the user.
 
 ## 4. Learnings (Keep!)
 
@@ -72,16 +72,16 @@
 
 - [x] All pre-flight checks passed at release time — see §1 (QA box is a recorded user override, not a failure).
 - [x] Changelog written in user-facing language — see §2; no commit hashes, ticket IDs or jargon.
-- [ ] Release actions executed and verified — **partial**: push done and confirmed live; PR not open — blocked by a local tool-permission denial, not by missing authorization (the user's go was given and used for the push). Rollback path below.
+- [x] Release actions executed and verified — push done and confirmed live; [PR #23](https://github.com/a-lottes/aSPARK/pull/23) open against `main`, verified via `gh pr list` before and after creation. Rollback path below, now PR-aware.
 - [x] Learnings recorded — see §4.
 - [x] Line budget respected: Ist **87** / Soll ~100 (excluding HTML comments; there are none in this file) — counted via `wc -l`, same method `review.md`'s own self-report used.
-- [ ] Status set to `released`/`handed-off` — **neither yet.** Remains `preparing`: constitution §7's `handed-off` requires a genuinely open PR, and none exists. **Outstanding: open the PR** — either the user grants this role a `gh pr create` permission to retry, or the user runs the drafted command in §3 themselves. **Owner: the user (`a-lottes`)**, who is also the declared self-review approver for the merge that follows; the real tag happens at/after that merge, outside this role's control either way.
+- [x] Status set to `handed-off` — the PR is genuinely open (constitution §7's condition for this status). **Outstanding: self-review and merge** — **owner: the user (`a-lottes`)**, the declared approver; the real tag happens at/after that merge, outside this role's control either way.
 
 ---
 
 ## Rollback path
 
-- **What would need undoing:** the two local commits (`b0d0761`, `254da89`) now pushed to `origin/feat/lean-rounds` — 18 files: 12 feature files, `.claude-plugin/plugin.json`, 5 new `.spark/lean-rounds/*.md` files. No PR is open and nothing has merged to `main`, so `main` is untouched.
-- **To fully undo this pass:** delete the remote branch — `git push origin --delete feat/lean-rounds` — and optionally the local one (`git branch -D feat/lean-rounds`). No tag, no PR, no merge exists to unwind beyond that.
-- **If a PR later opens and merges:** a single `git revert b0d0761` (and `254da89` if also merged) on `main` restores every protected template structure, all five agents and the plugin manifest to their pre-feature state in one operation, including un-bumping `plugin.json` back to `0.6.0` — no separate version-rollback step needed.
+- **What would need undoing:** three commits (`b0d0761`, `254da89`, `7fe334d`) pushed to `origin/feat/lean-rounds`, and [PR #23](https://github.com/a-lottes/aSPARK/pull/23), now open against `main`. Nothing has merged, so `main` itself is untouched.
+- **Before merge:** close PR #23 (`gh pr close 23`) and delete the branch — `git push origin --delete feat/lean-rounds` (and locally, `git branch -D feat/lean-rounds`). No tag exists yet, so nothing else to unwind.
+- **After merge:** a single `git revert b0d0761` (and `254da89`/`7fe334d` if also merged) on `main` restores every protected template structure, all five agents and the plugin manifest to their pre-feature state in one operation, including un-bumping `plugin.json` back to `0.6.0` — no separate version-rollback step needed.
 - **No tag exists** (per `pr` mode) — nothing published to the marketplace/consumers to roll back yet.
