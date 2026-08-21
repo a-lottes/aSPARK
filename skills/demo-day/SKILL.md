@@ -54,6 +54,8 @@ user for it, and how to start the app if it isn't running.
    If a tool resolved as available in step 1, pass
    `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md` the same way — one more path
    alongside the lens paths, nothing else.
+   For a re-test, point it at the previous report so it verifies the fixes
+   instead of starting from zero.
 3. **Relay needs.** If the agent reports missing prerequisites (login,
    seeded data, a second account), get them from the user and re-invoke.
 4. **Present the report.** The AC verification table (every criterion:

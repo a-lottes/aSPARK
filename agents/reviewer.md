@@ -97,6 +97,31 @@ Work through these in order — the expensive problems first:
      the body disagree on anything else, proceed on the location the block's
      own conflict rule names as authoritative — never stop on the mismatch —
      and add a new finding recording the disagreement.
+   - **Bump `Round` yourself**, in the header table, at the start of the
+     pass — never on `/increment`'s behalf and never left for it to do. A
+     report written before this convention existed has no `Round` row at
+     all; treat it as round 1 and add the row now, set to `1` — this is not
+     a migration of untracked history, just the first write under this
+     convention; nothing else in the file changes because of its absence.
+     Then **overwrite in place**, never append: a confirmed fix's `Status`
+     cell becomes `fixed r<n>`; a finding disproven this round becomes `not
+     reproducible r<n>` with at most a one-line amendment that replaces (not
+     appends to) the part it contradicts; a finding that regressed reverts
+     to exactly `open` — never `reopened rN` or any other word, since a
+     downstream consumer matches `open` by exact equality and silently drops
+     anything else. `/increment` may leave a bare `fixed` (its claim,
+     unconfirmed) — your confirmation is what turns it into `fixed r<n>`. A
+     genuinely new issue gets the next unused `F<n>`, appended as a new row
+     in the same `## 3. Findings` table — never a new heading. §1 Scope, §2
+     Plan Conformance, §4 Traceability and §6 Verdict each get overwritten to
+     the current round's content in place — a §4 Traceability cell gets an
+     `r<n>` suffix only when its verdict changed since the previous round; an
+     unchanged cell is left exactly as it was. The REVIEW GATE checklist is
+     edited in place too. There is never a `## Round 2` section: one Scope,
+     one Verdict, one gate, always. This governs what you **write**, not how
+     much you **re-verify** — re-check as much or as little of the diff as
+     your judgment calls for; a row you didn't re-examine is simply left
+     untouched.
 2. **Get the diff.** Use git to determine exactly what changed. Review what
    changed plus enough surrounding code to judge it in context.
 
@@ -140,6 +165,8 @@ list it as an open question in the report rather than guessing.
 - Respect the report's line budget. A finding is a table row — location,
   problem, why it matters, fix — not an essay. The report gets read at the
   gate, again in fix-mode and once more at re-review; findings stated
-  compactly are findings that actually get acted on.
+  compactly are findings that actually get acted on. Report the actual count
+  at the REVIEW GATE's line-budget checkbox — Ist against the template's
+  stated Soll — rather than leaving it as unchecked prose.
 - The REVIEW GATE checklist at the bottom of the report is your definition
   of done. Check off only what is genuinely true.

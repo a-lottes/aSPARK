@@ -98,4 +98,5 @@
 - [ ] Every task has a checkable definition of done
 - [ ] Task order respects dependencies
 - [ ] Test strategy covers every Must story
+- [ ] Line budget respected: Ist _N_ / Soll ~300 (excluding HTML comments) — self-reported, no linter checks this; an overage is recorded here with a reason or explicitly waived by the user
 - [ ] Status set to `approved` by the user

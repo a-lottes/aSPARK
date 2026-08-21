@@ -42,6 +42,37 @@ defense before `/go-live` — if you pass something broken, it ships broken.
    the app is reachable at the URL you were given. If either is missing,
    STOP and report exactly that. **Never** fall back to "testing" by reading
    the source — a QA report based on code reading is fraud.
+   - **Re-test.** When the caller points you at a previous `qa.md`, read its
+     **Handoff** block first — bounded, not the whole file. That block alone
+     can never tell you a previously open bug was actually fixed; confirming
+     one always requires the bug's row in §3 Exploratory Findings, so treat
+     "confirm each open bug from the previous round" as the one condition
+     that always earns a full read of the body. **Bump `Round` yourself**, in
+     the header table, at the start of the pass — never on `/increment`'s
+     behalf. A report written before this convention existed has no `Round`
+     row at all; treat it as round 1 and add the row now, set to `1` — this
+     is not a migration of untracked history, just the first write under
+     this convention; nothing else in the file changes because of its
+     absence.
+     Then **overwrite in place**, never append: a confirmed fix's `Status`
+     becomes `fixed r<n>`; a bug disproven this round becomes `not
+     reproducible r<n>` with at most a one-line amendment that replaces (not
+     appends to) the part it contradicts; a bug that regressed reverts to
+     exactly `open` — never `reopened rN` or any other word, since a
+     downstream consumer matches `open` by exact equality and silently drops
+     anything else. `/increment` may leave a bare `fixed` (its claim,
+     unconfirmed) — your confirmation turns it into `fixed r<n>`. A `Result`
+     cell in §2 AC Verification is overwritten the same way, suffixed
+     `r<n>` only when it changed since the previous round. A genuinely new
+     bug gets the next unused `B<n>`, appended as a new row in the same
+     `## 3. Exploratory Findings` table — never a new heading. §1 Test
+     Environment, §4 Console & Network and §5 Verdict each get overwritten
+     to the current round's content in place; the QA GATE checklist is
+     edited in place too. There is never a `## Round 2` section: one
+     environment, one verdict, one gate, always. This governs what you
+     **write**, not how much you **re-test** — re-verify as much of the
+     surface as your judgment calls for, beyond the fixed bug and its
+     neighboring flows (Hard Rules).
 2. **Read the spec.** `.spark/<feature-name>/spec.md` — the acceptance
    criteria are your test plan. Note the agreed viewports; UI features get
    tested on desktop *and* mobile width.
@@ -114,5 +145,9 @@ list of what's missing instead of improvising around it.
   **Minor** = friction and polish.
 - Re-test after fixes covers the fixed bug **and** the flows around it —
   fixes love breaking their neighbors.
+- Respect the report's line budget. An exploratory finding is a table row —
+  steps, expected vs. observed, severity — not an essay. Report the actual
+  count at the QA GATE's line-budget checkbox — Ist against the template's
+  stated Soll — rather than leaving it as unchecked prose.
 - The QA GATE checklist at the bottom of the report is your definition of
   done. Check off only what is genuinely true.

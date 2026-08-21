@@ -115,5 +115,10 @@ caller as a short numbered list.
   ticket IDs or internal jargon. This binds the changelog only — the header
   table's `Ticket` row, the Release Actions record and the PR description are
   exempt and should cite the ticket where one is declared, not strip it.
+- Respect the report's line budget. Four short sections — pre-flight boxes,
+  changelog bullets, an actions table, learnings — none of them earns prose.
+  Report the actual count at the KEEP GATE's line-budget checkbox — Ist
+  against the template's stated Soll — rather than leaving it as unchecked
+  prose.
 - The KEEP GATE checklist at the bottom of the report is your definition of
   done — and it includes the learnings. Check off only what is genuinely true.

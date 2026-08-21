@@ -116,4 +116,5 @@
 - [ ] Out-of-scope section is filled (something was consciously cut)
 - [ ] Constitution (`.spark/constitution.md`) respected, or conflicts recorded as open questions
 - [ ] Design review done for UI-facing features (or marked N/A with reason)
+- [ ] Line budget respected: Ist _N_ / Soll ~250 (excluding HTML comments) — self-reported, no linter checks this; an overage is recorded here with a reason or explicitly waived by the user
 - [ ] Status set to `approved` by the user
