@@ -51,13 +51,16 @@ Optional argument: the feature name. Resolve as usual.
    `/demo-day`: read the report's **Handoff** block first — it names the
    open Blocker/Major IDs, which is your task list; read the Findings /
    Exploratory Findings table by exception, for the rows the block points
-   at, not the whole report. Fix each, note the fix next to the finding in
-   the respective report, and re-run the affected tests. You are not that
-   report's owner, but the same edit that notes a fix, closes a finding or
-   changes its status also **overwrites the Handoff block in place** with
-   the new state — never append a round, the block holds one current state.
-   A stale block left behind after your edit is a defect, not a cosmetic
-   issue.
+   at, not the whole report. Fix each, and re-run the affected tests. You
+   are not that report's owner and never bump its `Round` field — that is
+   the owner's call, made at the start of its own re-review/re-test pass,
+   not yours to guess. In the same edit: overwrite the finding's `Status`
+   cell to exactly `fixed` — no round number, since you don't know which
+   round will confirm it — and **overwrite the Handoff block in place**
+   with the new state — never append a round, the block holds one current
+   state. Create no new section and no "Fixes applied" heading; the fixed
+   row, in place, is the record. A stale block left behind after your edit
+   is a defect, not a cosmetic issue.
 6. **Close the phase.** All tasks `done`, full test suite green, project
    builds. Report to the user: tasks completed, deviations recorded, test
    results.

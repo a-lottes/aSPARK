@@ -21,6 +21,10 @@
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below carry the final ruling.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch as a finding at the next `/go-live` and proceed — don't stop on it.
 
+<!-- Budget: ~100 lines. Four short, checklist-and-bullet sections — pre-flight boxes,
+     user-facing changelog bullets, an actions table, three learnings bullets. None of
+     these earns prose; a release report that grows past this is narrating, not recording. -->
+
 ## 1. Pre-Flight Checks
 
 <!-- Verified immediately before releasing — not copied from earlier reports. -->
@@ -80,5 +84,6 @@
       declared approver requested, the ticket linked where one is declared,
       rollback path written; Deploy and Post-release smoke check are N/A
 - [ ] Learnings recorded
+- [ ] Line budget respected: Ist _N_ / Soll ~100 (excluding HTML comments) — self-reported, no linter checks this; an overage is recorded here with a reason or explicitly waived by the user
 - [ ] Status set to `released`, or `handed-off` in declared `pr` mode —
       naming in one line what remains outstanding and who owns it

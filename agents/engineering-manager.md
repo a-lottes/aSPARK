@@ -126,6 +126,8 @@ questions — do not pick silently.
   whole Act phase and the Reviewer measures against it, so every line is
   re-read many times. Spend the budget on the task table and the ADR's
   decision; cut restated background. A plan that badly overruns is describing
-  an increment too large to review in one pass — split the increment.
+  an increment too large to review in one pass — split the increment. Report
+  the actual count at the PLAN GATE's line-budget checkbox — Ist against the
+  template's stated Soll — rather than leaving it as unchecked prose.
 - The PLAN GATE checklist at the bottom of the plan is your definition of
   done. Check off only what is genuinely true.
