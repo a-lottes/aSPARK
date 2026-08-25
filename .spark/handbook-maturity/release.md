@@ -10,7 +10,7 @@
 | **Date** | 2026-08-25 |
 
 **Handoff**
-- **Status:** mirrors the header table above (authoritative for `Status`/`Version`). User go received 2026-08-25 (orchestrator relay): **steps 1–4 executed** — branch carried onto `feat/handbook-maturity`, manifest bumped `0.7.0` → `0.7.1`, exactly the four paths staged, release commit **`a8435fe6969745cead58750e22dbafa01004d845`**, working tree clean after (`git status --porcelain` empty). **Step 5 pending** — the user's open-in-Word visual check. **Steps 6–8 authorized but gated** on that confirmation arriving in conversation: no push, no PR, no tag has happened; local tags end at `v0.7.0`.
+- **Status:** mirrors the header table above (authoritative for `Status`/`Version`). User go received 2026-08-25 (orchestrator relay): **steps 1–4 executed** — branch carried onto `feat/handbook-maturity`, manifest bumped `0.7.0` → `0.7.1`, exactly the four paths staged, release commit **`a8435fe6969745cead58750e22dbafa01004d845`**, working tree clean after (`git status --porcelain` empty). **Step 5 passed** — user quote: "looked good in Word, push it" (2026-08-25); QA finding E2 adjudicated: overview-table placement acceptable in real rendering. **Steps 6–7 authorized and executing** on that confirmation; **step 8 stays gated on post-merge**: at this writing no push, no PR, no tag has happened.
 - **Summary:** Handbook honesty labelling released-as-prepared as v0.7.1 (patch, confirmed): delivery-stage label on all 17 chapters, overview table up front, 18 inline target-state markers, title page separating the v1.2 revision from the shipped baseline (Core v0.7.0 · graph v0.7.0).
 - **Open:** `1 outstanding` — step 5, the open-in-Word visual integrity check (plan §4; adjudicates QA E2). Owner: the user (`a-lottes`). Rulings recorded same day: version **v0.7.1 confirmed**; the NFR-2 residual (title-page pair names judged baseline v0.7.0 while Core's newest release becomes v0.7.1) **accepted by the user** as recorded here — the pair states the AC-3.3 spot-check target and stays true because this diff changes nothing the chapters describe; drift beyond a named baseline is what the scope-designation sentence covers; carried with F2 by the website-sync / handbook-revision follow-up.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below.
@@ -25,7 +25,7 @@
 - [x] No uncommitted changes in the working tree — verified fresh after the release commit: `git status --porcelain` empty on `feat/handbook-maturity` at `a8435fe`.
 - [x] Diff is exactly the expected paths: `M ROADMAP.md`, `M docs/aSPARK_Enterprise_Architecture_Handbook.docx` (Bin 2012344 → 2013907), `.spark/handbook-maturity/` (six artifacts incl. this report), `M .claude-plugin/plugin.json` (version bump only).
 - [x] Title-page pairs true right now: Core `v0.7.0` → `753a793` resolves locally and matches origin's tag; graph `v0.7.0` is the highest remote tag. ROADMAP diff coherent: Shipped row added; #18 entry restated as the `/charter` follow-up; links point at issue #18, not lean-rounds' PR.
-- [ ] Open-in-Word visual integrity check — **pending, human**: booked for release by plan §4 and adjudicates QA E2 (overview table sits close under the bare "Contents" heading); owner: user; gates steps 6–8.
+- [x] Open-in-Word visual integrity check — **passed 2026-08-25**: user quote "looked good in Word, push it"; booked by plan §4; QA E2 adjudicated — overview-table placement acceptable in real rendering.
 
 ## 2. Changelog
 
@@ -57,7 +57,7 @@
 2. ✅ Bumped `.claude-plugin/plugin.json` `"version": "0.7.0"` → `"0.7.1"`
 3. ✅ `git add ROADMAP.md docs/aSPARK_Enterprise_Architecture_Handbook.docx .spark/handbook-maturity .claude-plugin/plugin.json`
 4. ✅ Committed as `a8435fe6969745cead58750e22dbafa01004d845` (verbatim drafted message)
-5. ☐ User opens the revised docx in Word/Pages once — the visual integrity check (plan §4; adjudicates QA E2)
+5. ✅ Done 2026-08-25 — user opened the docx in Word: passed ("looked good in Word"); E2 adjudicated acceptable
 6. ☐ `git push -u origin feat/handbook-maturity`
 7. ☐ `gh pr create --base main --head feat/handbook-maturity --title "docs: label handbook ambition vs delivery per chapter (v0.7.1, proposed)" --body "<§2 changelog; Gates: review passed (F1 fixed r1, F2 waived/routed), QA passed via plan §4 override, E1–E3 accepted; Version 0.7.1 proposed only, no tag; Approval: self-review-via-PR (a-lottes, constitution §7); Test plan: claude plugin validate passed, dogfood evidence in evidence.md>"` 
 8. ☐ After merge (maintainer): `git fetch origin && git tag -a v0.7.1 origin/main -m "aSPARK Core v0.7.1 — handbook maturity labels (content-only)" && git push origin v0.7.1`
