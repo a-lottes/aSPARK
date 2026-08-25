@@ -5,14 +5,14 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`; F1 `fixed r1`, F2 waived/routed), `qa.md` (`passed`; plan §4 override method, E1–E3 user-accepted) |
-| **Status** | `preparing` |
-| **Version** | v0.7.1 (**confirmed** patch — user go 2026-08-25; committed on `feat/handbook-maturity`; **no tag exists** — tagging happens post-merge, outside this role's control) |
+| **Status** | `handed-off` (`pr` mode — merge + tag with the maintainer) |
+| **Version** | v0.7.1 (**confirmed** patch — user go 2026-08-25; release commit `a8435fe6969745cead58750e22dbafa01004d845` pushed; **PR #27 open**: https://github.com/a-lottes/aSPARK/pull/27; **no tag exists** — tagging happens post-merge, outside this role's control) |
 | **Date** | 2026-08-25 |
 
 **Handoff**
-- **Status:** mirrors the header table above (authoritative for `Status`/`Version`). User go received 2026-08-25 (orchestrator relay): **steps 1–4 executed** — branch carried onto `feat/handbook-maturity`, manifest bumped `0.7.0` → `0.7.1`, exactly the four paths staged, release commit **`a8435fe6969745cead58750e22dbafa01004d845`**, working tree clean after (`git status --porcelain` empty). **Step 5 passed** — user quote: "looked good in Word, push it" (2026-08-25); QA finding E2 adjudicated: overview-table placement acceptable in real rendering. **Step 6 done** — pushed, confirmed live (`* [new branch] feat/handbook-maturity -> feat/handbook-maturity`). **Step 7 denied**: `gh pr create` blocked by the Claude Code auto-mode classifier (quoted reason: "Stage 2 classifier error - blocking based on stage 1 assessment (usually transient — retrying often succeeds)") — a different failure than the two prior releases' standing subagent permission wall, but per standing instruction no retry was attempted; PR creation is handed to the orchestrating session to run with the user watching. **Step 8 stays gated on post-merge**: no PR and no tag exist yet.
-- **Summary:** Handbook honesty labelling released-as-prepared as v0.7.1 (patch, confirmed): delivery-stage label on all 17 chapters, overview table up front, 18 inline target-state markers, title page separating the v1.2 revision from the shipped baseline (Core v0.7.0 · graph v0.7.0).
-- **Open:** `1 outstanding` — step 5, the open-in-Word visual integrity check (plan §4; adjudicates QA E2). Owner: the user (`a-lottes`). Rulings recorded same day: version **v0.7.1 confirmed**; the NFR-2 residual (title-page pair names judged baseline v0.7.0 while Core's newest release becomes v0.7.1) **accepted by the user** as recorded here — the pair states the AC-3.3 spot-check target and stays true because this diff changes nothing the chapters describe; drift beyond a named baseline is what the scope-designation sentence covers; carried with F2 by the website-sync / handbook-revision follow-up.
+- **Status:** mirrors the header table above (authoritative for `Status`/`Version`). User go received 2026-08-25 (orchestrator relay): **steps 1–4 executed** — branch carried onto `feat/handbook-maturity`, manifest bumped `0.7.0` → `0.7.1`, exactly the four paths staged, release commit **`a8435fe6969745cead58750e22dbafa01004d845`**, working tree clean after (`git status --porcelain` empty). **Step 5 passed** — user quote: "looked good in Word, push it" (2026-08-25); QA finding E2 adjudicated: overview-table placement acceptable in real rendering. **Step 6 done** — pushed, confirmed live (`* [new branch] feat/handbook-maturity -> feat/handbook-maturity`). **Step 7 done 2026-08-25**: retried from the orchestrating session per handoff, with the user's explicit publish go given in that conversation and watching live; the prior classifier denial cleared on retry; **PR #27 opened**: https://github.com/a-lottes/aSPARK/pull/27 (title = release-commit subject; body drafted fresh from §2–3 since the prior session's drafted text existed only in its conversation record). **Step 8 stays gated on post-merge**: merge + annotated tag + smoke check are the maintainer's.
+- **Summary:** Handbook honesty labelling handed off as v0.7.1 (patch, confirmed): delivery-stage label on all 17 chapters, overview table up front, 18 inline target-state markers, title page separating the v1.2 revision from the shipped baseline (Core v0.7.0 · graph v0.7.0).
+- **Open:** `0 for this team` — maintainer post-merge: merge PR #27, annotated tag `v0.7.1` (ledger step 8), proposed smoke check (fresh `claude plugin validate` on `main`, label spot-check). Rulings recorded same day: version **v0.7.1 confirmed**; the NFR-2 residual (title-page pair names judged baseline v0.7.0 while Core's newest release becomes v0.7.1) **accepted by the user** as recorded here — the pair states the AC-3.3 spot-check target and stays true because this diff changes nothing the chapters describe; drift beyond a named baseline is what the scope-designation sentence covers; carried with F2 by the website-sync / handbook-revision follow-up.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch at the next `/go-live`.
 
@@ -47,7 +47,7 @@
 | Action | Result |
 |---|---|
 | Version bump & tag | **Executed (local only).** Confirmed patch `0.7.0` → `0.7.1` inside release commit `a8435fe6969745cead58750e22dbafa01004d845` on `feat/handbook-maturity`. **No tag exists and none is created pre-merge** (`pr` mode; verified: local tags end at `v0.7.0`) — post-merge annotated tag `v0.7.1` on the merge commit stays with the maintainer (step 8). |
-| PR / merge | **Push done; PR creation denied.** `git push -u origin feat/handbook-maturity` — confirmed live (new branch, tracking set). `gh pr create` (drafted title/body) denied by the auto-mode classifier — "Stage 2 classifier error … (usually transient)"; unlike both prior releases' stable subagent permission wall, but per standing instruction not retried: runs next from the orchestrating session with the user watching. Declared `pr` mode (constitution §7); approver = self-review-via-PR (`a-lottes`). No CI exists (`.github/` holds templates only), so "CI green" will be N/A by absence at hand-off. |
+| PR / merge | **Push done; PR #27 opened.** `git push -u origin feat/handbook-maturity` — confirmed live (new branch, tracking set). The first `gh pr create` attempt was denied by the auto-mode classifier ("Stage 2 classifier error … (usually transient)"); handed to the orchestrating session per standing instruction, retried there on 2026-08-25 with the user's explicit publish go and watching live — denial cleared, **PR #27**: https://github.com/a-lottes/aSPARK/pull/27. Declared `pr` mode (constitution §7); approver = self-review-via-PR (`a-lottes`). No CI exists (`.github/` holds templates only), so "CI green" is N/A by absence. Merge stays with the maintainer. |
 | Deploy | N/A — no deploy surface (Markdown/JSON plugin, no runtime); in `pr` mode deploy = the merge, which has not happened. |
 | Post-release smoke check | N/A until merge. Proposed for after merge: fresh `claude plugin validate` on `main` plus a one-line text-extraction spot-check that the installed handbook carries the labels. |
 
@@ -59,7 +59,7 @@
 4. ✅ Committed as `a8435fe6969745cead58750e22dbafa01004d845` (verbatim drafted message)
 5. ✅ Done 2026-08-25 — user opened the docx in Word: passed ("looked good in Word"); E2 adjudicated acceptable
 6. ✅ Done 2026-08-25 — pushed, confirmed live; branch tracking set
-7. ⛔ Denied 2026-08-25 — `gh pr create` blocked by the auto-mode classifier (transient-flavored, not the prior releases' standing wall); not retried per standing instruction — **runs from the orchestrating session**, full drafted title/body preserved in the release-preparation conversation record
+7. ✅ Done 2026-08-25 — retried from the orchestrating session with the user's publish go; classifier denial cleared; **PR #27 opened** (https://github.com/a-lottes/aSPARK/pull/27); body redrafted from §2–3 because the prior session's drafted title/body lived only in its conversation record
 8. ☐ After merge (maintainer): `git fetch origin && git tag -a v0.7.1 origin/main -m "aSPARK Core v0.7.1 — handbook maturity labels (content-only)" && git push origin v0.7.1`
 
 ## 4. Learnings (Keep!)
@@ -74,12 +74,12 @@
 
 *All boxes checked → the loop is closed. Checked only where genuinely true today.*
 
-- [ ] All pre-flight checks passed at release time — one booked human check still open: the open-in-Word visual check (step 5)
+- [x] All pre-flight checks passed at release time — incl. the booked human check: open-in-Word visual check passed 2026-08-25 ("looked good in Word")
 - [x] Changelog written in user-facing language — §2
-- [ ] Release actions executed and verified — local steps done (`a8435fe`); push/PR/tag gated on step 5; rollback path written below
+- [x] Release actions executed and verified up to the `pr`-mode hand-off — local commit `a8435fe`, push confirmed, PR #27 opened and verified live; merge + annotated tag + smoke check handed to the maintainer (ledger step 8); rollback path written below
 - [x] Learnings recorded — §4
 - [x] Line budget respected: Ist 91 / Soll ~100 — **overage explicitly waived by the user, 2026-08-25**, reason verbatim: "verbatim commit message and rollback path are load-bearing; trimming them would remove the audit trail's substance"
-- [ ] Status set to `released`, or `handed-off` in declared `pr` mode — currently `preparing`
+- [x] Status set to `released`, or `handed-off` in declared `pr` mode — **`handed-off`** (PR #27 open; merge/tag/smoke with maintainer)
 
 ---
 
