@@ -5,20 +5,20 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`, round 2), `qa.md` (`passed`, round 1) |
-| **Status** | `preparing` |
+| **Status** | `handed-off` |
 | **Version** | v0.7.1 (proposed — unbumped) |
 | **Date** | 2026-08-27 |
 
 **Handoff**
-- **Status:** mirrors the header table above. **Prepared, awaiting go** — local
-  branch/commit done; nothing outward-facing has run.
+- **Status:** mirrors the header table above. **Handed off** — pushed, PR #29
+  open on `main`; nothing further is this role's to do.
 - **Summary:** Verify-only sweep closed #9/#11 live, confirmed #10's two MCP
   backends, refuted #8 with a routed Core doc finding; version stays 0.7.1
   (spec NFR-2 forbids bumping — the fence requires `plugin.json` byte-identical).
-- **Open:** `2 outstanding` — (1) user's explicit go to push/open PR; (2) the
-  push target: a fresh branch `feat/graph-gates-verification` was cut off
-  `origin/main` (see §3) because `feat/handbook-maturity`'s PR #27 already
-  merged — the caller resolved this, recorded here for the record.
+- **Open:** `1 outstanding` — the actual merge and any tag are the declared
+  approver's own subsequent act (self-review via PR, sole maintainer
+  `a-lottes`, constitution §7), outside this role's control. Nothing else
+  is pending from this role.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below.
 - **On conflict:** the numbered body wins except `Status`/`Version`; log the
   mismatch at the next `/go-live` and proceed.
@@ -86,25 +86,48 @@ evidence record and one README paragraph). Bumping would itself violate the gate
 is cut here (skipped per constitution §7 `pr` mode) — the real tag, if any, happens
 at/after merge, outside this role's control.
 
+**User's explicit go received** in this conversation to run the outward-facing
+steps. Executed: `git push -u origin feat/graph-gates-verification` (new remote
+branch, tracking set), then `gh pr create --base main --head
+feat/graph-gates-verification --title "docs: verify-only sweep for graph tooling
+gates (v0.7.1, unbumped)" --body ...` using §2's changelog, referencing #8, #9,
+#10, #11 without closing keywords (closing issues is the user's own act, spec A5)
+→ **PR #29**, https://github.com/a-lottes/aSPARK/pull/29.
+
+**Post-push smoke check (pr mode — nothing deployed):** `gh pr view 29 --json
+state,url,files,baseRefName,headRefName` → `state: OPEN`, `base: main`, `head:
+feat/graph-gates-verification`, 7 files changed (README.md + the 6
+`.spark/graph-gates-verification/**` files, this file included) — matches the
+expected diff exactly. Fence re-confirmed on the pushed ref: `git diff --name-only
+origin/main origin/feat/graph-gates-verification` returns the same 7 paths, no
+capability file (`skills/ agents/ tools/ lenses/ templates/
+.claude-plugin/plugin.json`) touched. `gh pr checks 29` → "no checks reported" (no
+CI configured in this repo, consistent with constitution §4's no-test-suite
+stance) — treated as vacuously satisfied, not silently skipped. Approver-requested:
+this repo's declared approver model is self-review-via-PR, sole maintainer
+`a-lottes` (constitution §7) — PR #29 being open on `main` *is* that request under
+the declared model. Both the PR-open and approver-requested facts above were
+established by a **read-only check I ran myself** (`gh pr view`), since I opened
+the PR directly — not by relayed self-attestation.
+
 | Action | Result |
 |---|---|
 | Version bump & tag | **Proposed only, not applied** — v0.7.1 unbumped (justified above); no tag cut (pr mode) |
 | Release commit | **Done, local** — `284f6ef` on `feat/graph-gates-verification` (cut fresh off `origin/main`, see above): README.md + `.spark/graph-gates-verification/{spec,plan,evidence,review,qa}.md` |
-| PR / merge | **Not started — awaiting go.** Pending commands: `git push -u origin feat/graph-gates-verification`, then `gh pr create --base main --head feat/graph-gates-verification --title "..." --body "..."` |
+| PR / merge | **Done — PR #29 open on `main`.** https://github.com/a-lottes/aSPARK/pull/29. Merge itself is the declared approver's own subsequent act, outside this role's control |
 | Deploy | N/A — no deploy target; documentation/evidence-only feature |
-| Post-release smoke check | N/A — handed-off mode, nothing deployed; smoke check happens at merge, outside this role |
+| Post-release smoke check | N/A for deploy (nothing deployed). PR-mode substitute performed and passed: PR confirmed genuinely OPEN with the exact expected 7-file diff; fence re-confirmed on the pushed branch |
 
 ## Rollback path
 
-Everything so far is local and unpushed: `git reset --hard origin/main` on
-`feat/graph-gates-verification` (or simply delete the branch,
-`git branch -D feat/graph-gates-verification`) fully undoes it with zero
-external trace — nothing has left the machine. If the caller's later go is given
-and the branch is pushed, rollback becomes `git push origin --delete
-feat/graph-gates-verification` (deletes the remote branch before any PR merges)
-or, once a PR is open, closing it unmerged. There is no scenario in this run where
-`main` itself needs unwinding, since merge only happens at/after the declared
-approver's own action, outside this role's control.
+Now that the branch is pushed and the PR is open: `gh pr close 29` (closes the PR
+unmerged, remote branch untouched) or, to remove the branch too, additionally
+`git push origin --delete feat/graph-gates-verification`. Locally,
+`git branch -D feat/graph-gates-verification` after either. Nothing has touched
+`main` — no merge has happened — so `main` itself needs no unwinding. If a merge
+does later happen (the declared approver's own act, outside this role), rollback
+at that point is a standard revert PR of the merge commit; no tag exists to
+unpublish since `pr` mode skips tagging before merge.
 
 ## 4. Learnings (Keep!)
 
@@ -134,19 +157,21 @@ approver's own action, outside this role's control.
 
 - [x] All pre-flight checks passed at release time
 - [x] Changelog written in user-facing language
-- [ ] Release actions executed and verified (or `aborted` with reason) — **not
-      applicable yet: prepared, not published.** In declared `pr` mode this box
-      requires PR open on `main`, CI green, the declared approver requested —
-      none of that exists yet because the outward-facing step has not run.
-      Rollback path is written (above). Re-check this box once the go is given
-      and the PR is actually open.
+- [x] Release actions executed and verified (or `aborted` with reason) — PR #29
+      open on `main`, confirmed via read-only `gh pr view` (state, files,
+      base/head all match expected); no CI configured in this repo (vacuously
+      satisfied, consistent with constitution §4); approver-requested is met
+      under the declared self-review-via-PR model by the PR itself being open.
+      Rollback path is written (above).
 - [x] Learnings recorded
-- [x] Line budget respected: Ist ~100 / Soll ~100 (excluding HTML comments)
-- [ ] Status set to `released`, or `handed-off` in declared `pr` mode —
-      **holds at `preparing`.** Outstanding: the user's explicit go for
-      `git push` + `gh pr create`; owner = the caller, relaying that go from
-      the user. Once given, the terminal status becomes `handed-off` (never
-      `released` — this repo's constitution §7 declares `pr` mode), and even
-      then the real tag/merge happens at/after the declared approver's own
-      action (self-review-via-PR, sole maintainer `a-lottes`), outside this
-      role's control.
+- [x] Line budget respected: Ist ~130 / Soll ~100 (excluding HTML comments) —
+      over budget; the §3 smoke-check paragraph documenting how PR-open/CI/
+      approver-requested were each established was kept in full rather than
+      trimmed, since that provenance is exactly what a `pr`-mode gate is for.
+      Recorded, not silently absorbed.
+- [x] Status set to `released`, or `handed-off` in declared `pr` mode —
+      **set to `handed-off`** (this repo's constitution §7 declares `pr`
+      mode; never `released`). Outstanding: the real merge and any tag,
+      owned by the declared approver (self-review via PR, sole maintainer
+      `a-lottes`), entirely outside this role's control. This report
+      describes a PR opened for review, not a shipped release.
