@@ -246,7 +246,7 @@ current state.
 | The loop — 10 skills, 7 agents, 6 templates, `/spark` | **Proven** — full end-to-end run on a sample app, all five gates enforced, shipped as `v0.1.0` |
 | Spec-driven core — constitution, Clarify pass, NFRs, traceability | **Proven through Plan** — live review/QA traceability awaits a full `/increment` |
 | Situational lenses (`lenses/`) | **Shipped, unproven in the field** — dogfooded on aSPARK itself, never yet run on someone else's project |
-| Optional tools (`tools/`, `aspark-graph`) | **25 of 30 criteria proven live**, six ship as a documented `partial` |
+| Optional tools (`tools/`, `aspark-graph`) | **25 of 30 criteria proven live** pre-sweep, six shipped `partial`; a 2026-08-26 verify-only sweep closed three of those six live, refuted one with a finding, and left two out of scope (still `unproven`) — see below |
 | PR-mode delivery (`handed-off`) | **Proven** on this repo's own release ([PR #3](https://github.com/a-lottes/aSPARK/pull/3)) |
 
 **The one real gap:** the lens layer's success signal is a UI-lens QA-verified on a
@@ -255,6 +255,29 @@ happened yet. Lens compliance is instruction-driven — no test enforces that a 
 actually fired, and none can — so a report from a real project is the only evidence
 that counts. If you run aSPARK on yours, [#4](https://github.com/a-lottes/aSPARK/issues/4)
 and [#5](https://github.com/a-lottes/aSPARK/issues/5) are waiting for you.
+
+**Post-sweep proof state for issues #8–#11** (verify-only sweep, 2026-08-26 —
+**[.spark/graph-gates-verification/evidence.md](.spark/graph-gates-verification/evidence.md)**):
+**proven** — [#9](https://github.com/a-lottes/aSPARK/issues/9) (`/demo-day`'s
+no-browser stop path) and [#11](https://github.com/a-lottes/aSPARK/issues/11)
+(the `aspark-graph build` hint fires exactly once; a stale graph is announced
+once, then treated as absent) both held live, start to finish, with a stated
+counting method. [#10](https://github.com/a-lottes/aSPARK/issues/10) (browser
+backends) is now **proven** for Playwright MCP and Chrome DevTools MCP, one
+real navigation-plus-assertion each; Claude in Chrome remains the only backend
+proven in an actual project run. **Refuted-with-finding** —
+[#8](https://github.com/a-lottes/aSPARK/issues/8) (MCP-first precedence): the
+MCP branch is real and is taken when tools are exposed, but repeated fresh
+sessions against an identical registered environment did not reliably
+reproduce the documented zero-probe-command guarantee, and the sweep's own
+evidence points at a specific fix: the tool file's "run no command" and the
+ceremony skills' "resolve both facts" give the MCP branch no documented,
+command-free way to satisfy both at once. **Unproven, out of this sweep's
+scope** — AC-1.2 (byte-identical output vs. the pre-change version) and AC-5.2
+(omitting a `files:` note for a genuinely unknowable-at-plan-time task): this
+feature never attempted either; they remain exactly as unproven as before.
+`docs/status.md`'s full criterion table predates this sweep and is not yet
+reconciled with it — a follow-up, not part of this diff.
 
 Full evidence — every run, every `partial` and why it ships that way:
 **[docs/status.md](docs/status.md)**.
