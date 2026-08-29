@@ -70,6 +70,13 @@ spends them in the context the rest of the loop still has to fit into.
    the app will be run for `/demo-day` (start command, URL) and confirm
    browser tooling exists — a loop that stalls at QA for missing setup
    wastes the whole session.
+   **Unless the project already declared its QA method:** if
+   `.spark/constitution.md` §8 `QA Method` names both
+   `Browser-observable surface: no` and a substitute method, don't ask any of
+   that and don't re-negotiate the method — say in one line which method QA
+   will use and move on. Absent, incomplete, or `yes` → ask exactly as above,
+   and say nothing about the declaration. Like every other ceremony, `/spark`
+   only ever **reads** it: creating or amending it is `/charter`'s alone.
 3. **Run each ceremony by its own rules.** For every phase, read
    `${CLAUDE_PLUGIN_ROOT}/skills/<ceremony>/SKILL.md` and follow it exactly
    — same agents, same templates, same gate procedure. You add nothing and

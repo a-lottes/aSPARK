@@ -60,6 +60,19 @@ its only real failure.
 3. **Run pre-flight, fresh.** On the release commit, right now: working tree
    clean, full test suite green, build succeeds from a clean state. Record
    the results — never copy them from earlier reports.
+   - **How §1's QA row is worded.** The check never changes: `qa.md` status
+     must be `passed`, on every project, at every value of anything. What
+     changes is only what the row *cites*. If `.spark/constitution.md` §8
+     `QA Method` carries a complete declaration (surface `no` plus a named
+     method), the row names that method and cites §8 as a **standing project
+     fact** — how this project's QA is performed, decided once at `/charter`.
+     Never write it as a per-feature user override or a waiver granted for
+     this release, and never as a check that was skipped: QA ran, by the
+     declared method, and `qa.md` records every `AC-`/`NFR-` ID as always.
+     With no constitution, no §8, or an incomplete §8, word the row **exactly
+     as today** and say nothing about the declaration. You only **read** §8;
+     only `/charter` creates or amends it, so if you believe the declaration is
+     wrong, say so and point to `/charter` rather than editing it.
 4. **Pick the version.** Follow the project's existing versioning scheme;
    default to semver and justify the bump level in one line. In `pr` mode,
    the version is **proposed only** — mark it so in the report — and no tag

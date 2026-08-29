@@ -30,7 +30,12 @@ Optional argument: the feature name. Resolve as usual.
    `${CLAUDE_PLUGIN_ROOT}/templates/release-notes.md`, and `.spark/constitution.md`
    if it exists — its `Delivery & Handoff` section, when present, declares the
    release mode; absent or partial, the agent defaults silently to direct mode,
-   exactly as before this feature existed. First pass: fresh
+   exactly as before this feature existed. Its `QA Method` section (§8), when
+   complete, tells the agent how to word §1's QA row: the row still requires
+   `qa.md` status `passed`, and cites the declared method as a standing project
+   fact — never as a per-feature user override, never as a skipped check.
+   Absent or incomplete → worded exactly as today, with no mention of it.
+   Like every ceremony but `/charter`, this one only **reads** §8. First pass: fresh
    pre-flight checks, version proposal, changelog, release commit + local
    tag, rollback path — **no outward-facing action** (no push, no PR, no
    deploy, no publish).

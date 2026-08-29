@@ -228,6 +228,27 @@ dependencies and no executable code of its own.
   tag happen outside aSPARK's control. Default when absent: `released` (direct
   mode's only terminal status).
 
+## 8. QA Method
+
+- **Browser-observable surface:** `no` — aSPARK Core is a Claude Code plugin made
+  of Markdown: 72 tracked `.md` files, plus 5 workflow `.yml`, 4 asset `.png` and
+  2 manifest `.json`. No package manifest, no `bin`, no server, no route handler,
+  no page — `/demo-day`'s browser gate cannot be satisfied here. Default when
+  absent: `yes`.
+- **Substitute verification method:** hands-on QA against the **installed
+  plugin**, where a performed step is a real ceremony invocation or a real
+  command whose output was observed. Reading a Markdown file and reasoning about
+  what it *would* do is never a performed step and never passes an acceptance
+  criterion — such rows are marked `not-verified-live`. Method and its evidence
+  rule established in `.spark/graph-gates/qa.md` §1. Default when absent: none —
+  the QA phase asks the user, exactly as today.
+
+This changes the QA phase's **method**, never its coverage: `qa.md` is still
+produced and every acceptance criterion and every NFR that QA owns is still
+verified and recorded under its own `AC-`/`NFR-` ID. It is browser/QA-specific
+and grants no other ceremony an off switch. Only `/charter` may create or amend
+it.
+
 ---
 
 ## Amendments
@@ -238,4 +259,5 @@ dependencies and no executable code of its own.
 | 2026-07-25 | Profile confirmed (`library` only, load 1; `security` off) and status set `active` | The user's decision on the drafted profile: `security`'s checks are 14/15 inapplicable to a repo with no runtime, auth, PII or dependencies; the one live concern is carried as a constraint in §3/§6 instead |
 | 2026-07-25 | `qa-report.md`'s protected columns recorded as `Spec ID` + `Result`, with the consumer defect named | Verified against `aspark-graph`'s `_parse_qa` (`artifacts.py:234`): it demands a header equal to or starting with `ac` and raises `TemplateDriftError` on the shipped template. `Spec ID` is protected because it is what ships and it carries `NFR-<n>` as well as `AC-<n>.<m>`; renaming it back would break that semantics, so the fix is the consuming repo's |
 | 2026-08-06 | Added `## 7. Delivery & Handoff`, declaring `pr` release mode into `main`, terminal status `handed-off`, `none` ticket format, and approver = self-review-via-PR (confirmed by the user) | Deliberate, already-decided switch to PR-first delivery per `.spark/tracker-handoff/spec.md` clarification C8 — this repo needs a real venue to prove `handed-off`'s positive case at its own `/go-live`, ahead of that feature's Keep phase. Mechanics (branch protection, exact approver identity) were explicitly scoped as this amendment's decision, not the spec's (spec §6 Out of Scope). The user confirmed self-review-via-PR as the approver and explicitly chose **not** to set up real GitHub branch protection now (`gh api .../branches/main/protection` → 404 at decision time) — the declaration is a process commitment the team is choosing to adopt, not a description of enforced infrastructure, flagged inline in §7 rather than papered over |
+| 2026-08-29 | Added `## 8. QA Method`, declaring `Browser-observable surface: no` and naming the substitute method (hands-on QA against the installed plugin, with a performed step defined as a real ceremony invocation or an observed command output) | Confirmed explicitly by the user at `/charter`, drafted from named evidence only — 72 tracked `.md` files and no package manifest, `bin`, server or route handler — never inferred from the profile or from `ux`/`seo` being off, per `.spark/right-sizing/spec.md` AC-1.8. Retires a negotiation that had recurred on four consecutive features (`graph-gates`, `handbook-maturity`, `lean-rounds`, and this one), each time re-deciding the same override by hand. The method and its "performed step" rule are not new: they were established and used at `.spark/graph-gates/qa.md` §1; this records them once as a standing project fact instead of per feature. Coverage is unchanged — `qa.md` is still produced with every `AC-`/`NFR-` ID verified |
 | 2026-08-15 | `review-report.md`'s protected structures extended with the findings table's columns `Severity`, `Location`, `Status` | The §3 row named only the `Findings` heading and the `^F\d+$` ID pattern, but `aspark-graph`'s `_parse_review` (`artifacts.py:202-205`, verified independently) hard-requires a findings-table header containing `severity`, `location` and `status` (substring match, case-insensitive, same tolerance as the rest of the contract) and raises `TemplateDriftError` if any is absent — so the constitution's own account of the contract was incomplete. Surfaced during `/story-time` on `lean-artifacts` (clarification C2 / tracked dependency A5), which scoped the fix out of its own diff because it renames nothing and doesn't touch this table. `qa-report.md`'s parser (`_parse_qa`) was checked in the same pass and requires only the `ac`/`result` columns already documented in the 2026-07-25 entry above — no scope expansion there |
