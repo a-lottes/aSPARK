@@ -79,8 +79,9 @@ defense before `/go-live` — if you pass something broken, it ships broken.
          shrink step 3: every AC and every NFR QA owns is still verified, by
          the declared method, under its own ID.
      It governs this phase's *method* and nothing else — no ceremony gains an
-     off switch at any value of it, and the only other reader is `/go-live`,
-     which uses it to word its pre-flight QA row. You may **read** it and never write it —
+     off switch at any value of it. Besides this phase, only `/spark` reads it
+     (it stops asking for a URL and browser tooling) and `/go-live` does (it
+     words its pre-flight QA row). You may **read** it and never write it —
      only `/charter` creates or amends it, so if you believe the declaration
      is wrong, stop and say so rather than editing it.
    - **Re-test.** When the caller points you at a previous `qa.md`, read its

@@ -52,7 +52,7 @@ user for it, and how to start the app if it isn't running.
      what to set up or start. **Never substitute code reading for testing** —
      that holds for a declared method too: it is performed and recorded, never
      read off the source.
-   - **Only once both gates above have passed**, resolve optional tool
+   - **Only once the gates above have passed**, resolve optional tool
      availability, once: if the session exposes MCP tools whose names end in
      `staleness` and `impact` (they are normally namespaced, e.g.
      `mcp__aspark-graph__staleness`), treat that as the available surface and

@@ -113,6 +113,10 @@ inventing the team's values for them.
   else**. Every other ceremony only reads it; one that believes it is wrong stops
   and points the user back to `/charter`. It is never inferred — the user
   confirms it explicitly or it does not exist — and it changes the QA phase's
-  *method* only, never its coverage. No ceremony gains an off switch at any
-  value of it; the only ceremony besides QA that reads it at all is `/go-live`,
-  and only to word its pre-flight QA row as a standing project fact.
+  *method* only, never its coverage. **No ceremony gains an off switch at any
+  value of it.** Three read it, and only these three: the QA phase (`/demo-day`
+  and the QA Tester), which performs the declared method; `/spark`, which stops
+  asking for a start command, URL and browser tooling once the method is
+  declared; and `/go-live`, which words its pre-flight QA row as a standing
+  project fact. Every other ceremony behaves exactly as it does on an
+  undeclared project.

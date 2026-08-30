@@ -484,3 +484,160 @@ fall-back cases shown against real fixtures — (a) and (b) fully, (c) partially
 with the limit stated ✓; QA phase proceeding by the declared method and
 `release.md` §1 citing the constitution — **not run**, they are the next two
 ceremonies (5.3) ✓ recorded honestly. **Done, with 5.3 outstanding by design.**
+
+---
+
+## Entry 6 — the venue, established (review finding F3, first half)
+
+F3's blocking half was that ceremonies load `${CLAUDE_PLUGIN_ROOT}` — the
+installed plugin — and the installed plugin was not this branch. Resolved by
+committing the branch and repointing the marketplace at the working tree.
+
+**Correction to what Entry 4 and Entry 5 implied about staleness.** The
+installed `0.7.0` was *not* behind on committed work. Measured before the
+change:
+
+```
+$ for f in agents/reviewer.md agents/qa-tester.md skills/demo-day/SKILL.md; do
+    diff <(git show 085db99:$f) $CACHE/$f | grep -c '^[<>]'   # cache vs committed HEAD
+    diff $f $CACHE/$f | grep -c '^[<>]'                        # cache vs working tree
+  done
+agents/reviewer.md:        cache-vs-HEAD=0   cache-vs-worktree=16
+agents/qa-tester.md:       cache-vs-HEAD=0   cache-vs-worktree=66
+skills/demo-day/SKILL.md:  cache-vs-HEAD=0   cache-vs-worktree=39
+```
+
+Zero drift against committed `main`. The entire gap was **this feature's own
+uncommitted work** — so the `0.7.0` vs `0.7.1` version difference was a version
+bump, never a content lag, and re-installing from GitHub would have changed
+nothing. Recorded because the earlier framing of F3 invited the wrong inference.
+
+**What was done:**
+
+```
+$ git commit                                   # 47f6040, 15 files, tree clean
+$ claude plugin marketplace add /Users/andreaslottes/aSPARK
+✔ Successfully added marketplace: aspark (declared in user settings)
+   source: {'source': 'directory', 'path': '/Users/andreaslottes/aSPARK'}
+$ claude plugin update aspark@aspark
+✔ Plugin "aspark" updated from 0.7.0 to 0.7.1 for scope user. Restart to apply changes.
+```
+
+`claude plugin install aspark@aspark` was a no-op ("already installed"); the
+source change only takes effect via `update`, and only with the
+marketplace-qualified name — plain `update aspark` fails with "Plugin not
+found".
+
+**Verified, not assumed:**
+
+```
+$ CACHE=~/.claude/plugins/cache/aspark/aspark/0.7.1
+$ grep -c 'Cite what a predecessor already established' $CACHE/agents/reviewer.md      -> 1
+$ grep -c 'no ceremony gains an off switch at any value' $CACHE/templates/constitution.md -> 1
+$ grep -c 'QA Method' $CACHE/skills/spark/SKILL.md                                     -> 1
+$ grep -c 'A QA report without performed steps is invalid' $CACHE/skills/demo-day/SKILL.md -> 1
+$ diff -rq $CACHE/agents    aSPARK/agents      -> agents/: IDENTICAL
+$ diff -rq $CACHE/skills    aSPARK/skills      -> skills/: IDENTICAL
+$ diff -rq $CACHE/templates aSPARK/templates   -> templates/: IDENTICAL
+```
+
+**F3 is NOT closed by this entry.** The venue now exists; nothing has yet
+executed it. The CLI itself says *"Restart to apply changes"*, and the session
+that ran this install was still serving `0.7.0`'s skills — the `/peer-review`
+invocation in it carried the base directory `.../aspark/0.7.0/skills/peer-review`.
+F3 closes only when a ceremony **runs** under `0.7.1`: the next `/peer-review`
+after a restart, which is also US-2's first live venue and the point at which
+`plan.md` §4's corrected claim becomes checkable.
+
+**Standing consequence for the rest of this loop:** the installed plugin is a
+*copy* taken at update time, not a live view of the working tree. Any further
+edit to `agents/`, `skills/` or `templates/` desynchronises it and requires
+`claude plugin update aspark@aspark` plus a restart before it is exercised again.
+Edits confined to `.spark/` do not.
+
+---
+
+## Entry 7 — the first ceremonies to actually execute this diff
+
+Entry 6 established the venue but proved nothing had run in it. This entry
+records the first ceremonies that did. Both are **live observations**, not
+readings of instruction text.
+
+### 7.1 `/spark` step 2 under the declaration (AC-1.1, at the orchestrator)
+
+The resumed `/spark` loaded from `.../aspark/0.7.1/skills/spark` — its own
+skill header says so, where the previous session's said `0.7.0` — and its step 2
+carried T10's clause. `.spark/constitution.md` §8 is complete
+(`Browser-observable surface: no` plus a named method).
+
+**Observed:** the orchestrator asked for **no** start command, **no** URL and
+**no** browser tooling. It named the declared method in one line ("QA läuft als
+Hands-on-Prüfung gegen das installierte Plugin. Nichts zu verhandeln.") and
+continued. No override was negotiated with the user.
+
+**This is the orchestrator half only, and it is not AC-1.1.** AC-1.1
+(`spec.md:118`) requires that "when the loop reaches the QA phase, then
+**`/demo-day`** proceeds by the declared method" — `/demo-day` has not run, so
+AC-1.1 is **not yet met** and belongs in §7.4's not-run list, not here. What was
+performed is T10's clause in `/spark`, which is the counterpart to Entry 2's
+fourth-occurrence recording: the negotiation Entry 2 caught happening for the
+fourth time did not happen a fifth. Corrected after review round 3 (finding
+F16); the original wording claimed the AC outright. Note the further limit —
+this is one observation on one project, the same project that wrote the rule. It
+is not evidence that the clause generalizes.
+
+### 7.2 `/peer-review` round 2 under the US-2 rule (US-2's live venue)
+
+Round 1 ran `0.7.0`'s `reviewer.md`, which carries no US-2 rule — that was
+finding F3. Round 2's Reviewer verified its own venue rather than accepting the
+caller's word, and reported the check as decisive:
+
+```
+installed_plugins.json  -> aspark@aspark at .../cache/aspark/aspark/0.7.1,
+                           gitCommitSha 47f60402…
+known_marketplaces.json -> source: directory, path: /Users/andreaslottes/aSPARK
+diff -rq cache vs tree  -> agents/ skills/ templates/ lenses/ tools/
+                           .claude-plugin/plugin.json  all identical
+grep -c 'Cite what a predecessor already established'
+    0.7.0/agents/reviewer.md -> 0
+    0.7.1/agents/reviewer.md -> 1
+```
+
+It found `lenses/`, `tools/` and `.claude-plugin/plugin.json` identical too —
+**three paths more than Entry 6 claimed**, so Entry 6 understated its own
+result. It also corrected Entry 6's "12 files" for commit `47f6040` to **15**
+(`git show --name-only`), which is finding F14, fixed in place.
+
+**US-2 observed live, with its limit stated.** The Reviewer cited predecessor
+artifacts where it could and named the AC-2.2 condition each time it went back
+to source — (a) for verifying the claimed fixes, (d) for the venue claim it had
+concrete reason to doubt. That is AC-2.1 and AC-2.3 performed. Facts re-derived
+**without** a named condition: **zero**.
+
+The Reviewer immediately qualified that number, and the qualification belongs
+here rather than only in its report: AC-2.2(b) exempts every Must AC's
+verification, and this feature is all-Must, so on *this* feature S2 is
+satisfiable almost by construction. **The zero is real but nearly uninformative
+here.** Raised as an open question for the PO/EM, not resolved by this evidence.
+
+### 7.3 A regression this loop caught, recorded rather than buried
+
+F1's round-1 fix removed a false claim about `/go-live` and introduced a false
+one about `/spark`, in `agents/facilitator.md` — the file that explains §8 to the
+user at `/charter`. Round 2 caught it as **F12** and rated it Major, the same
+class as the defect it replaced. Fixed by naming all three readers explicitly
+(the QA phase, `/spark`, `/go-live`); a repo-wide grep for the old claim returns
+zero. Unconfirmed until round 3 checks it.
+
+### 7.4 Still not run
+
+**AC-1.1** — `/demo-day` proceeding by the declared method (§7.1 performed only
+the `/spark` half). **AC-1.2** — `qa.md` produced by that method with every
+`AC-`/`NFR-` ID verified. **AC-1.4** — `release.md` §1 citing the constitution.
+Those are `/demo-day` and `/go-live`, and they remain the outstanding half of
+Entry 5 §5.3.
+
+**Venue caveat carried forward:** the installed plugin is a snapshot. F13 and
+F12's fixes have desynchronised it again — `claude plugin update aspark@aspark`
+plus a restart must run before `/demo-day` performs §8's "QA against the
+installed plugin", or QA would test superseded text.

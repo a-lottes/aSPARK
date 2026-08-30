@@ -108,10 +108,14 @@
        ID. A declared method is performed and written down — never a licence to read the source.
      - It is browser/QA-specific. It is not a generic "declare a ceremony inapplicable" switch:
        **no ceremony gains an off switch at any value.** /story-time, /look-and-feel,
-       /sprint-plan, /increment and /peer-review behave exactly as today. /go-live still runs
-       every check it runs today - the one difference is how it *words* the QA row of the
-       release report's pre-flight section, which cites this declaration as a standing project
-       fact instead of a per-feature override.
+       /sprint-plan, /increment and /peer-review behave exactly as today. Exactly two
+       ceremonies have exactly one stated difference each. /go-live still runs every check it
+       runs today - the one difference is how it *words* the QA row of the release report's
+       pre-flight section, which cites this declaration as a standing project fact instead of
+       a per-feature override. /spark still runs every step it runs today - the one difference
+       is that it stops asking for a start command, URL and browser tooling, and names the
+       declared method instead. Apart from /demo-day, whose method is the point of this
+       section, and /charter, its sole writer, no ceremony behaves differently at any value.
      - It is not self-service. Only /charter may create or amend it; a phase that believes the
        declaration is wrong stops and points to /charter rather than editing it.
      - It cannot suppress live-browser QA on a project that has a browser-observable surface. There,
