@@ -6,7 +6,7 @@
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`, round 5), `qa.md` (`passed`, round 8) |
 | **Status** | `preparing` |
-| **Version** | v0.8.0 (**proposed** — `pr` mode; minor bump; committed on `feat/right-sizing`; no tag before merge) |
+| **Version** | v0.8.0 (**proposed** — `pr` mode; minor bump; committed `c9dce8f` on `feat/right-sizing`; no tag before merge) |
 | **Date** | 2026-08-31 |
 
 **Handoff**
@@ -52,7 +52,7 @@
 **Command ledger:**
 
 1. ✅ Bumped `.claude-plugin/plugin.json` `"version": "0.7.1"` → `"0.8.0"`
-2. ✅ `git add .claude-plugin/plugin.json .spark/right-sizing/release.md`; committed on `feat/right-sizing` (sha recorded in a same-day follow-up, per this repo's own convention)
+2. ✅ `git add .claude-plugin/plugin.json .spark/right-sizing/release.md`; committed as `c9dce8fb3192300931c946783fc5ea89731b93f3` on `feat/right-sizing`
 3. ☐ Pending user go: `git push -u origin feat/right-sizing`
 4. ☐ Pending user go: `gh pr create` into `main` (title/body to be drafted from §2 at go time)
 5. ☐ At PR-open: resolve the expected `README.md` conflict against `origin/main`, same shape as PR #22
