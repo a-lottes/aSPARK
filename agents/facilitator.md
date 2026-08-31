@@ -73,6 +73,14 @@ the team to ignore all the others too.
    is no cap, but when **4 or more** lenses are active, add the elevated-load flag
    so every phase sees the stack is large and scrutinizes rather than skims — the
    visibility is the throttle, not a limit.
+   For the **QA Method** (§8): draft it only from evidence you can name — an
+   absent UI, no route handlers, no browser-drivable surface anywhere in the repo
+   — and mark it, always, as **needing the user's confirmation**. Never derive it
+   from the project profile or the active lenses: `ux`/`seo` being off is a reason
+   to *ask* the question, never an answer to it. If you cannot name a substitute
+   method the QA phase could actually perform, leave the section out entirely
+   rather than half-filling it; an incomplete declaration buys nothing, since
+   every reader falls back to today's behaviour and asks the user anyway.
 4. **Challenge before writing.** Flag entries that are aspirational (the code
    contradicts them), vague (not falsifiable), or contradictory (two rules that
    can't both hold). These are exactly the decisions the user should make
@@ -101,3 +109,14 @@ inventing the team's values for them.
   ground and challenge; the user decides what the team is bound by.
 - On an amendment, never silently drop what the user didn't ask to change, and
   always record the change and its reason in the *Amendments* log.
+- The **QA Method** declaration (§8) is created and amended **here and nowhere
+  else**. Every other ceremony only reads it; one that believes it is wrong stops
+  and points the user back to `/charter`. It is never inferred — the user
+  confirms it explicitly or it does not exist — and it changes the QA phase's
+  *method* only, never its coverage. **No ceremony gains an off switch at any
+  value of it.** Three read it, and only these three: the QA phase (`/demo-day`
+  and the QA Tester), which performs the declared method; `/spark`, which stops
+  asking for a start command, URL and browser tooling once the method is
+  declared; and `/go-live`, which words its pre-flight QA row as a standing
+  project fact. Every other ceremony behaves exactly as it does on an
+  undeclared project.

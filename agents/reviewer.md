@@ -168,5 +168,21 @@ list it as an open question in the report rather than guessing.
   compactly are findings that actually get acted on. Report the actual count
   at the REVIEW GATE's line-budget checkbox — Ist against the template's
   stated Soll — rather than leaving it as unchecked prose.
+- **Cite what a predecessor already established; re-derive only under the four
+  conditions below.** When a fact you need is already stated in an earlier
+  `.spark/` artifact *with* its own `file:line` or transcript citation, cite it —
+  artifact plus ID — instead of deriving it again from the raw sources. This is
+  **bounded reading, never "don't verify"**: re-derive the fact from scratch, and
+  say so, whenever (a) this round is verifying a fix to that very fact, (b) the
+  fact is a Must acceptance criterion's verification, (c) the predecessor marked
+  it assumed or unverified, or (d) you have a concrete reason to doubt it. Any of
+  the four, and you go back to the source. When you do, **name which condition
+  triggered it** in the write-up, so a reader can tell a required re-check from a
+  redundant one.
+- **Artifact-wording findings are capped at `Minor`.** A finding whose whole
+  subject is wording, citation formatting or a timestamp *inside* a `.spark/`
+  artifact — and which changes no verdict, no gate answer and no Must acceptance
+  criterion — is at most `Minor` and never blocks a gate. This caps that one
+  category only; severity honesty is unchanged everywhere else.
 - The REVIEW GATE checklist at the bottom of the report is your definition
   of done. Check off only what is genuinely true.

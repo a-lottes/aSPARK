@@ -42,7 +42,15 @@ one.
    the project handles auth or PII), so confirm it consciously with the user
    rather than letting it ride. Also surface the **active-lens load** — if 4+
    lenses come out active, flag the elevated load so the user sees each phase
-   will carry several lenses (no cap, just visibility).
+   will carry several lenses (no cap, just visibility). Surface the **QA method**
+   (§8) as its own explicit decision too, with the evidence the agent found —
+   whether this project has a browser-observable surface, and if not, which
+   method the QA phase performs instead. Never let it ride on the profile or the
+   lens state: a project with no `website` and no `web-app` is *evidence* for the
+   question, never the answer to it, so a mis-typed profile can never suppress QA
+   on its own. Leaving it undeclared is a valid answer and the default — QA then
+   behaves exactly as it does today. `/charter` is the only ceremony that may
+   create or amend this declaration.
 4. **Iterate.** Fold the user's edits back in via the agent until they're
    satisfied. On an amendment, confirm the *Amendments* log records the change
    and its reason.

@@ -24,11 +24,42 @@ user for it, and how to start the app if it isn't running.
      point to `/peer-review`. (The user may explicitly override this order —
      record that in the QA report.) The `Status` row answers this; the report
      itself belongs to the `qa-tester` agent's context, not to yours.
-   - Confirm browser tooling is available (Claude in Chrome, Playwright MCP,
+   - **Only after that gate has passed**, read the project's QA method if it
+     declares one: `.spark/constitution.md` §8 `QA Method`, two fields —
+     `Browser-observable surface` and `Substitute verification method`. Four
+     outcomes, and only the last changes anything:
+     - **No constitution, no §8, or `Browser-observable surface: yes`** →
+       continue **exactly as today**: run the browser check below unchanged.
+       **Never** ask the user to choose, confirm or supply a substitute
+       method, treat this as an error or a warning, or re-negotiate whether
+       the ceremony should be overridden. **Fine, not a violation:** stating
+       in your own words, in your reply or in `qa.md` §1, that no declaration
+       applies. **Discouraged, capped at Minor:** quoting the declaration's
+       raw field values verbatim instead of describing the outcome. This
+       holds at every invocation, including one where the caller demands
+       full narration of your reasoning (spec `AC-1.3`/`NFR-4`, `C19`).
+     - **§8 present but incomplete** — surface `no` with no method named, or an
+       empty value → also **exactly as today**: run the browser check and ask the
+       user. Ambiguity resolves toward more verification, never less.
+     - **Surface `no`, method named, but this session cannot perform it** →
+       **STOP** and name the part you cannot perform. A declaration is a route,
+       never a licence to skip.
+     - **Surface `no` with a performable method named** → the browser check below
+       does not apply; proceed by the declared method without asking the user for
+       a per-feature override, and pass the method to the QA Tester in step 2.
+     Coverage never changes: `qa.md` is still produced, and every acceptance
+     criterion and every NFR that QA owns is still verified and recorded under its
+     own `AC-`/`NFR-` ID. You may **read** this declaration and never write it —
+     only `/charter` creates or amends it; if you believe it is wrong, stop and
+     point the user to `/charter`.
+   - Unless §8 declared a performable substitute method above, confirm browser
+     tooling is available (Claude in Chrome, Playwright MCP,
      Chrome DevTools MCP — whatever the session offers) and the app responds
      at the given URL. If either is missing, STOP and tell the user exactly
-     what to set up or start. **Never substitute code reading for testing.**
-   - **Only once both gates above have passed**, resolve optional tool
+     what to set up or start. **Never substitute code reading for testing** —
+     that holds for a declared method too: it is performed and recorded, never
+     read off the source.
+   - **Only once the gates above have passed**, resolve optional tool
      availability, once: if the session exposes MCP tools whose names end in
      `staleness` and `impact` (they are normally namespaced, e.g.
      `mcp__aspark-graph__staleness`), treat that as the available surface and
@@ -54,6 +85,9 @@ user for it, and how to start the app if it isn't running.
    If a tool resolved as available in step 1, pass
    `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md` the same way — one more path
    alongside the lens paths, nothing else.
+   Where step 1 resolved a declared substitute method, pass **that method** in
+   place of the app URL and the viewports, and say they are `N/A` for this
+   project — do not leave the agent to rediscover the declaration on its own.
    For a re-test, point it at the previous report so it verifies the fixes
    instead of starting from zero.
 3. **Relay needs.** If the agent reports missing prerequisites (login,
@@ -71,8 +105,12 @@ user for it, and how to start the app if it isn't running.
 
 ## Rules
 
-- A QA report without performed browser steps is invalid — reject it and
-  fix the tooling problem instead.
+- A QA report without performed steps is invalid — reject it and fix the
+  tooling problem instead. "Performed steps" means **in the browser**, except
+  on a project whose constitution §8 `QA Method` declares a substitute method,
+  where it means steps performed by *that* method. Either way they are
+  performed and recorded; a report resting on code reading is invalid on every
+  project.
 - Never mark `passed` while a Must-story AC is unverified.
 
 ## Handoff

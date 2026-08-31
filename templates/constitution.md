@@ -96,6 +96,34 @@
 - **Ticket-reference format:** e.g. `PROJ-123`, `#123`, a URL, or `none`. Default when absent: `none`.
 - **Terminal status:** the status a `pr`-mode release ends in once handed over — `handed-off`, unless amended. Default when absent: `released` (direct mode's only terminal status).
 
+## 8. QA Method
+
+<!-- How this project's QA phase verifies. Every field defaults to today's behavior when absent — an
+     undeclared project sees no new prompt, no new terminology, anywhere in /spark or /demo-day.
+     Declare this only if the project genuinely has no browser-observable surface.
+
+     Four things this declaration does NOT do:
+     - It changes the *method*, never the coverage. `qa.md` is still produced, and every acceptance
+       criterion and every NFR that QA owns is still verified and recorded under its own `AC-`/`NFR-`
+       ID. A declared method is performed and written down — never a licence to read the source.
+     - It is browser/QA-specific. It is not a generic "declare a ceremony inapplicable" switch:
+       **no ceremony gains an off switch at any value.** /story-time, /look-and-feel,
+       /sprint-plan, /increment and /peer-review behave exactly as today. Exactly two
+       ceremonies have exactly one stated difference each. /go-live still runs every check it
+       runs today - the one difference is how it *words* the QA row of the release report's
+       pre-flight section, which cites this declaration as a standing project fact instead of
+       a per-feature override. /spark still runs every step it runs today - the one difference
+       is that it stops asking for a start command, URL and browser tooling, and names the
+       declared method instead. Apart from /demo-day, whose method is the point of this
+       section, and /charter, its sole writer, no ceremony behaves differently at any value.
+     - It is not self-service. Only /charter may create or amend it; a phase that believes the
+       declaration is wrong stops and points to /charter rather than editing it.
+     - It cannot suppress live-browser QA on a project that has a browser-observable surface. There,
+       no value here changes anything. -->
+
+- **Browser-observable surface:** `yes` \| `no` — whether this project has a UI a browser can drive. Default when absent: `yes`.
+- **Substitute verification method:** the named method the QA phase performs instead, e.g. `documented dry run against the installed plugin, one performed step per AC`. Read only when the surface is `no`. Default when absent: none — the QA phase asks the user, exactly as today.
+
 ---
 
 ## Amendments
