@@ -6,13 +6,14 @@
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`, round 5), `qa.md` (`passed`, round 8) |
 | **Status** | `handed-off` |
-| **Version** | v0.8.0 (**proposed** — `pr` mode; minor bump; committed `c9dce8f` on `feat/right-sizing`; tag happens post-merge, outside this role's control) |
+| **Version** | v0.8.0 (**tagged and pushed** — `pr` mode; minor bump; merged `9c47bc9` into `main` by `a-lottes` 2026-08-31T13:21:23Z; annotated tag `v0.8.0` pushed to `origin`, commit `896af7c`) |
 | **Date** | 2026-08-31 |
 
 **Handoff**
-- **Status:** mirrors the header table above. PR #31 opened into `main`, awaiting merge by the declared approver (`a-lottes`, self-review-via-PR). Nothing else remains in this session's control.
+- **Status:** mirrors the header table above. PR #31 merged into `main` by the declared approver (`a-lottes`, self-review-via-PR), commit `9c47bc9`. Tag `v0.8.0` created and pushed. Per constitution §7, `handed-off` is `pr` mode's only terminal status — it does not become `released` after merge; that status is direct mode's alone (precedent: `tracker-handoff/release.md`, still `handed-off`).
 - **Summary:** A project with no browser-observable surface can now declare its QA method once in the constitution instead of renegotiating the same override every feature; a later phase can cite a predecessor's already-established fact instead of re-deriving it. Proposed **v0.8.0** (minor, additive, no breaking change).
-- **Open:** `3 outstanding`, none blocking handoff: (1) the declared approver (`a-lottes`) still needs to merge PR #31 — real tag/merge happen then, outside this session; (2) `handbook-maturity/release.md` still self-reports `preparing` though its PR #27 is visibly merged into `origin/main` — a stale artifact belonging to a different feature, flagged for the caller, not fixed here; (3) `README.md`'s QA-method-declaration status row currently reads "first exercised by this feature's own `/demo-day` and `/go-live`" — true as of this report closing that citation (§1 below); no edit needed, not stale.
+- **Open:** `1 outstanding`, not blocking, not this feature's to fix: `handbook-maturity/release.md` still self-reports `preparing` though its PR #27 is visibly merged into `origin/main` and, per the same repo history, `v0.7.1` was never tagged at all (last tag before this release was `v0.7.0`) — a stale, unrelated artifact, flagged for the caller. This feature's own two prior open items are resolved: PR #31 merged, tag `v0.8.0` created; `README.md`'s QA-method-declaration status row was already accurate and needed no post-merge edit.
+- **Post-release smoke check:** `git ls-remote --tags origin` confirms `v0.8.0` → `9c47bc9` on GitHub. A fresh `claude plugin install aspark@aspark` (against the now-fast-forwarded local `main`, which matches `origin/main`) installs `.claude-plugin/plugin.json` version `0.8.0` and the installed `agents/qa-tester.md` carries the `C19` action-based text. A responding install, not just a merged commit, is the finish line — confirmed live, not assumed.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch at the next `/go-live`.
 
@@ -72,17 +73,16 @@
 
 - [x] All pre-flight checks passed at release time — §1, all fresh
 - [x] Changelog written in user-facing language — §2, limitation and honesty constraint stated plainly
-- [x] Release actions executed and verified — push + PR done (§3); PR-open, CI-green (N/A by absence), and approver-requested all established by a read-only `gh pr view` on a PR this session opened itself; rollback path written below
+- [x] Release actions executed and verified — push + PR + merge + tag all done (§3); merge commit `9c47bc9` and tag `v0.8.0` → `896af7c` confirmed via read-only `gh pr view` / `git ls-remote`; post-release smoke check passed (a fresh install responds); rollback path written below
 - [x] Learnings recorded — §4
 - [x] Line budget respected: Ist 88 / Soll ~100 (excluding HTML comments — none in this file)
-- [x] Status set to `handed-off` (declared `pr` mode) — outstanding: PR #31's merge and the v0.8.0 tag, owned by the declared approver (`a-lottes`, self-review-via-PR), happening post-merge outside this session's control
+- [x] Status set to `handed-off` (declared `pr` mode) — PR #31 merged and `v0.8.0` tagged by the declared approver (`a-lottes`, self-review-via-PR); `handed-off` remains the terminal status per constitution §7 (`pr` mode never becomes `released`), nothing further owed
 
 ---
 
 ## Rollback path
 
-- **Anchor:** `origin/main` was at `1671f2b` before this push; that commit is untouched. The release commits (`c9dce8f`, `f152976`) live on the pushed branch `feat/right-sizing` and in open PR #31, nothing merged into `main` yet.
-- **Abandon now (current state):** `gh pr close 31 && git push origin --delete feat/right-sizing` — closes the PR and removes the pushed branch; `main` is never touched.
-- **Pushed / PR open, pre-merge:** same as above — this is the state as of this report.
-- **After merge:** one `git revert -m 1 <merge-sha>` on `main` restores `plugin.json` to `0.7.1` and reverts the eight touched files' declaration-reading clauses. Only if tag `v0.8.0` was already pushed: `git push origin :refs/tags/v0.8.0 && git tag -d v0.8.0`, re-tagging only after the revert lands.
+- **Anchor:** `origin/main` was at `1671f2b` before this feature's work; PR #31 merged it forward to `9c47bc9`, and tag `v0.8.0` (`896af7c`) points at that merge commit. This is the current, live state.
+- **Current state — after merge, tag pushed:** `git revert -m 1 9c47bc9` on `main` restores `plugin.json` to `0.7.1` and reverts the eight touched files' declaration-reading clauses; then `git push origin :refs/tags/v0.8.0 && git tag -d v0.8.0` removes the now-inaccurate tag before any re-tag.
+- **Branch cleanup, optional:** `git push origin --delete feat/right-sizing` — the feature branch is merged and no longer needed; left in place unless the user wants it removed.
 </content>
