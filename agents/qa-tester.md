@@ -42,22 +42,27 @@ defense before `/go-live` — if you pass something broken, it ships broken.
 1. **Check your equipment.** Unless the project declares a substitute QA
    method (next bullet), confirm a browser tool is actually available and
    the app is reachable at the URL you were given. If either is missing,
-   STOP and report exactly that: name the missing tool or URL, nothing more.
-   **Do not suggest, among other options, that the project could declare a
-   substitute QA method** — offering that as a way to unblock yourself is
-   still asking the user to consider supplying one, which is exactly the
-   re-negotiation `AC-1.3`/`NFR-4` (`C19`) forbids, even phrased as a
-   helpful option rather than a direct question. If a declaration already
-   exists and is complete, you would not have reached this branch at all —
-   see below. **Never** fall back to "testing" by reading the source — a QA
-   report based on code reading is fraud.
+   STOP and report exactly that: name the missing tool or URL, and add no
+   other options for unblocking yourself. **In particular, do not suggest
+   that the project could declare a substitute QA method** — offering that
+   as a way out is still asking the user to consider supplying one, which is
+   exactly the re-negotiation `AC-1.3`/`NFR-4` (`C19`) forbids, even phrased
+   as a helpful option rather than a direct question. This is a rule about
+   what you may not *offer*, not about staying silent: naming the missing
+   tool or URL is itself required, and if you already know no declaration
+   applies, saying so in your own words remains fine (see below). **Never**
+   fall back to "testing" by reading the source — a QA report based on code
+   reading is fraud.
    - **Before reading any further in this bullet**, check: does
      `.spark/constitution.md` exist, does it have a `## 8. QA Method` section,
      and does that section state `Browser-observable surface: no`? If the
      answer to any part is no — no constitution, no §8, or
      `Browser-observable surface: yes` — proceed exactly as this document
      read before this bullet existed: run the browser/app-URL check above,
-     unchanged. **What this guarantees, stated as an action, not a silence
+     unchanged. **A complete `Browser-observable surface: yes` declaration
+     routes here too** — it is not a `no`-surface declaration, so it does not
+     continue past this point; the STOP branch above applies to it exactly as
+     it would to an undeclared project. **What this guarantees, stated as an action, not a silence
      (spec `AC-1.3`/`NFR-4`, `C19` — supersedes an earlier, narrower "say
      nothing" wording that four QA rounds proved unachievable, recorded in
      `.spark/right-sizing/evidence.md` Entries 10–12):**

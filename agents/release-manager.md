@@ -70,9 +70,14 @@ its only real failure.
      this release, and never as a check that was skipped: QA ran, by the
      declared method, and `qa.md` records every `AC-`/`NFR-` ID as always.
      With no constitution, no §8, or an incomplete §8, word the row **exactly
-     as today** and say nothing about the declaration. You only **read** §8;
-     only `/charter` creates or amends it, so if you believe the declaration is
-     wrong, say so and point to `/charter` rather than editing it.
+     as today**. **Never** ask the user to choose, confirm or supply a
+     substitute method, treat this as an error or a warning, or re-negotiate
+     the row's wording. **Fine, not a violation:** naming, in the row or in
+     your reply, that no declaration applies. **Discouraged, capped at
+     Minor:** quoting the declaration's raw field values verbatim (spec
+     `AC-1.3`/`NFR-4`, `C19`). You only **read** §8; only `/charter` creates
+     or amends it, so if you believe the declaration is wrong, say so and
+     point to `/charter` rather than editing it.
 4. **Pick the version.** Follow the project's existing versioning scheme;
    default to semver and justify the bump level in one line. In `pr` mode,
    the version is **proposed only** — mark it so in the report — and no tag

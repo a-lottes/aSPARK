@@ -1016,3 +1016,109 @@ unconfirmed until a further round tests it. Round 7 owes a fresh test
 covering B5's specific path (a STOP-and-report with no app and no
 declaration) under both invocation modes, plus a repeat of the four
 combinations round 6 ran, before this requirement can be trusted as closed.
+
+---
+
+## Entry 15 — T11–T14: propagating C19, and stating honestly what that does and doesn't prove
+
+Review round 4 found (`F17`, Major) that only `agents/qa-tester.md` had actually
+been hardened through seven `/demo-day` rounds; `skills/demo-day/SKILL.md`,
+`skills/spark/SKILL.md`, `skills/go-live/SKILL.md` and `agents/release-manager.md`
+still shipped the superseded content-suppression wording `C19` retired. `plan.md`
+T2/T8's own Definition of Done cited that superseded wording as their
+verification criteria — the shipped code was faithful to a plan no longer
+faithful to the spec, C17's root cause one layer down. `/sprint-plan` revised
+T2/T8 and added T11–T14 (user-approved, second plan-gate walk, 2026-08-31).
+
+### 15.1 T8's quoted observations, re-judged against the action-based bar
+
+T8 (Entry 4 §4.2) quoted each ceremony's **old** absent-case text. That text's
+literal instruction was "say nothing" — a *stricter* requirement than `C19`'s
+action-based bar ("never ask/error/warn/re-negotiate; stating the fact is
+fine"). Silence trivially satisfies a weaker requirement it is a subset of, so
+every one of the four quotes in §4.2 **passes** the new bar on inspection.
+None needs re-flagging. This is a re-derivation under `C19` (a fix to the
+requirement those very quotes were read against), not a rubber stamp.
+
+### 15.2 The four re-worded files, dry-run with no declaration present
+
+*A reading of the shipped instruction text — not a performed step; see 15.3
+for what is and isn't live-tested.* Quoted fresh from the working tree, all
+four files T11–T13 touched:
+
+- `/spark` — "Absent, incomplete, or `yes` → ask exactly as above. **Never**
+  ask the user to choose, confirm or supply a substitute method, treat this
+  as an error or a warning, or re-negotiate..."
+- `/demo-day` — "continue **exactly as today**: run the browser check below
+  unchanged. **Never** ask the user to choose, confirm or supply a
+  substitute method..."
+- `/go-live` — "Absent or incomplete → worded exactly as today. **Never**
+  ask the user to choose, confirm or supply a substitute method..."
+- `release-manager.md` — "word the row **exactly as today**. **Never** ask
+  the user to choose, confirm or supply a substitute method..."
+
+All four state the same three-part shape (Never / Fine, not a violation /
+Discouraged, capped Minor), each scoped to its own ceremony's actual
+behaviour (a live conversational branch for `/spark`/`/demo-day`, an
+artifact-row-wording rule for `/go-live`/`release-manager.md`). None asks,
+errors, warns, or re-negotiates on this reading.
+
+### 15.3 What is live-tested and what is not — stated once, plainly
+
+- **`agents/qa-tester.md`'s action-based bar** (the "Never/Fine/Discouraged"
+  block, and B5's STOP-branch fix) — **live-tested**, 5/5, in `qa.md` round 7,
+  across the full designed matrix.
+- **T13's two clauses (F18, F19)**, landed *after* round 7, — **not yet
+  live-tested**. They correct two false/confusing sentences near the
+  live-proven block without touching the block itself (§15.4 confirms the
+  diff's exact scope), but no QA round has run against this exact file since.
+- **`skills/demo-day/SKILL.md`, `skills/spark/SKILL.md`, `skills/go-live/SKILL.md`,
+  `agents/release-manager.md`** (T11, T12) — **`not-verified-live`, and stay
+  that way in this loop.** The nested `claude -p` session cannot authenticate
+  in this environment (`OAuth session expired`, reproduced fresh in every one
+  of `qa.md`'s seven rounds — see `qa.md` §1 each round). These four files are
+  read by *orchestrating* skills (`/spark`, `/demo-day`, `/go-live`) and one
+  ceremony-writing agent, none of which this session can invoke as a live
+  sub-session the way `agents/qa-tester.md` was invoked directly. **No claim
+  of live coverage is made for them.** This is the same limit `qa.md`
+  recorded every round, carried forward rather than quietly dropped now that
+  the propagation is done.
+
+### 15.4 Diff scope confirmed for T13
+
+```
+$ git diff agents/qa-tester.md
+```
+Touches exactly two locations: the STOP-branch text (F19: "nothing more" →
+"add no other options for unblocking yourself," plus the clarifying "this is
+a rule about what you may not *offer*, not about staying silent") and the
+false-claim sentence (F18: replaced with "a complete `Browser-observable
+surface: yes` declaration routes here too"). The fraud rule, the B5
+"do-not-suggest" rule itself, the three-part `C19` block, and the incomplete/
+unperformable branches are unchanged — confirmed by inspection of the same
+diff, not asserted.
+
+### 15.5 Gate integrity, re-run
+
+```
+$ for f in templates/{spec,plan,review-report,qa-report,release-notes}.md; do …
+templates/spec.md            | ✅ SPEC GATE   | before=11 | after=11
+templates/plan.md            | ✅ PLAN GATE   | before=10 | after=10
+templates/review-report.md   | ✅ REVIEW GATE | before=7  | after=7
+templates/qa-report.md       | ✅ QA GATE     | before=7  | after=7
+templates/release-notes.md   | ✅ KEEP GATE   | before=6  | after=6
+$ diff -q <(git show 22673c8:skills/go-live/SKILL.md | sed -n '/^4\. \*\*Get the go/,/^5\./p') \
+          <(sed -n '/^4\. \*\*Get the go/,/^5\./p' skills/go-live/SKILL.md)
+IDENTICAL
+```
+
+All six gates identical, `before` measured against `22673c8` (the commit
+round 4's review was written against). `claude plugin validate` green.
+
+**DoD check (T14):** T8's quotes re-judged against the action-based bar, all
+pass, none flagged ✓ (15.1); dry run of all four re-worded files with no
+declaration present ✓ (15.2); the venue limit stated once, honestly, in one
+place rather than three times inconsistently — `qa-tester.md`'s block is
+live-proven, T13's two clauses are not, the four sibling files are not and
+will not be while `claude -p` auth is broken ✓ (15.3); six-gate table
+re-run, identical ✓ (15.5); `claude plugin validate` green ✓. **Done.**

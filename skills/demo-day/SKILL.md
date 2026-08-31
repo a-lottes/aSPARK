@@ -29,8 +29,15 @@ user for it, and how to start the app if it isn't running.
      `Browser-observable surface` and `Substitute verification method`. Four
      outcomes, and only the last changes anything:
      - **No constitution, no §8, or `Browser-observable surface: yes`** →
-       continue **exactly as today**: run the browser check below unchanged and
-       say nothing about the declaration. No error, no warning, no mention.
+       continue **exactly as today**: run the browser check below unchanged.
+       **Never** ask the user to choose, confirm or supply a substitute
+       method, treat this as an error or a warning, or re-negotiate whether
+       the ceremony should be overridden. **Fine, not a violation:** stating
+       in your own words, in your reply or in `qa.md` §1, that no declaration
+       applies. **Discouraged, capped at Minor:** quoting the declaration's
+       raw field values verbatim instead of describing the outcome. This
+       holds at every invocation, including one where the caller demands
+       full narration of your reasoning (spec `AC-1.3`/`NFR-4`, `C19`).
      - **§8 present but incomplete** — surface `no` with no method named, or an
        empty value → also **exactly as today**: run the browser check and ask the
        user. Ambiguity resolves toward more verification, never less.

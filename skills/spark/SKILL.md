@@ -74,9 +74,14 @@ spends them in the context the rest of the loop still has to fit into.
    `.spark/constitution.md` §8 `QA Method` names both
    `Browser-observable surface: no` and a substitute method, don't ask any of
    that and don't re-negotiate the method — say in one line which method QA
-   will use and move on. Absent, incomplete, or `yes` → ask exactly as above,
-   and say nothing about the declaration. Like every other ceremony, `/spark`
-   only ever **reads** it: creating or amending it is `/charter`'s alone.
+   will use and move on. Absent, incomplete, or `yes` → ask exactly as above.
+   **Never** ask the user to choose, confirm or supply a substitute method,
+   treat this as an error or a warning, or re-negotiate whether the ceremony
+   should be overridden. **Fine, not a violation:** stating in your own
+   words that no declaration applies. **Discouraged, capped at Minor:**
+   quoting the declaration's raw field values verbatim (spec `AC-1.3`/
+   `NFR-4`, `C19`). Like every other ceremony, `/spark` only ever **reads**
+   it: creating or amending it is `/charter`'s alone.
 3. **Run each ceremony by its own rules.** For every phase, read
    `${CLAUDE_PLUGIN_ROOT}/skills/<ceremony>/SKILL.md` and follow it exactly
    — same agents, same templates, same gate procedure. You add nothing and

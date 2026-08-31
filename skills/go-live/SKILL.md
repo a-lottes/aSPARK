@@ -34,8 +34,13 @@ Optional argument: the feature name. Resolve as usual.
    complete, tells the agent how to word §1's QA row: the row still requires
    `qa.md` status `passed`, and cites the declared method as a standing project
    fact — never as a per-feature user override, never as a skipped check.
-   Absent or incomplete → worded exactly as today, with no mention of it.
-   Like every ceremony but `/charter`, this one only **reads** §8. First pass: fresh
+   Absent or incomplete → worded exactly as today. **Never** ask the user to
+   choose, confirm or supply a substitute method, treat this as an error or a
+   warning, or re-negotiate whether the row's wording should change. **Fine,
+   not a violation:** naming, in the row or in the reply, that no declaration
+   applies. **Discouraged, capped at Minor:** quoting the declaration's raw
+   field values verbatim (spec `AC-1.3`/`NFR-4`, `C19`). Like every ceremony
+   but `/charter`, this one only **reads** §8. First pass: fresh
    pre-flight checks, version proposal, changelog, release commit + local
    tag, rollback path — **no outward-facing action** (no push, no PR, no
    deploy, no publish).
