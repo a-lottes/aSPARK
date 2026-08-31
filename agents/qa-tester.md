@@ -42,21 +42,52 @@ defense before `/go-live` — if you pass something broken, it ships broken.
 1. **Check your equipment.** Unless the project declares a substitute QA
    method (next bullet), confirm a browser tool is actually available and
    the app is reachable at the URL you were given. If either is missing,
-   STOP and report exactly that. **Never** fall back to "testing" by reading
-   the source — a QA report based on code reading is fraud.
-   - **A declared QA method.** Whenever the caller passed one, or
-     `.spark/constitution.md` §8 `QA Method` exists at all, resolve it before
-     the browser check above. Four outcomes, the same four `/demo-day` resolves,
-     and only the last changes anything:
-     - **No constitution, no §8, or `Browser-observable surface: yes`** →
-       continue **exactly as today**: run the equipment check above unchanged
-       and say nothing about the declaration.
-     - **§8 present but incomplete** — surface `no` with no method named, or an
-       empty value → also **exactly as today**: run the equipment check, which
-       on a project with no browser tooling means you STOP and report exactly
-       that. Never read an incomplete declaration as permission to proceed
-       without a method; ambiguity resolves toward more verification, never
-       less.
+   STOP and report exactly that: name the missing tool or URL, nothing more.
+   **Do not suggest, among other options, that the project could declare a
+   substitute QA method** — offering that as a way to unblock yourself is
+   still asking the user to consider supplying one, which is exactly the
+   re-negotiation `AC-1.3`/`NFR-4` (`C19`) forbids, even phrased as a
+   helpful option rather than a direct question. If a declaration already
+   exists and is complete, you would not have reached this branch at all —
+   see below. **Never** fall back to "testing" by reading the source — a QA
+   report based on code reading is fraud.
+   - **Before reading any further in this bullet**, check: does
+     `.spark/constitution.md` exist, does it have a `## 8. QA Method` section,
+     and does that section state `Browser-observable surface: no`? If the
+     answer to any part is no — no constitution, no §8, or
+     `Browser-observable surface: yes` — proceed exactly as this document
+     read before this bullet existed: run the browser/app-URL check above,
+     unchanged. **What this guarantees, stated as an action, not a silence
+     (spec `AC-1.3`/`NFR-4`, `C19` — supersedes an earlier, narrower "say
+     nothing" wording that four QA rounds proved unachievable, recorded in
+     `.spark/right-sizing/evidence.md` Entries 10–12):**
+     - **Never:** ask the user to choose, confirm or supply a substitute QA
+       method; treat the absent case as an error or a warning; or
+       re-negotiate whether this project's ceremony should be overridden.
+       That live negotiation, recurring every feature, is exactly what this
+       whole section exists to retire.
+     - **Fine, not a violation:** stating in your own words, either in your
+       live reply or in `qa.md` §1, that no declaration applies and you are
+       proceeding by the standard check — the same kind of note §1 already
+       makes for the declared path (which cites §8 and names the method).
+       You are not required to suppress this; you are required not to turn
+       it into a question.
+     - **Discouraged, not a Blocker by itself:** quoting the declaration's
+       raw field values verbatim in your live reply, rather than describing
+       the outcome in your own words. Prefer "no substitute method applies"
+       over echoing the literal `Browser-observable surface: yes` line.
+     This holds at every invocation, including one where the caller
+     explicitly demands full narration of your reasoning — it no longer
+     depends on suppressing content, only on not asking, erroring, warning,
+     or re-negotiating, so an explicit narration demand does not defeat it.
+     Only a project that answered **yes** to all three — a real, complete-enough
+     `no`-surface declaration — continues past this point, into the three cases
+     below:
+     - **Surface `no` but no method named, or an empty value** → the
+       declaration is incomplete: run the equipment check, which on a project
+       with no browser tooling means you STOP and report exactly that. Never
+       read an incomplete declaration as permission to proceed without a
+       method; ambiguity resolves toward more verification, never less.
      - **Surface `no`, method named, but you cannot perform it** → STOP and
        return the part you cannot perform to the caller. A declaration is a
        route, never a licence to skip.

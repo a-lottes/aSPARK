@@ -641,3 +641,378 @@ Entry 5 §5.3.
 F12's fixes have desynchronised it again — `claude plugin update aspark@aspark`
 plus a restart must run before `/demo-day` performs §8's "QA against the
 installed plugin", or QA would test superseded text.
+
+---
+
+## Entry 8 — a trap in §8's own method: `update` is version-gated
+
+Recorded because it silently defeats the QA method this feature declares, and
+it will recur on every future feature that QA's against the installed plugin.
+
+After committing the spec amendment and its one obliged clause (`22673c8`), the
+documented refresh step from Entry 6 **refused to do anything**:
+
+```
+$ claude plugin update aspark@aspark
+✔ aspark is already at the latest version (0.7.1).
+```
+
+`update` compares the **version string**, not the content. `plugin.json` still
+read `0.7.1` — the same value the previous commit carried — so the update was a
+no-op even though the working tree had moved two commits on. Verified rather
+than assumed:
+
+```
+$ grep gitCommitSha ~/.claude/plugins/installed_plugins.json
+  "gitCommitSha": "47f60402…"          # the PREVIOUS commit
+$ git log --oneline -1
+  22673c8 fix: name /spark in every file that enumerates …
+$ grep -c '/spark still runs every step' $CACHE/templates/constitution.md
+  0                                     # F15's clause absent from the cache
+$ diff -rq $CACHE/agents agents; diff -rq $CACHE/templates templates; …
+  facilitator.md, qa-tester.md, templates/constitution.md, demo-day/SKILL.md differ
+```
+
+**Why this matters here specifically.** Constitution §8 declares QA is performed
+"against the **installed plugin**". Had this gone unnoticed, `/demo-day` would
+have tested superseded text while reporting, accurately by its own lights, that
+it tested the installed plugin — a QA report that is false without anyone
+lying. The declaration makes the *installed* artifact the object under test, so
+keeping it current is part of performing the method, not housekeeping around it.
+
+**The workaround, and why this one.** Neither `update` nor `install` offers a
+force or reinstall flag (`--help` on both). Bumping `plugin.json` would have
+worked, but version selection belongs to the Release Manager at `/go-live`
+(constitution §5 requires a **minor** bump here — `0.8.0`), so pre-empting it
+from `/increment` would have been the wrong call. Uninstall-then-install
+sidesteps the version comparison without touching the version:
+
+```
+$ claude plugin uninstall aspark@aspark   -> ✔ uninstalled
+$ claude plugin install aspark@aspark -y  -> ✔ installed
+$ grep gitCommitSha …installed_plugins.json -> "22673c8dc238ae13…"   # current HEAD
+$ grep -c '/spark still runs every step' $CACHE/templates/constitution.md -> 1
+$ diff -rq agents / templates / skills  -> ALL IDENTICAL
+```
+
+**Standing correction to Entry 6.** Entry 6's carried-forward instruction
+(`claude plugin update aspark@aspark` plus a restart) is **insufficient whenever
+the version string has not changed**, which is the normal case mid-feature. The
+reliable step is uninstall + install + restart, and the check that it worked is
+`gitCommitSha` against `git log --oneline -1` — not the CLI's success message,
+which was cheerfully green while doing nothing.
+
+**Out of scope, flagged not fixed:** whether §8 should say how the installed
+artifact is kept current is a `/charter` question, and whether the release notes
+should warn consumers is `/go-live`'s. Neither is this diff's business.
+
+---
+
+## Entry 9 — correcting Entry 8's freshness check (it can pass falsely)
+
+Entry 8 told the reader to confirm a refreshed install with
+`gitCommitSha` against `git log --oneline -1`. **That check is not sufficient,
+and this entry exists because the fix round after `/demo-day` r1 proved it.**
+
+Refreshing the install with three **uncommitted** modifications in the tree
+(`agents/qa-tester.md` carrying B1's fix among them):
+
+```
+$ git status --short
+ M .spark/right-sizing/evidence.md
+ M .spark/right-sizing/spec.md
+ M agents/qa-tester.md          <- B1's fix, uncommitted
+?? .spark/right-sizing/qa.md
+$ claude plugin uninstall aspark@aspark && claude plugin install aspark@aspark -y
+$ grep -c '"Nothing" is literal' $CACHE/agents/qa-tester.md
+1                                <- the UNCOMMITTED fix is in the cache
+$ grep gitCommitSha …installed_plugins.json
+  "gitCommitSha": "22673c8dc238…"
+$ git log --oneline -1
+  22673c8 fix: name /spark in every file …
+$ diff -rq $CACHE/agents agents; …/templates; …/skills
+ALL IDENTICAL
+```
+
+**Two facts, and the second is the trap.** First, a `directory`-source install
+copies the **working tree**, not the commit — so no commit is required to
+refresh it, and Entry 6's and Entry 8's implicit "commit first" was never a
+precondition, only good hygiene. Second, and this is the correction:
+`gitCommitSha` records **HEAD at install time, not what was copied.** With
+uncommitted work in the tree those two are different things, and the field
+reports the commit while the cache holds something else. It would read
+"current" for a tree that had moved well beyond HEAD.
+
+**The reliable check is content, not metadata:**
+
+```
+diff -rq $CACHE/agents agents && diff -rq $CACHE/skills skills && diff -rq $CACHE/templates templates
+```
+
+`gitCommitSha` may be quoted as context; it must never be the thing a freshness
+claim rests on. Entry 8's own conclusion — "the check that it worked is
+`gitCommitSha` against `git log --oneline -1`" — is **superseded by this entry**.
+Entry 8's substantive finding stands unchanged: `claude plugin update` is
+version-gated and silently no-ops when the version string has not moved, so
+uninstall + install remains the reliable refresh.
+
+Recorded because this feature's whole subject is not claiming more verification
+than was performed, and a freshness check that can pass falsely is exactly that
+failure wearing a command prompt.
+
+---
+
+## Entry 10 — a wording fix failed; the mechanism was the bug (B1)
+
+Recorded because it is a real methodological lesson, not because the loop
+requires an entry per fix attempt.
+
+**Round 1** found B1: on a project declaring nothing (or `yes`), the QA Tester
+still mentioned the declaration. **The round-1 fix added a reinforcement
+sentence** — `**"Nothing" is literal."**`, spelling out five things not to do.
+**Round 2 re-tested it live, 3/3, and it did not work.** The agent still opened
+with "there is no §8 QA Method declaration to resolve" — a sentence the
+reinforcement explicitly forbade, immediately after forbidding it.
+
+**Diagnosis, not another wording pass.** The bullet's opening sentence —
+"resolve it before the browser check above… Four outcomes…" — frames the
+absent case as one of four things to *resolve and report on*, no matter how
+firmly a later sentence tells the model not to narrate that resolution. Adding
+words to the "don't narrate" side of a structure that already primes narration
+was fighting the frame with more frame.
+
+**The r3 fix restructures instead of reinforcing:** the §8 check is now a
+silent precondition, stated and disposed of *before* the four-branch structure
+even begins — "before reading any further in this bullet, silently check…
+if the answer to any part is no… stop reading this bullet… There is no branch
+to narrate here." The three named-method branches are reached only once a real
+declaration is confirmed present; the absent case never enters the same
+sentence as "outcomes to resolve."
+
+**Deliberately not propagated.** The identical "say nothing" rule exists
+verbatim in three more files — `skills/demo-day/SKILL.md`, `agents/
+release-manager.md`, `skills/spark/SKILL.md` — none touched by either fix
+round, and all three remain `not-verified-live` because the nested `claude -p`
+session cannot authenticate in this environment (OAuth session expired,
+reproduced in both QA rounds). Copying an unconfirmed mechanism into three more
+files before confirming it works even once would be r2's mistake at triple the
+scale. Confirm here; propagate only once confirmed — and even then, propagating
+without a live test on those three files would itself be a claim this feature's
+whole discipline forbids.
+
+---
+
+## Entry 11 — an artifact contradicted its own gate, one ceremony after the last
+
+Round 3's `qa.md`, as first written, claimed `Status: passed` while its own QA
+GATE checklist had **three open boxes** and one **checked** box asserting
+something false: "No open Blocker or Major bugs (Minor bugs listed and
+accepted by the user)" was `[x]` while B4 sat `open, unaccepted` two lines
+below it in the same file. This is the identical defect class as F1/F12/F15
+(review) — an artifact saying something its own body contradicts — now found
+inside a QA report rather than a review report. Recorded because the pattern
+recurring in a *different* ceremony, written by a *different* agent, is worth
+knowing: self-contradiction is not particular to one role's writing habits.
+
+**Reconciled, not silently overwritten** — the fix (routed through the user,
+who chose to fix B4 and correct the checklist rather than accept or hand it
+back for self-correction):
+- **B4** (a "narrate every step" prompt made the agent announce a silent
+  check occurred, without disclosing its content) — fixed structurally in
+  `agents/qa-tester.md`: the rule now states explicitly that an instruction to
+  narrate every step does not make this check a step to narrate, because on
+  this path it was never one.
+- **NFR-5's row** was flagged as included by mistake: `spec.md`'s own "How
+  it's verified" column names `/peer-review`, not `/demo-day`, for NFR-5. It
+  had been blocking a QA-owned checklist box for something that was never
+  QA's to verify.
+- **Two N/A boxes** (NFRs, viewports) had been left unchecked while a third,
+  structurally identical N/A case (browser console) was checked — inconsistent
+  handling of the same situation within one file.
+- **The line-budget box** had been left unchecked despite recording a reason,
+  when the template itself (`templates/qa-report.md:101`) offers two branches
+  — "waived" or "recorded with a reason" — and this feature's own `review.md`
+  round 3 already established checking `[x]` on the second branch as the
+  correct reading. `qa.md` had not followed its sibling artifact's own
+  precedent.
+
+**Standing rule for future rounds of this feature, and worth carrying beyond
+it:** before accepting a `passed`/`fixed`/gate-closed claim, cross-check the
+gate checklist against the Handoff and the finding rows it summarizes — a
+`[x]` box is a claim like any other line in the artifact, not exempt from the
+verify-don't-trust discipline this feature exists to establish.
+
+---
+
+## Entry 12 — the spec was narrowed, and the fix stopped claiming what it could not prove
+
+Direct continuation of Entries 10–11. Round 4's adversarial test (4 live runs,
+all explicitly demanding full narration) found the round-3 restructuring
+still leaking on 3/4 — one run **quoting actual §8 field content verbatim**,
+one reproducing B4's placeholder pattern. That was the **third** distinct
+fix attempt at the same requirement to fail under live testing:
+
+| Round | Fix attempt | Result under its own test |
+|---|---|---|
+| 1 | reinforcement sentence ("Nothing is literal") | held 0 rounds — r2 found it leaking 3/3 |
+| 3 | silent-precondition restructuring | held 2/2 in r3's own test; r4's harder test found a narrower leak (B4) |
+| 4 | explicit "even under narrate-everything" clause | held 0/4 in r4's own test — the clause it added was itself immediately disproven |
+
+Per this project's own standing discipline (constitution §1: negative case
+first; the "three failed rounds" threshold the loop applies to `/peer-review`
+extends in spirit here), three failed attempts at one requirement is a signal
+to question the requirement, not to draft a fourth wording. Routed to
+`/story-time` for a spec amendment rather than a fourth `/increment` attempt.
+
+**The amendment (spec `C18`):** AC-1.3 and NFR-4 now guarantee silence under
+**ordinary invocation** only, and state explicitly that a caller's same-turn
+instruction to narrate all internal reasoning is **out of scope** — reasoned,
+not asserted: no natural-language rule embedded in an agent's own definition
+can be made robust against a contradicting explicit instruction in the same
+turn. A candidate two-tier alternative (permit "a check occurred," still
+forbid content disclosure) was considered and rejected for lacking evidence:
+every one of round 4's four counted runs was itself narration-demanding, so
+the record contains no case isolating one failure mode from the other.
+
+**The fix that followed removes the disproven claim rather than layering a
+fourth attempt on top of it.** `agents/qa-tester.md`'s "This holds even when
+you are asked to narrate..." sentence — the exact claim round 4 falsified —
+is deleted, not qualified further. In its place: an explicit statement of
+what the guarantee covers (ordinary invocation) and what it does not
+(an explicit narration demand), citing this evidence trail by entry number
+so a future reader does not have to rediscover why the boundary is drawn
+here. This is the same discipline as `evidence.md`'s own Rule — "anything not
+run is labelled *not run*" — applied to a design claim inside shipped prompt
+material: a scope that was not achieved is not claimed, worded around, or
+buried under more words that also fail.
+
+**Deliberately not done:** AC-1.5 (the `yes`-surface guarantee) makes a
+different claim — never *suppressed*, not never *mentioned* — and held 2/2
+under the identical round-4 adversarial test. The PO left it untouched and
+flagged the asymmetry for the user rather than assuming consistency required
+narrowing it too; the user did not ask for that narrowing.
+
+**What this does and does not close.** B1 and B4 move to `fixed`
+(`/increment`'s unconfirmed claim) reflecting the honest text. It does **not**
+mean they are confirmed: both were reproduced only under narration-demanding
+prompts the amended AC now places out of scope, so what remains to verify is
+the **ordinary-invocation** case specifically — and the only prior clean data
+for that exact case (round 3's single plain-prompt run) predates round 4's
+edit to this same file, so it is stale evidence, not current confirmation.
+`/demo-day` owes a fresh, clean, non-narration-demanding test before either
+finding can be marked confirmed.
+
+---
+
+## Entry 13 — the requirement itself was wrong, not the fifth wording of it
+
+Direct continuation of Entry 12. Round 5 tested exactly the case `C18`'s
+narrowing claimed would hold — an ordinary QA request, zero narration
+demanded — and found **0/2 clean**, one run quoting the raw declaration field
+verbatim, unprompted. This is a harder failure than round 4's: round 4 needed
+an adversarial demand to leak; round 5 needed nothing.
+
+**The diagnosis moved from "the wording isn't careful enough" to "the
+agent's role structurally conflicts with this requirement."**
+`agents/qa-tester.md`'s Mission and Hard Rules pervasively demand exhaustive
+self-documentation of every check performed ("no pass without performed
+steps," "if you didn't see it, it didn't happen") — dozens of sentences
+pulling toward transparency, all of them older and more central to the file
+than the one new clause asking for silence about one specific check. Four
+attempts tried to make that one clause win against a contradicting *live
+instruction*; round 5 shows it was actually losing against the *agent's
+entire prompt*, with or without any live instruction at all. No fifth wording
+of a narrow exception was likely to reverse that.
+
+**The repair went to the actual motivation instead.** US-1's own story text
+(`spec.md:112-114`) says "so that I stop **re-negotiating** the same override
+on every feature" — a claim about not having a live ask with the user each
+cycle, never a claim about total silence in every output forever. AC-1.3 and
+NFR-4 had generalized that motivation into a stronger claim than it required.
+Spec `C19` (2026-08-31, superseding `C18`) re-scopes both to what the
+motivation actually needs: **never ask, error, warn, or re-negotiate; stating
+the fact in one's own words is explicitly fine**, symmetric with how the
+declared path already documents its method in `qa.md` §1. Quoting the raw
+declaration verbatim is discouraged but capped at `Minor` — a courtesy, not
+the hard requirement.
+
+**The fix that followed is a deletion, again, not a fifth addition.**
+`agents/qa-tester.md`'s "silently check... produces zero output, always" and
+the C18-era "scope of this guarantee" paragraph are both removed — not
+qualified, not layered under more words — and replaced with what the rule
+actually now requires: three concrete "never"s, one explicit "fine, not a
+violation," and one "discouraged, not a Blocker." Because the guarantee is
+now about an action (asking) rather than about content (mentioning), it no
+longer depends on suppressing anything under narration pressure — the file
+says so, and that claim is a structural consequence of the new rule's shape,
+not a repetition of the disproven ones.
+
+**Standing count, four fix attempts at one requirement, none surviving its
+own confirming test until this one:**
+
+| # | Approach | What broke it |
+|---|---|---|
+| 1 | reinforcement sentence | any neutral prompt (round 2) |
+| 2 | silent-precondition restructuring | an adversarial narration demand (round 3's own harder test → B4) |
+| 3 | explicit narration-immunity clause | four narration-demanding runs, 3/4 (round 4) |
+| 4 | narrow the claim to ordinary invocation (`C18`) | the ordinary case itself, 0/2 (round 5) |
+
+**What did not change, and should not be mistaken for progress on its own:**
+this is still unconfirmed. B1/B4 are `fixed` against `C19`'s wording, not
+against any test that has actually run — the favorable re-reading of round
+5's own transcripts (neither venue asked, erred, warned, or negotiated) is a
+citation under AC-2.2(a), stated as exactly that in `qa.md`'s Handoff, not
+promoted into a pass. A sixth QA round, covering both ordinary and
+narration-demanding invocation against the new rule, is still owed before
+either finding can be trusted.
+
+---
+
+## Entry 14 — C19 held on the historically hardest case; a different path leaked
+
+Round 6 tested the re-scoped, action-based rule (`C19`) under all four
+combinations of {venue: absent declaration / `yes`-surface} × {invocation:
+ordinary / narration-demanding}. **3 of 4 were clean, including the run that
+broke every one of the four prior mechanisms** — narration-demanding
+invocation on the bare venue. That is the first time this specific,
+historically hardest condition has held.
+
+**The one leak was not a repeat of B1/B4's failure mode.** It came from a
+different branch entirely: the equipment check's STOP-and-report step, when
+listing everything that would unblock it (missing browser tool, missing app
+URL), volunteered *"a `.spark/constitution.md` §8 declaring an alternate QA
+method... if browser testing genuinely doesn't apply here"* as one of three
+options — on an **ordinary** invocation, no narration involved. This is a
+subtler instance of the same underlying forbidden act (re-negotiation), not a
+new category: **suggesting** a substitute-method declaration as a way out is
+still asking the user to consider supplying one, phrased as help rather than
+a question. Filed as **B5**, Blocker, per `C19`'s own "Never" list.
+
+**Fixed by naming the leak at its actual source**, not by adding a general
+reinforcement: the STOP-and-report instruction in `agents/qa-tester.md` now
+states explicitly that reporting the missing tool/URL means naming it and
+nothing more, and that suggesting a declaration as an unblocking option is
+itself the forbidden re-negotiation. This is a third distinct location in the
+same file now carrying a C19-shaped constraint (the silent-check branch from
+Entry 13, and this STOP branch) — worth naming so a future reader does not
+assume the guarantee lives in one place.
+
+**A second thing fixed this round, unrelated to B1/B4/B5 but the same defect
+class this whole feature keeps finding (Entry 11):** `spec.md`'s own Handoff
+and SPEC GATE checklist disagreed about whether C19 had been re-approved —
+one said yes, the other said "not yet," both describing the same event. This
+was `/increment`'s own error, introduced while walking the C19 gate, caught
+by the QA Tester reading the artifact rather than trusting either line in
+isolation. Corrected in place.
+
+**What round 6 does and does not establish:** three of four conditions held
+clean, and the mechanism's structural claim — that an action-based rule
+should not depend on suppressing content, so a narration demand should not
+defeat it — held on its hardest prior counterexample. That is progress this
+feature's own discipline requires stating plainly, not just the failures.
+It does not mean the requirement is now proven: B5 shows a fifth location
+could still leak the same forbidden act, and B5's own fix is itself
+unconfirmed until a further round tests it. Round 7 owes a fresh test
+covering B5's specific path (a STOP-and-report with no app and no
+declaration) under both invocation modes, plus a repeat of the four
+combinations round 6 ran, before this requirement can be trusted as closed.
