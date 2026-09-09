@@ -150,6 +150,24 @@ Taken with
 (the exclusion drops a stale second checkout that would otherwise double-count
 two features).
 
+> **Interim: this is one machine, not all of them.** A second development
+> machine reports **14 features across 6 projects** with the same command, and
+> the two have not yet been merged. The combined figure is therefore not yet
+> known, but it is **bounded between 51 and 65**: at least 51, because every
+> feature in the table below is in the union, and at most 65, because a union
+> cannot exceed the sum of its parts.
+>
+> The true value sits below the upper bound, since the two machines demonstrably
+> overlap — aSPARK's own repository is on both, and its 8 features are committed
+> in `.spark/`, so any clone carries all of them. That puts the working estimate
+> at **51 to 57**. Which of the other five projects also exist on both is not
+> known from here, and is not guessed.
+>
+> A single `--merge` of both machines' reports replaces this note with a counted
+> figure — see [Counting across machines](#counting-across-machines). Until then
+> the range stands in place of a number, because adding 51 and 14 would count
+> aSPARK's features twice and the result would not be reproducible by anyone.
+
 ### Loop artifacts on disk
 
 | Features | Spec | Plan | Review | QA | Release | Git tags |
