@@ -74,11 +74,11 @@ claim how many loops ran; the `.spark/` artifacts answer that question properly.
 ## Honest nulls
 
 A phase or a repository that cannot be measured reports `n/a` with a reason, not
-a `0`. A zero in these tables always means *counted, found none*. Two live cases
-in the snapshot below: one project does not commit its `.spark/` directory, so
-no line count exists for it; another is not a git repository at all. Neither is
-quietly folded into the total as a zero — the aggregate says how many projects
-it could measure and how many it could not.
+a `0`. A zero in these tables always means *counted, found none*. Three live
+cases in the snapshot below: three projects do not commit their `.spark/`
+directory, so no line count exists for them. None is quietly folded into the
+total as a zero — the aggregate says how many projects it could measure and how
+many it could not.
 
 ## Counting across machines
 
@@ -201,15 +201,18 @@ hold when a machine has a feature the other does not — two clones each holding
 work the other lacks, which the moment `.spark/` is uncommitted in a shared
 project is the normal case, not the exception.
 
-One of the ten projects is not a git repository and therefore has no identity
-that survives a machine boundary. It is counted as found, and if the same project
-also exists on the other machine it is counted twice — a possible **over**count
-of at most one project, stated rather than hidden.
+**The possible overcount is closed.** One of the ten projects was not a git
+repository, so it had no identity that survives a machine boundary and would
+have been counted twice had it existed on both machines. It has since been put
+under version control, and every project in this snapshot now merges on a stable
+identity. Its history counting for the first time is why the line figure below
+is some 7,800 lines higher than the merge that preceded it — no code was
+written, a project simply became measurable.
 
-**+106,828 / −12,534 lines** since the loop was adopted, across the 6 of 10
+**+114,630 / −12,589 lines** since the loop was adopted, across the 7 of 10
 projects whose line count is measurable; 3 report `n/a` (`.spark/` not tracked in
-that repository), 1 reports `n/a` (not a git repository). The line figure drifts
-with every commit — it is a snapshot, not a standing claim.
+that repository). The line figure drifts with every commit — it is a snapshot,
+not a standing claim.
 
 ### Loop activity in Claude Code transcripts
 
