@@ -483,8 +483,8 @@
       "git": {
         "available": true,
         "tags": 9,
-        "added": 15911,
-        "deleted": 1181,
+        "added": 17139,
+        "deleted": 1261,
         "adopted_at_root": false
       }
     },
@@ -556,7 +556,7 @@
       }
     },
     {
-      "id": null,
+      "id": "g:92a6c7b3beaef5f6",
       "features": [
         {
           "key": "9a49c3453826",
@@ -597,8 +597,11 @@
         "release": 3
       },
       "git": {
-        "available": false,
-        "reason": "not a git repository"
+        "available": true,
+        "tags": 0,
+        "added": 7417,
+        "deleted": 0,
+        "adopted_at_root": true
       }
     },
     {
@@ -652,8 +655,8 @@
       "release": 47
     },
     "tags": 52,
-    "added": 104755,
-    "deleted": 12501
+    "added": 113400,
+    "deleted": 12581
   },
   "transcripts": {
     "available": true,
