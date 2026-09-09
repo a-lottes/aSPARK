@@ -207,7 +207,7 @@ If you're new to Claude Code plugins, this is all there is to it:
 - **`lenses/`** — situational concern checklists (`seo`, `ux`, …). Activated by the project profile in the constitution and applied by the existing agents in the phases they own. Lenses are the "when it applies".
 - **`tools/`** — guidance for optional external programs a ceremony may use *if you happen to have them installed*. Activated by installation state rather than by the constitution. Tools are the "if it's there".
 - **`docs/`** — deep-dives, starting with the workflow and gate hand-over rules.
-- **`scripts/`** — one standalone counter, `spark-metrics.py`, that tallies what the loop has actually produced on a machine. Not part of the loop; nothing calls it.
+- **`scripts/`** — one standalone counter, `spark-metrics.py`, that tallies what the loop has actually produced on a machine, and can merge reports from several into one total. Not part of the loop; nothing calls it.
 - **`.claude-plugin/`** — plugin metadata so Claude Code can discover and install all of the above.
 
 Reading order for newcomers: this README → `docs/workflow.md` → one template → one skill → one agent. After that you'll understand every file in the repo.
