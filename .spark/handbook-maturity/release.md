@@ -5,7 +5,7 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`; F1 `fixed r1`, F2 waived/routed), `qa.md` (`passed`; plan §4 override method, E1–E3 user-accepted) |
-| **Status** | `handed-off` (`pr` mode — merge + tag with the maintainer) |
+| **Status** | `handed-off` (`pr` mode — merge + tag with the maintainer). **Post-merge, recorded 2026-09-09:** PR #27 merged 2026-08-25 (`085db99`); tag `v0.7.1` never created and now superseded by v0.8.0 — see ledger step 8. |
 | **Version** | v0.7.1 (**confirmed** patch — user go 2026-08-25; release commit `a8435fe6969745cead58750e22dbafa01004d845` pushed; **PR #27 open**: https://github.com/a-lottes/aSPARK/pull/27; **no tag exists** — tagging happens post-merge, outside this role's control) |
 | **Date** | 2026-08-25 |
 
@@ -60,7 +60,7 @@
 5. ✅ Done 2026-08-25 — user opened the docx in Word: passed ("looked good in Word"); E2 adjudicated acceptable
 6. ✅ Done 2026-08-25 — pushed, confirmed live; branch tracking set
 7. ✅ Done 2026-08-25 — retried from the orchestrating session with the user's publish go; classifier denial cleared; **PR #27 opened** (https://github.com/a-lottes/aSPARK/pull/27); body redrafted from §2–3 because the prior session's drafted title/body lived only in its conversation record
-8. ☐ After merge (maintainer): `git fetch origin && git tag -a v0.7.1 origin/main -m "aSPARK Core v0.7.1 — handbook maturity labels (content-only)" && git push origin v0.7.1`
+8. ⛔ **Not done, and now superseded** (recorded 2026-09-09, after the fact). PR #27 merged 2026-08-25 as `085db99cab5ffb111cf3f75e1db34006daed01d8`, so the content shipped — but the annotated tag `v0.7.1` was never created. `git tag` goes `v0.7.0` → `v0.8.0`, and the manifest now reads `0.8.0`, so v0.7.1 exists only as this ledger's intent: the handbook labels reached users inside v0.8.0 instead. Tagging it retroactively would place a version between two shipped releases and is not proposed. The gap is the loop's, not the maintainer's: `handed-off` is a terminal status, and nothing in the process re-checks whether the maintainer's step 8 ever happened.
 
 ## 4. Learnings (Keep!)
 
