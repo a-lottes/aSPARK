@@ -207,6 +207,7 @@ If you're new to Claude Code plugins, this is all there is to it:
 - **`lenses/`** — situational concern checklists (`seo`, `ux`, …). Activated by the project profile in the constitution and applied by the existing agents in the phases they own. Lenses are the "when it applies".
 - **`tools/`** — guidance for optional external programs a ceremony may use *if you happen to have them installed*. Activated by installation state rather than by the constitution. Tools are the "if it's there".
 - **`docs/`** — deep-dives, starting with the workflow and gate hand-over rules.
+- **`scripts/`** — one standalone counter, `spark-metrics.py`, that tallies what the loop has actually produced on a machine. Not part of the loop; nothing calls it.
 - **`.claude-plugin/`** — plugin metadata so Claude Code can discover and install all of the above.
 
 Reading order for newcomers: this README → `docs/workflow.md` → one template → one skill → one agent. After that you'll understand every file in the repo.
@@ -240,6 +241,25 @@ aSPARK is feature-complete — everything below ships today. The column that mat
 is **how well each part is proven**, because prompt material has no test suite: the
 only evidence is a documented run, written down. This section always reflects the
 current state.
+
+### Dogfooding to date
+
+**51 features have gone through the loop across 7 projects** — a Python CLI, an
+embedded game, a static site, a Reddit bot and a policy DSL — as of 2026-09-09:
+
+| Spec | Plan | Review | QA | Release | Git tags | Role-agent runs | Human gate decisions |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 51 | 50 | 50 | 40 | 47 | 52 | 411 | 344 |
+
+The gaps are real and left in. QA reached 40 of 51 because `/demo-day` ran once
+in nine `aspark-graph` features; release reached 47 of 51 because three
+`aspark-policy` features were specified, planned, reviewed and QA'd but never
+shipped. The first six columns are counted from `.spark/` artifacts and git on
+disk — verifiable with `ls`, inferred from nothing. The last two come from
+Claude Code's own session logs on this machine. None of it is a token count, and
+[docs/metrics.md](docs/metrics.md) explains why not, along with the method, the
+per-project breakdown and the honest `n/a`s. Reproduce it against your own
+projects with `python3 scripts/spark-metrics.py`.
 
 | Area | State |
 |---|---|
