@@ -22,6 +22,7 @@ Standard library only — no install step, no dependencies. Useful flags:
 | `--search-root DIR` / `--depth N` | where and how deep to look (default `~`, depth 3) |
 | `--exclude SUBSTRING` | skip a path — a stale second checkout, say |
 | `--totals-only` | aggregate counts only, no project named — the shape meant for publishing |
+| `--write-report DIR` | write this machine's report to `DIR/<machine-id>.json`, always nameless |
 | `--merge a.json b.json` | combine reports from several machines (see below) |
 | `--no-transcripts` | disk artifacts only |
 | `--format json` | the same report as JSON |
@@ -82,19 +83,33 @@ it could measure and how many it could not.
 ## Counting across machines
 
 One run measures one machine. To keep a running total across several, produce a
-report on each and merge them:
+report on each and merge them.
+
+**The repository is the transport.** Every machine that runs the loop already
+has this repository, it syncs in both directions, and a report is nameless — so
+reports live in [`docs/reports/`](reports/), one per machine, and nothing has to
+be hand-carried:
 
 ```bash
-# on every machine
-python3 scripts/spark-metrics.py --totals-only --format json > report-$(hostname).json
+# on each machine
+git pull
+python3 scripts/spark-metrics.py --totals-only --write-report docs/reports
+git add docs/reports && git commit -m "chore: metrics report from this machine" && git push
 
-# once, wherever the reports were collected
-python3 scripts/spark-metrics.py --merge report-*.json
+# on any machine that has pulled them all
+python3 scripts/spark-metrics.py --merge docs/reports/*.json
 ```
 
-The script itself is all that has to travel — a single file, standard library
-only, no install step. `git`, if present, supplies line counts and tags; without
-it those report `n/a` rather than failing.
+A report is named after its machine's own hashed id, so a second run overwrites
+that machine's file instead of adding one. `--write-report` always writes the
+nameless shape, whatever `--totals-only` says about what the run prints: the
+flag governs one run's output, the directory governs what leaves the machine.
+
+Nothing about this is required — `--format json` to any path and
+`--merge a.json b.json` works the same, if the reports travel some other way.
+The script itself is all that has to exist on a machine: a single file, standard
+library only, no install step. `git`, if present, supplies line counts and tags;
+without it those report `n/a` rather than failing.
 
 **Artifacts are unioned, never added.** The same repository checked out on two
 machines holds overlapping features; adding the reports would double-count every
