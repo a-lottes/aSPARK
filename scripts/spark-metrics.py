@@ -22,9 +22,11 @@ Usage:
 
 Counting across machines: run it on each with `--format json`, collect the
 reports, then combine them with `--merge a.json b.json`. Artifacts are
-unioned on a stable per-project identity so a repository checked out twice
-counts once; session figures, which really are distinct per machine, are
-summed.
+unioned on a stable per-project *and* per-feature identity, so a repository
+checked out twice counts once and a phase reached on either machine counts
+as reached; session figures, which really are distinct per machine, are
+summed — and one machine's report passed twice is refused, since summing it
+again would inflate every one of them.
 
 stdlib only, no dependencies.
 """
@@ -35,6 +37,7 @@ import argparse
 import hashlib
 import json
 import os
+import platform
 import re
 import subprocess
 import sys
@@ -61,7 +64,8 @@ SKIP_DIRS = {
 
 # Bumped whenever the JSON report's shape changes. A merge across machines
 # refuses mismatched versions rather than silently mis-adding them.
-REPORT_SCHEMA = 1
+# 2: features carry a `key`, and the report carries a `machine` id.
+REPORT_SCHEMA = 2
 
 CEREMONIES = {
     "spark", "story-time", "sprint-plan", "increment", "peer-review",
@@ -107,6 +111,16 @@ def git(repo: Path, *args: str) -> str | None:
     except (OSError, subprocess.SubprocessError):
         return None
     return out.stdout.strip() if out.returncode == 0 else None
+
+
+def machine_id() -> str:
+    """An opaque, stable id for the machine a report was produced on.
+
+    Only ever compared against other reports' ids, so that merging the same
+    machine's report twice can be refused. Hashed because a hostname is
+    often a person's name or a client's.
+    """
+    return "m:" + hashlib.sha256(platform.node().encode()).hexdigest()[:16]
 
 
 def project_id(repo: Path) -> str | None:
@@ -190,7 +204,14 @@ def scan_project(project: Path) -> dict | None:
             phase: any((entry / name).is_file() for name in names)
             for phase, names in PHASES.items()
         }
-        features.append({"name": entry.name, "reached": reached})
+        # The key lets a merge union features across machines by identity
+        # rather than by count. Hashed, so it survives `--totals-only`
+        # without putting a feature name into a published report.
+        features.append({
+            "name": entry.name,
+            "key": hashlib.sha256(entry.name.encode()).hexdigest()[:12],
+            "reached": reached,
+        })
 
     return {
         "path": str(project),
@@ -354,6 +375,47 @@ def feature_count(project: dict) -> int:
     return features if isinstance(features, int) else len(features)
 
 
+def feature_key(feature: dict) -> str:
+    """The identity a merge unions on.
+
+    `key` is written by this version; `name` covers a report produced
+    before features carried one. Without either there is nothing to union
+    on, and guessing would be worse than stopping.
+    """
+    key = feature.get("key") or feature.get("name")
+    if not key:
+        raise SystemExit(
+            "a feature in this report has neither `key` nor `name`, so it "
+            "cannot be matched across machines — regenerate the report"
+        )
+    return key
+
+
+def feature_union(existing: dict[str, dict], project: dict) -> dict[str, dict]:
+    """Fold one project's features into an accumulator, OR-ing the phases.
+
+    A feature present on two machines is one feature, and a phase reached
+    on either machine was reached: one clone may sit at `plan.md` while the
+    other has already been through QA.
+    """
+    union = {k: dict(v) for k, v in existing.items()}
+    for feature in project["features"]:
+        key = feature_key(feature)
+        reached = feature.get("reached", {})
+        into = union.setdefault(key, {phase: False for phase in PHASES})
+        for phase in PHASES:
+            into[phase] = into[phase] or bool(reached.get(phase))
+    return union
+
+
+def phase_counts_of(features: dict[str, dict]) -> dict[str, int]:
+    """Phase counts derived from a unioned feature set."""
+    return {
+        phase: sum(1 for reached in features.values() if reached[phase])
+        for phase in PHASES
+    }
+
+
 def render_totals(report: dict) -> list[str]:
     """The aggregate table: counts only, no project named.
 
@@ -380,9 +442,21 @@ def render_totals(report: dict) -> list[str]:
         note = (
             f"Merged from {report['merged_from']} machine "
             f"report{'s' if report['merged_from'] != 1 else ''}. Projects are "
-            "unioned on a stable identity, never added, so a repository checked "
-            "out on more than one machine counts once."
+            "unioned on a stable identity and their features on a per-feature "
+            "identity, never added, so a repository checked out on more than "
+            "one machine counts once and a phase reached on either machine "
+            "counts as reached."
         )
+        if report.get("duplicate_machines"):
+            note += (
+                " Refused as duplicates, because the same machine's report "
+                "counted twice would inflate every session figure: "
+                + ", ".join(
+                    f"`{new}` repeats `{old}`"
+                    for new, old in report["duplicate_machines"]
+                )
+                + "."
+            )
         if report.get("unidentified_projects"):
             n = report["unidentified_projects"]
             note += (
@@ -479,10 +553,16 @@ def merge_reports(paths: list[Path]) -> dict:
     """Combine per-machine JSON reports into one honest total.
 
     Artifacts are unioned, never added. The same repository checked out on
-    two machines holds the *same* features, so adding the two reports would
+    two machines holds overlapping features, so adding the two reports would
     double-count every one of them; projects are keyed on `project_id` and
-    each count takes the highest any machine saw, which is the most complete
-    view available when one clone is behind the other.
+    their features unioned on the per-feature `key`, with each phase OR'd
+    across machines.
+
+    The union is by identity rather than by count on purpose. Taking the
+    highest count any machine saw is only correct when one clone's features
+    are a subset of the other's — which holds when `.spark/` is committed,
+    and fails when it is not. Two machines each holding three features, one
+    of them shared, is five features; a `max` would report three.
 
     Transcript figures are the opposite case and *are* summed: a session on
     another machine is a genuinely different session. Active days union
@@ -494,6 +574,8 @@ def merge_reports(paths: list[Path]) -> dict:
     be wrong in the other direction.
     """
     reports = []
+    seen_machines: dict[str, str] = {}
+    duplicate_machines: list[tuple[str, str]] = []
     for path in paths:
         try:
             data = json.loads(path.read_text())
@@ -507,6 +589,15 @@ def merge_reports(paths: list[Path]) -> dict:
                 f"{path}: report schema {schema!r}, this script writes and reads "
                 f"{REPORT_SCHEMA}. Regenerate it with the same version of the script."
             )
+        # One machine's report passed twice is the single mistake that would
+        # silently inflate every session figure — those are summed, so they
+        # have no identity to protect them the way projects do.
+        machine = data.get("machine")
+        if machine and machine in seen_machines:
+            duplicate_machines.append((str(path), seen_machines[machine]))
+            continue
+        if machine:
+            seen_machines[machine] = str(path)
         reports.append(data)
 
     merged: dict[str, dict] = {}
@@ -520,17 +611,14 @@ def merge_reports(paths: list[Path]) -> dict:
             if key not in merged:
                 merged[key] = {
                     "id": key,
-                    "features": feature_count(project),
-                    "phase_counts": dict(project["phase_counts"]),
+                    "features": feature_union({}, project),
                     "git": dict(project["git"]),
                 }
+                merged[key]["phase_counts"] = phase_counts_of(merged[key]["features"])
                 continue
             seen = merged[key]
-            seen["features"] = max(seen["features"], feature_count(project))
-            for phase in PHASES:
-                seen["phase_counts"][phase] = max(
-                    seen["phase_counts"][phase], project["phase_counts"][phase]
-                )
+            seen["features"] = feature_union(seen["features"], project)
+            seen["phase_counts"] = phase_counts_of(seen["features"])
             here, there = seen["git"], project["git"]
             here["available"] = here.get("available") or there.get("available")
             for field in ("tags", "added", "deleted"):
@@ -558,6 +646,7 @@ def merge_reports(paths: list[Path]) -> dict:
         "schema": REPORT_SCHEMA,
         "merged_from": len(reports),
         "unidentified_projects": len(unidentified),
+        "duplicate_machines": duplicate_machines,
         "projects": projects,
         "totals": totals,
         "transcripts": merge_transcripts([r["transcripts"] for r in reports]),
@@ -653,6 +742,7 @@ def main() -> int:
 
     report = {
         "schema": REPORT_SCHEMA,
+        "machine": machine_id(),
         "projects": projects,
         "totals": totals,
         "transcripts": transcripts,
@@ -664,8 +754,13 @@ def main() -> int:
             # would be a display trick rather than a real one.
             # `id` survives: it is an opaque hash, not a name, and without
             # it a merge across machines cannot tell one project from two.
+            # Features keep their hashed `key` for the same reason — a
+            # merge unions on it — and drop their name.
             payload["projects"] = [
-                {"id": p["id"], "features": len(p["features"]),
+                {"id": p["id"],
+                 "features": [
+                     {"key": f["key"], "reached": f["reached"]} for f in p["features"]
+                 ],
                  "phase_counts": p["phase_counts"],
                  "git": {k: v for k, v in p["git"].items() if k != "adopted_on"}}
                 for p in projects

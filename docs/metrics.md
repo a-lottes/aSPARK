@@ -97,20 +97,33 @@ only, no install step. `git`, if present, supplies line counts and tags; without
 it those report `n/a` rather than failing.
 
 **Artifacts are unioned, never added.** The same repository checked out on two
-machines holds the *same* features; adding the reports would double-count every
+machines holds overlapping features; adding the reports would double-count every
 one of them. Projects are keyed on a stable identity — the SHA-256 of the
-repository's root commit, which is identical in every clone — and each count
-takes the highest any machine saw, so a clone that is behind contributes nothing
-rather than dragging the total down.
+repository's root commit, which is identical in every clone — and their features
+are unioned on a per-feature identity, with each phase OR'd across machines. A
+feature that exists on both machines counts once, and a phase reached on either
+machine counts as reached, so a clone sitting at `plan.md` does not erase the QA
+the other clone already passed.
 
-That identity is hashed rather than used raw, so a report can be passed around
-without pointing at the repository it came from. It is the one field
-`--totals-only` keeps, because without it a merge cannot tell one project from
-two.
+The union is per feature rather than "the highest count any machine saw" because
+the latter is only correct when one clone's features are a subset of the other's.
+That holds when `.spark/` is committed and fails when it is not — and this
+snapshot has projects in both states. Two machines each holding three features,
+one shared, is five; a highest-count rule would report three.
+
+Both identities are hashed rather than used raw, so a report can be passed
+around without pointing at the repository it came from or naming a single
+feature. They are the fields `--totals-only` keeps, because without them a merge
+cannot tell one project from two, or one feature from another.
 
 **Session figures are summed**, because a session on another machine is a
 genuinely different session. Active days are unioned, not added — the same
 calendar day can appear on two machines.
+
+Because they are summed, they have no identity protecting them the way projects
+do, and passing **one machine's report twice** would inflate every one of them.
+Each report therefore carries a hashed machine id, and a repeat is refused and
+named in the output rather than merged.
 
 **A project that is not a git repository has no stable identity.** It cannot be
 matched across machines, so it is counted as found and the merged report says
