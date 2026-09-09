@@ -30,3 +30,7 @@ node_modules/
 
 # aspark-graph working directory (optional external tool; never committed)
 .aspark-graph/
+
+# Python (only if tooling is ever added; harmless otherwise)
+__pycache__/
+*.pyc
