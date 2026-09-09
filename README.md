@@ -244,22 +244,26 @@ current state.
 
 ### Dogfooding to date
 
-**51 features have gone through the loop across 7 projects** — a Python CLI, an
-embedded game, a static site, a Reddit bot and a policy DSL — as of 2026-09-09:
+**51 features have gone through the loop across 7 projects** — one of them aSPARK
+itself, six of them not — as of 2026-09-09:
 
 | Spec | Plan | Review | QA | Release | Git tags | Role-agent runs | Human gate decisions |
 |---:|---:|---:|---:|---:|---:|---:|---:|
 | 51 | 50 | 50 | 40 | 47 | 52 | 411 | 344 |
 
-The gaps are real and left in. QA reached 40 of 51 because `/demo-day` ran once
-in nine `aspark-graph` features; release reached 47 of 51 because three
-`aspark-policy` features were specified, planned, reviewed and QA'd but never
-shipped. The first six columns are counted from `.spark/` artifacts and git on
-disk — verifiable with `ls`, inferred from nothing. The last two come from
-Claude Code's own session logs on this machine. None of it is a token count, and
-[docs/metrics.md](docs/metrics.md) explains why not, along with the method, the
-per-project breakdown and the honest `n/a`s. Reproduce it against your own
-projects with `python3 scripts/spark-metrics.py`.
+The gaps are real and left in. QA reached 40 of 51 — eight of the shortfall sit
+in one library project with no browser surface, where `/demo-day` ran once across
+nine features. Release reached 47 of 51 — three features elsewhere were
+specified, planned, reviewed and QA'd but never shipped, and this repository's own
+`situational-lenses` has a spec and nothing else.
+
+The first six columns are counted from `.spark/` artifacts and git on disk —
+verifiable with `ls`, inferred from nothing. The last two come from Claude Code's
+own session logs on this machine. The projects themselves are deliberately not
+named: a count needs no name to be checked. None of it is a token count, and
+[docs/metrics.md](docs/metrics.md) explains why not, along with the method and
+the honest `n/a`s. Reproduce it against your own projects with
+`python3 scripts/spark-metrics.py --totals-only`.
 
 | Area | State |
 |---|---|

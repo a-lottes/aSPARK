@@ -15,6 +15,7 @@ instead of a fabricated `0`. A zero here always means "counted, found none".
 Usage:
     scripts/spark-metrics.py                     # search ~ for projects with .spark/
     scripts/spark-metrics.py ~/foo ~/bar         # only these projects
+    scripts/spark-metrics.py --totals-only         # aggregate counts, no project named
     scripts/spark-metrics.py --format json
     scripts/spark-metrics.py --no-transcripts    # disk artifacts only
 
@@ -315,15 +316,52 @@ def label_projects(projects: list[dict]) -> None:
             project["label"] = project["name"]
 
 
-def render_markdown(report: dict) -> str:
+def render_totals(report: dict) -> list[str]:
+    """The aggregate table: counts only, no project named.
+
+    What a project is called is nobody's business but its owner's, and a
+    name adds nothing to a figure about the loop. The per-project view stays
+    available locally; this is the shape meant for publishing.
+    """
     projects = report["projects"]
     totals = report["totals"]
-    out: list[str] = []
+    t = totals["phase_counts"]
+    out = [
+        "| Features | Spec | Plan | Review | QA | Release | Git tags |",
+        "|---:|---:|---:|---:|---:|---:|---:|",
+        f"| **{totals['features']}** | **{t['spec']}** | **{t['plan']}** | "
+        f"**{t['review']}** | **{t['qa']}** | **{t['release']}** | **{totals['tags']}** |",
+        "",
+        f"{totals['projects']} project{'s' if totals['projects'] != 1 else ''}, "
+        f"{totals['features']} feature{'s' if totals['features'] != 1 else ''}. "
+        "A phase counts as reached when its artifact exists — nothing here is "
+        "inferred from a transcript.",
+    ]
 
-    out.append("## Loop artifacts on disk\n")
-    out.append("| Project | Features | Spec | Plan | Review | QA | Release | Tags | Lines since adoption |")
-    out.append("|---|---:|---:|---:|---:|---:|---:|---:|---|")
-    for p in projects:
+    counted = [p for p in projects if p["git"]["available"]]
+    skipped = Counter(p["git"]["reason"] for p in projects if not p["git"]["available"])
+    line = (
+        f"**+{totals['added']:,} / −{totals['deleted']:,} lines** since the loop "
+        f"was adopted, across the {len(counted)} of {len(projects)} projects whose "
+        "line count is measurable"
+    )
+    if skipped:
+        line += "; " + ", ".join(
+            f"{n} report{'s' if n == 1 else ''} n/a ({reason})"
+            for reason, n in skipped.most_common()
+        )
+    out.append(line + ".")
+    return out
+
+
+def render_detail(report: dict) -> list[str]:
+    """The per-project table, for reading on the machine that produced it."""
+    totals = report["totals"]
+    out = [
+        "| Project | Features | Spec | Plan | Review | QA | Release | Tags | Lines since adoption |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---|",
+    ]
+    for p in report["projects"]:
         c = p["phase_counts"]
         g = p["git"]
         if g["available"]:
@@ -351,6 +389,12 @@ def render_markdown(report: dict) -> str:
         "A phase counts as reached when its artifact exists — nothing here is "
         "inferred from a transcript."
     )
+    return out
+
+
+def render_markdown(report: dict, totals_only: bool = False) -> str:
+    out: list[str] = ["## Loop artifacts on disk\n"]
+    out += render_totals(report) if totals_only else render_detail(report)
 
     tr = report["transcripts"]
     out.append("\n## Loop activity in Claude Code transcripts\n")
@@ -383,6 +427,8 @@ def main() -> int:
                         help="skip any project whose path contains SUBSTRING (repeatable)")
     parser.add_argument("--transcripts", type=Path, default=Path.home() / ".claude" / "projects")
     parser.add_argument("--no-transcripts", action="store_true", help="count disk artifacts only")
+    parser.add_argument("--totals-only", action="store_true",
+                        help="aggregate counts only — no project named, for publishing")
     parser.add_argument("--format", choices=("md", "json"), default="md")
     args = parser.parse_args()
 
@@ -415,9 +461,18 @@ def main() -> int:
 
     report = {"projects": projects, "totals": totals, "transcripts": transcripts}
     if args.format == "json":
-        print(json.dumps(report, indent=2))
+        payload = dict(report)
+        if args.totals_only:
+            # A name must not survive in the JSON either, or --totals-only
+            # would be a display trick rather than a real one.
+            payload["projects"] = [
+                {"features": len(p["features"]), "phase_counts": p["phase_counts"],
+                 "git": {k: v for k, v in p["git"].items() if k != "adopted_on"}}
+                for p in projects
+            ]
+        print(json.dumps(payload, indent=2))
     else:
-        print(render_markdown(report))
+        print(render_markdown(report, totals_only=args.totals_only))
     return 0
 
 

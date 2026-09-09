@@ -21,6 +21,7 @@ Standard library only — no install step, no dependencies. Useful flags:
 | `~/foo ~/bar` | count only these projects instead of searching |
 | `--search-root DIR` / `--depth N` | where and how deep to look (default `~`, depth 3) |
 | `--exclude SUBSTRING` | skip a path — a stale second checkout, say |
+| `--totals-only` | aggregate counts only, no project named — the shape meant for publishing |
 | `--no-transcripts` | disk artifacts only |
 | `--format json` | the same report as JSON |
 
@@ -71,28 +72,40 @@ claim how many loops ran; the `.spark/` artifacts answer that question properly.
 ## Honest nulls
 
 A phase or a repository that cannot be measured reports `n/a` with a reason, not
-a `0`. A zero in these tables always means *counted, found none*. Two live
-examples in the snapshot below: `aSPARK-policy` does not commit its `.spark/`
-directory, so no line count exists for it; `Reddit-Scout` is not a git
-repository at all.
+a `0`. A zero in these tables always means *counted, found none*. Two live cases
+in the snapshot below: one project does not commit its `.spark/` directory, so
+no line count exists for it; another is not a git repository at all. Neither is
+quietly folded into the total as a zero — the aggregate says how many projects
+it could measure and how many it could not.
+
+## Why no project is named
+
+The published figures are counts, and a count needs no project name to be
+checked. Naming them would put private repositories into a public README to add
+nothing a reader can use, so `--totals-only` drops the per-project rows — in the
+JSON output as well as the Markdown, or the flag would be a display trick rather
+than a real one. The per-project view stays available to whoever runs the script
+on their own machine.
 
 ## Snapshot — 2026-09-09
 
-Taken with `python3 scripts/spark-metrics.py --depth 2 --exclude Downloads`
-(the exclusion drops a stale second checkout of `aSPARK-graph`).
+Taken with
+`python3 scripts/spark-metrics.py --depth 2 --exclude Downloads --totals-only`
+(the exclusion drops a stale second checkout that would otherwise double-count
+two features).
 
 ### Loop artifacts on disk
 
-| Project | Features | Spec | Plan | Review | QA | Release | Tags | Lines since adoption |
-|---|---:|---:|---:|---:|---:|---:|---:|---|
-| aSPARK-insights | 12 | 12 | 12 | 12 | 11 | 12 | 12 | +32,545 / −506 |
-| steamcore | 12 | 12 | 12 | 12 | 12 | 12 | 12 | +32,619 / −1,288 |
-| aSPARK-graph | 9 | 9 | 9 | 9 | 1 | 9 | 8 | +19,754 / −1,782 |
-| aSPARK | 8 | 8 | 7 | 7 | 6 | 7 | 9 | +14,803 / −1,099 (since 2026-07-15) |
-| aSPARK-policy | 5 | 5 | 5 | 5 | 5 | 2 | 2 | n/a — `.spark/` is not tracked in this repository |
-| Reddit-Scout | 3 | 3 | 3 | 3 | 3 | 3 | n/a | n/a — not a git repository |
-| datrivo | 2 | 2 | 2 | 2 | 2 | 2 | 9 | +3,926 / −7,744 (since 2026-07-14) |
-| **Total** | **51** | **51** | **50** | **50** | **40** | **47** | **52** | **+103,647 / −12,419** |
+| Features | Spec | Plan | Review | QA | Release | Git tags |
+|---:|---:|---:|---:|---:|---:|---:|
+| **51** | **51** | **50** | **50** | **40** | **47** | **52** |
+
+7 projects, 51 features — one of them aSPARK itself, six of them not.
+
+**+104,223 / −12,419 lines** since the loop was adopted, across the 5 of 7
+projects whose line count is measurable; 1 reports `n/a` (`.spark/` not tracked
+in that repository), 1 reports `n/a` (not a git repository). The line figure
+drifts with every commit — it is a snapshot, not a standing claim.
 
 ### Loop activity in Claude Code transcripts
 
@@ -106,14 +119,15 @@ Taken with `python3 scripts/spark-metrics.py --depth 2 --exclude Downloads`
 
 The gaps are the interesting part, and they are not rounded away.
 
-- **QA, 40 of 51.** Mostly `aspark-graph`, where `/demo-day` ran once in nine
-  features. A library with no browser surface is exactly the case
+- **QA, 40 of 51.** Eight of the eleven missing QA reports sit in a single
+  library project with no browser surface, where `/demo-day` ran once across
+  nine features. That is exactly the case
   [constitution §8's QA-method declaration](../README.md#project-status) was
-  written for, and those nine features predate it.
-- **Release, 47 of 51.** `aSPARK-policy` has three features specified,
-  planned, reviewed and QA'd that were never released.
-- **`situational-lenses` has a spec and nothing else** — the lens layer's own
-  field-proof gap, tracked as
+  written for, and those features predate it.
+- **Release, 47 of 51.** Three features in one project were specified, planned,
+  reviewed and QA'd but never shipped.
+- **`situational-lenses` has a spec and nothing else** — this repository's own
+  feature, and the lens layer's field-proof gap, tracked as
   [#4](https://github.com/a-lottes/aSPARK/issues/4) and
   [#5](https://github.com/a-lottes/aSPARK/issues/5).
 
