@@ -1,0 +1,740 @@
+{
+  "schema": 2,
+  "machine": "m:2e80b1d428827c8d",
+  "projects": [
+    {
+      "id": "g:8fcc549be7ab51bf",
+      "features": [
+        {
+          "key": "c93539eea9a5",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "2bd8b7b0d83e",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "5d9c1c1d37ea",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "6c7915018034",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "2d86897cff9b",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "f0247a65962c",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "af04738dabe9",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "b6b4eee8d973",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "99902ea5b18d",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "6de5a8304bde",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "53a0d151104d",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "41995b8c76b9",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 12,
+        "plan": 12,
+        "review": 12,
+        "qa": 11,
+        "release": 12
+      },
+      "git": {
+        "available": true,
+        "tags": 12,
+        "added": 32545,
+        "deleted": 506,
+        "adopted_at_root": true
+      }
+    },
+    {
+      "id": "g:6d4b7e81c0625256",
+      "features": [
+        {
+          "key": "a96e7ad609a2",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "4438e38c7670",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "fba6a4d251c6",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "f0c6ba1b354a",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "6173cb33dd20",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "03b627b3126e",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "81ac6ceef0c6",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "d01261c3d7a9",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "a0e64aa9abb0",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "19fdae996108",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "bc1a6fd02c8c",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "f25b527d7c11",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 12,
+        "plan": 12,
+        "review": 12,
+        "qa": 12,
+        "release": 12
+      },
+      "git": {
+        "available": true,
+        "tags": 12,
+        "added": 32619,
+        "deleted": 1288,
+        "adopted_at_root": true
+      }
+    },
+    {
+      "id": "g:cb92f71b2671725e",
+      "features": [
+        {
+          "key": "080c6bd87a3f",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "84261de17abc",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "e7d8c11c3a57",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "047c3c779462",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "495690513749",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "f4af4f6e2d80",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "9b380d15ba63",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "048f6248e0a8",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "2271070624f5",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 9,
+        "plan": 9,
+        "review": 9,
+        "qa": 1,
+        "release": 9
+      },
+      "git": {
+        "available": true,
+        "tags": 8,
+        "added": 19754,
+        "deleted": 1782,
+        "adopted_at_root": true
+      }
+    },
+    {
+      "id": "g:ef6b0fee91e06b89",
+      "features": [
+        {
+          "key": "3e935b83ac90",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "48b1c3533211",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "6069ad7d820d",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "a1c050575005",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "ccdf21443847",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "2ceb00b9d261",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "0601ca7a1c13",
+          "reached": {
+            "spec": true,
+            "plan": false,
+            "review": false,
+            "qa": false,
+            "release": false
+          }
+        },
+        {
+          "key": "2628d94585f4",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 8,
+        "plan": 7,
+        "review": 7,
+        "qa": 6,
+        "release": 7
+      },
+      "git": {
+        "available": true,
+        "tags": 9,
+        "added": 15911,
+        "deleted": 1181,
+        "adopted_at_root": false
+      }
+    },
+    {
+      "id": "g:c386b6cfe32fd635",
+      "features": [
+        {
+          "key": "85160fa491e9",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": false
+          }
+        },
+        {
+          "key": "b4a85d0f690e",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": false
+          }
+        },
+        {
+          "key": "2bd8b7b0d83e",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "82f1ed39c8e3",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "20c034ecb72f",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": false
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 5,
+        "plan": 5,
+        "review": 5,
+        "qa": 5,
+        "release": 2
+      },
+      "git": {
+        "available": false,
+        "tags": 2,
+        "reason": ".spark/ is not tracked in this repository"
+      }
+    },
+    {
+      "id": null,
+      "features": [
+        {
+          "key": "9a49c3453826",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "252d67c5c1b0",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "dcdcd6a5b323",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 3,
+        "plan": 3,
+        "review": 3,
+        "qa": 3,
+        "release": 3
+      },
+      "git": {
+        "available": false,
+        "reason": "not a git repository"
+      }
+    },
+    {
+      "id": "g:44cf5cec3248d9c8",
+      "features": [
+        {
+          "key": "448be8c5b15b",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "7f446233bc29",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 2,
+        "plan": 2,
+        "review": 2,
+        "qa": 2,
+        "release": 2
+      },
+      "git": {
+        "available": true,
+        "tags": 9,
+        "added": 3926,
+        "deleted": 7744,
+        "adopted_at_root": false
+      }
+    }
+  ],
+  "totals": {
+    "projects": 7,
+    "features": 51,
+    "phase_counts": {
+      "spec": 51,
+      "plan": 50,
+      "review": 50,
+      "qa": 40,
+      "release": 47
+    },
+    "tags": 52,
+    "added": 104755,
+    "deleted": 12501
+  },
+  "transcripts": {
+    "available": true,
+    "root": "/Users/andreaslottes/.claude/projects",
+    "sessions_total": 85,
+    "sessions_aspark": 38,
+    "agent_runs": {
+      "reviewer": 103,
+      "product-owner": 97,
+      "release-manager": 62,
+      "qa-tester": 59,
+      "engineering-manager": 57,
+      "designer": 23,
+      "facilitator": 10
+    },
+    "agent_runs_total": 411,
+    "gates": 344,
+    "ceremonies": {
+      "spark": 34,
+      "next-steps": 23,
+      "peer-review": 12,
+      "sprint-plan": 11,
+      "demo-day": 11,
+      "increment": 8,
+      "story-time": 6,
+      "go-live": 6,
+      "charter": 2
+    },
+    "active_days": 49,
+    "days": [
+      "2026-07-15",
+      "2026-07-16",
+      "2026-07-17",
+      "2026-07-18",
+      "2026-07-19",
+      "2026-07-20",
+      "2026-07-21",
+      "2026-07-25",
+      "2026-07-26",
+      "2026-07-27",
+      "2026-07-28",
+      "2026-07-29",
+      "2026-07-30",
+      "2026-07-31",
+      "2026-08-01",
+      "2026-08-02",
+      "2026-08-03",
+      "2026-08-04",
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-09",
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-16",
+      "2026-08-17",
+      "2026-08-18",
+      "2026-08-19",
+      "2026-08-20",
+      "2026-08-21",
+      "2026-08-23",
+      "2026-08-24",
+      "2026-08-25",
+      "2026-08-26",
+      "2026-08-27",
+      "2026-08-29",
+      "2026-08-30",
+      "2026-08-31",
+      "2026-09-01",
+      "2026-09-02",
+      "2026-09-03",
+      "2026-09-04",
+      "2026-09-05",
+      "2026-09-06",
+      "2026-09-07",
+      "2026-09-08"
+    ],
+    "first_day": "2026-07-15",
+    "last_day": "2026-09-08"
+  }
+}

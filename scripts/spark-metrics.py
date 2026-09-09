@@ -549,6 +549,28 @@ def render_markdown(report: dict, totals_only: bool = False) -> str:
     return "\n".join(out) + "\n"
 
 
+def nameless(report: dict) -> dict:
+    """The report with every name removed, ids kept.
+
+    The ids are opaque hashes and must survive: without them a merge cannot
+    tell one project from two, one feature from another, or one machine from
+    the same machine twice.
+    """
+    payload = dict(report)
+    payload["projects"] = [
+        {
+            "id": project["id"],
+            "features": [
+                {"key": f["key"], "reached": f["reached"]} for f in project["features"]
+            ],
+            "phase_counts": project["phase_counts"],
+            "git": {k: v for k, v in project["git"].items() if k != "adopted_on"},
+        }
+        for project in report["projects"]
+    ]
+    return payload
+
+
 def merge_reports(paths: list[Path]) -> dict:
     """Combine per-machine JSON reports into one honest total.
 
@@ -696,6 +718,9 @@ def main() -> int:
                         help="skip any project whose path contains SUBSTRING (repeatable)")
     parser.add_argument("--transcripts", type=Path, default=Path.home() / ".claude" / "projects")
     parser.add_argument("--no-transcripts", action="store_true", help="count disk artifacts only")
+    parser.add_argument("--write-report", type=Path, metavar="DIR",
+                        help="also write this machine's report to DIR/<machine-id>.json, "
+                             "ready to commit and merge elsewhere")
     parser.add_argument("--merge", nargs="+", type=Path, metavar="REPORT.json",
                         help="combine JSON reports from several machines instead of scanning")
     parser.add_argument("--totals-only", action="store_true",
@@ -747,24 +772,22 @@ def main() -> int:
         "totals": totals,
         "transcripts": transcripts,
     }
+    if args.write_report:
+        # A written report exists to be shared — committed to a repository,
+        # carried to another machine. It is therefore always the nameless
+        # shape, whatever --totals-only says about what is printed here:
+        # the flag governs this run's output, not what leaves the machine.
+        target = args.write_report.expanduser()
+        target.mkdir(parents=True, exist_ok=True)
+        path = target / f"{report['machine'].replace(':', '-')}.json"
+        path.write_text(json.dumps(nameless(report), indent=2) + "\n")
+        print(f"Report written to {path}", file=sys.stderr)
+
     if args.format == "json":
-        payload = dict(report)
-        if args.totals_only:
-            # A name must not survive in the JSON either, or --totals-only
-            # would be a display trick rather than a real one.
-            # `id` survives: it is an opaque hash, not a name, and without
-            # it a merge across machines cannot tell one project from two.
-            # Features keep their hashed `key` for the same reason — a
-            # merge unions on it — and drop their name.
-            payload["projects"] = [
-                {"id": p["id"],
-                 "features": [
-                     {"key": f["key"], "reached": f["reached"]} for f in p["features"]
-                 ],
-                 "phase_counts": p["phase_counts"],
-                 "git": {k: v for k, v in p["git"].items() if k != "adopted_on"}}
-                for p in projects
-            ]
+        # A name must not survive in the JSON either, or --totals-only would
+        # be a display trick rather than a real one. The ids are what a merge
+        # needs, and `nameless` is the one place that decides what they are.
+        payload = nameless(report) if args.totals_only else report
         print(json.dumps(payload, indent=2))
     else:
         print(render_markdown(report, totals_only=args.totals_only))
