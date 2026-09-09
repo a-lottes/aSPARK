@@ -247,6 +247,14 @@ current state.
 **51 features have gone through the loop across 7 projects** — one of them aSPARK
 itself, six of them not — as of 2026-09-09:
 
+> **These are one machine's figures.** A second development machine adds 14
+> features across 6 projects, which puts the combined total somewhere between
+> **51 and 65** — the two overlap (aSPARK's own repository is on both), so the
+> working estimate is 51 to 57. The exact figure needs one `--merge` of both
+> machines' reports and is not published until it has been counted; adding the
+> two totals would count the shared features twice. Method and bounds:
+> [docs/metrics.md](docs/metrics.md#snapshot--2026-09-09).
+
 | Spec | Plan | Review | QA | Release | Git tags | Role-agent runs | Human gate decisions |
 |---:|---:|---:|---:|---:|---:|---:|---:|
 | 51 | 50 | 50 | 40 | 47 | 52 | 411 | 344 |
@@ -259,10 +267,10 @@ specified, planned, reviewed and QA'd but never shipped, and this repository's o
 
 The first six columns are counted from `.spark/` artifacts and git on disk —
 verifiable with `ls`, inferred from nothing. The last two come from Claude Code's
-own session logs on this machine. The projects themselves are deliberately not
-named: a count needs no name to be checked. None of it is a token count, and
-[docs/metrics.md](docs/metrics.md) explains why not, along with the method and
-the honest `n/a`s. Reproduce it against your own projects with
+own session logs on the machine that produced them. The projects themselves are
+deliberately not named: a count needs no name to be checked. None of it is a
+token count, and [docs/metrics.md](docs/metrics.md) explains why not, along with
+the method and the honest `n/a`s. Reproduce it against your own projects with
 `python3 scripts/spark-metrics.py --totals-only`.
 
 | Area | State |
