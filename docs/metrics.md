@@ -160,61 +160,82 @@ on their own machine.
 
 ## Snapshot — 2026-09-09
 
-Taken with
-`python3 scripts/spark-metrics.py --depth 2 --exclude Downloads --totals-only`
+Two machines, merged. Each wrote its report with
+
+```bash
+python3 scripts/spark-metrics.py --depth 2 --exclude Downloads --totals-only \
+  --write-report docs/reports
+```
+
+and the total is the merge of both, from [`docs/reports/`](reports/):
+
+```bash
+python3 scripts/spark-metrics.py --merge docs/reports/*.json
+```
+
 (the exclusion drops a stale second checkout that would otherwise double-count
 two features).
-
-> **Interim: this is one machine, not all of them.** A second development
-> machine reports **14 features across 6 projects** with the same command, and
-> the two have not yet been merged. The combined figure is therefore not yet
-> known, but it is **bounded between 51 and 65**: at least 51, because every
-> feature in the table below is in the union, and at most 65, because a union
-> cannot exceed the sum of its parts.
->
-> The true value sits below the upper bound, since the two machines demonstrably
-> overlap — aSPARK's own repository is on both, and its 8 features are committed
-> in `.spark/`, so any clone carries all of them. That puts the working estimate
-> at **51 to 57**. Which of the other five projects also exist on both is not
-> known from here, and is not guessed.
->
-> A single `--merge` of both machines' reports replaces this note with a counted
-> figure — see [Counting across machines](#counting-across-machines). Until then
-> the range stands in place of a number, because adding 51 and 14 would count
-> aSPARK's features twice and the result would not be reproducible by anyone.
 
 ### Loop artifacts on disk
 
 | Features | Spec | Plan | Review | QA | Release | Git tags |
 |---:|---:|---:|---:|---:|---:|---:|
-| **51** | **51** | **50** | **50** | **40** | **47** | **52** |
+| **54** | **54** | **53** | **52** | **41** | **48** | **61** |
 
-7 projects, 51 features — one of them aSPARK itself, six of them not.
+10 projects, 54 features — one of them aSPARK itself, nine of them not.
 
-**+104,223 / −12,419 lines** since the loop was adopted, across the 5 of 7
-projects whose line count is measurable; 1 reports `n/a` (`.spark/` not tracked
-in that repository), 1 reports `n/a` (not a git repository). The line figure
-drifts with every commit — it is a snapshot, not a standing claim.
+**What the merge removed.** The two machines report 51 and 14 features, which
+would add to 65 across 13 projects. The counted figure is **54 across 10**,
+because **3 projects sit on both machines and 11 of their features are the same
+features**. The largest of the three is aSPARK itself: 8 features on each
+machine, identical, since `.spark/` is committed and both clones carry all of
+them. The other two overlap one-sidedly — 9 features against 2, and 2 against 1,
+with the smaller set contained in the larger both times, because one machine's
+clone is simply behind.
+
+On this particular pair of reports a highest-count rule would therefore have
+produced the same 54: every overlap here happens to be a subset, which is the
+one case where taking the larger count is right. The per-feature union is not
+what changed this number, and is not claimed to be. It is what makes the number
+hold when a machine has a feature the other does not — two clones each holding
+work the other lacks, which the moment `.spark/` is uncommitted in a shared
+project is the normal case, not the exception.
+
+One of the ten projects is not a git repository and therefore has no identity
+that survives a machine boundary. It is counted as found, and if the same project
+also exists on the other machine it is counted twice — a possible **over**count
+of at most one project, stated rather than hidden.
+
+**+106,828 / −12,534 lines** since the loop was adopted, across the 6 of 10
+projects whose line count is measurable; 3 report `n/a` (`.spark/` not tracked in
+that repository), 1 reports `n/a` (not a git repository). The line figure drifts
+with every commit — it is a snapshot, not a standing claim.
 
 ### Loop activity in Claude Code transcripts
 
-- **38** of 85 sessions were aSPARK-driven
-- **411** role-agent runs — reviewer 103 · product-owner 97 · release-manager 62 · qa-tester 59 · engineering-manager 57 · designer 23 · facilitator 10
-- **344** human gate decisions
-- **49** active days, 2026-07-15 to 2026-09-08
-- 113 ceremonies invoked by name — `/spark` 34 · `/next-steps` 23 · `/peer-review` 12 · `/sprint-plan` 11 · `/demo-day` 11 · `/increment` 8 · `/story-time` 6 · `/go-live` 6 · `/charter` 2 (an undercount, see above)
+- **42** of 114 sessions were aSPARK-driven
+- **429** role-agent runs — reviewer 108 · product-owner 103 · release-manager 63 · engineering-manager 61 · qa-tester 59 · designer 24 · facilitator 11
+- **377** human gate decisions
+- **51** active days, 2026-07-13 to 2026-09-08
+- 116 ceremonies invoked by name — `/spark` 35 · `/next-steps` 24 · `/peer-review` 12 · `/sprint-plan` 11 · `/demo-day` 11 · `/increment` 8 · `/story-time` 6 · `/go-live` 6 · `/charter` 3 (an undercount, see above)
+
+These are summed across both machines, not unioned: a session on another machine
+is genuinely another session. Only the active days are unioned, since the same
+calendar day appears on both. The window starts two days earlier than the single
+machine's did, because the earlier adoption happened on the other one.
 
 ## Reading the gaps
 
 The gaps are the interesting part, and they are not rounded away.
 
-- **QA, 40 of 51.** Eight of the eleven missing QA reports sit in a single
+- **QA, 41 of 54.** Eight of the thirteen missing QA reports sit in a single
   library project with no browser surface, where `/demo-day` ran once across
   nine features. That is exactly the case
   [constitution §8's QA-method declaration](../README.md#project-status) was
   written for, and those features predate it.
-- **Release, 47 of 51.** Three features in one project were specified, planned,
-  reviewed and QA'd but never shipped.
+- **Release, 48 of 54.** Three of the six unreleased features sit in one project
+  that specified, planned, reviewed and QA'd them and then shipped nothing. Two
+  more are single-feature projects that stalled before review.
 - **`situational-lenses` has a spec and nothing else** — this repository's own
   feature, and the lens layer's field-proof gap, tracked as
   [#4](https://github.com/a-lottes/aSPARK/issues/4) and

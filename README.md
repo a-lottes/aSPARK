@@ -244,33 +244,37 @@ current state.
 
 ### Dogfooding to date
 
-**51 features have gone through the loop across 7 projects** — one of them aSPARK
-itself, six of them not — as of 2026-09-09:
-
-> **These are one machine's figures.** A second development machine adds 14
-> features across 6 projects, which puts the combined total somewhere between
-> **51 and 65** — the two overlap (aSPARK's own repository is on both), so the
-> working estimate is 51 to 57. The exact figure needs one `--merge` of both
-> machines' reports and is not published until it has been counted; adding the
-> two totals would count the shared features twice. Method and bounds:
-> [docs/metrics.md](docs/metrics.md#snapshot--2026-09-09).
+**54 features have gone through the loop across 10 projects** — one of them
+aSPARK itself, nine of them not — as of 2026-09-09, across two development
+machines:
 
 | Spec | Plan | Review | QA | Release | Git tags | Role-agent runs | Human gate decisions |
 |---:|---:|---:|---:|---:|---:|---:|---:|
-| 51 | 50 | 50 | 40 | 47 | 52 | 411 | 344 |
+| 54 | 53 | 52 | 41 | 48 | 61 | 429 | 377 |
 
-The gaps are real and left in. QA reached 40 of 51 — eight of the shortfall sit
+The gaps are real and left in. QA reached 41 of 54 — eight of the shortfall sit
 in one library project with no browser surface, where `/demo-day` ran once across
-nine features. Release reached 47 of 51 — three features elsewhere were
-specified, planned, reviewed and QA'd but never shipped, and this repository's own
-`situational-lenses` has a spec and nothing else.
+nine features. Release reached 48 of 54 — three unreleased features sit in one
+project that specified, planned, reviewed and QA'd them and shipped nothing, and
+this repository's own `situational-lenses` has a spec and nothing else.
+
+**54 is a merge, not a sum.** The two machines report 51 and 14 features, which
+would add to 65 — but 3 projects sit on both and 11 of their features are the
+same features, aSPARK's own 8 among them. Adding the totals would have
+overstated the count by a fifth. Each machine writes a nameless report into
+[docs/reports/](docs/reports/) and the published figure is
+`spark-metrics.py --merge docs/reports/*.json`, so the arithmetic is checkable
+without either machine. This machine contributes only 3 features the other did
+not already have; that is what deduplication looks like when the big projects
+are clones of the same repositories.
 
 The first six columns are counted from `.spark/` artifacts and git on disk —
 verifiable with `ls`, inferred from nothing. The last two come from Claude Code's
-own session logs on the machine that produced them. The projects themselves are
-deliberately not named: a count needs no name to be checked. None of it is a
-token count, and [docs/metrics.md](docs/metrics.md) explains why not, along with
-the method and the honest `n/a`s. Reproduce it against your own projects with
+own session logs and are summed across machines, since a session elsewhere is
+genuinely another session. The projects themselves are deliberately not named: a
+count needs no name to be checked. None of it is a token count, and
+[docs/metrics.md](docs/metrics.md) explains why not, along with the method and
+the honest `n/a`s. Count your own with
 `python3 scripts/spark-metrics.py --totals-only`.
 
 | Area | State |
