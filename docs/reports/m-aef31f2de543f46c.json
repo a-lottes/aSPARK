@@ -1,0 +1,305 @@
+{
+  "schema": 2,
+  "machine": "m:aef31f2de543f46c",
+  "projects": [
+    {
+      "id": "g:ef6b0fee91e06b89",
+      "features": [
+        {
+          "key": "3e935b83ac90",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "48b1c3533211",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "6069ad7d820d",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "a1c050575005",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "ccdf21443847",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "2ceb00b9d261",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "0601ca7a1c13",
+          "reached": {
+            "spec": true,
+            "plan": false,
+            "review": false,
+            "qa": false,
+            "release": false
+          }
+        },
+        {
+          "key": "2628d94585f4",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 8,
+        "plan": 7,
+        "review": 7,
+        "qa": 6,
+        "release": 7
+      },
+      "git": {
+        "available": true,
+        "tags": 9,
+        "added": 16754,
+        "deleted": 1206,
+        "adopted_at_root": false
+      }
+    },
+    {
+      "id": "g:cb92f71b2671725e",
+      "features": [
+        {
+          "key": "080c6bd87a3f",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "84261de17abc",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": false
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 2,
+        "plan": 2,
+        "review": 2,
+        "qa": 1,
+        "release": 1
+      },
+      "git": {
+        "available": true,
+        "tags": 1,
+        "added": 7372,
+        "deleted": 88,
+        "adopted_at_root": true
+      }
+    },
+    {
+      "id": "g:38c2b118a2015217",
+      "features": [
+        {
+          "key": "812dde83f0f9",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": false
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 1,
+        "plan": 1,
+        "review": 1,
+        "qa": 0,
+        "release": 0
+      },
+      "git": {
+        "available": false,
+        "tags": 3,
+        "reason": ".spark/ is not tracked in this repository"
+      }
+    },
+    {
+      "id": "g:dbcb33e2bf47fb81",
+      "features": [
+        {
+          "key": "916631b472ce",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 1,
+        "plan": 1,
+        "review": 1,
+        "qa": 1,
+        "release": 1
+      },
+      "git": {
+        "available": true,
+        "tags": 1,
+        "added": 1230,
+        "deleted": 8,
+        "adopted_at_root": false
+      }
+    },
+    {
+      "id": "g:44cf5cec3248d9c8",
+      "features": [
+        {
+          "key": "448be8c5b15b",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 1,
+        "plan": 1,
+        "review": 1,
+        "qa": 1,
+        "release": 1
+      },
+      "git": {
+        "available": true,
+        "tags": 8,
+        "added": 1925,
+        "deleted": 145,
+        "adopted_at_root": false
+      }
+    },
+    {
+      "id": "g:ac99ebc025bcc12a",
+      "features": [
+        {
+          "key": "b3e86fa557f9",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": false,
+            "qa": false,
+            "release": false
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 1,
+        "plan": 1,
+        "review": 0,
+        "qa": 0,
+        "release": 0
+      },
+      "git": {
+        "available": false,
+        "tags": 5,
+        "reason": ".spark/ is not tracked in this repository"
+      }
+    }
+  ],
+  "totals": {
+    "projects": 6,
+    "features": 14,
+    "phase_counts": {
+      "spec": 14,
+      "plan": 13,
+      "review": 12,
+      "qa": 9,
+      "release": 10
+    },
+    "tags": 27,
+    "added": 27281,
+    "deleted": 1447
+  },
+  "transcripts": {
+    "available": true,
+    "root": "/Users/andreas.lottes/.claude/projects",
+    "sessions_total": 29,
+    "sessions_aspark": 4,
+    "agent_runs": {
+      "product-owner": 6,
+      "reviewer": 5,
+      "engineering-manager": 4,
+      "release-manager": 1,
+      "facilitator": 1,
+      "designer": 1
+    },
+    "agent_runs_total": 18,
+    "gates": 33,
+    "ceremonies": {
+      "charter": 1,
+      "next-steps": 1,
+      "spark": 1
+    },
+    "active_days": 9,
+    "days": [
+      "2026-07-13",
+      "2026-07-14",
+      "2026-07-15",
+      "2026-07-16",
+      "2026-08-06",
+      "2026-08-18",
+      "2026-08-19",
+      "2026-08-20",
+      "2026-08-21"
+    ],
+    "first_day": "2026-07-13",
+    "last_day": "2026-08-21"
+  }
+}
