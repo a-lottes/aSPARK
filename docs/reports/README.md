@@ -2,7 +2,7 @@
 
 One JSON report per machine, the input to a cross-machine total.
 
-The repository is the transport. Both machines already have it, it syncs in both
+The repository is the transport. Every machine already has it, it syncs in both
 directions, and a report is nameless — so there is nothing to hand-carry and
 nothing to leak. Add yours:
 
