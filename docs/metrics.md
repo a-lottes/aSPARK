@@ -15,7 +15,7 @@ this repository will produce a newer figure.
 
 ## Check any figure yourself
 
-Three commands, run from the repository root. They need Python 3 and nothing
+Four commands, run from the repository root. They need Python 3 and nothing
 else — no install, no dependencies, no tool of ours. Each one was run exactly as
 printed and its output is shown beneath it.
 
@@ -140,7 +140,7 @@ ceremony charter 3
 
 ### The four combination rules
 
-Everything above is those three commands plus four rules about how several
+Everything above is those four commands plus four rules about how several
 machines' reports combine. The rules are what make the figures honest, so they are stated
 rather than buried in code:
 
@@ -226,10 +226,13 @@ it came from or naming a single feature — and those hashes are exactly what a
 merge needs to tell one project from two.
 
 A project that is **not** a git repository has no such identity and cannot be
-matched across machines. One of the ten was in that state at an earlier merge and
-has since been put under version control, which is why this snapshot's line
-figure is some 7,800 lines higher than the one before it: no code was written, a
-project simply became measurable.
+matched across machines. One project was in that state at an earlier, single-
+machine measurement, and was put under version control before the first
+two-machine merge — which is why *that* merge's line figure came in some 7,800
+lines higher than the single-machine figure before it: no code was written, a
+project simply became measurable. (A second, larger lift happened at the move
+to three machines — see the current snapshot below for that one; the two are
+separate events, not the same number restated.)
 
 ## Snapshot — 2026-09-10
 
