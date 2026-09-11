@@ -4,13 +4,14 @@
 |---|---|
 | **Phase** | Act (`/increment`) |
 | **Owner** | Developer (the orchestrating session) |
-| **Status** | `in-progress` |
+| **Status** | `complete` |
 | **Date** | 2026-09-11 |
 
 **Handoff**
-- **Status:** `in-progress` — written run by run as tasks complete. Entries are append-only; a superseded number is struck through in place, never deleted.
+- **Status:** `complete` for `/increment` — all 12 tasks `done`, written run by run as each completed. Entries are append-only.
 - **Summary:** The single evidence artifact for this feature. Holds the negative case, the figure derivations (run twice, either side of the `transcripts.root` strip), the recovery commit for the deleted script, and the command sequences `/demo-day` must perform.
-- **Open:** see the task table in `plan.md` §3 for what is still `todo`.
+- **Open:** `2`, both **by design and both `/demo-day`'s** — AC-1.3 (refreshed plugin install) and AC-1.5 (fresh clone) write outside the repository, which constitution §6 reserves to the user's explicit go. Entry 9 holds the verbatim command sequences and their stop rules. No result is claimed for either.
+- **Findings raised here, for `/peer-review`:** `AC-4.1` second clause **refuted-with-finding** (Entry 6, ruled as D1); `AC-1.2`'s literal command unsatisfiable by a path-prefix bug though its intent holds (Entry 7); `F-jq` (Entry 1) resolved by the user as deviation D6; one extra §3 hunk as D7. Two pre-existing observations left in scope's way deliberately: README's "10 skills, 7 agents, 6 templates" will rot, and `ROADMAP.md`'s Shipped row names baseline Core v0.7.0 against a live 0.8.0.
 - **Binding ruling:** the derivation verdicts in Entry 3 are the **only** permitted source of figures for T6 and T10. A figure not in that table may not be published.
 - **On conflict:** `plan.md` §3 wins on task status; this file wins on what was observed.
 
@@ -605,3 +606,149 @@ Recorded as a **wording defect in the criterion, not a defect in the work** —
 the same class as AC-4.1 (Entry 6), and the second time a grep written ahead of
 the artifacts it would later match has needed this treatment. `/peer-review` owns
 whether the criterion or the record should carry the correction.
+
+---
+
+## Entry 8 — T11/T12, final sweep and the package `/demo-day` needs
+
+### T11 — `ROADMAP.md`
+
+"Close the handbook honesty exception" is removed from `## Next` (it was done at
+`/charter` this morning), and this feature is listed there in its place. It moves
+to `## Shipped` at `/go-live`, not here.
+
+```
+$ python3 - <<'PY'   # counts scoped to the ## Next section only
+'handbook honesty exception' under ## Next : 0
+script removal under ## Next              : 1
+still mentioned anywhere in file          : 0
+PY
+```
+
+**Pre-existing drift left alone, flagged for `/peer-review`:** `## Shipped`'s
+handbook row names the baseline "Core v0.7.0 · graph v0.7.0" while Core is at
+`0.8.0`. It understates rather than overstates, the plan recorded it as a
+follow-up for the handbook revision, and it is outside this feature's scope.
+
+### T12 — NFR-1: the consumed contract is untouched
+
+```
+$ git diff --name-status main
+M	.spark/constitution.md
+A	.spark/metrics-script-removal/evidence.md
+A	.spark/metrics-script-removal/plan.md
+A	.spark/metrics-script-removal/spec.md
+M	README.md
+M	ROADMAP.md
+M	docs/metrics.md
+M	docs/reports/README.md
+M	docs/reports/m-2e80b1d428827c8d.json
+M	docs/reports/m-aef31f2de543f46c.json
+D	scripts/spark-metrics.py
+```
+
+No path under `skills/`, `agents/`, `lenses/`, `templates/`, `tools/` or
+`.claude-plugin/`. NFR-1 holds, and with T1's zero-hit negative case, NFR-2's
+"not breaking" holds too: nothing in the consumed contract referenced the deleted
+file, so no consumer can have depended on it. `.claude-plugin/plugin.json` is
+untouched — version stays `0.8.0` through Act (D3); the bump is `/go-live`'s.
+
+### T12 — `claude plugin validate`, unchanged from the T1 baseline
+
+```
+✔ Validation passed with warnings
+  ❯ autoUpdate: Unknown field 'autoUpdate'. Claude Code ignores it at load time.
+```
+
+Same single warning as Entry 1, on a file this increment does not touch — so the
+increment introduced no new validation finding.
+
+### T12 — AC-4.1 sweep: every remaining hit classified
+
+```
+$ grep -rn 'spark-metrics' . --include='*.md' | grep -v '\.spark/[a-z-]*/'
+.spark/constitution.md:296:| 2026-09-11 | §3 stack/runtime: **no exception …
+```
+
+**One hit repo-wide.** It is the historical Amendments row, which D1 ruled stays.
+Everything else that named the script is gone: `README.md` 0, `docs/metrics.md` 0,
+`docs/reports/README.md` 0, and the constitution's preamble, §2, §3 and §8 all 0.
+The remaining hits under the literal filter are this feature's own `spec.md`,
+`plan.md` and this file — immutable artifacts recording what was decided, which
+the criterion intended to exclude and does not (see Entry 7, AC-1.2).
+
+---
+
+## Entry 9 — the package `/demo-day` must perform
+
+Two acceptance criteria are deliberately **not** verified here. Both write outside
+the repository, and constitution §6 reserves that to the user's explicit go:
+*"Nothing is executed or installed on the user's behalf unasked."* `/increment`
+did not run them, and no result for them is claimed.
+
+### AC-1.3 — the refreshed install carries no executable
+
+**Ask the user first.** This writes into `~/.claude`. If the answer is no, record
+AC-1.3 `not-verified-live` with that as the reason — which is an honest outcome,
+not a failure.
+
+```bash
+# 1. state the starting point, so the refresh is provable rather than assumed
+python3 -c "import json;print(json.load(open('$HOME/.claude/plugins/installed_plugins.json'))['plugins']['aspark@aspark'])"
+#    expect gitCommitSha 9c47bc95… (v0.8.0, installed 2026-08-31) BEFORE the refresh
+
+# 2. refresh from this branch
+claude plugin marketplace update aspark
+
+# 3. prove the refresh actually happened — gitCommitSha must now equal branch head
+git rev-parse HEAD
+python3 -c "import json;print(json.load(open('$HOME/.claude/plugins/installed_plugins.json'))['plugins']['aspark@aspark'])"
+
+# 4. the criterion itself
+find "$HOME/.claude/plugins/cache/aspark/aspark" -name '*.py'
+#    expect: no output
+```
+
+**Step 3 is the whole point.** Without it the `find` in step 4 is a tautology: the
+installed cache predates the script, so "no `.py` present" is already true today
+and proves nothing about this change. A listing taken before the `gitCommitSha`
+moves is not evidence.
+
+**Risk R1, and its remedy needs a second go.** No version bump happens in this
+increment (D3), so the refresh lands in the same `…/aspark/aspark/0.8.0/`
+directory. If the update **merges** into that directory rather than replacing it,
+a stale `spark-metrics.py` can survive and AC-1.3 fails for an install-mechanism
+reason that says nothing about the repository. The remedy is an uninstall and
+reinstall — **also** outside the repo, so it needs the user's go again. If they
+decline, record the observed state and the mechanism as a finding; do not record
+the repo as failing a criterion it met.
+
+### AC-1.5 — a fresh clone carries neither the script nor the ignored artifacts
+
+Needs the branch pushed, which is itself an outward action needing the user's go.
+Run it after `/go-live`'s push, or on the local repo as the origin.
+
+```bash
+git clone --branch feat/metrics-script-removal <repo> /tmp/ac15-clone
+find /tmp/ac15-clone -name '*.py'
+for f in 'docs/aSPARK_Enterprise_Architecture_Handbook.docx.bak' '.DS_Store' \
+         '.claude/settings.local.json' '.aspark-graph/graph.json' '.aspark-graph/parse-cache.json'; do
+  [ -e "/tmp/ac15-clone/$f" ] && echo "PRESENT $f" || echo "absent  $f"
+done
+rm -rf /tmp/ac15-clone
+```
+
+Expect no `.py` and all five `absent`. **What this does and does not settle:** it
+settles what a **clone** carries. It claims nothing about what a GitHub
+marketplace install carries — spec A9 records that as unverified, and the
+follow-up feature named in spec §6 owns it. Do not let a clean result here be
+written up as "consumers are unaffected".
+
+### What QA re-performs that was already done here
+
+AC-2.1 and AC-2.2 are QA's by the plan's own test strategy, and the point is
+independence: copy the three commands **out of `docs/metrics.md`** and run them
+from the repository root, supplying nothing. Any step QA has to invent — a
+changed path, a missing field name, a tool install — fails AC-2.2 regardless of
+what this file records. AC-7.4 is satisfied only if QA's own AC-2.1 run holds, so
+it cannot be verified by the author at all.

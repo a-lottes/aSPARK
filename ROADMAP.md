@@ -43,17 +43,20 @@ is worth more than a patch. Reports where it went badly are worth the most.
 
 ## Next
 
+**Remove the metrics counter, publish the method** · `metrics-script-removal`
+The repo tracked a 32 KB Python counter that its own constitution §3 forbids — Markdown and JSON only —
+and that `marketplace.json`'s `"source": "./"` would have installed into every consumer's plugin cache at
+the next release. `/charter` ruled it out rather than carving an exception, so the counter goes and the
+*method* is published in its place: three `python3` stdlib commands over the two committed machine
+reports, each with its observed output, so every figure the README publishes stays checkable by a
+stranger holding nothing but this repository. The cost is accepted and stated rather than hidden — the
+figures are now a closed 2026-09-09 snapshot that nothing here can refresh.
+
 **Anti-rationalization tables at every gate** · [#13](https://github.com/a-lottes/aSPARK/issues/13)
 The gates are prompt-enforced, not code-enforced. They hold until an agent under context pressure
 reasons its way around one — and a good-sounding reason is, from the agent's own view, a passed gate.
 Sequenced *after* field reports on purpose: written from imagination, the tables would list excuses no
 agent ever makes while the real ones go unlisted.
-
-**Close the handbook honesty exception** · follow-up to [#18](https://github.com/a-lottes/aSPARK/issues/18)
-The labels have landed (see Shipped): the handbook now carries the ambition/delivery split itself.
-What remains is constitutional bookkeeping — the constitution still names the unlabelled handbook as a
-known open exception to its own honesty principle. Close that exception via `/charter`, now that the
-labels exist; post-release follow-up, not part of the labelling diff.
 
 **An observability lens** · [#15](https://github.com/a-lottes/aSPARK/issues/15)
 Between the `api` lens (the contract) and the `security` lens (what must never be logged) sits a concern
