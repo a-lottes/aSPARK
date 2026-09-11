@@ -8,10 +8,10 @@
 | **Date** | 2026-09-11 |
 
 **Handoff**
-- **Status:** `complete` for `/increment`'s original 12 tasks, **extended** by two rounds of `/peer-review` fix-mode (Entries 1–9 are the original increment; Entry 10 is round 2 fix-mode — round 1 fix-mode is folded inline into Entries 1–9 rather than appended, since most of it corrected an entry's own prior claim in place). Entries are append-only; a superseded number is struck through in place, never deleted.
-- **Summary:** The single evidence artifact for this feature. Holds the negative case, the figure derivations (run three times now: pre-strip, post-strip, and again after the round-1 rebase to three reports), the recovery commit for the deleted script, the command sequences `/demo-day` must perform, and the self-inflicted drift two rounds of fix-mode produced and then closed (Entry 10).
-- **Open:** `2`, both **by design and both `/demo-day`'s** — AC-1.3 (refreshed plugin install) and AC-1.5 (fresh clone) write outside the repository, which constitution §6 reserves to the user's explicit go. Entry 9 holds the verbatim command sequences and their stop rules, corrected at round 1 fix-mode to include the plugin re-install step. No result is claimed for either.
-- **Findings raised here, for `/peer-review`:** `AC-4.1` second clause **refuted-with-finding** (Entry 6, ruled as D1); `AC-1.2`'s literal command unsatisfiable by a path-prefix bug though its intent holds (Entry 7); `F-jq` (Entry 1) resolved by the user as deviation D6; one extra §3 hunk as D7. Two pre-existing observations left in scope's way deliberately: README's "10 skills, 7 agents, 6 templates" will rot, and `ROADMAP.md`'s Shipped row names baseline Core v0.7.0 against a live 0.8.0. **New at round 2 fix-mode:** two spec edits (NFR-3, AC-2.3/AC-7.2) were made without the kind of explicit user re-approval the constitution's A8 has — flagged in `spec.md`'s own Handoff for the user to ratify or reopen, not silently equated with A8's authority.
+- **Status:** `complete` for `/increment`'s original 12 tasks, **extended** by three rounds of `/peer-review` fix-mode (Entries 1–9 are the original increment; Entry 10 is round 2 fix-mode; Entry 11 is round 3 fix-mode — round 1 fix-mode is folded inline into Entries 1–9 rather than appended). Entries are append-only; a superseded number is struck through in place, never deleted — round 3 applied that convention retroactively to Entries 4, 6 and 7, which round 1/2's fixes had superseded without it.
+- **Summary:** The single evidence artifact for this feature. Holds the negative case, the figure derivations (run four times now: pre-strip, post-strip, after the round-1 rebase to three reports, and independently re-verified each round since), the recovery commit for the deleted script, the command sequences `/demo-day` must perform, and the self-inflicted drift three rounds of fix-mode produced, each smaller than the last, and closed (Entries 10–11).
+- **Open:** `3` — `AC-1.3`/`AC-1.5` **by design**, both `/demo-day`'s (outside-repo writes, constitution §6); and **`F20`, deliberately not closed here** — whether this session had standing to edit an approved spec's NFR-3 (`C8`) without a fresh user re-approval. `spec.md`'s own Handoff states the question for the user directly.
+- **Findings raised here, for `/peer-review`:** `AC-4.1` second clause **refuted-with-finding** (Entry 6, ruled as D1); `AC-1.2`'s literal command unsatisfiable by a path-prefix bug though its intent holds (Entry 7); `F-jq` (Entry 1) resolved by the user as deviation D6; one extra §3 hunk as D7. Two pre-existing observations left in scope's way deliberately: README's "10 skills, 7 agents, 6 templates" will rot, and `ROADMAP.md`'s Shipped row names baseline Core v0.7.0 against a live 0.8.0. **Spec edits made in fix-mode without a fresh user re-approval** (`C8`–`C10`, NFR-3 and three ACs): disclosed in `spec.md`'s Handoff, not equated with the constitution's `A8` authority — `F20` tracks this as open.
 - **Binding ruling:** the derivation verdicts in Entry 3 are the **only** permitted source of figures for T6 and T10. A figure not in that table may not be published.
 - **On conflict:** `plan.md` §3 wins on task status; this file wins on what was observed.
 
@@ -287,11 +287,12 @@ of complexity as the `jq` the plan blessed; §3's bar is no new tracked executab
 and decisively, **`python3` is present where `jq` is not**, which AC-2.2 depends
 on — a stranger who must first install a tool is supplying a step of their own.
 
-What the file now carries: three commands (disk artifacts, git history,
-transcript activity), each with its observed output printed beneath it, plus the
-four combination rules as a table. What it lost: the flag table, the
-`--write-report` transport workflow, the merge-invocation prose, and every
-sentence describing a program's behaviour.
+What the file ~~now~~ **at T6** carried: three commands (disk artifacts, git
+history, transcript activity) — a fourth (per-agent/per-ceremony breakdown) was
+added at round 1 fix-mode, F6; see Entry 10 — each with its observed output
+printed beneath it, plus the four combination rules as a table. What it lost:
+the flag table, the `--write-report` transport workflow, the merge-invocation
+prose, and every sentence describing a program's behaviour.
 
 ### AC-2.1 / AC-2.2 — the printed commands were run *from the file*
 
@@ -345,9 +346,11 @@ wording and T6's stricter grep.
 
 The `git pull … --write-report … commit … push` workflow block and the
 "Then, on any machine that has pulled them all" merge invocation are gone. In
-their place the file states that the directory is a **closed 2026-09-09
-snapshot**, that this repository contains no tool to produce another report, and
-points at `docs/metrics.md`'s three commands for re-deriving the figures from
+their place the file states that the directory is a **closed ~~2026-09-09~~
+2026-09-10** snapshot (the date moved at round 1 fix-mode, F1 — a third report
+landed mid-increment; Entry 10), that this repository contains no tool to
+produce another report, and points at `docs/metrics.md`'s ~~three~~ **four**
+commands for re-deriving the figures from
 what is committed.
 
 Its "what is in a report" claim — *"Opaque ids and counts. No project name, no
@@ -495,7 +498,12 @@ $ git ls-files '*.py' | wc -l
 0
 ```
 
-The pinned inventory is stated against `db4ab15`, where it was taken:
+The pinned inventory is stated against ~~`db4ab15`~~ **`62b4318`** — `db4ab15`
+was the pin at T9, but round 1 fix-mode reworded that exact commit (F7),
+orphaning the reference; round 2 fix-mode re-pinned to the commit's new SHA
+and re-took every count there. See Entry 10 for the full correction; the
+transcript below is what was taken **at T9**, against `db4ab15`, and is kept
+as the historical record rather than edited to match the current pin:
 
 ```
 $ git ls-files | wc -l          # at db4ab15
@@ -525,9 +533,10 @@ contains rather than
 what the numbers currently are. The second paragraph states plainly what the
 evidence cannot do: refresh itself.
 
-Every figure moved inside `#### Snapshot — 2026-09-09`, introduced by the line
-*"Dated **evidence**, taken 2026-09-09 and not updated since"*. The `scripts/`
-bullet is gone from the repository-layout list (`README.md:210`).
+Every figure moved inside `#### Snapshot` (dated ~~2026-09-09~~ **2026-09-10**
+after round 1's rebase — Entry 10), introduced by a line carrying both the
+date and the word *"evidence"*. The `scripts/` bullet is gone from the
+repository-layout list (`README.md:210`).
 
 ### Definition-of-done greps
 
@@ -541,6 +550,13 @@ bullet is gone from the repository-layout list (`README.md:210`).
 
 ### AC-7.2 — the table sits inside the dated block
 
+Transcript as taken at T10, against the date and figures live at the time
+(2026-09-09, two reports). Both moved at round 1 fix-mode (F1); AC-7.2's own
+criterion was generalised at round 2 fix-mode (F14, `C9`) to anchor on the
+`#### Snapshot` heading text rather than a date string, specifically so this
+transcript would not need retaking every time the date moves — see Entry 10
+for the re-run against the current file and `C9`/`C10` in `spec.md`:
+
 ```
 $ grep -n -A4 '2026-09-09' README.md
 258:#### Snapshot — 2026-09-09
@@ -552,8 +568,9 @@ $ grep -n -A4 '2026-09-09' README.md
 264-| 54 | 53 | 52 | 41 | 48 | 61 | 429 | 377 |
 ```
 
-The line carrying `2026-09-09` also carries `evidence`, and the table follows
-inside four lines.
+The line carrying the date also carried `evidence`, and the table followed
+inside four lines — true then, and (re-verified in Entry 10) still true of
+the current heading-anchored check.
 
 ### AC-7.3 — no count outside the dated block
 
@@ -940,3 +957,122 @@ $ grep -rn 'spark-metrics' . --include='*.md' | grep -v '\.spark/[a-z-]*/'
 All 23 figures re-derived once more against the final file state: 0
 mismatches, matching both this file's earlier derivations and the Reviewer's
 independent one in round 2.
+
+---
+
+## Entry 11 — `/peer-review` round 3 fix-mode: the rebase's last two blind spots, and one inherited error
+
+Round 3 found the same failure mode a third time, smaller each time: round
+1's rebase (F1) generalised two date-bearing ACs at round 2 (`C9`) and missed
+two more with the identical defect, plus three historical entries in this
+file that round 2's own fixes had superseded without being struck through,
+plus one factual error in `docs/metrics.md` inherited verbatim from
+`origin/main` and never independently checked against the reports it
+describes.
+
+### F16 — AC-2.1's literal expected figures, 7 of 9 wrong
+
+AC-2.1 hardcoded `10 projects, 54 features, Spec 54, Plan 53, Review 52, QA
+41, Release 48` — the pre-rebase figures. `429` and `377` (role-agent runs,
+human gate decisions) happened to survive unchanged, because the third
+machine's report carries zero aSPARK-driven transcript activity:
+
+```
+$ python3 -c "import json,glob; print(sum((json.load(open(p))['transcripts'].get('agent_runs_total') or 0) for p in sorted(glob.glob('docs/reports/*.json'))))"
+429
+$ python3 -c "import json,glob; print(sum((json.load(open(p))['transcripts'].get('gates') or 0) for p in sorted(glob.glob('docs/reports/*.json'))))"
+377
+```
+
+Fixed the same way as `C9`, one step further: AC-2.1 now points at the
+published Snapshot block rather than a hardcoded figure set, since the
+figures themselves — not just the date — are exactly what a future report
+would move. A fixed number embedded in an AC that grades a live, reproducible
+method is the recurring defect; the fourth occurrence is the last one worth
+generalising away rather than re-dating.
+
+### F17 — AC-3.2, the same defect `C9` missed
+
+`C9` generalised AC-2.3 and AC-7.2 but not AC-3.2, which carried the
+identical hardcoded `2026-09-09`. Generalised the same way. Recorded as `C10`
+alongside F16, rather than widening `C9` after the fact — each finding that
+prompts a spec edit gets its own citation, consistent with `C8`'s and `C9`'s
+own precedent.
+
+### F18 — three historical entries, not struck through where superseded
+
+This file's own convention (`:10`, in the Handoff) is *"a superseded number
+is struck through in place, never deleted."* Round 1 and round 2's fixes
+changed facts that Entries 4, 6 and 7 had already recorded in prose — the
+command count, the snapshot date, the constitution's inventory pin — and
+none of the three entries were revisited to apply that convention to
+themselves. Fixed: each stale claim now carries a `~~old~~` **new** strike
+with a pointer to where the change actually happened (Entry 10, mostly), and
+the two places where a literal command transcript is quoted are annotated as
+"taken at T9/T10, kept as the historical record" rather than silently edited
+to match current values — the same distinction this file has used throughout
+between a live claim (corrected) and a transcript of a past run (kept, dated).
+
+### F19 — a release-gap claim that was never independently checked
+
+`docs/metrics.md`'s "Reading the gaps" section said *"Two more are
+single-feature projects that stalled before review."* Re-derived from the
+reports directly rather than trusted from `origin/main`'s prose (which this
+branch had copied verbatim without re-checking against the expanded
+three-report data):
+
+```
+$ python3 - <<'PY'
+import json, glob
+projects = {}
+for path in sorted(glob.glob('docs/reports/*.json')):
+    for proj in json.load(open(path))['projects']:
+        feats = projects.setdefault(proj['id'], {})
+        for f in proj['features']:
+            r = feats.setdefault(f['key'], {})
+            for phase, hit in f['reached'].items():
+                r[phase] = r.get(phase, False) or hit
+for pid, feats in projects.items():
+    for k, v in feats.items():
+        if not v.get('release'):
+            print(pid[:12], k[:10], v)
+PY
+g:ef6b0fee91 0601ca7a1c {'spec': True, 'plan': False, 'review': False, 'qa': False, 'release': False}
+g:c386b6cfe3 85160fa491 {'spec': True, 'plan': True, 'review': True, 'qa': True, 'release': False}
+g:c386b6cfe3 b4a85d0f69 {'spec': True, 'plan': True, 'review': True, 'qa': True, 'release': False}
+g:c386b6cfe3 20c034ecb7 {'spec': True, 'plan': True, 'review': True, 'qa': True, 'release': False}
+g:38c2b118a2 812dde83f0 {'spec': True, 'plan': True, 'review': True, 'qa': False, 'release': False}
+g:ac99ebc025 b3e86fa557 {'spec': True, 'plan': True, 'review': False, 'qa': False, 'release': False}
+```
+
+Three features in `g:c386b6cfe3` match the "specified, planned, reviewed and
+QA'd, shipped nothing" description exactly. Of the remaining two
+single-feature projects: `g:ef6b0fee91` genuinely stalled before plan —
+"before review" undersells how early it stopped. `g:38c2b118a2` reached
+`plan` **and** `review`, and stalled at QA — "stalled before review" is
+simply false for this one. Corrected to name each stall point precisely
+rather than group them under one claim that was right for neither.
+
+### F20 — left open, deliberately, for the user
+
+The Reviewer's round 3 judgement: `spec.md`'s disclosure of `C8`'s authority
+(added at this round, before round 3 even ran) is *"honest and adequate... but
+it discloses rather than resolves... ratification is now owed at the release
+gate."* This entry does not attempt to close F20. `spec.md`'s own Handoff
+states the question for the user directly; this file records that the
+question exists and was not settled in fix-mode, the same way `C8`/`C9`/`C10`
+are each marked with the limits of their own authority rather than presented
+as settled.
+
+### Final sweep
+
+```
+$ python3 <extract-and-run-4-blocks>
+4 pairs, all match: True
+$ claude plugin validate .
+✔ Validation passed with warnings   (same single pre-existing autoUpdate warning)
+$ git diff --name-status origin/main | grep -E '^.\t(skills|agents|lenses|templates|tools|\.claude-plugin)/'
+(no output — NFR-1 holds)
+$ wc -l .spark/metrics-script-removal/spec.md
+190
+```

@@ -299,8 +299,9 @@ The gaps are the interesting part, and they are not rounded away.
   [constitution §8's QA-method declaration](../README.md#project-status) was
   written for, and those features predate it.
 - **Release, 71 of 77.** Three of the six unreleased features sit in one project
-  that specified, planned, reviewed and QA'd them and then shipped nothing. Two
-  more are single-feature projects that stalled before review.
+  that specified, planned, reviewed and QA'd them and then shipped nothing. Of
+  the other two, both single-feature projects, one stalled before plan and one
+  reached review and stalled at QA.
 - **`situational-lenses` has a spec and nothing else** — this repository's own
   feature, and the lens layer's field-proof gap, tracked as
   [#4](https://github.com/a-lottes/aSPARK/issues/4) and
