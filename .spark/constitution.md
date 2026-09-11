@@ -15,8 +15,10 @@
 **What this project is.** This repo *is* aSPARK Core: the Claude Code plugin that
 provides the SPARK loop. It ships 10 skills, 7 agents, 8 lenses and 6 templates as
 Markdown prompt material plus two JSON manifests, and is installed from a plugin
-marketplace into *other people's* projects. It has no runtime, no build, no
-dependencies and no executable code of its own.
+marketplace into *other people's* projects. It has no runtime, no build and no
+dependencies. One standalone Python 3 script (`scripts/spark-metrics.py`, stdlib
+only) counts what the loop has produced on a machine; nothing in the loop invokes
+it, and it is ruled for removal (§3).
 
 ## 1. Product Principles
 
@@ -33,16 +35,17 @@ dependencies and no executable code of its own.
   runs first** — in a repo where the capability is absent, nothing may change.
 - **Honesty about maturity over ambition.** Shipped, unproven and planned are
   labelled as such; a doc that presents an intention as delivered is a defect.
-  *Known open exception:* `docs/aSPARK_Enterprise_Architecture_Handbook.docx`
-  describes a target platform without per-chapter maturity labels — tracked as
-  `handbook-maturity` in `ROADMAP.md`.
+  This now holds for every tracked document without exception, the architecture
+  handbook included (per-chapter Delivery stage labels, the ambition/delivery
+  overview table and the inline `Status.` markers shipped with
+  `handbook-maturity`, PR #27 / `085db99`).
 
 ## 2. Project Profile & Active Lenses
 
 - **Project type(s):** `library`.
   Evidence: `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` publish
-  a versioned artifact (`0.3.1`, four releases) that other projects install as a
-  dependency (`/plugin install aspark@aspark`). No `bin`, no server, no page routes,
+  a versioned artifact (`0.8.0` today, released iteratively since `v0.1.0`) that
+  other projects install as a dependency (`/plugin install aspark@aspark`). No `bin`, no server, no page routes,
   no UI. The "public API" is not code but the **consumed contract**: the ten slash
   commands, the `${CLAUDE_PLUGIN_ROOT}/…` paths skills resolve, and the protected
   structures in `templates/` (§3).
@@ -64,7 +67,7 @@ dependencies and no executable code of its own.
 | `security` | **Off** — no runtime, no auth, no PII, no network surface, no dependencies to audit; 14 of the lens's 15 checks are inapplicable. The one live concern (instructing agents to execute an external command) is carried as a constraint in §3/§6 instead | — |
 | `seo`, `ux` | Off — no website, no web-app, no UI of any kind | — |
 | `api` | Off — no route handlers, no OpenAPI spec, no service | — |
-| `cli` | Off — no `bin`, no process, no stdout/stderr or exit codes of our own; slash commands are prompts, not a terminal entrypoint | — |
+| `cli` | Off — no `bin`, no process, no stdout/stderr or exit codes that any consumer invokes; slash commands are prompts, not a terminal entrypoint. (`scripts/spark-metrics.py` does print to stdout, but it is hand-run maintainer tooling, not an entrypoint the plugin exposes, and is ruled for removal — §3) | — |
 | `i18n`, `data` | Off — single-locale (English), no database, no persistence | — |
 
 - **Active-lens load:** 1 lens active. Elevated load does not apply.
@@ -73,7 +76,20 @@ dependencies and no executable code of its own.
 
 - **Stack / runtime:** Markdown + JSON only. No build step, no runtime, no
   dependencies, no lockfile, no executable code. Introducing a language or
-  toolchain requires an amendment.
+  toolchain requires an amendment. Metrics and audit tooling lives outside this
+  repo; published figures are reproducible from the committed reports under
+  `docs/reports/`, not from a script shipped here.
+  *Known open exception:* `scripts/spark-metrics.py` (32,654 B, Python 3 stdlib,
+  tracked, added 2026-09-09 in `f446ca5` without the amendment this rule requires)
+  exists today. It is **ruled for removal** (2026-09-11) — not grandfathered, not a
+  standing allowance, and not an open question. The deletion is follow-up product
+  work because it also rewrites `README.md` §Project Status and `docs/metrics.md`,
+  which currently instruct readers to run it. When the deletion lands, delete this
+  paragraph; nothing else in this section changes.
+  **No new tracked executable code is added** — not while the exception is open and
+  not after it closes. A one-off scanner (for example the `situational-lenses` proof
+  audit) runs as *untracked* scratch under §5, with its output committed as the
+  evidence artifact; the script itself is never committed.
 - **Patterns to follow:**
   - **A new concern is a new file, not an edit to the roles.** A lens goes in
     `lenses/<name>.md`; skills pass lens paths to agents generically, so no agent
@@ -131,10 +147,19 @@ dependencies and no executable code of its own.
     them.
   - No vendoring another repo's code, no installer, no auto-build, no auto-execute
     on the user's behalf.
-  - No claim that an unpublished package is on a registry (`aspark-graph` is
-    install-from-source, not on PyPI).
+  - No registry or install claim about an external tool that isn't true at the time
+    of writing, verified against the registry itself. `aspark-graph` **is** published
+    on PyPI (verified 2026-09-11, HTTP 200), so `README.md`'s `pip install
+    aspark-graph` is correct and must not be "corrected" back to install-from-source.
   - No secrets, credentials or customer material anywhere in the repo — including
     under `.spark/`, which is tracked and therefore published (§5).
+  - **The published surface is the whole working tree, not the tracked files.**
+    `.claude-plugin/marketplace.json` declares `"source": "./"` with no
+    include/exclude mechanism, and an install copies *ignored* files too: the
+    untracked, `.gitignore`-matched `docs/…Handbook.docx.bak` (≈2 MB) is present in
+    `~/.claude/plugins/cache/aspark/aspark/0.8.0/docs/` — verifiable by listing that
+    directory. So `.gitignore` is not a shield. Anything in the working tree at
+    release time ships to every consumer.
 
 ## 4. Quality Bars (Definition of Done defaults)
 
@@ -188,8 +213,9 @@ dependencies and no executable code of its own.
   user's explicit go in the conversation.
 - **No agent passes its own gate.** `approved`, waivers and the release go are the
   user's, and every override is recorded in the artifact with its reason.
-- **Nothing that must stay private is committed** — this repo is public, `.spark/`
-  included.
+- **Nothing that must stay private is in the working tree at release** — this repo
+  is public, `.spark/` included, and `.gitignore` is no shield: a `source: "./"`
+  install copies ignored files too (§3). The test is presence, not tracking.
 
 ## 7. Delivery & Handoff
 
@@ -207,12 +233,14 @@ dependencies and no executable code of its own.
   (see amendment note below). Default when absent: `direct`.
 - **Approver:** self-review via PR — the sole maintainer (`a-lottes`) opens a PR,
   reviews it themself, and approves/merges it, rather than pushing straight to
-  `main`. Grounding: this repo has no `.github/` directory, no `CODEOWNERS` file,
-  and no evidence of a second collaborator (`gh auth status` → authenticated as
-  `a-lottes` only) — it is solo-maintained. Self-review-via-PR is a real but
-  unusual pattern for a solo project; it still gives `handed-off` an honest,
-  non-`released` terminal status by forcing the PR-open/CI-green checkpoint the
-  mechanism exists to name, even without a second human. **Confirmed by the user,
+  `main`. Grounding: this repo has **no `CODEOWNERS` file** and no evidence of a
+  second collaborator (`gh auth status` → authenticated as `a-lottes` only) — it is
+  solo-maintained. (`.github/` does exist, re-verified 2026-09-11: six files, five
+  issue templates and a PR template, no `CODEOWNERS` and no workflows.)
+  Self-review-via-PR is a real but unusual pattern for a solo project; it still
+  gives `handed-off` an honest, non-`released` terminal status by forcing the
+  PR-open/validate-green checkpoint the mechanism exists to name, even without a
+  second human. **Confirmed by the user,
   2026-08-06.** Default when absent: n/a (mode is `direct`).
 - **Target branch:** `main`. Verified via `git remote -v`
   (`origin` → `git@github.com:a-lottes/aSPARK.git`) and `.git/config`
@@ -224,17 +252,25 @@ dependencies and no executable code of its own.
   per `.spark/tracker-handoff/spec.md` NFR-10 this repo's own `spec.md` `Ticket`
   rows stay `none`. Default when absent: `none`.
 - **Terminal status:** `handed-off` — the loop ends there once a release's PR is
-  open, CI is green and the declared approver is requested; the real merge and
-  tag happen outside aSPARK's control. Default when absent: `released` (direct
+  open, `claude plugin validate` passes locally (§4's real bar) and the declared
+  approver is requested; the real merge and tag happen outside aSPARK's control.
+  There is **no CI to be green**: this repo has no `.github/workflows/` directory
+  (verified 2026-09-11), so the quality checkpoint is the local validate run plus
+  §4's documented dogfood, never a GitHub check. Default when absent: `released` (direct
   mode's only terminal status).
 
 ## 8. QA Method
 
 - **Browser-observable surface:** `no` — aSPARK Core is a Claude Code plugin made
-  of Markdown: 72 tracked `.md` files, plus 5 workflow `.yml`, 4 asset `.png` and
-  2 manifest `.json`. No package manifest, no `bin`, no server, no route handler,
-  no page — `/demo-day`'s browser gate cannot be satisfied here. Default when
-  absent: `yes`.
+  of Markdown. 104 tracked files (verified 2026-09-11): 87 `.md`, 5 `.yml`
+  (GitHub issue templates and their `config.yml` — there is **no** CI workflow in
+  this repo), 4 asset `.png`, 4 `.json` (2 plugin manifests + 2 metrics reports
+  under `docs/reports/`), 1 `.docx` handbook, 1 `.py` (`scripts/spark-metrics.py`,
+  ruled for removal — §3), plus `LICENSE` and `.gitignore`. No package manifest,
+  no `bin`, no server, no route handler, no page — `/demo-day`'s browser gate
+  cannot be satisfied here. The one script is a hand-run counter that prints to
+  stdout; that is a command whose output QA can observe, not a browser surface.
+  Default when absent: `yes`.
 - **Substitute verification method:** hands-on QA against the **installed
   plugin**, where a performed step is a real ceremony invocation or a real
   command whose output was observed. Reading a Markdown file and reasoning about
@@ -261,3 +297,8 @@ it.
 | 2026-08-06 | Added `## 7. Delivery & Handoff`, declaring `pr` release mode into `main`, terminal status `handed-off`, `none` ticket format, and approver = self-review-via-PR (confirmed by the user) | Deliberate, already-decided switch to PR-first delivery per `.spark/tracker-handoff/spec.md` clarification C8 — this repo needs a real venue to prove `handed-off`'s positive case at its own `/go-live`, ahead of that feature's Keep phase. Mechanics (branch protection, exact approver identity) were explicitly scoped as this amendment's decision, not the spec's (spec §6 Out of Scope). The user confirmed self-review-via-PR as the approver and explicitly chose **not** to set up real GitHub branch protection now (`gh api .../branches/main/protection` → 404 at decision time) — the declaration is a process commitment the team is choosing to adopt, not a description of enforced infrastructure, flagged inline in §7 rather than papered over |
 | 2026-08-29 | Added `## 8. QA Method`, declaring `Browser-observable surface: no` and naming the substitute method (hands-on QA against the installed plugin, with a performed step defined as a real ceremony invocation or an observed command output) | Confirmed explicitly by the user at `/charter`, drafted from named evidence only — 72 tracked `.md` files and no package manifest, `bin`, server or route handler — never inferred from the profile or from `ux`/`seo` being off, per `.spark/right-sizing/spec.md` AC-1.8. Retires a negotiation that had recurred on four consecutive features (`graph-gates`, `handbook-maturity`, `lean-rounds`, and this one), each time re-deciding the same override by hand. The method and its "performed step" rule are not new: they were established and used at `.spark/graph-gates/qa.md` §1; this records them once as a standing project fact instead of per feature. Coverage is unchanged — `qa.md` is still produced with every `AC-`/`NFR-` ID verified |
 | 2026-08-15 | `review-report.md`'s protected structures extended with the findings table's columns `Severity`, `Location`, `Status` | The §3 row named only the `Findings` heading and the `^F\d+$` ID pattern, but `aspark-graph`'s `_parse_review` (`artifacts.py:202-205`, verified independently) hard-requires a findings-table header containing `severity`, `location` and `status` (substring match, case-insensitive, same tolerance as the rest of the contract) and raises `TemplateDriftError` if any is absent — so the constitution's own account of the contract was incomplete. Surfaced during `/story-time` on `lean-artifacts` (clarification C2 / tracked dependency A5), which scoped the fix out of its own diff because it renames nothing and doesn't touch this table. `qa-report.md`'s parser (`_parse_qa`) was checked in the same pass and requires only the `ac`/`result` columns already documented in the 2026-07-25 entry above — no scope expansion there |
+| 2026-09-11 | §1: the handbook honesty exception **closed** — the principle now holds for every tracked document without exception | The exception was stale. `handbook-maturity` completed and merged as PR #27 (`085db99`): every chapter carries a Delivery stage label, an overview table up front splits ambition from delivery, 18 inline `Status.` markers qualify target-state claims, and the title page separates the handbook revision from the shipped baseline. `ROADMAP.md` lists "Maturity labels in the handbook" under **Shipped** and names closing this exception as its own *Next* item (follow-up to issue #18, explicitly scoped there as post-release constitutional bookkeeping). The loop's residuals were checked before closing and none reopens the exception: review F2 (Nit — pre-existing prose citing v0.4.x versions, verified to contradict nothing v0.7.0 ships) and QA E1–E3 were user-accepted and routed to the still-unpicked-up website-sync / handbook-revision follow-up. They are version-currency nits, not ambition presented as delivered, so they stay in `ROADMAP.md`/issues rather than here — as does carrying handbook corrections over to the separate website repo, which is another project's obligation and is not practice here today |
+| 2026-09-11 | §3 off-limits: the registry-claim rule **corrected** — the parenthetical calling `aspark-graph` install-from-source and not on PyPI is removed; the general no-false-registry-claim principle stays and now says to verify against the registry | The constitution was the stale document, not the README. `https://pypi.org/pypi/aspark-graph/json` returns HTTP 200 with author "Andreas Lottes" — the package is published. `README.md:226-227` (`published on PyPI as aspark-graph`, `pip install aspark-graph`) and `tools/README.md:125` are therefore accurate and were left untouched. The old wording actively invited a future agent to "fix" a correct README back into a false statement, which is the opposite of what the rule is for |
+| 2026-09-11 | §3 stack/runtime: **no exception — Markdown + JSON only stands**, with metrics and audit tooling placed outside this repo, `scripts/spark-metrics.py` named as a known open exception **ruled for removal**, and a standing rule that no new tracked executable code is added (one-off scanners run as untracked scratch under §5, their output committed as the evidence artifact). §8's inventory, §2's version evidence and `cli` justification, and the preamble's "no executable code" claim refreshed to the real tracked file set | The script shipped 2026-09-09 (`f446ca5`, plus `df1005f`/`678f04d` for the cross-machine merge and `b6b7aab` for `docs/reports/*.json`) with no amendment, so the repo's most recent feature had falsified §3's first line. The Facilitator drafted both bounds — a narrow stdlib-only `scripts/` exception (its recommendation) and no exception at all — and the user ruled for **no exception**, knowingly: with `marketplace.json` declaring `"source": "./"` and no include/exclude mechanism, "keep it but don't ship it" does not exist, so keeping the script would have meant knowingly installing a 32 KB executable into every consumer's plugin cache at the next release. The script is recorded in §1's established *known open exception* form rather than deleted from the text, because it still exists on disk today and a flat "no executable code" would have recreated the very defect this amendment fixes; it is marked a scheduled deletion under a ruling already made, not grandfathered, and closing it when the deletion lands is a one-line edit. The deletion itself is follow-up product work, not this ceremony's: `README.md` §Project Status and `docs/metrics.md` instruct readers to run the script and ground the published 54-feature figure on `--merge docs/reports/*.json` being checkable, so removing it rewrites both. Bookkeeping corrected in the same pass against `git ls-files` (104 tracked: 87 `.md` — was 72; 4 `.json` — was 2; the `.py` and `.docx` previously unlisted) and against `.github/`, which holds **no** workflow at all — §8's "5 workflow `.yml`" were issue templates. §2's evidence cited version `0.3.1`/four releases against a live `0.8.0` |
+| 2026-09-11 | §7: two stale grounding facts **corrected** — the Approver bullet no longer claims this repo has no `.github/` directory, and the `handed-off` checkpoint no longer names a CI. The terminal status now reads PR open + `claude plugin validate` passing locally (§4's real bar) + approver requested | `.github/` exists (re-verified 2026-09-11: five issue templates plus a PR template, six files) — but there is **no `CODEOWNERS`** and no second collaborator, so the conclusion the evidence supported is unchanged: solo-maintained, self-review-via-PR, confirmed by the user 2026-08-06 and untouched here. The bigger falsity was "CI is green": there is no `.github/workflows/` directory at all, so the checkpoint named a gate that cannot be performed and that no past release performed. Reworded to the checkpoint that is real and that releases actually ran, rather than dropping the quality bar or inventing a CI requirement. **The branch-protection decision and its inline ⚠ are deliberately untouched** — that decision stands exactly as made |
+| 2026-09-11 | §3 off-limits gains **"the published surface is the whole working tree, not the tracked files"**, and §6's privacy non-negotiable retuned from *committed* to *present in the working tree at release* | Discovered while auditing the tracked-file inventory: `docs/…Handbook.docx.bak` is untracked **and** `.gitignore`-matched (`.gitignore:22:*.bak`, confirmed by `git check-ignore -v`), yet it is present in the installed plugin cache at `~/.claude/plugins/cache/aspark/aspark/0.8.0/docs/`. A `source: "./"` install copies ignored files, so `.gitignore` does not protect the shipped surface and ≈2 MB of untracked backup reaches every consumer. Stated here rather than left as release bookkeeping because §6's privacy rule was *wrong about its own test*: it bounded exposure by what is committed, when the real bound is what is present. Falsifiable by listing that cache directory. Removing the `.bak` and adding a `/go-live` pre-flight that asserts what the install actually ships are follow-ups, not constitutional |
