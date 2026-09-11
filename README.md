@@ -245,7 +245,7 @@ current state.
 
 The loop has been run on real projects, and the evidence for that is committed
 rather than asserted: three machine reports sit in [docs/reports/](docs/reports/),
-and [docs/metrics.md](docs/metrics.md) prints three `python3` commands that
+and [docs/metrics.md](docs/metrics.md) prints four `python3` commands that
 re-derive every figure below from those files. Standard library only — no
 install, no dependency, and no tool of this project's. So the arithmetic here is
 checkable without trusting this page, and without any of the machines.

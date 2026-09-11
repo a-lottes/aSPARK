@@ -8,10 +8,10 @@
 | **Date** | 2026-09-11 |
 
 **Handoff**
-- **Status:** `complete` for `/increment` — all 12 tasks `done`, written run by run as each completed. Entries are append-only.
-- **Summary:** The single evidence artifact for this feature. Holds the negative case, the figure derivations (run twice, either side of the `transcripts.root` strip), the recovery commit for the deleted script, and the command sequences `/demo-day` must perform.
-- **Open:** `2`, both **by design and both `/demo-day`'s** — AC-1.3 (refreshed plugin install) and AC-1.5 (fresh clone) write outside the repository, which constitution §6 reserves to the user's explicit go. Entry 9 holds the verbatim command sequences and their stop rules. No result is claimed for either.
-- **Findings raised here, for `/peer-review`:** `AC-4.1` second clause **refuted-with-finding** (Entry 6, ruled as D1); `AC-1.2`'s literal command unsatisfiable by a path-prefix bug though its intent holds (Entry 7); `F-jq` (Entry 1) resolved by the user as deviation D6; one extra §3 hunk as D7. Two pre-existing observations left in scope's way deliberately: README's "10 skills, 7 agents, 6 templates" will rot, and `ROADMAP.md`'s Shipped row names baseline Core v0.7.0 against a live 0.8.0.
+- **Status:** `complete` for `/increment`'s original 12 tasks, **extended** by two rounds of `/peer-review` fix-mode (Entries 1–9 are the original increment; Entry 10 is round 2 fix-mode — round 1 fix-mode is folded inline into Entries 1–9 rather than appended, since most of it corrected an entry's own prior claim in place). Entries are append-only; a superseded number is struck through in place, never deleted.
+- **Summary:** The single evidence artifact for this feature. Holds the negative case, the figure derivations (run three times now: pre-strip, post-strip, and again after the round-1 rebase to three reports), the recovery commit for the deleted script, the command sequences `/demo-day` must perform, and the self-inflicted drift two rounds of fix-mode produced and then closed (Entry 10).
+- **Open:** `2`, both **by design and both `/demo-day`'s** — AC-1.3 (refreshed plugin install) and AC-1.5 (fresh clone) write outside the repository, which constitution §6 reserves to the user's explicit go. Entry 9 holds the verbatim command sequences and their stop rules, corrected at round 1 fix-mode to include the plugin re-install step. No result is claimed for either.
+- **Findings raised here, for `/peer-review`:** `AC-4.1` second clause **refuted-with-finding** (Entry 6, ruled as D1); `AC-1.2`'s literal command unsatisfiable by a path-prefix bug though its intent holds (Entry 7); `F-jq` (Entry 1) resolved by the user as deviation D6; one extra §3 hunk as D7. Two pre-existing observations left in scope's way deliberately: README's "10 skills, 7 agents, 6 templates" will rot, and `ROADMAP.md`'s Shipped row names baseline Core v0.7.0 against a live 0.8.0. **New at round 2 fix-mode:** two spec edits (NFR-3, AC-2.3/AC-7.2) were made without the kind of explicit user re-approval the constitution's A8 has — flagged in `spec.md`'s own Handoff for the user to ratify or reopen, not silently equated with A8's authority.
 - **Binding ruling:** the derivation verdicts in Entry 3 are the **only** permitted source of figures for T6 and T10. A figure not in that table may not be published.
 - **On conflict:** `plan.md` §3 wins on task status; this file wins on what was observed.
 
@@ -458,10 +458,15 @@ $ grep -n 'spark-metrics' .spark/constitution.md
 296:| 2026-09-11 | §3 stack/runtime: **no exception — Markdown + JSON only stands**, with me…
 ```
 
-One hit, at `.spark/constitution.md:295` — the Amendments row added earlier today
-by `36a3f17`, which records the very ruling this feature executes and names the
-file four times in doing so. Every other occurrence is gone: the preamble, §2's
-`cli` row, §3's exception paragraph and §8's inventory no longer mention it.
+One hit — the `2026-09-11` Amendments row opening "§3 stack/runtime: **no
+exception — Markdown + JSON only stands**", added earlier today by `36a3f17`,
+which records the very ruling this feature executes and names the file four
+times in doing so. Every other occurrence is gone: the preamble, §2's `cli`
+row, §3's exception paragraph and §8's inventory no longer mention it.
+(Cited by content, not line number, after round 1 fix-mode (F9) corrected a
+`:295`→`:296` drift and round 2 found the file had since moved the same row to
+`:305` — a line number in this file is a snapshot of one moment, not a stable
+address, and every subsequent edit above a cited line invalidates it again.)
 
 **Cause.** The criterion was written on 2026-09-11 before that amendment row
 existed, and the spec authorises four edits plus a *new* row (`A2`/`A8`) — it does
@@ -510,10 +515,13 @@ cannot mislead.
 ## Entry 7 — T10, the README headline stops rotting
 
 `### Dogfooding to date` no longer opens with a number. The non-rotting claim is
-that **the evidence is committed rather than asserted** — two machine reports in
-`docs/reports/`, and three `python3` commands in `docs/metrics.md` that re-derive
-every figure from them, standard library only. That sentence stays true however
-much time passes, because it describes what the repository contains rather than
+that **the evidence is committed rather than asserted** — ~~two~~ **three**
+machine reports in `docs/reports/` (a third landed on `origin/main` mid-round
+and this branch rebased onto it — Entry 10), and ~~three~~ **four** `python3`
+commands in `docs/metrics.md` (a fourth was added at round 1 fix-mode, F6)
+that re-derive every figure from them, standard library only. That sentence
+stays true however much time passes, because it describes what the repository
+contains rather than
 what the numbers currently are. The second paragraph states plainly what the
 evidence cannot do: refresh itself.
 
@@ -772,8 +780,163 @@ written up as "consumers are unaffected".
 ### What QA re-performs that was already done here
 
 AC-2.1 and AC-2.2 are QA's by the plan's own test strategy, and the point is
-independence: copy the three commands **out of `docs/metrics.md`** and run them
+independence: copy the ~~three~~ **four** commands (Entry 10) **out of
+`docs/metrics.md`** and run them
 from the repository root, supplying nothing. Any step QA has to invent — a
 changed path, a missing field name, a tool install — fails AC-2.2 regardless of
 what this file records. AC-7.4 is satisfied only if QA's own AC-2.1 run holds, so
 it cannot be verified by the author at all.
+
+---
+
+## Entry 10 — `/peer-review` round 2 fix-mode: the fixes had their own drift
+
+Round 1's fix-mode closed the Blockers and Majors correctly but, in doing so,
+created a second tier of staleness: fixing F7 (a commit message) changed that
+commit's SHA and orphaned a reference to it elsewhere; fixing F6 (a missing
+command) made every "three commands" sentence wrong; the F1 rebase moved the
+snapshot date and made two ACs' own literal text wrong. Round 2 caught all of
+it. None of it was structural — every item below is a reference, a count, or
+a sentence that needed to agree with something that had already changed.
+
+### F10 — the self-contradicting "7,800 lines" paragraph
+
+`docs/metrics.md`'s "Why no project is named" section carried a sentence
+describing **this snapshot's** line lift as "7,800 lines" — a number that was
+correct for the 1→2-machine transition, now sitting two screens above a
+paragraph that correctly states the 2→3-machine lift as **+125,661**. Same
+file, two numbers, both claiming to be the lift, neither labelled as to which
+transition it describes.
+
+```
+$ grep -n '7,800\|125,661' docs/metrics.md
+230:figure is some 7,800 lines higher than the one before it: no code was written, a
+265:lines, of which 125,646 are the new machine's one large project, counted now
+```
+
+Disambiguated rather than deleted — the 7,800 figure is real history and
+stays, now explicitly anchored to "an earlier, single-machine measurement"
+and "the first two-machine merge", with a forward pointer to where the
+current lift is explained.
+
+### F11 — the constitution's inventory pin, orphaned by this round's own earlier fix
+
+§8 pinned its file-count inventory to `db4ab15`. Round 1 fix-mode reworded
+that exact commit to fix F7 (its subject), which gives it a new SHA
+(`62b4318`) — `db4ab15` stopped being reachable from any branch the moment
+that replay landed, hours before round 2 caught it:
+
+```
+$ git merge-base --is-ancestor db4ab15 HEAD; echo $?
+1
+$ git merge-base --is-ancestor db4ab15 origin/main; echo $?
+1
+```
+
+Re-pinned to `62b4318`, with the counts re-taken at that exact commit rather
+than assumed to be unchanged:
+
+```
+$ git ls-tree -r --name-only 62b4318 | wc -l
+107
+$ git ls-tree -r --name-only 62b4318 | grep -c '\.md$'
+90
+$ git ls-tree -r --name-only 62b4318 | grep -c '\.json$'
+5
+$ git ls-tree -r --name-only 62b4318 | grep '\.json$'
+.claude-plugin/marketplace.json
+.claude-plugin/plugin.json
+docs/reports/m-2e80b1d428827c8d.json
+docs/reports/m-382a803dcc0de961.json
+docs/reports/m-aef31f2de543f46c.json
+```
+
+A "Pin history" note was added alongside the corrected figures — naming the
+old SHA, the old count, and *why* a commit reference is fragile in a feature
+whose own history gets reworded mid-increment — rather than silently
+substituting new numbers with no trace of the old ones.
+
+### F12 / F13 — "three commands" became four and nobody told the prose
+
+F6 (round 1) added a fourth printed command to `docs/metrics.md` without
+updating the five sentences elsewhere that promised three: the file's own
+opening line, `README.md`, `docs/reports/README.md`, `ROADMAP.md`, and two
+places in this file. All five corrected to "four". `ROADMAP.md` additionally
+still said "two committed machine reports" and "2026-09-09" — both corrected
+to three and 2026-09-10, since `ROADMAP.md` sat outside round 1's sweep
+entirely (it is reader-facing prose, not one of F1's three named files).
+
+### F14 — two Must ACs hardcoded a date that moved
+
+`AC-2.3` and `AC-7.2` both named `2026-09-09` as literal text, written before
+F1's rebase moved the snapshot to `2026-09-10`. `AC-7.2`'s own embedded
+verification command (`grep -n -A4 '2026-09-09' README.md`) now printed
+nothing — a Must AC whose own stated test fails on a fact that has nothing to
+do with whether the work is correct.
+
+Fixed by generalising rather than by updating one date to another, which
+would only move the failure to the next time this snapshot's date changes:
+`AC-2.3` now says "dates the snapshot" without naming one; `AC-7.2`'s command
+anchors on the `#### Snapshot` heading text, which is stable, instead of a
+date string, which is not.
+
+```
+$ grep -n -A4 '#### Snapshot' README.md
+258:#### Snapshot — 2026-09-10
+259-
+260:Dated **evidence**, taken 2026-09-10 and not updated since:
+261-
+262-| Spec | Plan | Review | QA | Release | Git tags | Role-agent runs | Human gate decisions |
+```
+
+Recorded as `C9` in the spec's Clarifications table.
+
+### F15 — the spec's own gate forgot it had grown
+
+Adding `C8` (round 1) and `C9` (this round) without updating the two places
+that summarise the Clarify pass left the Handoff and the SPEC GATE both
+claiming "`C1–C7` … all resolved" while `C8`/`C9` sat unmentioned, and the
+line-budget box still read "Ist 187" against a file that had grown to 189
+lines. Both corrected to `C1–C9` and `Ist 189`.
+
+**The harder part of F15, addressed directly rather than deferred:** editing
+an *approved* spec's NFR/AC text has no clean precedent in this project's own
+rules — `/increment`'s fix-mode is authorised to make "small, obvious
+corrections" but that language is written about `plan.md`, not `spec.md`,
+and the constitution edits earlier today had an explicit user ruling (`A8`)
+that these corrections do not. Rather than claim equivalent authority or
+silently proceed, the spec's Handoff now states plainly that `C8`/`C9` are
+`/peer-review` findings corrected in fix-mode — narrow, factual, low-risk —
+without a fresh spec-gate re-approval, and names that for the user to ratify
+or reopen. The correction stands; the authority question is surfaced, not
+resolved unilaterally.
+
+### F9, completed
+
+Round 1 corrected the quoted grep transcript but missed the prose sentence
+one line below it, which still read `:295` against the corrected `:296` —
+and by the time round 2 reached it, the constitution had moved again (to
+`:305`, from this very round's F11 fix). Fixed by dropping line numbers from
+the prose citation entirely and citing the row by its content instead — the
+third time a line-number citation in this file has gone stale is the
+argument for never doing it a fourth.
+
+### Final sweep after all of the above
+
+```
+$ python3 <extract-and-run-4-blocks, $SCRATCH>
+4 pairs, all match: True
+$ claude plugin validate .
+✔ Validation passed with warnings   (same single pre-existing autoUpdate warning)
+$ git diff --name-status origin/main | grep -E '^.\t(skills|agents|lenses|templates|tools|\.claude-plugin)/'
+(no output — NFR-1 holds)
+$ git log --oneline --reverse origin/main..HEAD | grep -n 'negative case\|remove the metrics counter'
+4:e8eb42c docs(evidence): record the negative case before any deletion
+6:62b4318 feat: remove the metrics counter and publish the method instead
+$ grep -rn 'spark-metrics' . --include='*.md' | grep -v '\.spark/[a-z-]*/'
+.spark/constitution.md:305:| 2026-09-11 | §3 stack/runtime: **no exception …   (the one expected hit, D1 unchanged)
+```
+
+All 23 figures re-derived once more against the final file state: 0
+mismatches, matching both this file's earlier derivations and the Reviewer's
+independent one in round 2.

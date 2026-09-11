@@ -11,7 +11,7 @@ outside this repo and no command here can produce another report. What the
 directory keeps is the part that matters: the data the published figures were
 computed from, so anyone can re-derive them without trusting the author or
 possessing the tool. [docs/metrics.md](../metrics.md#check-any-figure-yourself)
-prints the three commands that do it, and their output.
+prints the four commands that do it, and their output.
 
 ## What is in a report, and what is not
 
