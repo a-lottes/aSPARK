@@ -410,3 +410,96 @@ $ git ls-files | wc -l
 This commit lands **after** Entry 1's negative-case commit (`f5d546d`) — the
 ordering constitution §4 requires, and `git log --oneline` is the proof rather
 than this sentence.
+
+---
+
+## Entry 6 — T9, the constitution stops describing a script that does not exist
+
+Four edits plus one Amendments row, in a single commit placed **after** T8's
+deletion, so no commit exists in which §3 forbids a script that §8's inventory
+still counts.
+
+| # | Section | Before | After |
+|---|---|---|---|
+| 1 | Preamble | "It has no runtime, no build and no dependencies. One standalone Python 3 script … counts what the loop has produced … ruled for removal (§3)." | "It has no runtime, no build, no dependencies **and no executable code of its own**." The claim now stands unqualified |
+| 2 | §2 `cli` row | "…no stdout/stderr or exit codes **that any consumer invokes**; … (the script does print to stdout, but it is hand-run maintainer tooling … ruled for removal — §3)" | "…no stdout/stderr or exit codes **of our own**" — the parenthetical is gone and the original justification is restored. Lens activation unchanged: `library` only, load 1 |
+| 3 | §3 | The *Known open exception* paragraph | Deleted. §3's own instruction was "When the deletion lands, delete this paragraph" |
+| 4 | §8 | "104 tracked files (verified 2026-09-11): 87 `.md` … 1 `.py` (…, ruled for removal — §3)" | "**Zero executable files** — `git ls-files '*.py'` returns nothing, and that clause is the one here that stays true as the repo grows, so verify it live rather than against the count below", then the inventory pinned to `db4ab15` |
+
+### A fifth touch inside §3, recorded rather than slipped in
+
+T9's definition of done said the exception paragraph goes and *"`git diff` shows
+no other hunk inside §3"*. One more clause had to change, and leaving it would
+have been worse than touching it. The sentence following the exception read:
+
+> **No new tracked executable code is added** — not while the exception is open
+> and not after it closes.
+
+With the exception deleted, "while the exception is open" refers to nothing. It
+now reads **"No new tracked executable code is added."** — the same rule with an
+obsolete temporal qualifier removed, no scope change in either direction.
+Recorded here as a deliberate deviation from that DoD clause; `/peer-review` owns
+the ruling on whether it was the right call.
+
+### AC-4.1 — `refuted-with-finding`
+
+The criterion (`spec.md:94`) requires:
+
+> - [ ] AC-4.1: Given the repo at the moment this feature's PR is opened, when
+>   `grep -rn 'spark-metrics' . --include='*.md' | grep -v '/\.spark/[a-z-]*/'` is
+>   run, then the only hits are past-tense provenance statements (AC-2.3), and
+>   **`grep -n 'spark-metrics' .spark/constitution.md` prints nothing**.
+
+The second clause **does not hold, and was ruled not to be made to hold.**
+
+```
+$ grep -n 'spark-metrics' .spark/constitution.md
+295:| 2026-09-11 | §3 stack/runtime: **no exception — Markdown + JSON only stands**, with me…
+```
+
+One hit, at `.spark/constitution.md:295` — the Amendments row added earlier today
+by `36a3f17`, which records the very ruling this feature executes and names the
+file four times in doing so. Every other occurrence is gone: the preamble, §2's
+`cli` row, §3's exception paragraph and §8's inventory no longer mention it.
+
+**Cause.** The criterion was written on 2026-09-11 before that amendment row
+existed, and the spec authorises four edits plus a *new* row (`A2`/`A8`) — it does
+not authorise rewriting an existing one. Satisfying the clause literally would
+mean editing the audit trail of a decision so that a grep comes out clean.
+
+**Ruling.** Put to the user at the plan gate as deviation **D1** with the
+alternative (scrub the historical row) stated explicitly. The user ruled
+2026-09-11 to **leave the record intact and record the clause as refuted**. The
+new row added by this task is worded without the literal string, so the count
+stays at one and does not grow with each amendment.
+
+**Not a defect in the work, and not a pass either.** The first clause of AC-4.1
+holds (verified at T12); the second is refuted against the current file text with
+the quote and `file:line` above. Per the project's `CLAUDE.md`, a documented
+refutation is a valid ceremony outcome, and forcing a "confirmed" here would have
+meant damaging the record to protect a checkbox.
+
+### AC-4.2 — satisfied under deviation D2
+
+§8 no longer makes a live total claim. The clause that **is** live-verifiable is
+the one that carries the argument:
+
+```
+$ git ls-files '*.py' | wc -l
+0
+```
+
+The pinned inventory is stated against `db4ab15`, where it was taken:
+
+```
+$ git ls-files | wc -l          # at db4ab15
+106
+$ git ls-files '*.md' | wc -l
+90
+```
+
+D2's reasoning, now visible in §8 itself: this feature's own `review.md`, `qa.md`
+and `release.md` are still to come, so any live total written today is wrong by
+the time QA reads it. Pinning the total and live-checking the executable count
+puts the durable claim where it can be tested and the perishable one where it
+cannot mislead.

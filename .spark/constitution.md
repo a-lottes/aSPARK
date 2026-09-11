@@ -15,10 +15,8 @@
 **What this project is.** This repo *is* aSPARK Core: the Claude Code plugin that
 provides the SPARK loop. It ships 10 skills, 7 agents, 8 lenses and 6 templates as
 Markdown prompt material plus two JSON manifests, and is installed from a plugin
-marketplace into *other people's* projects. It has no runtime, no build and no
-dependencies. One standalone Python 3 script (`scripts/spark-metrics.py`, stdlib
-only) counts what the loop has produced on a machine; nothing in the loop invokes
-it, and it is ruled for removal (§3).
+marketplace into *other people's* projects. It has no runtime, no build, no
+dependencies and no executable code of its own.
 
 ## 1. Product Principles
 
@@ -67,7 +65,7 @@ it, and it is ruled for removal (§3).
 | `security` | **Off** — no runtime, no auth, no PII, no network surface, no dependencies to audit; 14 of the lens's 15 checks are inapplicable. The one live concern (instructing agents to execute an external command) is carried as a constraint in §3/§6 instead | — |
 | `seo`, `ux` | Off — no website, no web-app, no UI of any kind | — |
 | `api` | Off — no route handlers, no OpenAPI spec, no service | — |
-| `cli` | Off — no `bin`, no process, no stdout/stderr or exit codes that any consumer invokes; slash commands are prompts, not a terminal entrypoint. (`scripts/spark-metrics.py` does print to stdout, but it is hand-run maintainer tooling, not an entrypoint the plugin exposes, and is ruled for removal — §3) | — |
+| `cli` | Off — no `bin`, no process, no stdout/stderr or exit codes of our own; slash commands are prompts, not a terminal entrypoint | — |
 | `i18n`, `data` | Off — single-locale (English), no database, no persistence | — |
 
 - **Active-lens load:** 1 lens active. Elevated load does not apply.
@@ -79,17 +77,10 @@ it, and it is ruled for removal (§3).
   toolchain requires an amendment. Metrics and audit tooling lives outside this
   repo; published figures are reproducible from the committed reports under
   `docs/reports/`, not from a script shipped here.
-  *Known open exception:* `scripts/spark-metrics.py` (32,654 B, Python 3 stdlib,
-  tracked, added 2026-09-09 in `f446ca5` without the amendment this rule requires)
-  exists today. It is **ruled for removal** (2026-09-11) — not grandfathered, not a
-  standing allowance, and not an open question. The deletion is follow-up product
-  work because it also rewrites `README.md` §Project Status and `docs/metrics.md`,
-  which currently instruct readers to run it. When the deletion lands, delete this
-  paragraph; nothing else in this section changes.
-  **No new tracked executable code is added** — not while the exception is open and
-  not after it closes. A one-off scanner (for example the `situational-lenses` proof
-  audit) runs as *untracked* scratch under §5, with its output committed as the
-  evidence artifact; the script itself is never committed.
+  **No new tracked executable code is added.** A one-off scanner (for example
+  the `situational-lenses` proof audit) runs as *untracked* scratch under §5,
+  with its output committed as the evidence artifact; the script itself is never
+  committed.
 - **Patterns to follow:**
   - **A new concern is a new file, not an edit to the roles.** A lens goes in
     `lenses/<name>.md`; skills pass lens paths to agents generically, so no agent
@@ -262,14 +253,17 @@ it, and it is ruled for removal (§3).
 ## 8. QA Method
 
 - **Browser-observable surface:** `no` — aSPARK Core is a Claude Code plugin made
-  of Markdown. 104 tracked files (verified 2026-09-11): 87 `.md`, 5 `.yml`
-  (GitHub issue templates and their `config.yml` — there is **no** CI workflow in
-  this repo), 4 asset `.png`, 4 `.json` (2 plugin manifests + 2 metrics reports
-  under `docs/reports/`), 1 `.docx` handbook, 1 `.py` (`scripts/spark-metrics.py`,
-  ruled for removal — §3), plus `LICENSE` and `.gitignore`. No package manifest,
-  no `bin`, no server, no route handler, no page — `/demo-day`'s browser gate
-  cannot be satisfied here. The one script is a hand-run counter that prints to
-  stdout; that is a command whose output QA can observe, not a browser surface.
+  of Markdown. **Zero executable files** — `git ls-files '*.py'` returns nothing,
+  and that clause is the one here that stays true as the repo grows, so verify it
+  live rather than against the count below. The rest is an inventory taken at
+  `db4ab15`, the commit that removed the last script: 106 tracked files — 90
+  `.md`, 5 `.yml` (GitHub issue templates and their `config.yml` — there is **no**
+  CI workflow in this repo), 4 asset `.png`, 4 `.json` (2 plugin manifests + 2
+  metrics reports under `docs/reports/`), 1 `.docx` handbook, plus `LICENSE` and
+  `.gitignore`. A total is pinned to its commit on purpose: a feature's own
+  artifacts change it while that feature is still in flight, so a live total
+  would be false more often than true. No package manifest, no `bin`, no server,
+  no route handler, no page — `/demo-day`'s browser gate cannot be satisfied here.
   Default when absent: `yes`.
 - **Substitute verification method:** hands-on QA against the **installed
   plugin**, where a performed step is a real ceremony invocation or a real
@@ -302,3 +296,4 @@ it.
 | 2026-09-11 | §3 stack/runtime: **no exception — Markdown + JSON only stands**, with metrics and audit tooling placed outside this repo, `scripts/spark-metrics.py` named as a known open exception **ruled for removal**, and a standing rule that no new tracked executable code is added (one-off scanners run as untracked scratch under §5, their output committed as the evidence artifact). §8's inventory, §2's version evidence and `cli` justification, and the preamble's "no executable code" claim refreshed to the real tracked file set | The script shipped 2026-09-09 (`f446ca5`, plus `df1005f`/`678f04d` for the cross-machine merge and `b6b7aab` for `docs/reports/*.json`) with no amendment, so the repo's most recent feature had falsified §3's first line. The Facilitator drafted both bounds — a narrow stdlib-only `scripts/` exception (its recommendation) and no exception at all — and the user ruled for **no exception**, knowingly: with `marketplace.json` declaring `"source": "./"` and no include/exclude mechanism, "keep it but don't ship it" does not exist, so keeping the script would have meant knowingly installing a 32 KB executable into every consumer's plugin cache at the next release. The script is recorded in §1's established *known open exception* form rather than deleted from the text, because it still exists on disk today and a flat "no executable code" would have recreated the very defect this amendment fixes; it is marked a scheduled deletion under a ruling already made, not grandfathered, and closing it when the deletion lands is a one-line edit. The deletion itself is follow-up product work, not this ceremony's: `README.md` §Project Status and `docs/metrics.md` instruct readers to run the script and ground the published 54-feature figure on `--merge docs/reports/*.json` being checkable, so removing it rewrites both. Bookkeeping corrected in the same pass against `git ls-files` (104 tracked: 87 `.md` — was 72; 4 `.json` — was 2; the `.py` and `.docx` previously unlisted) and against `.github/`, which holds **no** workflow at all — §8's "5 workflow `.yml`" were issue templates. §2's evidence cited version `0.3.1`/four releases against a live `0.8.0` |
 | 2026-09-11 | §7: two stale grounding facts **corrected** — the Approver bullet no longer claims this repo has no `.github/` directory, and the `handed-off` checkpoint no longer names a CI. The terminal status now reads PR open + `claude plugin validate` passing locally (§4's real bar) + approver requested | `.github/` exists (re-verified 2026-09-11: five issue templates plus a PR template, six files) — but there is **no `CODEOWNERS`** and no second collaborator, so the conclusion the evidence supported is unchanged: solo-maintained, self-review-via-PR, confirmed by the user 2026-08-06 and untouched here. The bigger falsity was "CI is green": there is no `.github/workflows/` directory at all, so the checkpoint named a gate that cannot be performed and that no past release performed. Reworded to the checkpoint that is real and that releases actually ran, rather than dropping the quality bar or inventing a CI requirement. **The branch-protection decision and its inline ⚠ are deliberately untouched** — that decision stands exactly as made |
 | 2026-09-11 | §3 off-limits gains **"the published surface is the whole working tree, not the tracked files"**, and §6's privacy non-negotiable retuned from *committed* to *present in the working tree at release* | Discovered while auditing the tracked-file inventory: `docs/…Handbook.docx.bak` is untracked **and** `.gitignore`-matched (`.gitignore:22:*.bak`, confirmed by `git check-ignore -v`), yet it is present in the installed plugin cache at `~/.claude/plugins/cache/aspark/aspark/0.8.0/docs/`. A `source: "./"` install copies ignored files, so `.gitignore` does not protect the shipped surface and ≈2 MB of untracked backup reaches every consumer. Stated here rather than left as release bookkeeping because §6's privacy rule was *wrong about its own test*: it bounded exposure by what is committed, when the real bound is what is present. Falsifiable by listing that cache directory. Removing the `.bak` and adding a `/go-live` pre-flight that asserts what the install actually ships are follow-ups, not constitutional |
+| 2026-09-11 | §3's *known open exception* **closed**: the last tracked executable file is deleted, so "Markdown + JSON only … no executable code" now holds without qualification. The preamble drops its script sentence, §2's `cli` row drops its parenthetical, §8's inventory is restated with zero executables, and the no-new-tracked-executable-code rule loses its "while the exception is open" framing and stands unconditionally | The removal ruled on earlier today was executed as the `metrics-script-removal` feature (`.spark/metrics-script-removal/`), so the exception has nothing left to describe. Closing it is recorded as its own row rather than by editing the row that opened it: amendment history is the audit trail of what was decided and when, and rewriting it to make a later grep come out clean would cost more than the grep is worth — the feature's `AC-4.1` asks for exactly that grep over this file and is recorded as **refuted-with-finding** instead (`.spark/metrics-script-removal/evidence.md`), a valid ceremony outcome under the project's `CLAUDE.md`. What replaced the tool is published in `docs/metrics.md`: three `python3` stdlib commands over the committed reports under `docs/reports/`, each with its observed output, plus the four combination rules read off the script before it was deleted — so every figure the README publishes stays checkable by a stranger who has only this repository. §8's total is now pinned to the commit it was taken at (`db4ab15`), because a feature's own artifacts change a live count while that feature is still in flight; the clause that stays live-verifiable is the one that matters, `git ls-files '*.py'` returning nothing. Authority for amending this file outside `/charter`: the user's ruling of 2026-09-11, recorded as `A2`/`A8` in that feature's spec |
