@@ -11,6 +11,14 @@
       "name": "aspark",
       "source": "./",
       "description": "An agile AI product team for Claude Code — Specify, Plan, Act, Review, Keep."
+    },
+    {
+      "name": "aspark-guard",
+      "source": {
+        "source": "github",
+        "repo": "a-lottes/aSPARK-guard"
+      },
+      "description": "Optional. Enforces the SPARK gates in code rather than in prompt, and records every .spark/ write with its hash. Silent in projects without .spark/."
     }
   ]
 }
