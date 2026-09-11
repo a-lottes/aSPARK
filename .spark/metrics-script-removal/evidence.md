@@ -130,3 +130,135 @@ not the evidence"). Choosing between that fallback, installing `jq` with the
 user's go, and a third option changes §1's architecture decision, so it was
 **raised to the user rather than decided here** (`/increment` does not improvise
 architecture). T2–T5 do not depend on the answer and proceeded; see Entry 2.
+
+---
+
+## Entry 2 — T2/T3, every published figure derived (pre-strip)
+
+Derivation ran from the session scratchpad (`$SCRATCH/derive.py`, Python 3
+stdlib, **never committed, never written into the repository**). Proof it stayed
+outside: `git status --porcelain` during the run showed only `plan.md`'s task
+status column.
+
+The four combination rules were read off `scripts/spark-metrics.py` before its
+deletion, not invented:
+
+| Rule | Source in the removed script | What it does |
+|---|---|---|
+| Union projects on `projects[].id` | `:662-664` | a repository cloned on two machines is one project |
+| OR `reached.*` per `(project id, feature key)` | `:662-664` | a phase counts as reached if either machine saw it |
+| **Max per project**, then sum, for `git.tags/added/deleted` | `:646-648` | two clones report the same history; the smaller number is a clone that is behind |
+| Sum `transcripts.*` counters, **union** `days[]` | `:689-706` | a session elsewhere is another session; the same calendar day is not |
+
+### Result: 23 of 23 figures reproduce exactly
+
+```
+FIGURE                    | PUBLISHED    | DERIVED      | VERDICT
+-----------------------------------------------------------------------
+projects                  | 10           | 10           | MATCH
+features                  | 54           | 54           | MATCH
+spec reached              | 54           | 54           | MATCH
+plan reached              | 53           | 53           | MATCH
+review reached            | 52           | 52           | MATCH
+qa reached                | 41           | 41           | MATCH
+release reached           | 48           | 48           | MATCH
+naive feature sum         | 65           | 65           | MATCH
+git tags                  | 61           | 61           | MATCH
+git added                 | 114630       | 114630       | MATCH
+git deleted               | 12589        | 12589        | MATCH
+projects with line counts | 7            | 7            | MATCH
+projects reporting n/a    | 3            | 3            | MATCH
+sessions aspark           | 42           | 42           | MATCH
+sessions total            | 114          | 114          | MATCH
+role-agent runs           | 429          | 429          | MATCH
+human gate decisions      | 377          | 377          | MATCH
+active days               | 51           | 51           | MATCH
+window start              | 2026-07-13   | 2026-07-13   | MATCH
+window end                | 2026-09-08   | 2026-09-08   | MATCH
+agent breakdown           | reviewer 108 | reviewer 108 | MATCH
+ceremonies total          | 116          | 116          | MATCH
+ceremony breakdown        | spark 35 / n | spark 35 / n | MATCH
+
+
+23 figures checked, 0 mismatch(es)
+```
+
+**T3's verdict: every figure `reproduced`. No figure is `refuted`, none is
+corrected, none is dropped.** Per this file's Handoff ruling, this is the only
+permitted source of figures for T6 and T10.
+
+Two things worth naming, because the spec expected otherwise:
+
+- **AC-2.5's tags figure reproduces at 61.** The spec recorded `52 + 27 = 79`
+  against a published `61` and treated the dedup rule as untested, with
+  refutation the likely path. The rule exists and is statable: max per project,
+  then sum. Per-project tags are `[0, 1, 2, 3, 5, 8, 9, 9, 12, 12]`, summing to
+  61. The `79` was a naive sum across machines, which is not what the figure ever
+  claimed to be. **The refutation path stayed open through this run and did not
+  need to be taken** — recorded as a confirmed figure, not as a near-miss.
+- **One apparent mismatch was mine, not the data's.** The first run reported a
+  `MISMATCH` on the per-agent breakdown because the expected string in the
+  scratch script abbreviated the role names (`po`, `rm`, `em`) while the reports
+  spell them out. Every number in that breakdown matched on the first run
+  (`reviewer 108 · product-owner 103 · release-manager 63 ·
+  engineering-manager 61 · qa-tester 59 · designer 24 · facilitator 11`, summing
+  to 429). The comparison string was corrected and the run repeated to reach
+  `0 mismatch(es)`. Recorded rather than quietly re-run, so the 23/23 above is
+  not mistaken for a first-try result.
+
+---
+
+## Entry 3 — T4/T5, the leaked paths stripped and the figures re-proven
+
+### T4 — `transcripts.root` removed from both committed reports
+
+The field held an absolute home directory in each report, in a **public**
+repository, while `docs/reports/README.md:27` claims *"Opaque ids and counts. No
+project name, no feature name, no hostname, no path."* Before:
+
+```
+$ grep -n '"root"' docs/reports/*.json
+docs/reports/m-2e80b1d428827c8d.json:663:    "root": "<a home directory>/.claude/projects",
+docs/reports/m-aef31f2de543f46c.json:272:    "root": "<a second, different home directory>/.claude/projects",
+```
+
+(The two values are quoted here with the paths elided on purpose — recording them
+verbatim in a tracked public file would re-commit what this task removes.)
+
+After, with the diff confined to exactly that line in each file:
+
+```
+$ git diff --stat docs/reports/
+ docs/reports/m-2e80b1d428827c8d.json | 1 -
+ docs/reports/m-aef31f2de543f46c.json | 1 -
+ 2 files changed, 2 deletions(-)
+```
+
+Verification (AC-5.1, AC-5.3, NFR-6):
+
+```
+$ grep -rn '/Users/' docs/ | wc -l
+0
+$ grep -rn '"root"\|/Users/\|hostname' docs/reports/*.json | wc -l
+0
+$ for f in docs/reports/*.json; do python3 -m json.tool "$f" > /dev/null && echo -n "ok "; done
+ok ok
+```
+
+So `docs/reports/README.md`'s claim is now true as written, and both files remain
+valid JSON. The round-trip preserved key order and indentation, which is why the
+diff is two deletions rather than a reformat of 900 lines.
+
+### T5 — AC-5.2: no published figure depended on the removed field
+
+The derivation from Entry 2 was re-run **verbatim** against the edited reports
+and the two outputs diffed:
+
+```
+$ diff -u $SCRATCH/run1-prestrip.txt $SCRATCH/run2-poststrip.txt
+$ echo $?
+0
+```
+
+**Empty diff.** All 23 figures unchanged, so stripping `transcripts.root` cost no
+published number. AC-5.2 satisfied.
