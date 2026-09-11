@@ -455,7 +455,7 @@ The second clause **does not hold, and was ruled not to be made to hold.**
 
 ```
 $ grep -n 'spark-metrics' .spark/constitution.md
-295:| 2026-09-11 | §3 stack/runtime: **no exception — Markdown + JSON only stands**, with me…
+296:| 2026-09-11 | §3 stack/runtime: **no exception — Markdown + JSON only stands**, with me…
 ```
 
 One hit, at `.spark/constitution.md:295` — the Amendments row added earlier today
@@ -583,13 +583,17 @@ The criterion's command is:
 grep -rn 'python3 scripts/' --include='*.md' . | grep -v '/\.spark/'
 ```
 
-Run literally it returns **three** hits, all of them inside
-`.spark/metrics-script-removal/` — `spec.md:26` (quoting the invitation being
-removed), `spec.md:60` (AC-1.2 quoting its own command) and `plan.md:58` (T10's
-definition of done quoting it again). The exclusion pattern requires a leading
-slash before `.spark`, but this environment's `grep -r .` emits paths as
-`.spark/…` rather than `./.spark/…`, so the filter never matches and the feature's
-own artifacts are not excluded as intended.
+Run literally it returns **six** hits, not three as this entry first recorded —
+corrected at `/peer-review` round 1 (F8, Minor). Three are load-bearing:
+`spec.md:26` (quoting the invitation being removed), `spec.md:60` (AC-1.2
+quoting its own command) and `plan.md:58` (T10's definition of done quoting it
+again). The other three are this very file quoting the command below, to show
+its own output — a count that grows every time this entry is read back into
+itself, which is the honest reason the number is wrong in any draft that tries
+to state it as a constant. The exclusion pattern requires a leading slash
+before `.spark`, but this environment's `grep -r .` emits paths as `.spark/…`
+rather than `./.spark/…`, so the filter never matches and none of the feature's
+own artifacts — this one included — are excluded as intended.
 
 The criterion's **intent** — no document outside the feature's own artifacts
 instructs a reader to run the script — is satisfied, confirmed two independent
@@ -697,22 +701,43 @@ not a failure.
 python3 -c "import json;print(json.load(open('$HOME/.claude/plugins/installed_plugins.json'))['plugins']['aspark@aspark'])"
 #    expect gitCommitSha 9c47bc95… (v0.8.0, installed 2026-08-31) BEFORE the refresh
 
-# 2. refresh from this branch
+# 2. refresh the marketplace's own source tracking (this marketplace is a local
+#    directory, so this syncs its metadata to the branch's current working tree)
 claude plugin marketplace update aspark
 
-# 3. prove the refresh actually happened — gitCommitSha must now equal branch head
+# 3. re-install the plugin itself — step 2 alone does not do this; the installed
+#    plugin is a separate cached copy that does not auto-follow the marketplace
+#    source directory, so skipping this step is why the original sequence failed
+claude plugin update aspark
+
+# 4. prove the refresh actually happened — gitCommitSha must now equal branch head
 git rev-parse HEAD
 python3 -c "import json;print(json.load(open('$HOME/.claude/plugins/installed_plugins.json'))['plugins']['aspark@aspark'])"
 
-# 4. the criterion itself
+# 5. the criterion itself
 find "$HOME/.claude/plugins/cache/aspark/aspark" -name '*.py'
 #    expect: no output
 ```
 
-**Step 3 is the whole point.** Without it the `find` in step 4 is a tautology: the
+**Step 4 is the whole point.** Without it the `find` in step 5 is a tautology: the
 installed cache predates the script, so "no `.py` present" is already true today
 and proves nothing about this change. A listing taken before the `gitCommitSha`
 moves is not evidence.
+
+**Correction, `/peer-review` round 1 (F4, Major).** The sequence as first written
+stopped at step 2 (`marketplace update`) and went straight to the `find` — with
+no step that actually re-installs the plugin. The Reviewer did not run step 2
+themselves (that is the same unasked-install action §6 bars `/increment` from,
+and equally not theirs to perform); they read `~/.claude/plugins/installed_plugins.json`
+as it already stood — `gitCommitSha 9c47bc95…`, `lastUpdated 2026-08-31`, both
+still the pre-feature baseline recorded at T1 — and reasoned correctly that
+`marketplace update` alone cannot be what moves that record, since it refreshes
+the marketplace's own metadata, not the installed plugin copy. `claude plugin
+update aspark` (step 3, per `plan.md` §4's own "re-install" wording, which the
+first draft had named but not included) is the missing step, confirmed against
+the CLI's own `--help` output rather than assumed. Without it, AC-1.3 would have
+failed for an install-mechanism reason — exactly the false negative the original
+step-3 note warned against, just one step earlier than it located the risk.
 
 **Risk R1, and its remedy needs a second go.** No version bump happens in this
 increment (D3), so the refresh lands in the same `…/aspark/aspark/0.8.0/`
