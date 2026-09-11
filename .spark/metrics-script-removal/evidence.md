@@ -503,3 +503,105 @@ and `release.md` are still to come, so any live total written today is wrong by
 the time QA reads it. Pinning the total and live-checking the executable count
 puts the durable claim where it can be tested and the perishable one where it
 cannot mislead.
+
+---
+
+## Entry 7 — T10, the README headline stops rotting
+
+`### Dogfooding to date` no longer opens with a number. The non-rotting claim is
+that **the evidence is committed rather than asserted** — two machine reports in
+`docs/reports/`, and three `python3` commands in `docs/metrics.md` that re-derive
+every figure from them, standard library only. That sentence stays true however
+much time passes, because it describes what the repository contains rather than
+what the numbers currently are. The second paragraph states plainly what the
+evidence cannot do: refresh itself.
+
+Every figure moved inside `#### Snapshot — 2026-09-09`, introduced by the line
+*"Dated **evidence**, taken 2026-09-09 and not updated since"*. The `scripts/`
+bullet is gone from the repository-layout list (`README.md:210`).
+
+### Definition-of-done greps
+
+| AC | Check | Result |
+|---|---|---|
+| AC-7.1 | `grep -c '^\*\*54 features' README.md` | 0 — the numeric headline is gone |
+| AC-2.3 | `grep -c '\-\-merge' README.md` | 0 |
+| AC-3.1 | `grep -c 'write-report\|Add yours\|should be refreshed\|Count your own' README.md` | 0 |
+| AC-3.4 | `grep -ci 'aspark-insights' README.md` | 0 |
+| — | `grep -c 'spark-metrics' README.md` | 0 |
+
+### AC-7.2 — the table sits inside the dated block
+
+```
+$ grep -n -A4 '2026-09-09' README.md
+258:#### Snapshot — 2026-09-09
+259-
+260:Dated **evidence**, taken 2026-09-09 and not updated since:
+261-
+262-| Spec | Plan | Review | QA | Release | Git tags | Role-agent runs | Human gate decisions |
+263-|---:|---:|---:|---:|---:|---:|---:|---:|
+264-| 54 | 53 | 52 | 41 | 48 | 61 | 429 | 377 |
+```
+
+The line carrying `2026-09-09` also carries `evidence`, and the table follows
+inside four lines.
+
+### AC-7.3 — no count outside the dated block
+
+Checked mechanically rather than by eye, with a deliberately **over-broad**
+pattern: every sentence outside the block containing any numeral or number-word
+within the same sentence as `project(s)`, `feature(s)`, `run(s)` or `day(s)`, in
+both orders. Five candidates surfaced and all five are false positives on
+inspection:
+
+| Candidate | Why it is not a count of projects/features/runs/days |
+|---|---|
+| "The loop — 10 skills, 7 agents, 6 templates … all five gates enforced" | Counts skills, agents, templates and gates. Matched only because "run" appears in "end-to-end run" in the same sentence |
+| "QA-method declaration … the fall-backs (absent, incomplete, unperformable, and a `yes`-surface project)" | An enumeration, no number attached to "project" |
+| "It removes one recurring per-feature question on a project…" | "one … question", not one project or one feature |
+| `#11` / `#9` in the issue-state paragraph | Issue numbers |
+| "If you run aSPARK on yours, `#4`…" | Issue links |
+
+So AC-7.3 holds as written. **One observation for `/peer-review`, not a
+violation:** the Area/State table's "10 skills, 7 agents, 6 templates" *is* a
+count that will rot if the plugin gains a skill. AC-7.3 does not cover it (its
+list is projects, features, runs, days) and it is pre-existing text this feature's
+scope does not reach, so it was left alone rather than quietly widened into.
+
+### AC-2.3 — provenance
+
+The section names `docs/reports/` as the evidence and commit `a2c0541` as the
+recovery point, which Entry 5 proved both reachable on `origin/main` and
+byte-identical to the deleted file.
+
+### AC-1.2 — satisfied on intent; the literal command has a path-prefix bug
+
+The criterion's command is:
+
+```
+grep -rn 'python3 scripts/' --include='*.md' . | grep -v '/\.spark/'
+```
+
+Run literally it returns **three** hits, all of them inside
+`.spark/metrics-script-removal/` — `spec.md:26` (quoting the invitation being
+removed), `spec.md:60` (AC-1.2 quoting its own command) and `plan.md:58` (T10's
+definition of done quoting it again). The exclusion pattern requires a leading
+slash before `.spark`, but this environment's `grep -r .` emits paths as
+`.spark/…` rather than `./.spark/…`, so the filter never matches and the feature's
+own artifacts are not excluded as intended.
+
+The criterion's **intent** — no document outside the feature's own artifacts
+instructs a reader to run the script — is satisfied, confirmed two independent
+ways:
+
+```
+$ grep -rn 'python3 scripts/' --include='*.md' . | grep -v '\.spark/' | wc -l
+0
+$ git ls-files '*.md' | grep -v '^\.spark/' | xargs grep -n 'python3 scripts/' | wc -l
+0
+```
+
+Recorded as a **wording defect in the criterion, not a defect in the work** —
+the same class as AC-4.1 (Entry 6), and the second time a grep written ahead of
+the artifacts it would later match has needed this treatment. `/peer-review` owns
+whether the criterion or the record should carry the correction.
