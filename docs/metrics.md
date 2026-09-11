@@ -158,85 +158,110 @@ JSON output as well as the Markdown, or the flag would be a display trick rather
 than a real one. The per-project view stays available to whoever runs the script
 on their own machine.
 
-## Snapshot — 2026-09-09
+## Snapshot — 2026-09-10
 
-Two machines, merged. Each wrote its report with
+Three machines, merged. Two of them wrote their report with
 
 ```bash
 python3 scripts/spark-metrics.py --depth 2 --exclude Downloads --totals-only \
   --write-report docs/reports
 ```
 
-and the total is the merge of both, from [`docs/reports/`](reports/):
+and the third, whose repositories live under a data mount rather than `$HOME`,
+reached them with a `--search-root` of its own and excluded a stale copy of
+its own:
+
+```bash
+python3 scripts/spark-metrics.py --search-root /mnt/omarchy_data/30_repos \
+  --depth 3 --exclude windows/arbeitsbaeume --totals-only \
+  --write-report docs/reports
+```
+
+The total is the merge of all three, from [`docs/reports/`](reports/):
 
 ```bash
 python3 scripts/spark-metrics.py --merge docs/reports/*.json
 ```
 
-(the exclusion drops a stale second checkout that would otherwise double-count
-two features).
+(each exclusion drops a stale second checkout that would otherwise double-count.
+The `Downloads` one is a git clone simply behind its live copy; the `windows`
+one is not a git repository at all, so it has no identity to merge on and would
+be counted as found on top of the original.)
 
 ### Loop artifacts on disk
 
 | Features | Spec | Plan | Review | QA | Release | Git tags |
 |---:|---:|---:|---:|---:|---:|---:|
-| **54** | **54** | **53** | **52** | **41** | **48** | **61** |
+| **77** | **77** | **76** | **75** | **64** | **71** | **84** |
 
-10 projects, 54 features — one of them aSPARK itself, nine of them not.
+11 projects, 77 features — one of them aSPARK itself, ten of them not.
 
-**What the merge removed.** The two machines report 51 and 14 features, which
-would add to 65 across 13 projects. The counted figure is **54 across 10**,
-because **3 projects sit on both machines and 11 of their features are the same
-features**. The largest of the three is aSPARK itself: 8 features on each
-machine, identical, since `.spark/` is committed and both clones carry all of
-them. The other two overlap one-sidedly — 9 features against 2, and 2 against 1,
-with the smaller set contained in the larger both times, because one machine's
-clone is simply behind.
+**What the merge removed.** The three machines report 51, 14 and 31 features,
+which would add to 96 across 15 project checkouts. The counted figure is
+**77 across 11**, because **3 projects sit on more than one machine — aSPARK
+on all three — and 19 of their features are the same features**. The largest
+of the three is aSPARK itself: 8 features on each machine, identical, since
+`.spark/` is committed and every clone carries all of them. The other two
+overlap one-sidedly — 9 features against 2, and 2 against 1, with the smaller
+set contained in the larger both times, because one machine's clone is simply
+behind. The third machine's one other project exists on no other machine, so
+all 23 of its features are new to the total.
 
-On this particular pair of reports a highest-count rule would therefore have
-produced the same 54: every overlap here happens to be a subset, which is the
+On this particular set of reports a highest-count rule would therefore have
+produced the same 77: every overlap here happens to be a subset, which is the
 one case where taking the larger count is right. The per-feature union is not
 what changed this number, and is not claimed to be. It is what makes the number
-hold when a machine has a feature the other does not — two clones each holding
+hold when a machine has a feature the others do not — clones each holding
 work the other lacks, which the moment `.spark/` is uncommitted in a shared
 project is the normal case, not the exception.
 
-**The possible overcount is closed.** One of the ten projects was not a git
-repository, so it had no identity that survives a machine boundary and would
-have been counted twice had it existed on both machines. It has since been put
-under version control, and every project in this snapshot now merges on a stable
-identity. Its history counting for the first time is why the line figure below
-is some 7,800 lines higher than the merge that preceded it — no code was
-written, a project simply became measurable.
+**The possible overcount is closed.** One project in an earlier snapshot was
+not a git repository, so it had no identity that survives a machine boundary
+and would have been counted twice had it existed on two machines. It has since
+been put under version control, and every project in this snapshot now merges
+on a stable identity. Its history counting for the first time lifted that
+snapshot's line figure by some 7,800 lines with no code written — a project
+simply became measurable. The lift this time has a different cause: +125,661
+lines over the previous merge, of which 125,646 are the new machine's one large
+project, counted now because the machine holding it joined the total, and 15
+are where its fresher clone of this repository raised the per-project maximum
+the merge takes.
 
-**+114,630 / −12,589 lines** since the loop was adopted, across the 7 of 10
+**+240,291 / −18,872 lines** since the loop was adopted, across the 8 of 11
 projects whose line count is measurable; 3 report `n/a` (`.spark/` not tracked in
 that repository). The line figure drifts with every commit — it is a snapshot,
 not a standing claim.
 
 ### Loop activity in Claude Code transcripts
 
-- **42** of 114 sessions were aSPARK-driven
+- **42** of 138 sessions were aSPARK-driven
 - **429** role-agent runs — reviewer 108 · product-owner 103 · release-manager 63 · engineering-manager 61 · qa-tester 59 · designer 24 · facilitator 11
 - **377** human gate decisions
 - **51** active days, 2026-07-13 to 2026-09-08
 - 116 ceremonies invoked by name — `/spark` 35 · `/next-steps` 24 · `/peer-review` 12 · `/sprint-plan` 11 · `/demo-day` 11 · `/increment` 8 · `/story-time` 6 · `/go-live` 6 · `/charter` 3 (an undercount, see above)
 
-These are summed across both machines, not unioned: a session on another machine
-is genuinely another session. Only the active days are unioned, since the same
-calendar day appears on both. The window starts two days earlier than the single
-machine's did, because the earlier adoption happened on the other one.
+These are summed across all three machines, not unioned: a session on another
+machine is genuinely another session. Only the active days are unioned, since
+the same calendar day appears on more than one. The window starts two days
+earlier than the single machine's did, because the earlier adoption happened on
+the other one.
+
+The third machine added 24 sessions, none of them aSPARK-driven: its `.spark/`
+artifacts sit on a machine whose local session logs hold no aSPARK run, so the
+loops that produced them ran elsewhere. It grows the denominator and not the
+numerator — the share of aSPARK-driven sessions falls as the artifact counts
+rise — and that is the honest shape of the data, not an anomaly to smooth over.
 
 ## Reading the gaps
 
 The gaps are the interesting part, and they are not rounded away.
 
-- **QA, 41 of 54.** Eight of the thirteen missing QA reports sit in a single
+- **QA, 64 of 77.** Eight of the thirteen missing QA reports sit in a single
   library project with no browser surface, where `/demo-day` ran once across
   nine features. That is exactly the case
   [constitution §8's QA-method declaration](../README.md#project-status) was
   written for, and those features predate it.
-- **Release, 48 of 54.** Three of the six unreleased features sit in one project
+- **Release, 71 of 77.** Three of the six unreleased features sit in one project
   that specified, planned, reviewed and QA'd them and then shipped nothing. Two
   more are single-feature projects that stalled before review.
 - **`situational-lenses` has a spec and nothing else** — this repository's own

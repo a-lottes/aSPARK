@@ -244,29 +244,31 @@ current state.
 
 ### Dogfooding to date
 
-**54 features have gone through the loop across 10 projects** — one of them
-aSPARK itself, nine of them not — as of 2026-09-09, across two development
+**77 features have gone through the loop across 11 projects** — one of them
+aSPARK itself, ten of them not — as of 2026-09-10, across three development
 machines:
 
 | Spec | Plan | Review | QA | Release | Git tags | Role-agent runs | Human gate decisions |
 |---:|---:|---:|---:|---:|---:|---:|---:|
-| 54 | 53 | 52 | 41 | 48 | 61 | 429 | 377 |
+| 77 | 76 | 75 | 64 | 71 | 84 | 429 | 377 |
 
-The gaps are real and left in. QA reached 41 of 54 — eight of the shortfall sit
+The gaps are real and left in. QA reached 64 of 77 — eight of the shortfall sit
 in one library project with no browser surface, where `/demo-day` ran once across
-nine features. Release reached 48 of 54 — three unreleased features sit in one
+nine features. Release reached 71 of 77 — three unreleased features sit in one
 project that specified, planned, reviewed and QA'd them and shipped nothing, and
 this repository's own `situational-lenses` has a spec and nothing else.
 
-**54 is a merge, not a sum.** The two machines report 51 and 14 features, which
-would add to 65 — but 3 projects sit on both and 11 of their features are the
-same features, aSPARK's own 8 among them. Adding the totals would have
-overstated the count by a fifth. Each machine writes a nameless report into
-[docs/reports/](docs/reports/) and the published figure is
+**77 is a merge, not a sum.** The three machines report 51, 14 and 31 features,
+which would add to 96 — but 3 projects sit on more than one machine, aSPARK on
+all three, and 19 of their features are the same features. Adding the totals
+would have overstated the count by a quarter. Each machine writes a nameless
+report into [docs/reports/](docs/reports/) and the published figure is
 `spark-metrics.py --merge docs/reports/*.json`, so the arithmetic is checkable
-without either machine. This machine contributes only 3 features the other did
-not already have; that is what deduplication looks like when the big projects
-are clones of the same repositories.
+without any one of them. The smallest machine contributes only 3 features the
+others did not already have; the newest contributes 23 of its 31, its one large
+project existing on no other machine. That is deduplication working in both
+directions — clones of the same repositories add little, a repository that
+exists nowhere else adds all of itself.
 
 The first six columns are counted from `.spark/` artifacts and git on disk —
 verifiable with `ls`, inferred from nothing. The last two come from Claude Code's

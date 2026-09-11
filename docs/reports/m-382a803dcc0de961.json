@@ -1,0 +1,382 @@
+{
+  "schema": 2,
+  "machine": "m:382a803dcc0de961",
+  "projects": [
+    {
+      "id": "g:c220c697b2aa7fea",
+      "features": [
+        {
+          "key": "40915934a275",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "4380ee98c12c",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "f104cd84016b",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "dba8c403ded5",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "e38815cbb3b0",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "50d37f8d4778",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "97c5caf6e0a0",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "7c8ff5a4b282",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "a07cc6f859e7",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "5fa38f2b35d1",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "3d1c81c3b324",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "0605201e44c6",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "0edd982afda8",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "0db18031ac27",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "f154d69a753b",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "ffdb2eeb9e2a",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "960559f2b2e0",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "4dd988864532",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "d72a0cdf1c4d",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "5d4e5448628d",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "55a1512da413",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "060d3542c729",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "6d0c3f715144",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 23,
+        "plan": 23,
+        "review": 23,
+        "qa": 23,
+        "release": 23
+      },
+      "git": {
+        "available": true,
+        "tags": 23,
+        "added": 125646,
+        "deleted": 6274,
+        "adopted_at_root": false
+      }
+    },
+    {
+      "id": "g:ef6b0fee91e06b89",
+      "features": [
+        {
+          "key": "3e935b83ac90",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "48b1c3533211",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "6069ad7d820d",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "a1c050575005",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "ccdf21443847",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": false,
+            "release": true
+          }
+        },
+        {
+          "key": "2ceb00b9d261",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        },
+        {
+          "key": "0601ca7a1c13",
+          "reached": {
+            "spec": true,
+            "plan": false,
+            "review": false,
+            "qa": false,
+            "release": false
+          }
+        },
+        {
+          "key": "2628d94585f4",
+          "reached": {
+            "spec": true,
+            "plan": true,
+            "review": true,
+            "qa": true,
+            "release": true
+          }
+        }
+      ],
+      "phase_counts": {
+        "spec": 8,
+        "plan": 7,
+        "review": 7,
+        "qa": 6,
+        "release": 7
+      },
+      "git": {
+        "available": true,
+        "tags": 9,
+        "added": 17154,
+        "deleted": 1270,
+        "adopted_at_root": false
+      }
+    }
+  ],
+  "totals": {
+    "projects": 2,
+    "features": 31,
+    "phase_counts": {
+      "spec": 31,
+      "plan": 30,
+      "review": 30,
+      "qa": 29,
+      "release": 30
+    },
+    "tags": 32,
+    "added": 142800,
+    "deleted": 7544
+  },
+  "transcripts": {
+    "available": true,
+    "root": "/home/silenttz/.claude/projects",
+    "sessions_total": 24,
+    "sessions_aspark": 0,
+    "agent_runs": {},
+    "agent_runs_total": 0,
+    "gates": 0,
+    "ceremonies": {},
+    "active_days": 0,
+    "days": [],
+    "first_day": null,
+    "last_day": null
+  }
+}
