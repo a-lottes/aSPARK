@@ -244,40 +244,42 @@ current state.
 ### Dogfooding to date
 
 The loop has been run on real projects, and the evidence for that is committed
-rather than asserted: two machine reports sit in [docs/reports/](docs/reports/),
+rather than asserted: three machine reports sit in [docs/reports/](docs/reports/),
 and [docs/metrics.md](docs/metrics.md) prints three `python3` commands that
-re-derive every figure below from those two files. Standard library only — no
+re-derive every figure below from those files. Standard library only — no
 install, no dependency, and no tool of this project's. So the arithmetic here is
-checkable without trusting this page, and without either machine.
+checkable without trusting this page, and without any of the machines.
 
 What that evidence cannot do is refresh itself. The counter that produced it is
 no longer in this repository (constitution §3 allows Markdown and JSON only), so
 the figures below are a closed measurement rather than a running total, and they
 are dated for that reason.
 
-#### Snapshot — 2026-09-09
+#### Snapshot — 2026-09-10
 
-Dated **evidence**, taken 2026-09-09 and not updated since:
+Dated **evidence**, taken 2026-09-10 and not updated since:
 
 | Spec | Plan | Review | QA | Release | Git tags | Role-agent runs | Human gate decisions |
 |---:|---:|---:|---:|---:|---:|---:|---:|
-| 54 | 53 | 52 | 41 | 48 | 61 | 429 | 377 |
+| 77 | 76 | 75 | 64 | 71 | 84 | 429 | 377 |
 
-54 features across 10 projects — one of them aSPARK itself, nine of them not — on
-two development machines.
+77 features across 11 projects — one of them aSPARK itself, ten of them not — on
+three development machines.
 
-The gaps are real and left in. QA reached 41 of 54: eight of the shortfall sit in
-one library project with no browser surface, where `/demo-day` ran once across
-nine features. Release reached 48 of 54: three unreleased features sit in one
-project that specified, planned, reviewed and QA'd them and shipped nothing, and
-this repository's own `situational-lenses` has a spec and nothing else.
+The gaps are real and left in. QA reached 64 of 77: eight of the thirteen
+shortfall sit in one library project with no browser surface, where `/demo-day`
+ran once across nine features. Release reached 71 of 77: three unreleased
+features sit in one project that specified, planned, reviewed and QA'd them and
+shipped nothing, and this repository's own `situational-lenses` has a spec and
+nothing else.
 
-**54 is a merge, not a sum.** The two machines report 51 and 14 features, which
-would add to 65 — but 3 projects sit on both and 11 of their features are the
-same features, aSPARK's own 8 among them. Adding the totals would have overstated
-the count by about a fifth. Projects are matched on the hash of a repository's
-root commit, identical in every clone, which is what makes that deduplication
-checkable rather than claimed.
+**77 is a merge, not a sum.** The three machines report 51, 14 and 31 features,
+which would add to 96 — but 3 projects sit on more than one machine (aSPARK on
+all three) and 19 of their features are the same features, aSPARK's own 8 among
+them. Adding the totals would have overstated the count by about a fifth.
+Projects are matched on the hash of a repository's root commit, identical in
+every clone, which is what makes that deduplication checkable rather than
+claimed.
 
 The first six columns come from `.spark/` artifacts and git on disk — verifiable
 with `ls`, inferred from nothing. The last two come from Claude Code's own session
@@ -286,11 +288,15 @@ session; those logs are local to each machine and are the one input here a reade
 cannot audit back to its source. The projects are deliberately not named: a count
 needs no name to be checked. None of it is a token count, and
 [docs/metrics.md](docs/metrics.md) explains why not, along with the method, the
-four rules two reports combine under, and the honest `n/a`s.
+four rules several reports combine under, and the honest `n/a`s.
 
 The tool that produced these figures was removed in this repository's own
 `metrics-script-removal` loop. It remains recoverable from git history at commit
 `a2c0541` for anyone who wants to read what computed them.
+
+The snapshot ends here. What follows is not dated and not frozen — it tracks
+each part's proof state and is updated whenever that state changes, independent
+of the 2026-09-10 figures above.
 
 | Area | State |
 |---|---|

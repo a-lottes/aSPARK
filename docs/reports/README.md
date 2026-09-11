@@ -4,8 +4,8 @@ One JSON report per machine. Together they are the evidence behind the figures i
 [README §Project Status](../../README.md#project-status) and
 [docs/metrics.md](../metrics.md).
 
-**This is a closed snapshot, taken 2026-09-09, and nothing here will grow.** The
-two reports below were written by a counter that this repository no longer
+**This is a closed snapshot, taken 2026-09-10, and nothing here will grow.** The
+three reports below were written by a counter that this repository no longer
 contains — constitution §3 allows Markdown and JSON only, so metrics tooling lives
 outside this repo and no command here can produce another report. What the
 directory keeps is the part that matters: the data the published figures were

@@ -367,7 +367,6 @@
   },
   "transcripts": {
     "available": true,
-    "root": "/home/silenttz/.claude/projects",
     "sessions_total": 24,
     "sessions_aspark": 0,
     "agent_runs": {},
