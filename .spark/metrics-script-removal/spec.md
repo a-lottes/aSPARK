@@ -11,7 +11,7 @@
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`). **Approved by the user at the spec gate, 2026-09-11**, together with the ruling that the library lens's *Packaging & footprint* section applies to this feature (§5 note accepted; `/charter` to revisit §2's N/A as a follow-up). Next ceremony step: `/sprint-plan`.
 - **Summary:** The repo tracks a 32 KB Python counter that its own §3 forbids and that the next release ships to every consumer. Remove it; replace README's headline figure with a claim that does not rot; keep every published figure *checkable* from the committed reports while stating plainly that they are no longer *refreshable*.
-- **Open:** `none` — A1–A5 and C1–C7 resolved; A6/A9 resolve as verified-downstream, named as such.
+- **Open:** `none` — A1–A5 and C1–C9 resolved; A6/A9 resolve as verified-downstream, named as such. **Note on C8/C9's authority:** both are `/peer-review` findings (F3, F14) corrected by `/increment` fix-mode against the factual record — neither required inventing a requirement or changing scope, and both are the kind of "small, obvious correction" fix-mode is authorised to make directly. Neither carries an explicit fresh user re-approval of the gate the way the constitution's A8 does; flagged here for the user to ratify or reopen, rather than silently presented as equivalent to A8's authority.
 - **Binding ruling:** §4 User Stories (US-1…US-7); §6 Out of Scope holds three rulings (the `.docx.bak`: not a story; the `/go-live` pre-flight: next feature, scoped to the GitHub path; the `aspark-insights` port: follow-up with a stated precondition). §7 logs what changed and why.
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed.
 
@@ -70,7 +70,7 @@
 
 - [ ] AC-2.1: Given only `docs/reports/*.json` and the method as printed in `docs/metrics.md`, when a QA tester performs it (with `jq` or an untracked scratch script per §3/§5), then the observed output equals 10 projects, 54 features, Spec 54, Plan 53, Review 52, QA 41, Release 48, 429 role-agent runs, 377 human gate decisions.
 - [ ] AC-2.2: Given that method, when the tester executes it **literally, supplying no step of their own**, then it runs to completion without error — every field name (`projects[].id`, `features[].key`, `reached.*`, `transcripts.agent_runs_total`, `transcripts.gates`) and every combination rule (union on ids, OR on `reached`, sum on transcript counts) it needs is printed in the doc. A step the tester has to invent fails this AC.
-- [ ] AC-2.3: Given the rewritten §Project Status, when its provenance sentence is followed, then it dates the snapshot (2026-09-09), names `docs/reports/` as the evidence, names the commit from which the removed script can be recovered, and `git show <that-commit>:scripts/spark-metrics.py | head -1` succeeds — and `grep -n '\-\-merge' README.md` prints nothing.
+- [ ] AC-2.3: Given the rewritten §Project Status, when its provenance sentence is followed, then it dates the snapshot, names `docs/reports/` as the evidence, names the commit from which the removed script can be recovered, and `git show <that-commit>:scripts/spark-metrics.py | head -1` succeeds — and `grep -n '\-\-merge' README.md` prints nothing.
 - [ ] AC-2.4: Given `docs/reports/*.json` only, when the remaining five published figures are derived (lines +114,630/−12,589; 42 of 114 sessions; 51 active days; 116 ceremonies; tags per AC-2.5) with an untracked scratch script whose **output alone** is committed as this feature's evidence, then each value is either reproduced exactly with the rule that reproduces it printed in `docs/metrics.md`, or corrected/dropped in the docs **and** recorded as a finding carrying the observed value.
 - [ ] AC-2.5: Given the published `61` git tags against the naive machine sum `52 + 27 = 79`, when the per-project `git.tags` values are combined under the dedup rule stated in `docs/metrics.md`, then the result is exactly 61; if no stated rule yields 61, the figure is corrected in `README.md` and `docs/metrics.md` and the discrepancy recorded as a finding. A documented refutation passes this AC; publishing 61 with a caveat does not.
 
@@ -121,7 +121,7 @@
 **Acceptance criteria:**
 
 - [ ] AC-7.1: Given the rewritten §Project Status, when `grep -n '^\*\*54 features' README.md` is run, then it prints nothing — the numeric figure is no longer the headline.
-- [ ] AC-7.2: Given that section, when the numeric table is located, then it is still present and the block containing it carries `2026-09-09` and the word `evidence` (or equivalent) in the same paragraph — verified by `grep -n -A4 '2026-09-09' README.md` showing the table inside the dated block.
+- [ ] AC-7.2: Given that section, when the numeric table is located, then it is still present and the block containing it carries a date and the word `evidence` (or equivalent) in the same paragraph — verified by `grep -n -A4 '#### Snapshot' README.md` showing the dated heading, a line carrying both a date and `evidence`, and the table, all inside four lines of each other.
 - [ ] AC-7.3: Given every sentence in §Project Status **outside** that dated block, when each is checked for a count of projects, features, runs or days, then none contains one — so no sentence there requires editing as time passes. A single undated count falsifies this AC.
 - [ ] AC-7.4: Given the new headline claim, when a stranger performs the check it implies (AC-2.1), then the claim holds — the headline asserts only what `docs/reports/` contains and that anyone can recount it.
 
@@ -164,6 +164,7 @@ Constitution §4's bars are inherited, not restated: no test suite exists, so th
 | C6 | 2026-09-11 | Is the installed plugin refreshable pre-merge, so AC-1.3 is evidence? | **Yes** — it is a local *directory* install (A5), so AC-1.3 runs at `/demo-day`, not deferred to `/go-live` |
 | C7 | 2026-09-11 | Does the `.gitignore`-matched leak actually reach consumers, as the first draft implied? | **Unverified and probably nil** — the observed cache is a local directory copy; the GitHub path clones, and a clone carries tracked files only. NFR-3 and §1 reworded to claim only the dev-surface leak; A9 records the unknown; AC-1.5 narrows it; the follow-up in §6 re-scoped to the GitHub path |
 | C8 | 2026-09-11 | `/peer-review` round 1 (F3, Major): NFR-3 claimed the tracked footprint *drops* 32,654 B. Does it? | **No — it is a net increase.** `git ls-tree` blob sums show the feature's own `.spark/` evidence outweighs the removed script. **NFR-3 reworded** to state the correct direction and frame the growth as the feature's intended evidence, not a defect |
+| C9 | 2026-09-11 | `/peer-review` round 2 (F14, Minor): AC-2.3 and AC-7.2 hardcoded `2026-09-09` as literal text — F1's rebase moved the snapshot to `2026-09-10`, so both ACs' own wording was wrong, and AC-7.2's embedded verification command printed nothing. | **Both generalised.** AC-2.3 now says "dates the snapshot" without naming one; AC-7.2's command anchors on the `#### Snapshot` heading text instead of a date string, so neither can go stale the same way again |
 
 ## 8. Design Review
 
@@ -179,10 +180,10 @@ Constitution §4's bars are inherited, not restated: no test suite exists, so th
 - [x] Every story has testable Given/When/Then acceptance criteria
 - [x] Stories are prioritized (MoSCoW) and at least one is a Must
 - [x] Non-functional requirements are stated and measurable (or marked N/A with reason)
-- [x] Clarify pass done: no ambiguity left unresolved or unparked — C1–C7 all resolved
+- [x] Clarify pass done: no ambiguity left unresolved or unparked — C1–C7 all resolved at the spec gate; C8/C9 added post-approval from `/peer-review` findings, both resolved the same round they were raised
 - [x] Open questions are resolved or explicitly accepted as risk — A1–A5 resolved; A6 verified by AC-1.4 before the deletion commit; A7 recorded; A8 authorised; A9 accepted as a stated unknown and routed to §6
 - [x] Out-of-scope section is filled (something was consciously cut)
 - [x] Constitution respected; two deviations are stated rather than hidden — the constitution edit (A8, user's 2026-09-11 ruling) and the library lens §3 call (§5 note, routed to `/charter`)
 - [x] Design review N/A — project type `library`, constitution §8 `Browser-observable surface: no`; this change ships no UI and no browser-observable surface, so `/look-and-feel` has nothing to review
-- [x] Line budget respected: Ist 187 / Soll ~250 (excluding HTML comments)
+- [x] Line budget respected: Ist 189 / Soll ~250 (excluding HTML comments; +2 from C8/C9, both post-approval `/peer-review` corrections)
 - [x] Status set to `approved` by the user — **approved 2026-09-11**, after the gate was walked box by box; the library lens §3 deviation (§5 note) was put to the user and accepted, and A9 was accepted as a stated unknown rather than answered first
