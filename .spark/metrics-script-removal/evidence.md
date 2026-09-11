@@ -262,3 +262,151 @@ $ echo $?
 
 **Empty diff.** All 23 figures unchanged, so stripping `transcripts.root` cost no
 published number. AC-5.2 satisfied.
+
+---
+
+## Entry 4 — T6/T7, the method replaces the program
+
+### T6 — `docs/metrics.md` rewritten: 254 → 242 lines
+
+**Deviation D6 (authorised).** The approved architecture published the method as
+`jq` one-liners. `jq` is absent on this machine and `brew` with it (Entry 1,
+finding F-jq), so no printed `jq` command could satisfy NFR-4's *"runnable
+exactly as printed **and observed to run**"*, and T6's own definition of done
+requires every printed command to have been pasted into a shell. Raised to the
+user rather than resolved here, because it changes §1's decision. **Ruled
+2026-09-11: publish `python3` one-liners instead.**
+
+The plan had rejected `python3 -c` as "re-creating the program inside a tracked
+document". The ruling rests on three things that objection does not cover: the
+removed script was 32,654 B of project discovery, transcript parsing, merging and
+CLI, while each printed command is a `json.load` plus a set union — the same order
+of complexity as the `jq` the plan blessed; §3's bar is no new tracked executable
+*code*, and a fenced example command is not a file and is not shipped as code;
+and decisively, **`python3` is present where `jq` is not**, which AC-2.2 depends
+on — a stranger who must first install a tool is supplying a step of their own.
+
+What the file now carries: three commands (disk artifacts, git history,
+transcript activity), each with its observed output printed beneath it, plus the
+four combination rules as a table. What it lost: the flag table, the
+`--write-report` transport workflow, the merge-invocation prose, and every
+sentence describing a program's behaviour.
+
+### AC-2.1 / AC-2.2 — the printed commands were run *from the file*
+
+Not "tested before writing". The three fenced blocks were **extracted from
+`docs/metrics.md` itself** and executed verbatim, each output compared to the
+output printed beneath it in the document:
+
+```
+$ python3 <extract-and-run, $SCRATCH>   # parses docs/metrics.md, runs each bash
+                                        # block, diffs against the printed output
+found 3 command/output pairs in docs/metrics.md
+
+--- command 1: exit=0 match=YES
+--- command 2: exit=0 match=YES
+--- command 3: exit=0 match=YES
+
+ALL PRINTED COMMANDS RUN AS PRINTED AND MATCH: True
+```
+
+So every figure in the document is reachable by copy-paste from the document, with
+nothing supplied by the reader. `/demo-day` re-performs this independently (the
+plan reserves AC-2.1/AC-2.2 to QA); this run is the builder's own evidence that
+the commands are not aspirational.
+
+**One command needed correcting before it would run**, recorded because it is the
+reason NFR-4 demands observation rather than plausibility: the first draft of the
+git-history command applied `max()` across *every* field of `projects[].git`,
+which raised `TypeError: '>' not supported between instances of 'str' and 'int'`
+on the `reason` field (`git.available: false` projects carry a prose reason, and
+`adopted_at_root` is a bool). The published version names the three numeric fields
+explicitly, which is both correct and clearer to a reader.
+
+### T6/T7 — definition-of-done greps
+
+| Check | Command | Result |
+|---|---|---|
+| No flag table (AC-3.3) | `grep -c '^\| \`--' docs/metrics.md` | 0 |
+| No dead promises (AC-3.1) | `grep -c 'write-report\|Add yours\|should be refreshed\|Count your own' docs/metrics.md` | 0 |
+| Same, reports README | same grep over `docs/reports/README.md` | 0 |
+| No external-home pointer (AC-3.4) | `grep -ci 'aspark-insights' docs/metrics.md` | 0 |
+| No script named as existing | `grep -c 'spark-metrics' docs/metrics.md docs/reports/README.md` | 0 |
+| No absolute paths (NFR-6) | `grep -rn '/Users/' docs/ \| wc -l` | 0 |
+
+`docs/metrics.md`'s `Related` section is gone entirely. It had existed to contrast
+`aspark-insights` with "`spark-metrics.py` is deliberately smaller" — a sentence
+about a file that no longer exists, and AC-3.4 forbids presenting that repository
+as a place to get this counter. Removing the section satisfies both the AC's
+wording and T6's stricter grep.
+
+### T7 — `docs/reports/README.md`
+
+The `git pull … --write-report … commit … push` workflow block and the
+"Then, on any machine that has pulled them all" merge invocation are gone. In
+their place the file states that the directory is a **closed 2026-09-09
+snapshot**, that this repository contains no tool to produce another report, and
+points at `docs/metrics.md`'s three commands for re-deriving the figures from
+what is committed.
+
+Its "what is in a report" claim — *"Opaque ids and counts. No project name, no
+feature name, no hostname, no path."* — is **kept unchanged and is now true**, per
+T4's strip: `grep -rn '"root"\|/Users/\|hostname' docs/reports/*.json` returns 0.
+
+---
+
+## Entry 5 — T8, the script is gone, with a recovery path that survives any merge
+
+### The recovery commit: `a2c0541`, already on `origin/main`
+
+The plan's risk R2 warned that naming a *branch-local* commit would leave
+README's provenance sentence pointing at an unreachable object if this PR is
+squash-merged. That risk is closed rather than mitigated: the commit named is
+`a2c0541`, which is already an ancestor of `origin/main`, so it is reachable
+however this PR merges.
+
+```
+$ git merge-base --is-ancestor a2c0541 origin/main; echo $?
+0
+$ git show a2c0541:scripts/spark-metrics.py > <scratch>
+$ wc -c < <scratch>
+32654
+$ cmp <scratch> scripts/spark-metrics.py
+$ echo $?
+0
+$ git show a2c0541:scripts/spark-metrics.py | head -1
+#!/usr/bin/env python3
+```
+
+Byte-identical to the deleted file, so `a2c0541` recovers the **final** version,
+not an earlier one — `f446ca5` (the commit that added the script) holds a smaller,
+earlier revision and is the weaker choice the plan had offered as fallback.
+
+**A measurement artifact worth recording, since it nearly entered this file as a
+figure.** An early attempt to compare blob sizes across candidate commits inside a
+shell loop reported sizes of 1222–2073 B for a 32,654 B file. The cause was the
+`<sha>:<path>` argument not surviving the loop's quoting, so `git cat-file -s` was
+reporting *commit object* sizes rather than blob sizes. The numbers above were
+re-taken with one command per step and confirmed by `cmp`. No size figure in this
+file comes from that loop.
+
+### The deletion
+
+Pre-deletion `HEAD` was `3fa75fa`.
+
+```
+$ git rm -r scripts
+$ git ls-files '*.py' | wc -l
+0
+$ ls scripts
+ls: scripts: No such file or directory
+$ git ls-files | wc -l
+106
+```
+
+`scripts/` is removed as a directory, not emptied (AC-1.1). The tracked total is
+106: 106 at `6fd257c`, plus `evidence.md`, minus the script.
+
+This commit lands **after** Entry 1's negative-case commit (`f5d546d`) — the
+ordering constitution §4 requires, and `git log --oneline` is the proof rather
+than this sentence.
