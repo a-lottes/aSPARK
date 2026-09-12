@@ -38,6 +38,7 @@ is worth more than a patch. Reports where it went badly are worth the most.
 | **Optional tools** | `tools/`, wired into `/sprint-plan`, `/peer-review` and `/demo-day`. Dogfooded in both directions — the absent case first, in a repo without the tool, where nothing may change. |
 | **Honest PR-mode delivery** | `/go-live` reaches a `handed-off` terminal status where the project delivers by pull request instead of by tag. Proven on this repo's own release. |
 | **Maturity labels in the handbook** | Every chapter of the architecture handbook carries a visible Delivery stage label, an overview table up front splits ambition from delivery, inline `Status.` markers name each target-state claim, and the title page separates the handbook revision from the shipped baseline (Core v0.7.0 · graph v0.7.0). Built as the `handbook-maturity` loop on this repo itself. |
+| **No executable code, the method published instead** | `scripts/spark-metrics.py` is gone along with the directory, closing the constitution's own exception for it. `docs/metrics.md` now prints four `python3` commands over the committed machine reports, each with its observed output — the same figures README publishes stay checkable by a stranger holding nothing but this repository, though they can no longer be refreshed from it. Built as the `metrics-script-removal` loop on this repo itself. |
 
 ---
 
@@ -48,12 +49,6 @@ The gates are prompt-enforced, not code-enforced. They hold until an agent under
 reasons its way around one — and a good-sounding reason is, from the agent's own view, a passed gate.
 Sequenced *after* field reports on purpose: written from imagination, the tables would list excuses no
 agent ever makes while the real ones go unlisted.
-
-**Close the handbook honesty exception** · follow-up to [#18](https://github.com/a-lottes/aSPARK/issues/18)
-The labels have landed (see Shipped): the handbook now carries the ambition/delivery split itself.
-What remains is constitutional bookkeeping — the constitution still names the unlabelled handbook as a
-known open exception to its own honesty principle. Close that exception via `/charter`, now that the
-labels exist; post-release follow-up, not part of the labelling diff.
 
 **An observability lens** · [#15](https://github.com/a-lottes/aSPARK/issues/15)
 Between the `api` lens (the contract) and the `security` lens (what must never be logged) sits a concern

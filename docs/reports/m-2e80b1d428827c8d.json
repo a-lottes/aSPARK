@@ -660,7 +660,6 @@
   },
   "transcripts": {
     "available": true,
-    "root": "/Users/andreaslottes/.claude/projects",
     "sessions_total": 85,
     "sessions_aspark": 38,
     "agent_runs": {
