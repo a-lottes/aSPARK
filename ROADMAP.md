@@ -38,19 +38,11 @@ is worth more than a patch. Reports where it went badly are worth the most.
 | **Optional tools** | `tools/`, wired into `/sprint-plan`, `/peer-review` and `/demo-day`. Dogfooded in both directions — the absent case first, in a repo without the tool, where nothing may change. |
 | **Honest PR-mode delivery** | `/go-live` reaches a `handed-off` terminal status where the project delivers by pull request instead of by tag. Proven on this repo's own release. |
 | **Maturity labels in the handbook** | Every chapter of the architecture handbook carries a visible Delivery stage label, an overview table up front splits ambition from delivery, inline `Status.` markers name each target-state claim, and the title page separates the handbook revision from the shipped baseline (Core v0.7.0 · graph v0.7.0). Built as the `handbook-maturity` loop on this repo itself. |
+| **No executable code, the method published instead** | `scripts/spark-metrics.py` is gone along with the directory, closing the constitution's own exception for it. `docs/metrics.md` now prints four `python3` commands over the committed machine reports, each with its observed output — the same figures README publishes stay checkable by a stranger holding nothing but this repository, though they can no longer be refreshed from it. Built as the `metrics-script-removal` loop on this repo itself. |
 
 ---
 
 ## Next
-
-**Remove the metrics counter, publish the method** · `metrics-script-removal`
-The repo tracked a 32 KB Python counter that its own constitution §3 forbids — Markdown and JSON only —
-and that `marketplace.json`'s `"source": "./"` would have installed into every consumer's plugin cache at
-the next release. `/charter` ruled it out rather than carving an exception, so the counter goes and the
-*method* is published in its place: four `python3` stdlib commands over the committed machine
-reports, each with its observed output, so every figure the README publishes stays checkable by a
-stranger holding nothing but this repository. The cost is accepted and stated rather than hidden — the
-figures are now a closed 2026-09-10 snapshot that nothing here can refresh.
 
 **Anti-rationalization tables at every gate** · [#13](https://github.com/a-lottes/aSPARK/issues/13)
 The gates are prompt-enforced, not code-enforced. They hold until an agent under context pressure
