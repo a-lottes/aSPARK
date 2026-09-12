@@ -256,7 +256,7 @@ The gaps are real and left in. QA reached 64 of 77 — eight of the shortfall si
 in one library project with no browser surface, where `/demo-day` ran once across
 nine features. Release reached 71 of 77 — three unreleased features sit in one
 project that specified, planned, reviewed and QA'd them and shipped nothing, and
-this repository's own `situational-lenses` has a spec and nothing else.
+this repository's own `situational-lenses` has a spec and a verify-only sweep, not a shipped increment — see below.
 
 **77 is a merge, not a sum.** The three machines report 51, 14 and 31 features,
 which would add to 96 — but 3 projects sit on more than one machine, aSPARK on
@@ -283,17 +283,34 @@ the honest `n/a`s. Count your own with
 |---|---|
 | The loop — 10 skills, 7 agents, 6 templates, `/spark` | **Proven** — full end-to-end run on a sample app, all five gates enforced, shipped as `v0.1.0` |
 | Spec-driven core — constitution, Clarify pass, NFRs, traceability | **Proven through Plan** — live review/QA traceability awaits a full `/increment` |
-| Situational lenses (`lenses/`) | **Shipped, unproven in the field** — dogfooded on aSPARK itself, never yet run on someone else's project |
+| Situational lenses (`lenses/`) | **Shipped; verified against aSPARK itself and three real external projects' own completed loop history** — not a fresh run, a read of loops that already ran. Both success-signal legs confirmed, each via a substitute lens (no project here declares `seo`-on-`website` or `api`); suppression confirmed in aggregate, with one active-lens project's own gap checked properly rather than taken at the first read — that project has no feature at all postdating its profile, so the honest verdict is unproven, not refuted; the add-a-file guarantee refuted for one skill file. Full ledger: [`.spark/situational-lenses/evidence.md`](.spark/situational-lenses/evidence.md) |
 | Optional tools (`tools/`, `aspark-graph`) | **25 of 30 criteria proven live** pre-sweep, six shipped `partial`; a 2026-08-26 verify-only sweep closed three of those six live, refuted one with a finding, and left two out of scope (still `unproven`) — see below |
 | PR-mode delivery (`handed-off`) | **Proven** on this repo's own release ([PR #3](https://github.com/a-lottes/aSPARK/pull/3)) |
 | QA-method declaration (constitution §8) | **Shipped; declared path first exercised by this feature's own `/demo-day` and `/go-live`** — until then the fall-backs (absent, incomplete, unperformable, and a `yes`-surface project) are checked against constructed fixtures in `.spark/right-sizing/evidence.md`, and the declared path itself has not run. Not dogfooded on any other project. It removes one recurring per-feature question on a project that has no browser surface; it makes no other loop shorter and is not claimed to |
 
-**The one real gap:** the lens layer's success signal is a UI-lens QA-verified on a
-real `website` **and** a Review-lens Review-verified on a real `api`. Neither has
-happened yet. Lens compliance is instruction-driven — no test enforces that a lens
-actually fired, and none can — so a report from a real project is the only evidence
-that counts. If you run aSPARK on yours, [#4](https://github.com/a-lottes/aSPARK/issues/4)
-and [#5](https://github.com/a-lottes/aSPARK/issues/5) are waiting for you.
+**What the lens layer's verify-only sweep found:** the generalized form of both
+success-signal legs is confirmed from real project history — a UI lens QA-verified
+and a Review-owned lens Review-verified, each under its own `NFR-n`, on a real
+project's own completed loop. The literal legs stay unproven: no project
+accessible to the sweep declares type `website` with `seo` active, or type `api`
+— those two venues are still missing, not substituted for. Suppression holds in
+aggregate (zero SEO/UX NFRs where no UI lens is active, non-zero where one is). The
+sweep also found a real gap the aggregate hides, and checked it properly rather
+than taking the first read: one project with an active UI lens shows zero
+evidence the lens was ever applied to a real feature — but that project turns out
+to have **no feature at all** that postdates its own profile, so there was never a
+chance for the lens to fire or fail to. The honest verdict is unproven, not
+refuted — the missing venue is a feature running after the profile exists, which
+nobody has shipped yet. The add-a-file guarantee is refuted for one skill file,
+which enumerates four lens filenames by name instead of the generic form every
+sibling instruction uses. None of this was fixed in the sweep — verify-only by
+design, findings routed onward — full ledger in
+[`.spark/situational-lenses/evidence.md`](.spark/situational-lenses/evidence.md).
+Lens compliance is still instruction-driven — no test enforces that a lens fires.
+If you run aSPARK
+on a real `website` or `api` project, [#4](https://github.com/a-lottes/aSPARK/issues/4)
+and [#5](https://github.com/a-lottes/aSPARK/issues/5) are still waiting for you —
+those two venues remain genuinely untested.
 
 **Post-sweep proof state for issues #8–#11** (verify-only sweep, 2026-08-26 —
 **[.spark/graph-gates-verification/evidence.md](.spark/graph-gates-verification/evidence.md)**):
