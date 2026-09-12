@@ -207,7 +207,6 @@ If you're new to Claude Code plugins, this is all there is to it:
 - **`lenses/`** — situational concern checklists (`seo`, `ux`, …). Activated by the project profile in the constitution and applied by the existing agents in the phases they own. Lenses are the "when it applies".
 - **`tools/`** — guidance for optional external programs a ceremony may use *if you happen to have them installed*. Activated by installation state rather than by the constitution. Tools are the "if it's there".
 - **`docs/`** — deep-dives, starting with the workflow and gate hand-over rules.
-- **`scripts/`** — one standalone counter, `spark-metrics.py`, that tallies what the loop has actually produced on a machine, and can merge reports from several into one total. Not part of the loop; nothing calls it.
 - **`.claude-plugin/`** — plugin metadata so Claude Code can discover and install all of the above.
 
 Reading order for newcomers: this README → `docs/workflow.md` → one template → one skill → one agent. After that you'll understand every file in the repo.
@@ -244,40 +243,60 @@ current state.
 
 ### Dogfooding to date
 
-**77 features have gone through the loop across 11 projects** — one of them
-aSPARK itself, ten of them not — as of 2026-09-10, across three development
-machines:
+The loop has been run on real projects, and the evidence for that is committed
+rather than asserted: three machine reports sit in [docs/reports/](docs/reports/),
+and [docs/metrics.md](docs/metrics.md) prints four `python3` commands that
+re-derive every figure below from those files. Standard library only — no
+install, no dependency, and no tool of this project's. So the arithmetic here is
+checkable without trusting this page, and without any of the machines.
+
+What that evidence cannot do is refresh itself. The counter that produced it is
+no longer in this repository (constitution §3 allows Markdown and JSON only), so
+the figures below are a closed measurement rather than a running total, and they
+are dated for that reason.
+
+#### Snapshot — 2026-09-10
+
+Dated **evidence**, taken 2026-09-10 and not updated since:
 
 | Spec | Plan | Review | QA | Release | Git tags | Role-agent runs | Human gate decisions |
 |---:|---:|---:|---:|---:|---:|---:|---:|
 | 77 | 76 | 75 | 64 | 71 | 84 | 429 | 377 |
 
-The gaps are real and left in. QA reached 64 of 77 — eight of the shortfall sit
-in one library project with no browser surface, where `/demo-day` ran once across
-nine features. Release reached 71 of 77 — three unreleased features sit in one
-project that specified, planned, reviewed and QA'd them and shipped nothing, and
-this repository's own `situational-lenses` has a spec and nothing else.
+77 features across 11 projects — one of them aSPARK itself, ten of them not — on
+three development machines.
+
+The gaps are real and left in. QA reached 64 of 77: eight of the thirteen
+shortfall sit in one library project with no browser surface, where `/demo-day`
+ran once across nine features. Release reached 71 of 77: three unreleased
+features sit in one project that specified, planned, reviewed and QA'd them and
+shipped nothing, and this repository's own `situational-lenses` has a spec and
+nothing else.
 
 **77 is a merge, not a sum.** The three machines report 51, 14 and 31 features,
-which would add to 96 — but 3 projects sit on more than one machine, aSPARK on
-all three, and 19 of their features are the same features. Adding the totals
-would have overstated the count by a quarter. Each machine writes a nameless
-report into [docs/reports/](docs/reports/) and the published figure is
-`spark-metrics.py --merge docs/reports/*.json`, so the arithmetic is checkable
-without any one of them. The smallest machine contributes only 3 features the
-others did not already have; the newest contributes 23 of its 31, its one large
-project existing on no other machine. That is deduplication working in both
-directions — clones of the same repositories add little, a repository that
-exists nowhere else adds all of itself.
+which would add to 96 — but 3 projects sit on more than one machine (aSPARK on
+all three) and 19 of their features are the same features, aSPARK's own 8 among
+them. Adding the totals would have overstated the count by about a fifth.
+Projects are matched on the hash of a repository's root commit, identical in
+every clone, which is what makes that deduplication checkable rather than
+claimed.
 
-The first six columns are counted from `.spark/` artifacts and git on disk —
-verifiable with `ls`, inferred from nothing. The last two come from Claude Code's
-own session logs and are summed across machines, since a session elsewhere is
-genuinely another session. The projects themselves are deliberately not named: a
-count needs no name to be checked. None of it is a token count, and
-[docs/metrics.md](docs/metrics.md) explains why not, along with the method and
-the honest `n/a`s. Count your own with
-`python3 scripts/spark-metrics.py --totals-only`.
+The first six columns come from `.spark/` artifacts and git on disk — verifiable
+with `ls`, inferred from nothing. The last two come from Claude Code's own session
+logs, summed across machines, since a session elsewhere is genuinely another
+session; those logs are local to each machine and are the one input here a reader
+cannot audit back to its source. The projects are deliberately not named: a count
+needs no name to be checked. None of it is a token count, and
+[docs/metrics.md](docs/metrics.md) explains why not, along with the method, the
+four rules several reports combine under, and the honest `n/a`s.
+
+The tool that produced these figures was removed in this repository's own
+`metrics-script-removal` loop. It remains recoverable from git history at commit
+`a2c0541` for anyone who wants to read what computed them.
+
+The snapshot ends here. What follows is not dated and not frozen — it tracks
+each part's proof state and is updated whenever that state changes, independent
+of the 2026-09-10 figures above.
 
 | Area | State |
 |---|---|

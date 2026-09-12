@@ -1,40 +1,35 @@
 # Machine reports
 
-One JSON report per machine, the input to a cross-machine total.
+One JSON report per machine. Together they are the evidence behind the figures in
+[README §Project Status](../../README.md#project-status) and
+[docs/metrics.md](../metrics.md).
 
-The repository is the transport. Every machine already has it, it syncs in both
-directions, and a report is nameless — so there is nothing to hand-carry and
-nothing to leak. Add yours:
-
-```bash
-git pull
-python3 scripts/spark-metrics.py --totals-only --write-report docs/reports
-git add docs/reports && git commit -m "chore: metrics report from this machine" && git push
-```
-
-Then, on any machine that has pulled them all:
-
-```bash
-python3 scripts/spark-metrics.py --merge docs/reports/*.json
-```
-
-The file is named after the machine's own hashed id, so a second run from the
-same machine overwrites its report instead of adding one. Rerun and commit
-whenever the figure should be refreshed; nothing here updates itself.
+**This is a closed snapshot, taken 2026-09-10, and nothing here will grow.** The
+three reports below were written by a counter that this repository no longer
+contains — constitution §3 allows Markdown and JSON only, so metrics tooling lives
+outside this repo and no command here can produce another report. What the
+directory keeps is the part that matters: the data the published figures were
+computed from, so anyone can re-derive them without trusting the author or
+possessing the tool. [docs/metrics.md](../metrics.md#check-any-figure-yourself)
+prints the four commands that do it, and their output.
 
 ## What is in a report, and what is not
 
 Opaque ids and counts. No project name, no feature name, no hostname, no path.
-`--write-report` always writes this nameless shape, whatever `--totals-only`
-says about what a given run prints — the flag governs one run's output, this
-directory governs what leaves the machine.
 
 The ids are SHA-256 prefixes: a project's is derived from its repository's root
 commit, identical in every clone, which is what lets a merge tell one project
-from two rather than double-counting a repository checked out twice. Features
-and machines carry their own for the same reason.
+from two rather than double-counting a repository checked out twice. Features and
+machines carry their own for the same reason.
 
 What a reader can see here is therefore how many projects and features a machine
-holds, how far each got through the loop, and how much git history sits behind
+held, how far each got through the loop, and how much git history sat behind
 them — never which projects they are. That is the same trade the published
-figures make, and the reasoning is in [../metrics.md](../metrics.md#why-no-project-is-named).
+figures make, and the reasoning is in
+[../metrics.md](../metrics.md#why-no-project-is-named).
+
+A machine id also guards the summed figures. Projects and features are unioned on
+identity, so merging a report twice cannot inflate them — but session and
+agent-run counts are added, and a repeated report would inflate every one. Each
+report naming its own machine is what made a repeat detectable rather than
+silent.
