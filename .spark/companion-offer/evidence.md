@@ -149,3 +149,23 @@ Prior researched-not-executed items (A2's repo/manifest/release checks, recorded
 **NFR-5 — both-present leg.** With `aspark-guard@aspark` now installed, this same `/demo-day` invocation continued as one real ceremony run: this evidence-file edit, the plan-status edits, and the surrounding QA-report write all proceeded with **zero** additional prompts, denials, or messages from the guard — it enforces gate *sequencing* (denying a write that violates a phase precondition), and every write in this session followed its correct phase order, so nothing tripped. Compared against the both-absent leg (T7's diff-scope sweep, run before install), the observed prompt/question/sentence delta is **0**, as NFR-5 requires.
 
 **Keep-or-remove decision:** kept, by the user's explicit choice, 2026-09-14. `aspark-guard@aspark` v0.1.0 remains installed (scope `user`) after this feature's own increment closes.
+
+## F5 closure — `/go-live`, 2026-09-14
+
+Review Nit F5 (`review.md`): NFR-1's stated check, `git diff --name-only main...HEAD`, was vacuously empty pre-commit (no commit existed yet on this branch). Re-run immediately after the increment commit (`c6aad26`) landed:
+
+```
+$ git diff --name-only main...HEAD
+.spark/companion-offer/evidence.md
+.spark/companion-offer/plan.md
+.spark/companion-offer/qa.md
+.spark/companion-offer/review.md
+.spark/companion-offer/spec.md
+README.md
+ROADMAP.md
+tools/README.md
+```
+
+Exactly the 8 paths the increment commit touched — matches the working-tree sweep (T7) byte-for-byte, now proven against `HEAD` rather than the working tree. F5 closed.
+
+**Also observed:** installing `aspark-guard` (T8) created an untracked `.spark/.guard/` directory (`ledger.jsonl`, `trail.jsonl`) — the guard's own hash ledger, a side effect of its hooks observing `.spark/` writes from T8 onward. Not part of this feature's plan or NFR-1's fence; left untracked and uncommitted. Whether to track or `.gitignore` it is a separate decision, not made here.
