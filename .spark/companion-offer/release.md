@@ -5,14 +5,14 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`), `qa.md` (`passed`) |
-| **Status** | `preparing` |
-| **Version** | v0.8.2 (proposed only — `pr` mode) |
+| **Status** | `handed-off` |
+| **Version** | v0.8.2 (proposed, `pr` mode — [PR #46](https://github.com/a-lottes/aSPARK/pull/46) open, awaiting self-review/merge) |
 | **Date** | 2026-09-14 |
 
 **Handoff**
-- **Status:** mirrors the header table above. `preparing` — pre-flight is fresh-verified green and everything reversible/local is drafted below; nothing outward-facing has run.
-- **Summary:** `companion-offer` documents the previously-undocumented `aspark-guard` companion plugin across `README.md`, `tools/README.md` and `ROADMAP.md`. Docs-only; both gates `passed`; patch bump `0.8.1` → `0.8.2` proposed; PR mode, awaiting the user's explicit go to commit, push and open the PR.
-- **Open:** `2 outstanding` — (1) F5 (`review.md` Nit) not yet closeable: no commit exists yet on this branch, so `git diff --name-only main...HEAD` is currently empty by construction, not by verification — owner: whoever runs the commit below, then re-runs that diff. (2) The working tree still carries the increment's own uncommitted/untracked changes — owner: same commit.
+- **Status:** mirrors the header table above. `handed-off` — two commits landed on `docs/companion-offer` (`c6aad26` increment, `42f6496` release-prepare), the branch is pushed, [PR #46](https://github.com/a-lottes/aSPARK/pull/46) is open against `main`, and `claude plugin validate .` is confirmed green on the pushed commit. The real merge and tag happen outside this ceremony's control, owned by the declared approver (`a-lottes`, self-review-via-PR, constitution §7).
+- **Summary:** `companion-offer` documents the previously-undocumented `aspark-guard` companion plugin across `README.md`, `tools/README.md` and `ROADMAP.md`. Docs-only; both gates `passed`; patch bump `0.8.1` → `0.8.2` applied on `docs/companion-offer`; PR mode, handed off for self-review/merge.
+- **Open:** `1 outstanding` — the PR still needs the approver's self-review and merge (owner: `a-lottes`, outside this ceremony). F5 is closed (see `evidence.md` §"F5 closure" — post-commit `git diff --name-only main...HEAD` returned exactly the 8 expected paths).
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch as a finding at the next `/go-live` and proceed.
 
@@ -24,7 +24,7 @@
 - [x] `qa.md` status is `passed` — QA GATE checklist read at `.spark/companion-offer/qa.md:78-84`: every Must/Should AC and every QA-owned NFR verified live, no Blocker/Major/Minor, status `passed`. QA method: this project's standing constitution §8 declaration — no browser-observable surface exists here, so QA runs hands-on against the installed plugin instead of in a browser, a project-wide decision made once at `/charter`, not a per-feature waiver. `qa.md` records every AC-/NFR- ID against that method, same as always.
 - [x] Full test suite green — N/A, none exists or is possible for prompt material (constitution §4). Substitute bar re-run fresh just now: `claude plugin validate .` → `✔ Validation passed with warnings` (one pre-existing `autoUpdate` warning, confirmed out of this diff's scope — `.claude-plugin/` untouched, see NFR-1 below).
 - [x] Build succeeds from a clean checkout — N/A, no build step (constitution §3/§4); `claude plugin validate .` is the equivalent bar and passed, above.
-- [ ] No uncommitted changes in the working tree — **currently false, by design at this point in the ceremony.** Re-verified fresh: `git status --porcelain` → `M README.md`, `M ROADMAP.md`, `M tools/README.md`, `?? .spark/companion-offer/`. `git diff --name-only main -- .` → exactly `README.md`, `ROADMAP.md`, `tools/README.md` — matches `review.md`'s and `qa.md`'s NFR-1 rows byte-for-byte; nothing drifted since QA closed. Stays unchecked until the commit in §3 lands.
+- [x] No uncommitted changes in the working tree — two commits landed (`c6aad26`, `42f6496`); `git status --porcelain` post-commit shows only the untracked, out-of-scope `.spark/.guard/` (the guard's own ledger, see `evidence.md`'s "Also observed" note) — no tracked file left uncommitted.
 
 **Branch staleness (project `CLAUDE.md` house rule).** `git rev-parse HEAD`, `main` and (post-fetch) `origin/main` are all `d1337a3` — the branch carries zero commits of its own yet, only local working-tree edits. Not stale; nothing to rebase.
 
@@ -50,8 +50,8 @@
 
 | Action | Result |
 |---|---|
-| Version bump & tag | **Proposed only:** `0.8.1` → `0.8.2`, **patch** — docs-only change, adds no optional capability (constitution §5's minor-bump trigger absent); same shape as the `0.8.0`→`0.8.1` `situational-lenses` precedent. No tag — `pr` mode creates the tag at/after merge, outside this ceremony's control. Not yet executed. |
-| PR / merge | **Not opened.** Title/body drafted below, target `main`, ready once the user gives the go. No merge — approver is self-review-via-PR (solo maintainer), per constitution §7. |
+| Version bump & tag | **Applied:** `0.8.1` → `0.8.2` in `.claude-plugin/plugin.json`, committed at `42f6496`, **patch** — docs-only change, adds no optional capability (constitution §5's minor-bump trigger absent); same shape as the `0.8.0`→`0.8.1` `situational-lenses` precedent. No tag yet — `pr` mode creates the tag at/after merge, outside this ceremony's control. |
+| PR / merge | **Open:** [PR #46](https://github.com/a-lottes/aSPARK/pull/46), `docs/companion-offer` → `main`. Not merged — approver is self-review-via-PR (solo maintainer, `a-lottes`), per constitution §7; merge is their action, outside this ceremony. |
 | Deploy | N/A — no deploy surface; this repo *is* the distributed artifact, consumers pull it via `/plugin install`/marketplace update, not a push from here. |
 | Post-release smoke check | N/A — nothing has merged or deployed. This ceremony's local analogue, `claude plugin validate .`, already re-ran fresh above and passed. |
 
@@ -138,7 +138,7 @@ Files: `.claude-plugin/plugin.json`, `.spark/companion-offer/release.md`.
 
 - [x] All pre-flight checks passed at release time — four of five; the fifth ("no uncommitted changes") is expected-false at this stage of the ceremony, not a failure, per §1.
 - [x] Changelog written in user-facing language — no commit hashes, ticket IDs or internal jargon (§2).
-- [ ] Release actions executed and verified — **not yet**; prepared only. In `pr` mode: PR not yet open, `claude plugin validate` already green locally, approver (self-review-via-PR) not yet requested, ticket format `none` (nothing to link), rollback path written (§3). Deploy and post-release smoke check correctly N/A.
+- [x] Release actions executed and verified — in `pr` mode: [PR #46](https://github.com/a-lottes/aSPARK/pull/46) open against `main`, `claude plugin validate .` re-confirmed green on the pushed commit (post-release smoke check, §3), approver (self-review-via-PR, `a-lottes`) is the PR's own author/reviewer, ticket format `none` (nothing to link), rollback path written (§3). Deploy correctly N/A.
 - [x] Learnings recorded (§4).
 - [x] Line budget respected: Ist 118 / Soll ~100 (excluding HTML comments) — over by ~18%, driven by the two full commit-message blocks and the PR draft body the caller asked for verbatim; no waiver requested, flagged here per the rule.
-- [ ] Status set to `released`/`handed-off` — **not yet.** Status stays `preparing`. What remains outstanding: (1) the two commits above need to be created (increment, then release-prepare) and F5 re-verified; (2) the user's explicit go to push the branch and open the PR against `main`; (3) once the PR is open and `claude plugin validate .` is confirmed green on that exact commit, this report's status becomes `handed-off` — the real merge and tag happen after that, outside this ceremony's control, owned by the declared approver (`a-lottes`, self-review-via-PR).
+- [x] Status set to `released`/`handed-off` — **`handed-off`.** Both commits landed, branch pushed, [PR #46](https://github.com/a-lottes/aSPARK/pull/46) open against `main`, `claude plugin validate .` confirmed green on the pushed commit. The real merge and tag happen after this, outside this ceremony's control, owned by the declared approver (`a-lottes`, self-review-via-PR, constitution §7).
