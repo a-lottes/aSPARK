@@ -51,7 +51,7 @@ actually checked downstream — never just asserted.
 - [ ] One `<h1>` per page that names the page's subject; heading levels don't skip.
 
 ### 4. Media & assets *(Design for intent, Review for implementation)*
-- [ ] Content images have descriptive `alt` text (this doubles as the accessibility check — cite it once, not twice).
+- [ ] Content images have descriptive `alt` text (this doubles as `lenses/accessibility.md`'s check — cite it once, not twice).
 - [ ] Images are sized/compressed and lazy-loaded below the fold; no layout shift from unsized media.
 
 ### 5. Structured data *(Review)*

@@ -56,7 +56,7 @@ reading the diff. The Reviewer's remit stays code correctness.)*
 - [ ] The core flow is completable on a phone, not just technically rendered on one.
 
 ### 5. Feedback & motion *(Design, verified in QA)*
-- [ ] Interactive elements have visible hover, focus and active states (this doubles as the keyboard-accessibility check — cite once).
+- [ ] Interactive elements have visible hover, focus and active states (this doubles as `lenses/accessibility.md`'s check — cite once).
 - [ ] Motion is functional (orients, connects cause and effect), brief, and respects `prefers-reduced-motion`.
 - [ ] Nothing moves, autoplays or steals focus without the user initiating it.
 
