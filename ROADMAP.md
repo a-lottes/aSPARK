@@ -99,6 +99,7 @@ old one.
 | **Splitting deterministic from human-judgment checks** | A policy-layer concern, not a Core one. |
 | **Delivery metrics (DORA)** | Belongs in the graph repo, where commits and releases already live. |
 | **Security architecture and MCP threat modelling** | Belongs in the graph repo, which is where an MCP server actually runs. Core has no runtime and no network surface. |
+| **Code-enforced SPARK gates inside Core** | Belongs in the sibling plugin [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard), where a runtime exists to enforce with — Core ships Markdown and JSON only, with no runtime of its own (constitution §3). Self-tested by its own author (142 tests / 22 replayed artifacts), not independently verified by Core, never run through a third-party loop — see [README §Optional Tools](README.md#optional-tools). |
 
 ---
 

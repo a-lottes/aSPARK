@@ -218,7 +218,9 @@ Reading order for newcomers: this README → `docs/workflow.md` → one template
 
 Some ceremonies can go faster when an external program is available. They **never
 require one.** If it isn't installed, the loop behaves exactly as it does
-today — no error, no warning, no mention.
+today — no error, no warning, no mention. Two shapes exist: a **tool** a
+ceremony probes for and passes by path (`tools/`), and a **companion plugin**
+you install yourself, alongside Core, from the same marketplace.
 
 **[`aspark-graph`](https://github.com/a-lottes/aSPARK-graph)** — a deterministic
 graph over your `.spark/` artifacts and source code. When present, `/sprint-plan`
@@ -228,6 +230,23 @@ uses it to ground *Affected Components*, `/peer-review` to scope a diff, and
 install step at all) — and nothing in aSPARK installs, builds or runs it on your
 behalf. A result from it is treated as a map, never a verdict: it says where to
 look, and the agent still reads the code and still performs the steps.
+
+**[`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)** — a companion
+plugin that enforces the SPARK gates in code rather than in prompt: it denies a
+`.spark/` write that violates a phase precondition, and records every write with
+its hash. It addresses the gap this project's own roadmap names — the gates
+are prompt-enforced, and hold only until an agent under context pressure
+reasons its way around one
+([#13](https://github.com/a-lottes/aSPARK/issues/13)). It is **optional** —
+install it yourself with `/plugin install aspark-guard@aspark` — and nothing in
+aSPARK installs, builds or runs it on your behalf. `aspark-guard` reports
+substantial self-tested evidence — 142 tests replayed over 22 real gated
+artifacts with no false positive, and an author-verified marketplace install
+dated 2026-09-11 (its own `docs/evidence.md` §4) — but that evidence is
+self-reported by the guard's own author, has not been independently verified by
+aSPARK Core, and has never been exercised through a full third-party feature
+loop, the same gap `ROADMAP.md` names about this project itself. This entry
+makes no claim about gate enforcement that aSPARK Core has observed directly.
 
 See [`tools/README.md`](tools/README.md) for how this works and how to add another.
 
@@ -299,8 +318,9 @@ of the 2026-09-10 figures above.
 |---|---|
 | The loop — 10 skills, 7 agents, 6 templates, `/spark` | **Proven** — full end-to-end run on a sample app, all five gates enforced, shipped as `v0.1.0` |
 | Spec-driven core — constitution, Clarify pass, NFRs, traceability | **Proven through Plan** — live review/QA traceability awaits a full `/increment` |
-| Situational lenses (`lenses/`) | **Shipped; verified against aSPARK itself and three real external projects' own completed loop history** — not a fresh run, a read of loops that already ran. Both success-signal legs confirmed, each via a substitute lens (no project here declares `seo`-on-`website` or `api`); suppression confirmed in aggregate, with one active-lens project's own gap checked properly rather than taken at the first read — that project has no feature at all postdating its profile, so the honest verdict is unproven, not refuted. The add-a-file guarantee is refuted at five sites as of the 9th lens (`accessibility`): two skill files' closed lens lists (`demo-day`, `look-and-feel`), the `/charter` activation vocabulary (`agents/facilitator.md`, `templates/constitution.md`), and `peer-review`'s dispatch parenthetical — so a characteristic-triggered lens with `design`/`qa` checks can ship with those rows undispatched and its own characteristic not yet offered by `/charter`. Not fixed — routed to a follow-up increment. Full ledger: [`.spark/situational-lenses/evidence.md`](.spark/situational-lenses/evidence.md) and [`.spark/accessibility-lens/evidence.md`](.spark/accessibility-lens/evidence.md) |
-| Optional tools (`tools/`, `aspark-graph`) | **25 of 30 criteria proven live** pre-sweep, six shipped `partial`; a 2026-08-26 verify-only sweep closed three of those six live, refuted one with a finding, and left two out of scope (still `unproven`) — see below |
+| Situational lenses (`lenses/`) | **Shipped; verified against aSPARK itself and three real external projects' own completed loop history** — not a fresh run, a read of loops that already ran. Both success-signal legs confirmed, each via a substitute lens (no project here declares `seo`-on-`website` or `api`); suppression confirmed in aggregate, with one active-lens project's own gap checked properly rather than taken at the first read — that project has no feature at all postdating its profile, so the honest verdict is unproven, not refuted; the add-a-file guarantee refuted for one skill file. Full ledger: [`.spark/situational-lenses/evidence.md`](.spark/situational-lenses/evidence.md) |
+| Optional tools (`tools/`, `aspark-graph` only) | **25 of 30 criteria proven live** pre-sweep, six shipped `partial`; a 2026-08-26 verify-only sweep closed three of those six live, refuted one with a finding, and left two out of scope (still `unproven`) — see below |
+| Companion plugin (`aspark-guard`) | Self-tested by its own author (142 tests / 22 replayed artifacts), not independently verified by Core, never run through a third-party loop — see [§Optional Tools](#optional-tools) for the full statement |
 | PR-mode delivery (`handed-off`) | **Proven** on this repo's own release ([PR #3](https://github.com/a-lottes/aSPARK/pull/3)) |
 | QA-method declaration (constitution §8) | **Shipped; declared path first exercised by this feature's own `/demo-day` and `/go-live`** — until then the fall-backs (absent, incomplete, unperformable, and a `yes`-surface project) are checked against constructed fixtures in `.spark/right-sizing/evidence.md`, and the declared path itself has not run. Not dogfooded on any other project. It removes one recurring per-feature question on a project that has no browser surface; it makes no other loop shorter and is not claimed to |
 

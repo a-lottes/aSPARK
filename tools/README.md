@@ -16,18 +16,26 @@ Both are optional Markdown a skill passes to an agent by path. They differ in
 **what turns them on**, and that difference is the whole reason they are separate
 directories.
 
-| | Lens (`lenses/`) | Tool (`tools/`) |
-|---|---|---|
-| What it is | A concern checklist | A capability's usage guide |
-| Activated by | The **project profile** in `.spark/constitution.md` | **Installation state** — is the program actually here? |
-| Who decides | The user, by recording it in the constitution | Nobody decides; the ceremony probes and finds out |
-| Example | `security` — because this project handles auth | `aspark-graph` — because this machine has it built |
+| | Lens (`lenses/`) | Tool (`tools/`) | Companion plugin (`.claude-plugin/marketplace.json`) |
+|---|---|---|---|
+| What it is | A concern checklist | A capability's usage guide | A separately installed plugin |
+| Activated by | The **project profile** in `.spark/constitution.md` | **Installation state** — is the program actually here? | The user's own `/plugin install` |
+| Who decides | The user, by recording it in the constitution | Nobody decides; the ceremony probes and finds out | The user, by installing it — same as any other plugin |
+| Example | `security` — because this project handles auth | `aspark-graph` — because this machine has it built | `aspark-guard` |
 
 The test: *could the constitution know this?* A project's type and characteristics
 are stable facts a user can declare once. Whether a program is installed is not —
 it varies per machine and per checkout, and the constitution must never claim it.
 Bending a lens to activate on installation state would make the constitution's
 own rule ("no constitution → no lens") untrue for that one file.
+
+A **companion plugin** is a third shape, and it fits neither column above: it is
+installed by the user in the host (`/plugin install <name>@aspark`), never
+passed by path to an agent, and has no tool file and no probe — a ceremony
+cannot detect it and never tries to. Adding a `tools/<name>.md` for one is a
+defect: there is no phase slice for it to describe, since nothing in a ceremony
+ever reads it. `aspark-guard` is this repo's one example — see
+[`README.md` §Optional Tools](../README.md#optional-tools) for what it does.
 
 ## How a ceremony picks one up
 
