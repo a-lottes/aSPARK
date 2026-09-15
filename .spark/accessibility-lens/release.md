@@ -5,14 +5,14 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`, round 2), `qa.md` (`passed`, round 1) |
-| **Status** | `preparing` — commits landed, PR not yet open |
-| **Version** | v0.9.0 (proposed only — `pr` mode) |
+| **Status** | `handed-off` |
+| **Version** | v0.9.0 (proposed, `pr` mode — [PR #47](https://github.com/a-lottes/aSPARK/pull/47) open, awaiting self-review/merge) |
 | **Date** | 2026-09-15 |
 
 **Handoff**
-- **Status:** mirrors the header table above. `preparing` — pre-flight is fresh-verified green and everything reversible/local is drafted below; nothing outward-facing, and no commit, has run yet.
-- **Summary:** `accessibility-lens` adds `lenses/accessibility.md`, the 9th lens — characteristic-triggered (`must-be-accessible`), giving Specify/Design/Act/Review/QA each a falsifiable check. Both gates `passed`; minor bump `0.8.1` → `0.9.0` proposed; PR mode, awaiting the user's explicit go to commit, push and open the PR.
-- **Open:** `2 outstanding` — (1) the working tree still carries this feature's uncommitted/untracked changes — owner: whoever runs the two commits drafted in §3. (2) NFR-6's dispatch/activation gap (5 sites, `refuted-with-finding`) is routed to a follow-up increment, not fixed here — owner: a future `/increment`.
+- **Status:** mirrors the header table above. `handed-off` — two commits landed on `docs/accessibility-lens` (`4774e84` increment, `8f1d165` release-prepare), the branch is pushed, [PR #47](https://github.com/a-lottes/aSPARK/pull/47) is open against `main`, and `claude plugin validate .` is confirmed green on the pushed commit. The real merge and tag happen outside this ceremony's control, owned by the declared approver (`a-lottes`, self-review-via-PR, constitution §7).
+- **Summary:** `accessibility-lens` adds `lenses/accessibility.md`, the 9th lens — characteristic-triggered (`must-be-accessible`), giving Specify/Design/Act/Review/QA each a falsifiable check. Both gates `passed`; minor bump `0.8.1` → `0.9.0` applied on `docs/accessibility-lens`; PR mode, handed off for self-review/merge.
+- **Open:** `2 outstanding` — (1) the PR still needs the approver's self-review and merge (owner: `a-lottes`, outside this ceremony). (2) NFR-6's dispatch/activation gap (5 sites, `refuted-with-finding`) is routed to a follow-up increment, not fixed here — owner: a future `/increment`.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch as a finding at the next `/go-live` and proceed.
 
@@ -24,7 +24,7 @@
 - [x] `qa.md` status is `passed` — QA GATE checklist read at `.spark/accessibility-lens/qa.md:86-92`: every Must AC and every QA-owned NFR verified (12/12 AC ✅); NFR-6 `refuted-with-finding` by design, not a bug; no open Blocker/Major; status `passed`. **QA method:** constitution §8 carries a complete declaration (surface `no`, substitute method named — hands-on QA against the installed plugin) — QA ran by that declared method as this project's standing fact (§8, added 2026-08-29), not a per-feature override or a waiver for this release; `qa.md` records every `AC-`/`NFR-` ID it owns, same as always.
 - [x] Full test suite green — N/A, none exists or is possible for prompt material (constitution §4). Substitute bar re-run fresh just now: `claude plugin validate .` → `✔ Validation passed with warnings` (one pre-existing `autoUpdate` warning, unrelated to this diff, present on every prior release).
 - [x] Build succeeds from a clean checkout — N/A, no build step (constitution §3/§4); `claude plugin validate .` is the equivalent bar and passed, above.
-- [ ] No uncommitted changes in the working tree — **currently false, by design at this point in the ceremony.** Re-verified fresh: `git status --porcelain` → `M README.md`, `M lenses/README.md`, `M lenses/seo.md`, `M lenses/ux.md`, `?? lenses/accessibility.md`, `?? .spark/accessibility-lens/`, plus the pre-existing, unrelated `?? .spark/.guard/` (the loop's own session ledger — out of scope for this feature, same treatment `companion-offer`'s and `situational-lenses`' own releases gave it: untracked scratch this diff didn't create and won't commit). `git diff --name-only main -- .` → exactly `README.md`, `lenses/README.md`, `lenses/seo.md`, `lenses/ux.md` — matches `review.md`'s and `qa.md`'s recorded diff byte-for-byte; nothing drifted since QA closed. `git diff --name-only main -- skills/ agents/ templates/ .claude-plugin/` → empty, re-confirmed (AC-1.4/NFR-6 fence). Stays unchecked until the commits in §3 land.
+- [x] No uncommitted changes in the working tree — two commits landed (`4774e84`, `8f1d165`); `git status --porcelain` post-commit shows only the untracked, out-of-scope `.spark/.guard/` (the guard plugin's own ledger) — no tracked file left uncommitted.
 
 **Branch staleness (project `CLAUDE.md` house rule).** `git fetch origin` then `git rev-parse main origin/main` → both `2846739`, identical to `git merge-base HEAD origin/main`. Not stale — nothing landed on `main` since this branch was cut, and `companion-offer`'s own release (PR #46, proposing `v0.8.2`) is still open on its own unmerged branch, confirmed not on `main`.
 
@@ -48,8 +48,8 @@
 
 | Action | Result |
 |---|---|
-| Version bump & tag | **Proposed only:** `0.8.1` → `0.9.0`, **minor** — a genuinely new optional capability (the 9th lens) triggers constitution §5's stated minor-bump rule, unlike `companion-offer`'s docs-only `0.8.1`→`0.8.2` patch (still open, unmerged). Nothing protected in §3 renamed or removed (NFR-5). No tag — `pr` mode creates the tag at/after merge, outside this ceremony's control. Not yet executed. |
-| PR / merge | **Not opened.** Title/body drafted below, target `main`, ready once the user gives the go. No merge — approver is self-review-via-PR (solo maintainer), per constitution §7. |
+| Version bump & tag | **Applied:** `0.8.1` → `0.9.0` in `.claude-plugin/plugin.json`, committed at `8f1d165`, **minor** — a genuinely new optional capability (the 9th lens) triggers constitution §5's stated minor-bump rule, unlike `companion-offer`'s docs-only `0.8.1`→`0.8.2` patch (still open, unmerged). Nothing protected in §3 renamed or removed (NFR-5). No tag yet — `pr` mode creates the tag at/after merge, outside this ceremony's control. |
+| PR / merge | **Open:** [PR #47](https://github.com/a-lottes/aSPARK/pull/47), `docs/accessibility-lens` → `main`. Not merged — approver is self-review-via-PR (solo maintainer, `a-lottes`), per constitution §7; merge is their action, outside this ceremony. |
 | Deploy | N/A — no deploy surface; this repo *is* the distributed artifact, consumers pull it via `/plugin install`/marketplace update, not a push from here. |
 | Post-release smoke check | N/A — nothing has merged or deployed. This ceremony's local analogue, `claude plugin validate .`, already re-ran fresh above and passed. |
 
@@ -169,9 +169,9 @@ Files: `.claude-plugin/plugin.json`, `.spark/accessibility-lens/release.md`.
 
 ## ✅ KEEP GATE
 
-- [x] All pre-flight checks passed at release time — four of five; the fifth ("no uncommitted changes") is expected-false at this stage of the ceremony, not a failure, per §1.
+- [x] All pre-flight checks passed at release time — §1, all five, re-run at `8f1d165`.
 - [x] Changelog written in user-facing language — no commit hashes, ticket IDs or internal jargon (§2).
-- [ ] Release actions executed and verified — **not yet**; prepared only. In `pr` mode: PR not yet open, `claude plugin validate` already green locally, approver (self-review-via-PR) not yet requested, ticket format `none` (nothing to link), rollback path written (§3). Deploy and post-release smoke check correctly N/A.
+- [x] Release actions executed and verified — in `pr` mode: [PR #47](https://github.com/a-lottes/aSPARK/pull/47) open against `main`, `claude plugin validate .` re-confirmed green on the pushed commit (post-release smoke check, §3), approver (self-review-via-PR, `a-lottes`) is the PR's own author/reviewer, ticket format `none` (nothing to link), rollback path written (§3). Deploy correctly N/A.
 - [x] Learnings recorded (§4).
 - [x] Line budget respected: Ist 146 / Soll ~100 (excluding HTML comments) — over by ~48%, driven by the two full commit-message blocks and the PR draft body the caller asked for verbatim; no waiver requested, flagged here per the rule.
-- [ ] Status set to `released`/`handed-off` — **not yet.** Status stays `preparing`. What remains outstanding: (1) the two commits above need to be created (increment, then release-prepare); (2) the user's explicit go to push the branch and open the PR against `main`; (3) once the PR is open and `claude plugin validate .` is confirmed green on that exact commit, this report's status becomes `handed-off` — the real merge and tag happen after that, outside this ceremony's control, owned by the declared approver (`a-lottes`, self-review-via-PR, constitution §7).
+- [x] Status set to `released`/`handed-off` — **`handed-off`.** Both commits landed, branch pushed, [PR #47](https://github.com/a-lottes/aSPARK/pull/47) open against `main`, `claude plugin validate .` confirmed green on the pushed commit. The real merge and tag happen after this, outside this ceremony's control, owned by the declared approver (`a-lottes`, self-review-via-PR, constitution §7).
