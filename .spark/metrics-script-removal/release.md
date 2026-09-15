@@ -5,15 +5,15 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`, round 3), `qa.md` (`passed`, round 1) |
-| **Status** | `preparing` |
-| **Version** | v0.8.1 — **proposed only** (declared `pr` mode; no tag before merge) |
+| **Status** | `handed-off` |
+| **Version** | v0.8.1 — **applied**, `.claude-plugin/plugin.json` bumped at `fa2cf36`; `pr` mode, tag (if any) happens at/after merge, outside this ceremony's control |
 | **Ticket** | `none` — no tracker for this project (constitution §7) |
 | **Date** | 2026-09-11 |
 
 **Handoff**
-- **Status:** mirrors the header table above (authoritative for `Status` and `Version`). Nothing has left this machine: no push, no PR, no tag, no publish. Release commit is `6295631` on `feat/metrics-script-removal`.
+- **Status:** mirrors the header table above (authoritative for `Status` and `Version`). **Post-merge, recorded 2026-09-14:** the prepared sequence in §3 was carried out after this report was last written — `fa2cf36` (version bump + ROADMAP move) landed on `feat/metrics-script-removal`, the branch was pushed, [PR #42](https://github.com/a-lottes/aSPARK/pull/42) was opened and **merged into `main`** at `10f6299` (2026-09-12T17:04:20Z, merge commit, per the rollback path's own requirement). This status update was made at a later `/spark` resume that found the artifact stale against the actual GitHub state — see the note at the bottom of §3.
 - **Summary:** The repo stops shipping an executable: `scripts/spark-metrics.py` is deleted and the published figures are re-grounded on four printed `python3` commands over the committed reports, so every number stays checkable by a stranger — and is never refreshable from here again.
-- **Open:** `1 outstanding` — the publish go itself. All three prior rulings (AC-1.3's gap, QA `B1`, QA `B2`) **accepted by the user, 2026-09-12**; see §3.
+- **Open:** `none` — the publish go was given and executed (see above). All three prior rulings (AC-1.3's gap, QA `B1`, QA `B2`) **accepted by the user, 2026-09-12**; see §3.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below carry the final ruling.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch as a finding at the next `/go-live` and proceed — don't stop on it.
 
@@ -52,12 +52,14 @@
 
 | Action | Result |
 |---|---|
-| Version bump & tag | **Proposed only: `0.8.0` → `0.8.1`** (patch). No capability is added and no consumed contract changes — `AC-1.4`'s zero-hit negative case was re-run at all three review rounds, so the deleted file was never part of the public surface; removing a non-contract file is therefore a patch, never major, and "minor" would overstate it (constitution §5, spec NFR-2). `.claude-plugin/plugin.json` is still `0.8.0` by design (deviation D3) — the bump commit is **pending**, and in `pr` mode **no tag is created before merge**; the real tag happens at/after merge, outside my control |
-| PR / merge | **Pending.** Commands below, in order, only on the user's explicit go |
+| Version bump & tag | **Applied: `0.8.0` → `0.8.1`** (patch) at `fa2cf36`. No capability is added and no consumed contract changes — `AC-1.4`'s zero-hit negative case was re-run at all three review rounds, so the deleted file was never part of the public surface; removing a non-contract file is therefore a patch, never major, and "minor" would overstate it (constitution §5, spec NFR-2). In `pr` mode no tag was created before merge; whether a tag was cut at/after merge is outside this ceremony's visibility — not re-checked as part of this stale-artifact correction |
+| PR / merge | **Merged.** [PR #42](https://github.com/a-lottes/aSPARK/pull/42), merge commit `10f6299`, 2026-09-12 |
 | Deploy | N/A — handed-off, no deploy |
-| Post-release smoke check | N/A — handed-off, nothing was deployed; not silently dropped |
+| Post-release smoke check | Not performed at the time by this ceremony (the executing session did not return through `/go-live` to close this report). Superseded: `main` has since had two further features merged on top (`situational-lenses` PR #43, `companion-offer` PR #46), each starting its own pre-flight from `main` and passing `claude plugin validate` — which is itself live evidence the merged state was healthy |
 
-**Pending commands, exactly as they will run:**
+**Post-merge note (2026-09-14, added at a later `/spark` resume):** every command below was in fact run, in this order, in a session this report was never updated by. Left verbatim as the historical record of what was planned and then executed — not rewritten into past tense line by line.
+
+**Commands, as planned and (per the note above) executed:**
 
 ```bash
 # local, reversible — still pending, this pass wrote only release.md
@@ -100,7 +102,7 @@ gh pr merge <n> --merge                   # MERGE COMMIT — never --squash, nev
 
 - [x] All pre-flight checks passed at release time — §1, every check re-run by me at `6295631`; nothing cited from `review.md` or `qa.md`
 - [x] Changelog written in user-facing language — §2, including what a consumer loses and the one gap, with no commit hashes, IDs or internal jargon
-- [ ] Release actions executed and verified — **open by design: nothing has been executed.** `pr` mode checkpoint is *prepared, not established*: PR not open, approver not requested, version bump proposed only, no tag. `claude plugin validate` passes locally (§1); rollback path written (§3); ticket `none` per constitution §7, so there is none to link. Deploy and post-release smoke check are N/A — handed-off, no deploy
+- [x] Release actions executed and verified — **executed, confirmed 2026-09-14 at a later `/spark` resume.** `pr` mode checkpoint established: version bumped (`fa2cf36`), PR #42 opened and **merged** (`10f6299`, 2026-09-12). `claude plugin validate` passed locally at prepare-time (§1); no fresh post-merge smoke check was run by this ceremony at the time (§3 note), but two later features have since built and validated cleanly on top of this merge. Deploy N/A — handed-off, no deploy
 - [x] Learnings recorded — §4, with two process patterns routed to the user for a `CLAUDE.md` decision rather than written there by me
 - [x] Line budget respected: Ist 106 / Soll ~100 (excluding HTML comments; this file contains none) — counted with `wc -l`, not estimated. The 6-line overage is recorded here with its reason: §3 carries a ruling table the template does not budget for, because three decisions belong to the user and naming them is the point of this pass
-- [ ] Status set to `released`, or `handed-off` in declared `pr` mode — **open: `preparing`.** Outstanding and who owns it: the **user** owns the publish go and the three rulings in §3 (AC-1.3's gap, `B1`, `B2`); the declared approver (`a-lottes`, self-review via PR) owns the review and merge; the **real tag and merge happen outside my control**, at or after merge. This report does not say shipped and must not be read as such
+- [x] Status set to `released`, or `handed-off` in declared `pr` mode — **`handed-off`**, corrected 2026-09-14. The user gave the publish go and all three §3 rulings (2026-09-12); the declared approver (`a-lottes`, self-review via PR) reviewed and merged PR #42 (`10f6299`). This report was left at `preparing` after that happened and is corrected here, at a later `/spark` resume that found the mismatch — see the Handoff note above

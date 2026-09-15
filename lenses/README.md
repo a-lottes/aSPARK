@@ -46,7 +46,7 @@ profile records both, so:
   `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`, `library`←`library`.
 - **Characteristic-triggered lenses** declare `triggers: [<characteristic>]` —
   `security`←`handles-auth`/`is-public`/`handles-payments`/`handles-pii`,
-  `i18n`←`is-multilingual`, `data`←`has-database`.
+  `i18n`←`is-multilingual`, `data`←`has-database`, `accessibility`←`must-be-accessible`.
 
 ## The lens contract (what every lens file guarantees)
 
@@ -89,6 +89,7 @@ and carries any number of characteristics.
 | `handles-pii` | stores names, emails, addresses, health/financial data; a privacy policy exists | `security` |
 | `has-database` | Postgres/MySQL/Mongo/SQLite, an ORM, migration files | `data` |
 | `is-multilingual` | i18n library (i18next, `react-intl`, `vue-i18n`, gettext), locale files, a language switcher | `i18n` |
+| `must-be-accessible` | an existing accessibility statement/VPAT/WCAG target in the repo, a public-facing product under a legal accessibility mandate (EAA, ADA Title II/III, Section 508, EN 301 549), or a direct user confirmation at `/charter` absent a file-based signal — same judgment-call latitude `is-public` already has | `accessibility` |
 
 ## Available lenses
 
@@ -102,6 +103,7 @@ and carries any number of characteristics.
 | [`security.md`](security.md) | char. `handles-auth`, `is-public`, `handles-payments`, `handles-pii` | Depth beyond the Reviewer baseline: header/transport hardening, auth lifecycle, authz matrix, supply chain, PII/privacy |
 | [`i18n.md`](i18n.md) | char. `is-multilingual` | Externalized strings, locale-aware formatting, text-expansion & RTL layout |
 | [`data.md`](data.md) | char. `has-database` | Migration safety, integrity/transactions, indexing at scale, retention & recovery |
+| [`accessibility.md`](accessibility.md) | char. `must-be-accessible` | Specify-through-QA a11y depth beyond the Designer's baseline: grounded NFR, semantic HTML/ARIA in Act, keyboard-trap/focus checks in Review, keyboard-only + measured-contrast in QA |
 
 ## Adding a lens
 
@@ -113,4 +115,15 @@ A new concern is a new file, nothing else — no new agent, no skill rewrite:
 3. Add it to the *Available lenses* table here, and to the detection signals if
    it binds to a new type or a new characteristic.
 4. Its checks flow automatically: the skills pass active lens paths to their
-   agents by name, so any activated lens is picked up without further wiring.
+   agents by name, so any activated lens is picked up without further wiring —
+   **with known exceptions.** `/story-time`, `/increment` and (with a caveat)
+   `/peer-review` are genuinely generic. `/look-and-feel` and `/demo-day`
+   select design-/QA-relevant lenses from a closed, named list rather than
+   reading the constitution's active-lens set directly, so a lens with
+   `design`/`qa` phases needs those two skills edited by hand until that's
+   fixed. The `/charter` activation path has the same shape one layer up: the
+   Facilitator's characteristic vocabulary and the shipped constitution
+   template are also closed lists, so a *new characteristic* needs both
+   updated before any project can declare it. See
+   [`.spark/accessibility-lens/evidence.md`](../.spark/accessibility-lens/evidence.md)
+   for the full, current account of what is and isn't yet generic.

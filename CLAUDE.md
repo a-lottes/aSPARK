@@ -25,27 +25,31 @@ don't discover this at the last gate. `/go-live` for `graph-gates-verification`
 had to resolve this as a surprise; catching it earlier (e.g. at `/spark`'s
 resume, or `/increment`'s first commit) avoids the detour.
 
-## Re-derive, don't cite, for evidence living outside this repo
+## An add-a-file scope check must examine every phase the artifact claims
 
-When an AC's grounding fact lives in a sibling repo (another plugin's README,
-its own evidence doc, its published test counts), each phase that verifies that
-AC should re-fetch and re-check the fact itself, not trust the prior phase's
-citation of it. A cited chain of citations is exactly how a stale or fabricated
-claim survives three gates unnoticed — Specify may reasonably *relay* a fact it
-has no tool to check, but Review and QA do have the tools, and re-deriving costs
-one command. `companion-offer`'s `review.md` and `qa.md` each independently
-re-fetched `aspark-guard`'s own README (via `gh api` and `curl` respectively)
-rather than citing `evidence.md`, and both caught that its evidence needed to be
-carried as *self-reported*, not restated as this project's own claim.
+When planning a new lens (or any artifact whose frontmatter declares which
+SPARK phases it owns), verify dispatch **and activation** for every one of
+those phases at plan time — not just the phase that happens to already be
+wired generically. `accessibility-lens`'s plan checked only `/increment`
+(found clean, C6) and stopped; `/peer-review` then had to discover, across
+two separate rounds, that `/look-and-feel`, `/demo-day`, `/peer-review`'s own
+dispatch parenthetical, and even `/charter`'s activation vocabulary
+(`agents/facilitator.md`, `templates/constitution.md`) all shared the same
+closed-enumeration defect. Checking every claimed phase's dispatch *and* how
+its trigger gets declared in the first place — at Plan, not Review — would
+have caught 4 of 5 sites before the diff ever reached a reviewer. See
+`.spark/accessibility-lens/evidence.md` (T7, extended at review round 1) for
+the worked example.
 
-## Pin a repeated claim once, quote it everywhere it's needed
+## A disclosed limitation stays honest only if re-verified at every gate
 
-When a feature must state the same fact in more than one file (a maturity
-label, a status line, a short description), write the canonical wording once in
-the feature's `evidence.md` — long form and any declared short form — before
-any prose lands, and have every later task quote that block rather than
-re-derive or reword it from scratch. This is mechanically checkable for drift
-(a `grep` across the touched files) and cheaper to fix than three independent
-drafts converging by eye. `companion-offer`'s T1 did this for `aspark-guard`'s
-qualified maturity statement across `README.md` (twice) and `ROADMAP.md`; only
-one benign reordering slipped through, caught at `/peer-review`.
+A `refuted-with-finding` (or any other honestly-disclosed gap) recorded once
+does not stay accurate on its own — re-derive it fresh at each subsequent
+gate rather than citing the prior gate's word for it. `accessibility-lens`'s
+NFR-6 disclosure (a 5-site dispatch/activation gap) was independently
+re-verified from primary source four separate times across one loop — plan,
+review round 1, review round 2, and QA — with zero drift in either the
+`file:line`s or their consequence. That is what kept the disclosure from
+going stale between Plan and release; a single write-up trusted forward
+would not have caught a fix pass narrowing a citation range by one line
+(review round 2's own F9) or a wording change elsewhere going unnoticed.

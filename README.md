@@ -84,6 +84,7 @@ Not every concern applies to every project. So aSPARK detects **what kind of sof
 | **security** | *handles auth · public · payments · PII* | Header hardening, auth lifecycle, the authz matrix, supply chain, PII/privacy — depth beyond the Reviewer's baseline |
 | **i18n** | *multilingual* | Externalized strings, locale-aware formatting, text-expansion & RTL layout |
 | **data** | *has a database* | Migration safety, integrity/transactions, indexing at scale, retention & recovery |
+| **accessibility** | *must be accessible* | Specify-through-QA a11y depth beyond the Designer's baseline: grounded NFR, semantic HTML/ARIA, keyboard-trap/focus checks, keyboard-only + measured-contrast QA |
 
 The Facilitator grounds the type and characteristics in the repo during `/charter` and the user confirms them. The constitution is the **single source of truth** — it's the only place a lens is switched on, so no phase can drift from another. Without a constitution, **no lens is applied**: each phase just gives a one-line nudge ("this looks like a `website` — run `/charter` to record it") and nothing more. When 4+ lenses come out active, the profile flags the elevated load — there's no cap, the visibility *is* the throttle.
 
