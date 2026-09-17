@@ -4,132 +4,134 @@
 |---|---|
 | **Phase** | Review |
 | **Owner** | Reviewer (`/peer-review`) |
-| **Input** | The diff of `/increment` (`3f27eda`), `.spark/lens-dispatch-registry/plan.md` |
-| **Status** | `changes-requested` |
-| **Round** | 1 |
+| **Input** | The diff of `/increment` (`3f27eda`) plus the fix-mode commit (`f32be5c`), `.spark/lens-dispatch-registry/plan.md` |
+| **Status** | `passed` |
+| **Round** | 2 |
 | **Date** | 2026-09-17 |
 
 **Handoff**
-- **Status:** `changes-requested` — all round-1 findings fixed by the developer (F1-F3, F6-F7) or the reviewer (F4-F5); awaiting re-review to confirm and close the gate.
-- **Verdict:** The registry-sourced dispatch and activation rules are right, verified against all 9 lens frontmatters with zero omissions and zero false inclusions; the one thing that had to change — `lenses/README.md`'s new step 4 claiming a genericity the `act` phase does not have (F1) — is fixed, along with every Minor/Nit the reviewer raised.
-- **Open:** `0 findings, re-review pending` — all of F1-F7 are now `fixed`; the Reviewer, not the developer, confirms each and sets `Status` to `passed`/bumps `Round`
+- **Status:** `passed` — F1 (the only gate-blocking Major) is genuinely closed, verified against the current files rather than the fix-mode ledger; two new Nits (F8, F9) are open and block nothing.
+- **Verdict:** Every round-1 finding is resolved. The `act` exception is now stated honestly and the four phases the new step-4 text *does* claim (`specify`, `design`, `review`, `qa`) each really are reached without a skill edit — I re-derived all five phase sets from the nine frontmatters and traced each to its dispatching skill. F2 had regressed inside the very commit that fixed it (its restated file count omitted its own `agents/qa-tester.md` edit); the Reviewer corrected the numbers this round.
+- **Open:** `2 findings` — F8, F9, both Nit, both documentation-accuracy residue of the fix pass; route to the next touch of `lenses/README.md` / the ledger, not back to `/increment`
 - **Binding ruling:** §6 Verdict and the gate checklist below — the only binding location; there is no other round to point to
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
 
 ## 1. Scope
 
-Reviewed: `git diff main...feat/lens-dispatch-registry` (merge-base form, single commit `3f27eda`) —
-9 non-artifact files (+74/−51) plus the three `.spark/lens-dispatch-registry/` artifacts. PR #48's
-later landing on `main` was excluded by the three-dot form, as instructed.
+Re-review of `f32be5c` ("close round-1 review findings F1-F7") layered on the already-reviewed
+`3f27eda`. Judged against the **combined** diff `git diff main...feat/lens-dispatch-registry` —
+10 non-artifact files (+88/−59; round 1 saw 9, `agents/qa-tester.md` is new via F6) plus the
+`.spark/lens-dispatch-registry/` artifacts.
 
-Every cited site was re-read in the **current working tree**, not from the ledger's quotes: all eight
-edited resolved-instruction sites, the three receiving agents (`designer.md`, `reviewer.md`,
-`qa-tester.md`), all 9 `lenses/*.md` frontmatters, `skills/increment/SKILL.md`,
-`skills/story-time/SKILL.md`, `skills/charter/SKILL.md`, `docs/status.md`, `docs/workflow.md`. The
-phase→lens matrix (design 4, qa 5, review 8, act 1) and the negative case were **re-derived from the
-frontmatters**, not cited from `evidence.md` — triggered by condition (b), Must-AC verification
-(AC-2.4, NFR-4, NFR-5). The protected-template byte-identity check (NFR-6/C5) was likewise re-run from
-scratch against `git show main:templates/spec.md` — condition (b) and (d).
+Every one of F1-F7 was verified by re-reading the **current file**, never the fix-mode ledger entry or
+the developer's claim — condition (a), verifying a fix, on all seven. The phase→lens matrix was
+re-derived from scratch from the nine `lenses/*.md` frontmatters (condition (b), Must-AC verification):
+specify 9, design 4, qa 5, review 8, act 1 — unchanged from round 1. The protected-template check was
+re-run against `git show main:…` over the **combined** diff, not the fix commit alone (conditions (b)
+and (d)): every changed line in `templates/spec.md` and `templates/constitution.md` sits inside an HTML
+comment, and the extracted heading/table/`NFR-n` streams diff empty against `main`.
+
+New this round because the fix touched them: `skills/story-time/SKILL.md:26-42` and
+`agents/product-owner.md:74-80` (the Specify-phase path, which step 4's new wording now names
+explicitly), a repo-wide sweep for the retired "browser-observable"/"no browser surface" phrasing, and a
+sweep for any surviving relative `the plugin's lenses/README.md` reference (none remain).
 
 Not reviewed: `.spark/accessibility-lens/` (prior feature, cited only), `docs/…` beyond the two
-residual sites, and the positive firing case — no venue exists (spec §3 A2), `not-verified-live` by
-design and correctly not asserted anywhere in the diff.
+residuals, and the positive firing case — no venue exists (spec §3 A2), `not-verified-live` by design.
 
-Tool note: `aspark-graph` was **not** re-run. Plan §2 records that all seven (later nine) target paths
-return under `unknown_files` with empty `files`/`affected_stories`/`affected_acs` — the tool holds no
-data on this repo's plugin material, so a fresh query could not tell me where to look. Scoping was done
-by hand: `grep -rn 'lenses/'` over `skills/ agents/ templates/` to enumerate every lens-path reference,
-and a regex sweep for multi-lens-name enumerations. That sweep found no ninth resolved-instruction site;
-the only remaining enumerations are the type-triggered vocabulary (spec §6 / C2, out of scope) and
-non-restrictive "e.g." forms.
+Tool note: `aspark-graph` was not re-run, for the reason recorded in round 1 — it holds no data on this
+repo's plugin material (plan §2), so it could not tell me where to look. Scoping was by hand:
+`grep -rn 'lenses/'` and `grep -rln lens` over `skills/ agents/ templates/`, which enumerates 13 files
+and found no dispatch site the fix pass missed or broke.
 
 ## 2. Plan Conformance
 
 | Task | Implemented as planned? | Note |
 |---|---|---|
 | T1 | ✅ | Matrix re-derived independently from the 9 frontmatters: design 4, qa 5, review 8, act 1 — matches |
-| T2 | ✅ | `skills/look-and-feel/SKILL.md:33-37`; resolves to `{seo, ux, i18n, accessibility}`. Sentence was garbled — F4, fixed |
-| T3 | ✅ | `skills/demo-day/SKILL.md:82-85`; resolves to `{ux, seo, security, i18n, accessibility}`; the browser-observable→`phases: qa` widening is recorded as planned (see F6 for the receiving-layer residue) |
+| T2 | ✅ | `skills/look-and-feel/SKILL.md:33-38`; resolves to `{seo, ux, i18n, accessibility}`; F4's reordering landed |
+| T3 | ✅ | `skills/demo-day/SKILL.md:82-85`; resolves to `{ux, seo, security, i18n, accessibility}`; the receiving layer now matches (F6) |
 | T4 | ✅ | `skills/peer-review/SKILL.md:49-52`; parenthetical gone, resolves to 8 |
-| T5 | ✅ | `agents/facilitator.md:51-55`, `:68-72`; no enumerated characteristic or lens list remains; resolves to 6 characteristics and 4 characteristic-triggered lenses |
-| T6 | ✅ | `templates/constitution.md:27-28`, `:35`; headings/columns/rows byte-identical (re-verified), only the two HTML comments changed |
-| T7 | ⚠️ | `skills/spark/SKILL.md:64-68`; list gone, but the DoD's `${CLAUDE_PLUGIN_ROOT}/…` reference and the plural were lost — F5, fixed |
-| T8 | ✅ | `templates/spec.md:69-72`; structure byte-identical (re-verified from `main`), comment-only, three names readable as examples |
+| T5 | ✅ | `agents/facilitator.md:51-55`, `:69-72`; both now cite the one Characteristics table (F3); resolves to 7 characteristics and 4 characteristic-triggered lenses |
+| T6 | ✅ | `templates/constitution.md:26-28`, `:36`; headings/columns/rows byte-identical to `main` across both commits, only HTML comments changed |
+| T7 | ✅ | `skills/spark/SKILL.md:64-68`; F5's plural and `${CLAUDE_PLUGIN_ROOT}` path restored |
+| T8 | ✅ | `templates/spec.md:69`; comment-only against `main`, now in `${CLAUDE_PLUGIN_ROOT}` form (F7) |
 | T9 | ✅ | Cross-check reproduced independently; zero omissions, zero false inclusions, both layers |
-| T10 | ⚠️ | Negative case and `validate` correct; the diff-level compatibility assertion covers only 7 of 9 files — F2 |
-| T11 | ⚠️ | Caveat retired and links kept+repointed as required, but the replacement overclaims and omits the `act` caveat plan §5 R5 explicitly assigned to this task — F1. Also leaves the characteristic→lens fact declared twice in one file — F3 |
-| T12 | ✅ | `README.md:321`, `:340-346`; claim bounded to the eight sites, both residuals named with `file:line` |
+| T10 | ⚠️ | Negative case and `validate` correct; the diff-level compatibility assertion was restated in fix mode and still undercounted — F2, now corrected |
+| T11 | ✅ | Caveat retired, `act` exception written, mapping now declared once — F1/F3 closed; one stale author instruction remains (F8) |
+| T12 | ✅ | `README.md:321`, `:340-346`; unchanged by the fix pass, claim still bounded to the eight sites |
 
-**Scope widening (plan §1, user-directed).** I judge it legitimate, independently of the plan's own
-argument. C1 did settle the framing as a general-mechanism fix, so two more instances of the same
-mechanism are not a new decision; the spec's success signal ("none of the **six** sites contains a
-hardcoded list") is over-satisfied rather than contradicted; AC-3.2's "states the gap is closed" branch
-is the one the widening enables; and I verified the §6/C2 fence held — T7 and T8 edited *lens-name*
-lists only, while the type-triggered lists at `agents/facilitator.md:67-68`, `templates/constitution.md:26-27`
-and `lenses/README.md:45-46` are all still present and untouched. The one real cost is that T7/T8 carry
-no AC, so AC-3.2's "all eight sites" claim rests on work no AC verifies — NFR-4/T9 covers it, and the
-plan says so up front. Not a finding.
+**Fix-pass deviation.** `agents/qa-tester.md` is a file plan §2 classified as "verified generic, no edit
+needed"; F6's fix edited it. I judge that legitimate and in-scope: the edit changes only the receiving
+clause's *description* of the set it is handed (`:174-176`, `:191-193`), not which lenses it receives,
+so the genericity plan §2 asserted is intact. It is disclosed in the ledger at `evidence.md:595-602`.
+**Scope widening (plan §1, user-directed)** is unchanged from round 1 and remains legitimate: the
+§6/C2 fence still holds — the type-triggered lists at `agents/facilitator.md:67-68`,
+`templates/constitution.md:27`, `:35` and `lenses/README.md:45-46` are all still present and untouched.
 
 ## 3. Findings
 
 | # | Severity | Location | Finding | Status |
 |---|---|---|---|---|
-| F1 | Major | `lenses/README.md:127-131` | New step 4 claims "a lens with **any combination of phases** … reaches its agents … with no skill, agent or template edit". False for `phases: act`: `skills/increment/SKILL.md` contains **zero** lens references (grep, whole file), so nothing dispatches lens files at Act — the increment's own ledger says exactly this at `evidence.md:413-418`, and plan §5 R5 predicted the overclaim and assigned the caveat to T11, which never wrote it. Matters because this is the one file a future lens author reads before shipping; an author declaring `act` would expect dispatch and get silence — the same failure mode this feature exists to end — and constitution §1 makes "a doc that presents an intention as delivered" a defect. Fix: append the ledger's own qualifier, e.g. "— the one exception is Act: `/increment` dispatches no lens files, so an `act` check is realized through the spec's §5 NFRs, not by dispatch." | fixed |
-| F2 | Minor | `.spark/lens-dispatch-registry/evidence.md:445-451` | T10's NFR-6 assertion states the diff "shows exactly 7 files changed … 39 insertions, 30 deletions … nothing outside it". The shipped increment changes **9** non-artifact files: `README.md` (+12/−5) and `lenses/README.md` (+23/−16) were added by T11/T12 after T10 ran (`git diff --numstat main...feat/lens-dispatch-registry -- ':!.spark'`). Matters because NFR-6 is the library lens's compatibility bar and is supposed to cover the whole diff; a present-tense claim that silently excludes two files is not the coverage it advertises, and this repo's `CLAUDE.md` warns precisely against carrying a gate's word forward. Compatibility itself **does** hold — I re-derived it over all 9 files. Fix: date-stamp the snapshot ("as of T10, before T11/T12") and add one line covering the two doc files, or re-run the stat and restate 9. | fixed |
-| F3 | Minor | `lenses/README.md:47-49` vs. `:86-92` | The characteristic→lens fact is now declared **twice** in the registry — the *Two ways a lens activates* bullets and the Characteristics table's `Activates` column — and the two consumers read different copies: `agents/facilitator.md:70` and `templates/constitution.md:27` point at the bullets, `agents/facilitator.md:52` and `templates/constitution.md:35` at the table. That is a partial deviation from plan §1's own decision ("read each fact at its single declaration site, never at a copy"): an author updating one copy silently breaks the other consumer. Mitigated but not closed by step 3's hand-update instruction. Fix: make the *Two ways* section refer to the Characteristics table's `Activates` column instead of restating the mapping, and point both `/charter` consumers at that one table. | fixed |
-| F4 | Nit | `skills/look-and-feel/SKILL.md:34-37` | The new instruction's object was stranded: "pass the path of every active lens whose … includes `design` — read each active lens's file (…); do not work from a list of lens names given here — **in step 4**", with the trailing clause two lines from its verb. Matters because this is prompt text an agent parses under load. Fixed by reordering to "… includes `design` in step 4. To decide, read each active lens's file …" — no semantic change. | fixed |
-| F5 | Nit | `skills/spark/SKILL.md:66-67` | Two regressions against T7's own DoD: "the matching **lens** … **activates**" where several may activate (the replaced text was plural), and "the registry's *Available lenses* table" with no resolvable path, where the DoD asked for `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`'s table and constitution §3 requires that form. Fixed: restored the plural and the explicit `${CLAUDE_PLUGIN_ROOT}` path. | fixed |
-| F6 | Nit | `agents/qa-tester.md:174-176` vs. `skills/demo-day/SKILL.md:82-85` | Dispatch now selects by `phases: qa` (T3's deliberate widening away from "browser-observable"), but the receiving instruction still says to verify each lens's "**browser-observable** checks" and adds "(Lenses like `api`, `cli`, `library`, `data` have no browser surface…)". No live defect — every qa-phase lens's checks happen to be browser-observable today — but the two layers now define the same set by different criteria, and under constitution §8 substitute-method projects the receiving filter is the narrower one. Plan §2's "verified generic, no edit needed" is true for *membership* only, not for this qualifier. Fix (when next touched): align the receiving clause to "the checks it marks for the `qa` phase". | fixed |
-| F7 | Minor | `templates/spec.md:69`, `templates/constitution.md:27`, `:35` | The three new registry pointers are written as relative prose — "the plugin's lenses/README.md" — while the five non-template sites in the same diff correctly use `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`; constitution §3 Patterns: "Plugin-internal paths are always referenced as `${CLAUDE_PLUGIN_ROOT}/…`, never relative." Matters more after this change than before: these comments are instantiated *into a consumer project*, and they no longer carry the list inline, so a reference that doesn't resolve now yields no vocabulary at all rather than a stale one. Left open rather than fixed because `templates/constitution.md:25` used this phrasing pre-diff, so there is a plausible deliberate template convention to rule on. Fix: use `${CLAUDE_PLUGIN_ROOT}/lenses/README.md` in all three (and optionally `:25`). | fixed |
+| F1 | Major | `lenses/README.md:128-140` | New step 4 claimed "a lens with **any combination of phases** … reaches its agents … with no skill, agent or template edit". False for `phases: act`: `skills/increment/SKILL.md` contains **zero** lens references (grep, whole file), so nothing dispatches lens files at Act. Matters because this is the one file a future lens author reads before shipping; an author declaring `act` would expect dispatch and get silence — the same failure mode this feature exists to end — and constitution §1 makes "a doc that presents an intention as delivered" a defect. **Fixed r2, verified independently:** the claim is now enumerated (`specify`, `design`, `review`, `qa`) with `act` excepted in the developer's own words. All five re-derived: `act` still has zero dispatchers (`grep -c -i lens skills/increment/SKILL.md` = 0); `design`/`qa`/`review` are phase-filtered at `skills/look-and-feel/SKILL.md:34`, `skills/demo-day/SKILL.md:83`, `skills/peer-review/SKILL.md:49`; `specify` reaches the PO via `skills/story-time/SKILL.md:41`, which passes *every* active lens unfiltered — over-dispatch, not under-dispatch, and `agents/product-owner.md:80` handles "a lens with nothing relevant" explicitly, so the claim holds for it too. No new inaccuracy. | fixed r2 |
+| F2 | Minor | `.spark/lens-dispatch-registry/evidence.md:454-460` | T10's NFR-6 assertion stated the diff "shows exactly 7 files changed", excluding the two files T11/T12 added after T10 ran. Matters because NFR-6 is the library lens's compatibility bar and is supposed to cover the whole diff. **Regressed within its own fix and corrected r2:** the fix-mode restatement replaced "7" with a present-tense "**9** files changed … 74 insertions, 30→51 deletions" — which omits the *same commit's* F6 edit to `agents/qa-tester.md` and understates `lenses/README.md` (+29/−18, not +23/−16). Re-derived: `git diff --numstat main...feat/lens-dispatch-registry -- ':!.spark'` = **10 files, +88/−59**. Compatibility itself does hold over all 10 — `agents/qa-tester.md` is an agent prompt, clarifying, no set narrowed. Reviewer corrected the passage to 10 files with the numbers pinned to commit `f32be5c` so it cannot silently go stale a third time. | fixed r2 |
+| F3 | Minor | `lenses/README.md:47-50` vs. `:85-93` | The characteristic→lens fact was declared **twice** in the registry and the two consumers read different copies, contradicting plan §1's "read each fact at its single declaration site, never at a copy". **Fixed r2, verified independently:** the *Two ways* bullet now defers ("it is the single declaration of this fact, not restated here") and all four consumer pointers — `agents/facilitator.md:52`, `:70`, `templates/constitution.md:28`, `:36` — resolve to the one Characteristics table at `:85-93`. Grep confirms no second copy of the mapping survives outside that table. AC-1.1/AC-1.2 still resolve correctly through the new pointers (7 characteristics; `security`, `data`, `i18n`, `accessibility`). | fixed r2 |
+| F4 | Nit | `skills/look-and-feel/SKILL.md:33-38` | The new instruction's object was stranded two lines from its verb ("… includes `design` … — **in step 4**"), hard for an agent to parse under load. **Fixed r2:** reordered to "… includes `design` in step 4. To decide, read each active lens's file …"; re-read in the working tree, semantics unchanged, dispatch set still `{seo, ux, i18n, accessibility}`. | fixed r2 |
+| F5 | Nit | `skills/spark/SKILL.md:66-68` | Two regressions against T7's own DoD: a singular "the matching **lens** … activates" where several may, and "the registry's *Available lenses* table" with no resolvable path where constitution §3 requires `${CLAUDE_PLUGIN_ROOT}/…`. **Fixed r2:** current text reads "the matching lenses — see `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`'s *Available lenses* table … — activate for every phase"; both plural and path confirmed in the file. | fixed r2 |
+| F6 | Nit | `agents/qa-tester.md:174-176`, `:191-193` | Dispatch selects by `phases: qa` but the receiving instruction still said "**browser-observable** checks" and "(Lenses like `api`, `cli`, `library`, `data` have no browser surface…)" — two layers defining one set by different criteria, the receiving one narrower under constitution §8. **Fixed r2, verified independently:** now "verify the checks it marks for the **qa** phase" and "don't declare a `qa` phase". The replacement claim is true — `api`, `cli`, `library`, `data` all declare `phases: [specify, review]`, re-read from frontmatter. Repo-wide grep: no skill, agent or template outside `.spark/` still keys off the retired phrasing; `templates/qa-report.md:44`, `:97` use "browser-observable **NFR**", a different concept, untouched and unaffected. | fixed r2 |
+| F7 | Minor | `templates/spec.md:69`, `templates/constitution.md:26`, `:28`, `:36` | Three new registry pointers used relative prose ("the plugin's lenses/README.md") against constitution §3 Patterns ("Plugin-internal paths are always referenced as `${CLAUDE_PLUGIN_ROOT}/…`, never relative"). Matters more after this change because these comments are instantiated into a consumer project and no longer carry the list inline. **Fixed r2, verified independently:** all three now use the explicit form, as does the pre-existing `:26` reference that round 1 left optional; `grep -rn "plugin's lenses/README"` over `skills/ agents/ templates/ lenses/ docs/ README.md` returns nothing. Byte-identity re-checked over the **combined** diff from `main`: every `+`/`−` line in both templates lies inside an HTML comment, and the heading/table/`NFR-n` streams diff empty — C5 and NFR-6 hold. | fixed r2 |
+| F8 | Nit | `lenses/README.md:119-122` | Step 3 still tells a lens author that a new characteristic must be hand-added "to the detection-signals tables above **and the *Two ways a lens activates* section**". F3's fix made that section stop restating the characteristic mapping, so for a characteristic-triggered lens there is now nothing to update there — and an author who follows the instruction literally would re-introduce the duplicate declaration F3 just removed. Matters because step 3 is the author-facing contract and F3's whole point was one declaration site. Fix: scope that clause to type-triggered lenses, e.g. "… and, for a new **type**, the *Two ways a lens activates* bullets". | open |
+| F9 | Nit | `.spark/lens-dispatch-registry/evidence.md:198-201` | T3's write-up still asserts the `api`/`cli`/`library`/`data` parenthetical in `agents/qa-tester.md` "is accurate and **untouched**" — F6's fix in the same ledger (`:595-602`) rewrote exactly that parenthetical, so the two sections now contradict each other on a point of fact. Artifact-wording only: it changes no verdict, no gate answer and no Must AC (capped at Minor by rule; Nit here). Matters because `lenses/README.md:136-140` links this ledger as "the worked proof". Fix: add a forward pointer at `:199` — "(superseded by the F6 fix below; the parenthetical now reads 'don't declare a `qa` phase')". | open |
 
 ## 4. Requirements Traceability
 
 | Spec ID | Implemented at | Verdict |
 |---|---|---|
-| AC-1.1 | `agents/facilitator.md:51-55` → `lenses/README.md:82-92` (6 rows, `must-be-accessible` present) | ✅ met |
-| AC-1.2 | `agents/facilitator.md:68-72` → `lenses/README.md:45-49`; resolves to `security`, `i18n`, `data`, `accessibility` — all four, per plan §1's recorded reading | ✅ met |
-| AC-1.3 | `templates/constitution.md:27-28`, `:35` | ✅ met |
-| AC-1.4 | `lenses/README.md:112-126` steps 1-3 + the two sites above; a 10th lens needs no edit to `facilitator.md` or `templates/constitution.md` | ✅ met |
-| AC-2.1 | `skills/look-and-feel/SKILL.md:33-37` → `{seo, ux, i18n, accessibility}` | ✅ met |
+| AC-1.1 | `agents/facilitator.md:51-55` → `lenses/README.md:85-93` (7 rows, `must-be-accessible` present) | ✅ met |
+| AC-1.2 | `agents/facilitator.md:69-72` → `lenses/README.md:85-93` `Activates` column; resolves to `security`, `data`, `i18n`, `accessibility` — all four | ✅ met |
+| AC-1.3 | `templates/constitution.md:26-28`, `:36` | ✅ met |
+| AC-1.4 | `lenses/README.md:113-127` steps 1-3 + the two sites above; a 10th lens needs no edit to `facilitator.md` or `templates/constitution.md` | ✅ met |
+| AC-2.1 | `skills/look-and-feel/SKILL.md:33-38` → `{seo, ux, i18n, accessibility}` | ✅ met |
 | AC-2.2 | `skills/demo-day/SKILL.md:82-85` → `{ux, seo, security, i18n, accessibility}` | ✅ met |
 | AC-2.3 | `skills/peer-review/SKILL.md:49-52`; parenthetical removed entirely → 8 lenses | ✅ met |
-| AC-2.4 | The three sites above + generic receiving clauses re-read at `agents/designer.md:62-64,76-77`, `agents/reviewer.md:62-64,80`, `agents/qa-tester.md:174-176,193-194` | ✅ met |
-| AC-3.1 | `lenses/README.md:127-136` — caveat retired, both links present (kept + repointed), but the replacement claim overreaches into `act` | ⚠️ partial (F1) |
-| AC-3.2 | `README.md:321`, `:340-346`; claim scoped to the eight sites, both prose residuals named | ✅ met |
-| NFR-4 | Re-derived from all 9 frontmatters: design `{accessibility,i18n,seo,ux}`, qa `{+security}`, review `{all but ux}`, act `{accessibility}` — every one named by the matching rewritten instruction, none falsely included | ✅ met |
-| NFR-5 | Negative case re-derived live: `library` = `[specify, review]` → design ∅, qa ∅, review `{library}`, identical to T1. Independently corroborated by this very run — `/peer-review` passed me `library.md` and nothing else | ✅ met |
-| NFR-6 | Re-verified over all 9 changed files: no slash command renamed; `templates/spec.md` and `templates/constitution.md` headings/columns/`NFR-n` patterns byte-identical to `main` (diff of extracted heading+table lines is empty); both plugin manifests untouched; every dispatch set is a strict **superset** of the list it replaced, so no consumer loses a lens — additive, minor-bump | ✅ met |
+| AC-2.4 | The three sites above + generic receiving clauses re-read at `agents/designer.md:62-64,76-77`, `agents/reviewer.md:62-64,80`, `agents/qa-tester.md:174-176,191-193` | ✅ met |
+| AC-3.1 | `lenses/README.md:128-140` — caveat retired, both links present, and the replacement claim is now bounded to the four phases that really are generic, with `act` excepted (F1) | ✅ met r2 |
+| AC-3.2 | `README.md:321`, `:340-346`; claim scoped to the eight sites, both prose residuals named; untouched by the fix pass | ✅ met |
+| NFR-4 | Re-derived from all 9 frontmatters: design `{accessibility,i18n,seo,ux}`, qa `{+security}`, review `{all but ux}`, act `{accessibility}`, specify `{all 9}` — every one named by the matching rewritten instruction, none falsely included | ✅ met |
+| NFR-5 | Negative case re-derived live: `library` = `[specify, review]` → design ∅, qa ∅, review `{library}`. Corroborated by this run — `/peer-review` passed me `library.md` and nothing else | ✅ met |
+| NFR-6 | Re-verified over all **10** changed files: no slash command renamed; both protected templates comment-only against `main` across the combined diff; both plugin manifests untouched; every dispatch set still a strict superset of the list it replaced, and F6's edit narrows nothing — additive, minor-bump | ✅ met |
 
 ## 5. What Was Checked
 
-- [x] Correctness: every Must AC traced to its resolved instruction text, re-read in the working tree
-- [x] Non-functional: NFR-4/5/6 re-derived from primary source; constitution §1, §3, §4, §6 checked against the diff
-- [x] Error handling: N/A — prompt material, no runtime. The one failure mode (malformed `phases`) is documented at `lenses/README.md:114-117` per R4
+- [x] Correctness: every Must AC re-traced to its resolved instruction text in the working tree; all seven round-1 fixes verified from the file, not the ledger
+- [x] Non-functional: NFR-4/5/6 re-derived from primary source; constitution §1, §3, §4, §6 re-checked against the fix-mode diff
+- [x] Error handling: N/A — prompt material, no runtime. The one failure mode (malformed `phases`) is documented at `lenses/README.md:115-118` per R4
 - [x] Security: N/A — no user input, no secrets, no network surface touched (spec NFR-2)
-- [x] Tests: `claude plugin validate .` re-run after my fixes — passes with the one pre-existing, unrelated `autoUpdate` warning. No suite exists and none is possible (constitution §4); the read-based dry run is the bar and it was performed
-- [x] Readability: two garbled/regressed instruction sentences found and fixed (F4, F5)
+- [x] Tests: `claude plugin validate .` re-run on `f32be5c` — "Validation passed with warnings", the same single pre-existing, unrelated `autoUpdate` warning. No suite exists and none is possible (constitution §4); the read-based dry run is the bar and was performed
+- [x] Cross-reference integrity (new this round): swept for anything still keyed to the phrasing the fix pass retired — "browser-observable"/"no browser surface" and relative `the plugin's lenses/README.md`; found one stale author instruction (F8) and one self-contradiction inside the ledger (F9), both Nit
 - [x] Library lens (§1 public surface, §2 compatibility, §4 contract clarity; §3 N/A per constitution §2): no surface added, no contract structure renamed, docs shipped in the same change
 
 ## 6. Verdict
 
-The mechanism this feature set out to build is correct and I could not break it: all eight closed
-enumerations are gone, each replaced by a rule that reads the fact at its declaring site, and when I
-re-derived the phase sets from the nine lens frontmatters myself — rather than trusting the ledger — every
-rewritten instruction resolved to exactly the right set, with `accessibility` now included at design, qa
-and review where it previously reached none of them, and with no lens falsely included anywhere. The
-protected-template edit is genuinely comment-only: extracting every heading and table line from
-`templates/spec.md` and diffing it against `main` returns empty, so C5's "no major bump" holds, as does
-NFR-6 more broadly — every new dispatch set is a strict superset of the list it replaced, so no installed
-consumer loses anything. The two deliberately-left-open residuals are honestly disclosed, not glossed:
-`docs/status.md:34` and `docs/workflow.md:40-42` really do still list eight lenses, and both are named
-with `file:line` in the ledger, in `README.md`'s row and in `lenses/README.md`'s step 3, framed as
-documentation accuracy rather than as a dispatch gap — which is what they are. What stops this passing is
-F1: in retiring a caveat that was true, step 4 replaced it with a claim that is not — "any combination of
-phases … reaches its agents" is false for `act`, where no skill dispatches anything, and the plan's own
-R5 flagged that this task had to say so. A feature whose thesis is that a stale closed list silently
-misleads the next lens author should not ship a stale open claim in the same paragraph. Fix F1, decide
-F7 (a one-line convention call), and this is ready for QA; F2, F3 and F6 are real but can ride to the
-fix pass or the next feature at the developer's discretion.
+This passes. The one thing that blocked round 1 is genuinely fixed and fixed in the right way: step 4 no
+longer claims a genericity the mechanism does not have, and — more to the point — the four phases it
+*does* now claim each survived an independent check rather than a re-read of the developer's sentence.
+`act` still has zero dispatchers in `/increment`, and the new exception says exactly that; `design`, `qa`
+and `review` resolve through their phase-filtering skills; and `specify`, the phase the new wording adds,
+holds for a reason the fix text doesn't state but that I confirmed — `/story-time` passes every active
+lens unfiltered, so a `specify` lens cannot fail to arrive, and the PO's "a lens with nothing relevant"
+rule absorbs the over-dispatch. F3 collapsed the duplicate mapping to one table that all four consumers
+now cite, F6 aligned the receiving clause with a replacement claim I verified against the four
+frontmatters it names, and F7's `${CLAUDE_PLUGIN_ROOT}` conversion left both protected templates
+comment-only against `main` across the *combined* diff, not just the fix commit — headings, columns and
+`NFR-n` patterns all byte-identical, so C5 holds. The blemish worth naming is that the fix pass repeated
+its own mistake in miniature: F2's correction restated the file count in the present tense and left out
+the very edit that commit was making (`agents/qa-tester.md`), so the ledger claimed 9 files where the
+diff has 10 — I re-derived the numbers and corrected the passage, pinning it to a commit so it cannot
+drift again. What remains is two Nits that block nothing and should ride to the next touch: step 3 still
+tells a lens author to update a section F3 just emptied (F8), and the ledger's T3 section still calls a
+parenthetical "untouched" that its own fix-mode section rewrote (F9). Neither changes a dispatch set, a
+gate answer or a Must AC. Ready for QA.
 
 ---
 
@@ -139,9 +141,9 @@ fix pass or the next feature at the developer's discretion.
 re-review, edit this same checklist in place — never duplicate it as a second gate.*
 
 - [x] No open Blocker findings
-- [ ] No open Major findings (or explicitly waived by the user, with reason recorded here) — `F1` open; only the user may waive a Major
-- [x] Every Must AC traces to implementing code; no constitution non-negotiable violated (§6's five non-negotiables checked; F1 and F7 touch §1 and §3, neither of which is a §6 non-negotiable)
-- [x] All plan deviations documented and accepted — T7, T10, T11 deviate; each is recorded in §2 and carries a finding
-- [x] Test suite runs green — no suite exists (constitution §4); `claude plugin validate .` passes with the one pre-existing warning, re-run after the reviewer's fixes
-- [x] Line budget respected: Ist 147 / Soll ~150 (excluding HTML comments)
-- [ ] Status set to `passed` — `changes-requested` while F1 is open
+- [x] No open Major findings (or explicitly waived by the user, with reason recorded here) — `F1` confirmed fixed at round 2; nothing waived
+- [x] Every Must AC traces to implementing code; no constitution non-negotiable violated (§6's five non-negotiables re-checked against the fix-mode diff; F8/F9 touch neither)
+- [x] All plan deviations documented and accepted — T10 still deviates (F2, corrected); the fix pass's edit to `agents/qa-tester.md` is recorded in §2 and in the ledger
+- [x] Test suite runs green — no suite exists (constitution §4); `claude plugin validate .` passes on `f32be5c` with the one pre-existing warning
+- [x] Line budget respected: Ist 149 / Soll ~150 (excluding HTML comments)
+- [x] Status set to `passed` — two open Nits (F8, F9), no Blocker or Major

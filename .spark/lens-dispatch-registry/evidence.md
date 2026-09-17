@@ -455,9 +455,13 @@ Same single pre-existing, unrelated warning present on every prior release since
 showed 7 files changed — the seven dispatch/activation sites. Restated here, after T11/T12, at the
 review-fix pass (F2: the 7-file snapshot was accurate for its moment but stale as a claim about "the
 diff" once two more tasks landed):* `git diff --stat main...feat/lens-dispatch-registry -- ':!.spark'`
-now shows **9 files changed**: the original seven plus `README.md` (T12, +12/−5) and `lenses/README.md`
-(T11, +23/−16) — 74 insertions, 30→51 deletions, matching plan §2's Affected Components list exactly,
-nothing outside it.
+shows, **as of the fix-mode commit `f32be5c`, 10 files changed**: the original seven plus `README.md`
+(T12, +12/−5), `lenses/README.md` (T11 + F1/F3, +29/−18) and `agents/qa-tester.md` (F6, +4/−4) — 88
+insertions, 59 deletions, matching plan §2's Affected Components list plus the one review-driven fix
+(F6) recorded below, nothing outside it. *(Corrected by the Reviewer at round 2: the fix-mode restatement
+above said 9 files / 74 insertions / 51 deletions, which omitted its own F6 edit to `agents/qa-tester.md`
+— the same stale-snapshot shape F2 raised. Re-derived from `git diff --numstat
+main...feat/lens-dispatch-registry -- ':!.spark'`.)*
 
 - **No slash command name changed** — every file above is either an agent prompt, an existing skill's
   internal step text, or descriptive README/registry prose; no `name:` frontmatter field, no new or
