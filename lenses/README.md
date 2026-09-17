@@ -111,19 +111,26 @@ A new concern is a new file, nothing else — no new agent, no skill rewrite:
 
 1. Create `lenses/<name>.md` following the contract above (copy an existing one).
    Declare `applies-to` (a project type) or `triggers` (a characteristic).
-2. Give each check a phase owner so a real agent verifies it.
-3. Add it to the *Available lenses* table here, and to the detection signals if
-   it binds to a new type or a new characteristic.
-4. Its checks flow automatically: the skills pass active lens paths to their
-   agents by name, so any activated lens is picked up without further wiring —
-   **with known exceptions.** `/story-time`, `/increment` and (with a caveat)
-   `/peer-review` are genuinely generic. `/look-and-feel` and `/demo-day`
-   select design-/QA-relevant lenses from a closed, named list rather than
-   reading the constitution's active-lens set directly, so a lens with
-   `design`/`qa` phases needs those two skills edited by hand until that's
-   fixed. The `/charter` activation path has the same shape one layer up: the
-   Facilitator's characteristic vocabulary and the shipped constitution
-   template are also closed lists, so a *new characteristic* needs both
-   updated before any project can declare it. See
-   [`.spark/accessibility-lens/evidence.md`](../.spark/accessibility-lens/evidence.md)
-   for the full, current account of what is and isn't yet generic.
+2. Give each check a phase owner in the lens's own `phases:` frontmatter field —
+   that field is what every dispatching skill reads to decide who receives the
+   lens file. A missing or misspelled `phases` entry silently drops the lens
+   from every phase it should reach, with no error to surface the mistake.
+3. Add it to the *Available lenses* table here and, if it binds to a new type
+   or a new characteristic, to the detection-signals tables above and the
+   *Two ways a lens activates* section — these are the lists an author must
+   still update by hand for this file to stay the accurate single source of
+   truth. Three prose copies *outside* this file also name lenses for a human
+   reader and are not sourced from here, so they need the same hand update if
+   you want them to stay accurate: [`README.md`](../README.md)'s own lens
+   table, [`docs/status.md`](../docs/status.md), and
+   [`docs/workflow.md`](../docs/workflow.md).
+4. Its checks flow automatically: every dispatching skill and the `/charter`
+   activation path now read this file's tables and each lens's own `phases`
+   frontmatter, rather than a closed, named list — a lens with any
+   combination of phases and any new characteristic reaches its agents and
+   becomes declarable at `/charter` with no skill, agent or template edit.
+   See
+   [`.spark/lens-dispatch-registry/evidence.md`](../.spark/lens-dispatch-registry/evidence.md)
+   for the worked proof (all 9 shipped lenses, both dispatch and activation)
+   and [`.spark/accessibility-lens/evidence.md`](../.spark/accessibility-lens/evidence.md)
+   for the original finding that prompted the fix.

@@ -46,9 +46,10 @@ Optional argument: the feature name. Resolve as usual.
    feature paths, the report template from
    `${CLAUDE_PLUGIN_ROOT}/templates/review-report.md`, how to determine
    the diff (commit range or changed files since the increment started), and
-   the paths of any active lenses with review-phase checks (from the
-   constitution's profile — `${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md` for any of
-   `seo`, `api`, `cli`, `library`, `security`, `data`, `i18n` that are active).
+   the path of every active lens whose own frontmatter `phases` field includes
+   `review` — read each active lens's file
+   (`${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md`) to decide; do not work from a
+   list of lens names given here.
    If a tool resolved as available in step 1, pass
    `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md` the same way — one more path
    alongside the lens paths, nothing else.

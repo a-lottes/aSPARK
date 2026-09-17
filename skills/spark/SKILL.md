@@ -62,10 +62,11 @@ spends them in the context the rest of the loop still has to fit into.
    pass them from the constitution themselves. If **no** constitution exists,
    give a one-line **nudge**: glance at the repo (signals in
    `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`), name the likely type(s)/
-   characteristics you see, and note that `/charter` records them so the matching
-   lenses (`seo`, `ux`, `api`, `cli`, `library`, `security`, `i18n`, `data`)
-   activate for every phase. Without a constitution no lens is applied — the
-   nudge only surfaces the choice; the constitution is the single source of truth.
+   characteristics you see, and note that `/charter` records them so the
+   matching lens — see the registry's *Available lenses* table for the current
+   set — activates for every phase. Without a constitution no lens is applied —
+   the nudge only surfaces the choice; the constitution is the single source of
+   truth.
 2. **Gather QA prerequisites early.** Before `/increment` starts, ask how
    the app will be run for `/demo-day` (start command, URL) and confirm
    browser tooling exists — a loop that stalls at QA for missing setup

@@ -79,9 +79,10 @@ user for it, and how to start the app if it isn't running.
 2. **Delegate to the QA Tester.** Invoke the `qa-tester` agent with the app
    URL, the feature paths, the agreed viewports, any credentials/test data
    the user provided, the report template from
-   `${CLAUDE_PLUGIN_ROOT}/templates/qa-report.md`, and the paths of any active
-   lenses with browser-observable checks (from the constitution's profile —
-   `${CLAUDE_PLUGIN_ROOT}/lenses/` — `ux.md`, `seo.md`, `security.md`, `i18n.md`).
+   `${CLAUDE_PLUGIN_ROOT}/templates/qa-report.md`, and the path of every active
+   lens whose own frontmatter `phases` field includes `qa` — read each active
+   lens's file (`${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md`) to decide; do not work
+   from a list of lens names given here.
    If a tool resolved as available in step 1, pass
    `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md` the same way — one more path
    alongside the lens paths, nothing else.

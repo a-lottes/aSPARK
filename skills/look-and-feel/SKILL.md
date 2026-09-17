@@ -31,12 +31,14 @@ Optional argument: a feature name, a URL, or paths to screenshots/components.
      what is actually rendered.
 3. **Resolve active lenses.** The constitution is the single source of truth.
    Read the active lenses from `.spark/constitution.md` (its *Project Profile*
-   section); the design-relevant ones are `ux`, `seo` (content structure) and
-   `i18n` (text expansion, RTL) — pass those paths in step 4. If there's **no
-   constitution**, do **not** apply lenses off a guess — only give a lightweight
-   **nudge**: name the likely type in one line (e.g. "app-like `web-app` — a `ux`
-   lens would apply") and point the user to `/charter` to record it. No lens is
-   switched on without a confirmed constitution entry.
+   section); pass the path of every active lens whose own frontmatter `phases`
+   field includes `design` — read each active lens's file
+   (`${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md`) to decide; do not work from a list
+   of lens names given here — in step 4. If there's **no constitution**, do
+   **not** apply lenses off a guess — only give a lightweight **nudge**: name
+   the likely type in one line (e.g. "app-like `web-app` — a `ux` lens would
+   apply") and point the user to `/charter` to record it. No lens is switched
+   on without a confirmed constitution entry.
 4. **Delegate to the Designer.** Invoke the `designer` agent with the mode,
    the feature paths, any evidence, and the paths of the design-relevant active
    lenses (`${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md`). In Mode A it fills the
