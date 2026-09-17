@@ -92,6 +92,30 @@ A lens is **knowledge, not a new role** — the concern rides the same gates and
 
 ---
 
+## The aSPARK Family
+
+Core is one repo of five. Everything else is **optional** — Core has no hard
+dependency on any of them (constitution §3), and a project that installs none
+behaves exactly as documented above. The column that matters is the third one:
+two of the four siblings do not touch the loop at all today.
+
+| Repo | What it is | Hooks into Core today? | How you get it |
+|---|---|---|---|
+| **aSPARK** (this repo) | The loop: 10 skills, 7 agents, 9 lenses, 6 templates | — it *is* Core | `/plugin install aspark@aspark` |
+| [**aspark-guard**](https://github.com/a-lottes/aSPARK-guard) `v0.1.0` | Denies a `.spark/` write that violates a gate precondition; records every write with its hash | **Yes** — as a second plugin from the same marketplace | `/plugin install aspark-guard@aspark` |
+| [**aspark-graph**](https://github.com/a-lottes/aSPARK-graph) `v0.7.0` | Deterministic graph over your `.spark/` artifacts and source code | **Yes** — `/sprint-plan`, `/peer-review` and `/demo-day` probe for it and pass it by path | `pip install aspark-graph` (PyPI) |
+| [**aspark-insights**](https://github.com/a-lottes/aSPARK-insights) `v0.12.0` | Metrics over the graph's facts: traceability coverage, an offline HTML report, a release board, MCP queries | **No** — standalone; it reads the graph, not Core | source only, not on PyPI |
+| [**aspark-policy**](https://github.com/a-lottes/aSPARK-policy) `v0.2.0` | Policy-as-code: a documented format, a tested JSON Schema, 11 catalog packs including `pci-dss`, `un-r155` and `misra` | **No** — a format and a catalog; the `validate` CLI and the Facilitator integration are unbuilt | Git submodule, no tooling to run |
+
+Versions are the repos' latest git tags, not their own status prose — checkable
+with `git ls-remote --tags`. Overview and docs for the whole family:
+**[aspark.lottes.dev](https://aspark.lottes.dev)**.
+
+The two that *do* hook in are described in full — including what their evidence
+does and does not cover — under [§Optional Tools](#optional-tools) below.
+
+---
+
 ## Installation
 
 **Requirements:** [Claude Code](https://claude.com/claude-code) and Git. For `/demo-day` you additionally need a browser integration (Claude in Chrome, or a Playwright / Chrome DevTools MCP server) — unless the project's constitution declares a substitute QA method, which `/charter` sets once for a project that has no browser-observable surface.
@@ -117,6 +141,10 @@ claude
 ```
 /plugin install aspark@aspark
 ```
+
+> This marketplace carries **two** plugins: `aspark` (Core, above) and the
+> optional `aspark-guard` — see [§The aSPARK Family](#the-aspark-family).
+> Core works on its own; install the guard only if you want it.
 
 **4. Restart Claude Code** — close and reopen your session (or `/exit`, then `claude` again). Plugins only activate after a restart.
 
@@ -207,8 +235,10 @@ If you're new to Claude Code plugins, this is all there is to it:
 - **`templates/`** — the artifacts. Blueprints for `constitution.md`, `spec.md`, `plan.md`, `review.md`, `qa.md` and `release.md`, each (bar the constitution) ending in an explicit gate checklist. Templates are the "what".
 - **`lenses/`** — situational concern checklists (`seo`, `ux`, …). Activated by the project profile in the constitution and applied by the existing agents in the phases they own. Lenses are the "when it applies".
 - **`tools/`** — guidance for optional external programs a ceremony may use *if you happen to have them installed*. Activated by installation state rather than by the constitution. Tools are the "if it's there".
-- **`docs/`** — deep-dives, starting with the workflow and gate hand-over rules.
-- **`.claude-plugin/`** — plugin metadata so Claude Code can discover and install all of the above.
+- **`docs/`** — deep-dives: [`workflow.md`](docs/workflow.md) (the gate hand-over rules), [`status.md`](docs/status.md) (per-criterion proof state), [`metrics.md`](docs/metrics.md) (the method behind the figures below) and the [Enterprise Architecture Handbook](docs/aSPARK_Enterprise_Architecture_Handbook.docx) (`.docx`), which carries a delivery-stage label per chapter so ambition and delivery stay separable.
+- **`.claude-plugin/`** — plugin metadata so Claude Code can discover and install all of the above. `marketplace.json` is also what publishes the optional `aspark-guard` alongside Core.
+
+Alongside the folders, three documents at the repo root: [`ROADMAP.md`](ROADMAP.md) (what ships next, what's blocked, what was declined), [`CONTRIBUTING.md`](CONTRIBUTING.md) (how to add a skill, agent, lens or template without breaking the contract) and [`CLAUDE.md`](CLAUDE.md) (working habits kept across loops, distinct from the constitution's standing principles).
 
 Reading order for newcomers: this README → `docs/workflow.md` → one template → one skill → one agent. After that you'll understand every file in the repo.
 
@@ -222,21 +252,21 @@ today — no error, no warning, no mention. Two shapes exist: a **tool** a
 ceremony probes for and passes by path (`tools/`), and a **companion plugin**
 you install yourself, alongside Core, from the same marketplace.
 
-**[`aspark-graph`](https://github.com/a-lottes/aSPARK-graph)** — a deterministic
-graph over your `.spark/` artifacts and source code. When present, `/sprint-plan`
-uses it to ground *Affected Components*, `/peer-review` to scope a diff, and
-`/demo-day` to scope a test plan. It is **optional** — published on PyPI as
-`aspark-graph` (`pip install aspark-graph`, or `uvx aspark-graph build .` with no
-install step at all) — and nothing in aSPARK installs, builds or runs it on your
-behalf. A result from it is treated as a map, never a verdict: it says where to
-look, and the agent still reads the code and still performs the steps.
+These are the two siblings from [§The aSPARK Family](#the-aspark-family) that do
+hook into the loop. *What* each one is stands in that table; what follows is how
+it plugs in, and what its evidence does and does not cover.
 
-**[`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)** — a companion
-plugin that enforces the SPARK gates in code rather than in prompt: it denies a
-`.spark/` write that violates a phase precondition, and records every write with
-its hash. It addresses the gap this project's own roadmap names — the gates
-are prompt-enforced, and hold only until an agent under context pressure
-reasons its way around one
+**[`aspark-graph`](https://github.com/a-lottes/aSPARK-graph)** — when present,
+`/sprint-plan` uses it to ground *Affected Components*, `/peer-review` to scope a
+diff, and `/demo-day` to scope a test plan. It is **optional** — published on
+PyPI as `aspark-graph` (`pip install aspark-graph`, or `uvx aspark-graph build .`
+with no install step at all) — and nothing in aSPARK installs, builds or runs it
+on your behalf. A result from it is treated as a map, never a verdict: it says
+where to look, and the agent still reads the code and still performs the steps.
+
+**[`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)** — it addresses the
+gap this project's own roadmap names: the gates are prompt-enforced, and hold
+only until an agent under context pressure reasons its way around one
 ([#13](https://github.com/a-lottes/aSPARK/issues/13)). It is **optional** —
 install it yourself with `/plugin install aspark-guard@aspark` — and nothing in
 aSPARK installs, builds or runs it on your behalf. `aspark-guard` reports
