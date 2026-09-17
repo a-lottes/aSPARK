@@ -22,17 +22,18 @@
 ## 2. Project Profile & Active Lenses
 
 <!-- What kind of software this is, and which situational concern-checklists ("lenses") therefore apply.
-     The Facilitator grounds this in the repo (see the detection signals in the plugin's lenses/README.md);
-     the user confirms. Lenses activate two ways: from the project TYPE (seo←website, ux←web-app, api←api,
-     cli←cli, library←library) and from CHARACTERISTICS — see the plugin's lenses/README.md "Two ways a
-     lens activates" section for the current characteristic→lens mapping. A project can be several
+     The Facilitator grounds this in the repo (see the detection signals in
+     `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`); the user confirms. Lenses activate two ways: from the
+     project TYPE (seo←website, ux←web-app, api←api, cli←cli, library←library) and from CHARACTERISTICS —
+     see the `Activates` column of `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`'s "Characteristics"
+     detection-signals table for the current mapping. A project can be several
      types and carry several characteristics. Lenses are applied by the existing agents in the phases they own —
      no new roles. Leave a lens off when it doesn't genuinely apply. -->
 
 - **Project type(s):** e.g. `website` + `web-app` (public marketing site plus an authed dashboard).
   <!-- one or more of: website (public, indexable) · web-app (app-like frontend) · api · cli · library -->
 - **Characteristics:** e.g. `handles-auth`, `handles-pii`, `has-database`.
-  <!-- see the plugin's lenses/README.md "Characteristics" detection-signals table for the current list -->
+  <!-- see `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`'s "Characteristics" detection-signals table for the current list -->
 - **Active lenses:**
 
 | Lens | Why it's active (or off) | Enforced in |

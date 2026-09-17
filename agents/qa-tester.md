@@ -172,8 +172,8 @@ defense before `/go-live` — if you pass something broken, it ships broken.
    and large datasets) using the same `NFR-n` IDs — that closes the trace from
    spec to tested reality.
 4. **Apply active lenses.** For each active lens the caller passed (from the
-   constitution's profile), verify its **browser-observable** checks and report
-   them under the matching `NFR-n`:
+   constitution's profile), verify the checks it marks for the **qa** phase and
+   report them under the matching `NFR-n`:
    - **`ux`** — walk every state (empty, loading, error, success, large-data),
      test forms with junk input, and complete the core flow at mobile width;
      confirm feedback timing and visible focus/hover/active states.
@@ -189,8 +189,8 @@ defense before `/go-live` — if you pass something broken, it ships broken.
      English stand-ins), correct date/number/currency formats, RTL layout intact,
      nothing clipped by text expansion.
    Apply only lenses you were given; don't test a concern the profile didn't
-   activate. (Lenses like `api`, `cli`, `library`, `data` have no browser
-   surface — they're verified in Review, not here.)
+   activate. (Lenses like `api`, `cli`, `library`, `data` don't declare a `qa`
+   phase — they're verified in Review, not here.)
 5. **Go exploring.** Off the happy path, systematically:
    - empty, huge, and nonsense inputs; special characters and emoji;
    - double submits, rapid clicking, actions repeated out of order;

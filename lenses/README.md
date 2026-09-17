@@ -45,8 +45,9 @@ profile records both, so:
 - **Type-triggered lenses** declare `applies-to: [<type>]` — `seo`←`website`,
   `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`, `library`←`library`.
 - **Characteristic-triggered lenses** declare `triggers: [<characteristic>]` —
-  `security`←`handles-auth`/`is-public`/`handles-payments`/`handles-pii`,
-  `i18n`←`is-multilingual`, `data`←`has-database`, `accessibility`←`must-be-accessible`.
+  see the *Characteristics* detection-signals table's `Activates` column below
+  for the current mapping; it is the single declaration of this fact, not
+  restated here.
 
 ## The lens contract (what every lens file guarantees)
 
@@ -126,10 +127,13 @@ A new concern is a new file, nothing else — no new agent, no skill rewrite:
    [`docs/workflow.md`](../docs/workflow.md).
 4. Its checks flow automatically: every dispatching skill and the `/charter`
    activation path now read this file's tables and each lens's own `phases`
-   frontmatter, rather than a closed, named list — a lens with any
-   combination of phases and any new characteristic reaches its agents and
-   becomes declarable at `/charter` with no skill, agent or template edit.
-   See
+   frontmatter, rather than a closed, named list — a lens declaring
+   `specify`, `design`, `review` or `qa`, and any new characteristic, reaches
+   its agents and becomes declarable at `/charter` with no skill, agent or
+   template edit. The one exception is `act`: `/increment` dispatches no
+   lens files at all, so an `act` check is realized through the checks a
+   spec author writes into §5 Non-Functional Requirements, not by dispatch —
+   unchanged by this fix. See
    [`.spark/lens-dispatch-registry/evidence.md`](../.spark/lens-dispatch-registry/evidence.md)
    for the worked proof (all 9 shipped lenses, both dispatch and activation)
    and [`.spark/accessibility-lens/evidence.md`](../.spark/accessibility-lens/evidence.md)

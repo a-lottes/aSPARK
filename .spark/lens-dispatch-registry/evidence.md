@@ -451,18 +451,24 @@ Validating marketplace manifest: /Users/andreaslottes/aSPARK/.claude-plugin/mark
 Same single pre-existing, unrelated warning present on every prior release since commit `789e33f`
 (`.claude-plugin/marketplace.json` is untouched by this diff — confirmed below).
 
-**Diff-level compatibility assertion (NFR-6).** `git diff --stat` on `feat/lens-dispatch-registry`
-against its merge-base with `main` shows exactly 7 files changed: `agents/facilitator.md`,
-`skills/demo-day/SKILL.md`, `skills/look-and-feel/SKILL.md`, `skills/peer-review/SKILL.md`,
-`skills/spark/SKILL.md`, `templates/constitution.md`, `templates/spec.md` — 39 insertions, 30 deletions,
-matching plan §2's Affected Components list exactly, nothing outside it.
+**Diff-level compatibility assertion (NFR-6).** *As of T10 (before T11/T12 landed), `git diff --stat`
+showed 7 files changed — the seven dispatch/activation sites. Restated here, after T11/T12, at the
+review-fix pass (F2: the 7-file snapshot was accurate for its moment but stale as a claim about "the
+diff" once two more tasks landed):* `git diff --stat main...feat/lens-dispatch-registry -- ':!.spark'`
+now shows **9 files changed**: the original seven plus `README.md` (T12, +12/−5) and `lenses/README.md`
+(T11, +23/−16) — 74 insertions, 30→51 deletions, matching plan §2's Affected Components list exactly,
+nothing outside it.
 
-- **No slash command name changed** — every file above is either an agent prompt or an existing skill's
-  internal step text; no `name:` frontmatter field, no new or removed `/`-command was touched.
+- **No slash command name changed** — every file above is either an agent prompt, an existing skill's
+  internal step text, or descriptive README/registry prose; no `name:` frontmatter field, no new or
+  removed `/`-command was touched.
 - **No protected template heading, column or `NFR-n` ID pattern renamed or removed** — `templates/spec.md`
   is in constitution §3's protected contract set (spec C5); T8's byte-identity check (above) already
-  confirmed only its HTML comment changed. `templates/constitution.md` is not in that protected set
-  (spec C5) but received the same scrutiny at T6: only its two HTML comments changed.
+  confirmed only its HTML comment changed, re-confirmed after the review-fix pass's additional edit to
+  the same comment (F7). `templates/constitution.md` is not in that protected set (spec C5) but received
+  the same scrutiny at T6, re-confirmed after F7's edit: only its HTML comments changed.
+- **`README.md` and `lenses/README.md` (T11/T12) carry no protected structure of their own** — both are
+  descriptive documentation, not templates or skills; their edits are prose only.
 - **`.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` are both untouched** by this diff
   (absent from the file list above) — the version bump is `/go-live`'s action, not this increment's;
   `plugin.json` still reads `0.9.0` on this branch.
@@ -565,3 +571,43 @@ lens gets discovered, activated and dispatched," not every prose count of lenses
 
 **Result:** AC-3.2 satisfied — the gap is stated closed where it is closed, and the one honest residual
 is named with `file:line` and routed, not glossed over or silently folded into the "closed" claim.
+
+## Fix-mode round 1 — review findings F1, F2 (inline above), F3, F6, F7, 2026-09-17
+
+Per `.spark/lens-dispatch-registry/review.md` round 1 (`changes-requested`), routed with the user:
+
+**F1 (Major, fixed).** `lenses/README.md`'s "Adding a lens" step 4 claimed genericity for "any
+combination of phases," which is false for `act` — no skill dispatches lens files at that phase. Fixed
+by appending the honest exception, mirroring T9's own Act-phase finding: "The one exception is `act`:
+`/increment` dispatches no lens files at all, so an `act` check is realized through the checks a spec
+author writes into §5 Non-Functional Requirements, not by dispatch — unchanged by this fix." This is the
+caveat plan §5/R5 originally assigned to T11 and that task omitted.
+
+**F3 (Minor, fixed).** The characteristic→lens mapping was declared twice in `lenses/README.md` — the
+"Two ways a lens activates" bullets and the Characteristics table's `Activates` column — with
+`agents/facilitator.md` and `templates/constitution.md` each pointing at a different copy. Fixed by
+making "Two ways a lens activates" defer to the table ("see the *Characteristics* detection-signals
+table's `Activates` column below... it is the single declaration of this fact, not restated here") and
+repointing both `/charter` consumers (`agents/facilitator.md:69-70`, `templates/constitution.md:28`) at
+that same table. This also converges with T5's vocabulary pointer, which already cited the same table —
+the mapping and the vocabulary now share one declaration site instead of two.
+
+**F6 (Nit, fixed).** `agents/qa-tester.md` step 4's head clause said "verify its **browser-observable**
+checks," while T3 had already widened dispatch to `phases: qa` — two layers defining the same set by
+different criteria. Fixed by aligning the receiving clause: "verify the checks it marks for the **qa**
+phase," and the trailing parenthetical from "have no browser surface" to "don't declare a `qa` phase."
+This is an edit to a file plan §2 listed as "verified generic, no edit needed" — a legitimate fix-mode
+deviation triggered by a review finding, not a plan-conformance defect; `agents/qa-tester.md` remains
+generic in the sense that matters (it applies whatever it's given), the fix only aligns its *description*
+of what it's given with the dispatch layer's actual selection criterion.
+
+**F7 (Minor, fixed).** The three registry pointers written by T8/T5/T6 used relative prose ("the
+plugin's lenses/README.md") instead of the `${CLAUDE_PLUGIN_ROOT}/…` form constitution §3 requires.
+Fixed in all three (`templates/spec.md:69`, `templates/constitution.md:26,28,36`) and, for internal
+consistency now that every other reference in the same paragraph uses the explicit form, also at
+`templates/constitution.md:25` (the one pre-existing relative reference the reviewer flagged as
+optional). Byte-identity re-verified after this and F3's edits: `git diff templates/spec.md
+templates/constitution.md` shows only comment-line changes, no heading/column/`NFR-n` pattern touched.
+
+**Re-validation.** `claude plugin validate .` re-run after all fix-mode edits: passes with the one
+pre-existing, unrelated `autoUpdate` warning — unchanged from every prior check in this feature.

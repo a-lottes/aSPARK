@@ -32,9 +32,9 @@ Optional argument: a feature name, a URL, or paths to screenshots/components.
 3. **Resolve active lenses.** The constitution is the single source of truth.
    Read the active lenses from `.spark/constitution.md` (its *Project Profile*
    section); pass the path of every active lens whose own frontmatter `phases`
-   field includes `design` — read each active lens's file
-   (`${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md`) to decide; do not work from a list
-   of lens names given here — in step 4. If there's **no constitution**, do
+   field includes `design` in step 4. To decide, read each active lens's file
+   (`${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md`); do not work from a list of lens
+   names given here. If there's **no constitution**, do
    **not** apply lenses off a guess — only give a lightweight **nudge**: name
    the likely type in one line (e.g. "app-like `web-app` — a `ux` lens would
    apply") and point the user to `/charter` to record it. No lens is switched

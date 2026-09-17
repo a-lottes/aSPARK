@@ -66,9 +66,9 @@ the team to ignore all the others too.
    you detected and the *evidence* for each (the file or config that proves it),
    then derive the **active lenses** from both — types activate `seo`←`website`,
    `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`, `library`←`library`; for
-   characteristics, look up the current mapping in
-   `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`'s *Two ways a lens activates*
-   section rather than working from a list here. Recommend a lens only when it
+   characteristics, look up the current mapping in the `Activates` column of
+   `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`'s *Characteristics* detection-signals
+   table rather than working from a list here. Recommend a lens only when it
    genuinely warrants it; a lens the team won't act on is the same dead weight
    as a false principle. The active
    lenses bind downstream phases, so getting this right is what makes the loop

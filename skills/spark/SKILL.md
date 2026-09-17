@@ -63,8 +63,9 @@ spends them in the context the rest of the loop still has to fit into.
    give a one-line **nudge**: glance at the repo (signals in
    `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`), name the likely type(s)/
    characteristics you see, and note that `/charter` records them so the
-   matching lens — see the registry's *Available lenses* table for the current
-   set — activates for every phase. Without a constitution no lens is applied —
+   matching lenses — see `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`'s *Available
+   lenses* table for the current set — activate for every phase. Without a
+   constitution no lens is applied —
    the nudge only surfaces the choice; the constitution is the single source of
    truth.
 2. **Gather QA prerequisites early.** Before `/increment` starts, ask how
