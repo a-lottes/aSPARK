@@ -116,9 +116,11 @@ A new concern is a new file, nothing else — no new agent, no skill rewrite:
    that field is what every dispatching skill reads to decide who receives the
    lens file. A missing or misspelled `phases` entry silently drops the lens
    from every phase it should reach, with no error to surface the mistake.
-3. Add it to the *Available lenses* table here and, if it binds to a new type
-   or a new characteristic, to the detection-signals tables above and the
-   *Two ways a lens activates* section — these are the lists an author must
+3. Add it to the *Available lenses* table here and to the detection-signals
+   tables above; if it binds to a new **type**, also add it to the *Two ways a
+   lens activates* bullets (a new **characteristic** needs no edit there —
+   that section defers to the Characteristics table's `Activates` column,
+   which you've already updated above). These are the lists an author must
    still update by hand for this file to stay the accurate single source of
    truth. Three prose copies *outside* this file also name lenses for a human
    reader and are not sourced from here, so they need the same hand update if

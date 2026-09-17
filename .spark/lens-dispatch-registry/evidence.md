@@ -196,9 +196,12 @@ plan time):
 Same shape as T2: the per-lens bullets (`ux`, `seo`, `security`, `i18n`) are worked examples of what
 those four check, not a membership filter on what the skill may pass — a passed `accessibility.md` is
 applied under the same "apply only lenses you were given" rule. The parenthetical noting `api`/`cli`/
-`library`/`data` "have no browser surface" is accurate and untouched — those four correctly have no `qa`
-in their own frontmatter, so they were never in this dispatch's resolved set either before or after the
-fix.
+`library`/`data` "have no browser surface" is accurate as of this task (T3 made no edit to
+`agents/qa-tester.md`) — those four correctly have no `qa` in their own frontmatter, so they were never
+in this dispatch's resolved set either before or after the fix. *Superseded later in this ledger*: the
+fix-mode round (F6, below) rewrote this exact parenthetical to "don't declare a `qa` phase" for a
+different reason (aligning its wording with `phases: qa`, not correcting a membership error) — see that
+entry for the current text.
 
 **Result:** AC-2.2 (no enumerated filename subset) and AC-2.4 (resolved set includes `accessibility`,
 re-derived from frontmatter) both satisfied.
