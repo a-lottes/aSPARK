@@ -53,3 +53,34 @@ review round 1, review round 2, and QA — with zero drift in either the
 going stale between Plan and release; a single write-up trusted forward
 would not have caught a fix pass narrowing a citation range by one line
 (review round 2's own F9) or a wording change elsewhere going unnoticed.
+
+## Re-check branch staleness with `git merge-tree` right before pushing, not just once
+
+An earlier "confirmed synced with `origin/main`" claim in the same session
+can go stale by the time `/go-live` actually pushes — another branch can
+merge in the interval, especially in a repo where multiple sessions or
+agents share the same working directory. `git merge-tree <merge-base> HEAD
+origin/main` is a cheap, non-destructive way to check for real conflicts
+(not just "is main ahead") at `/go-live` pre-flight, and it's worth running
+twice: once when the release is prepared, and again immediately before the
+actual `git push`, rather than trusting the first check. `lens-dispatch-
+registry`'s release caught `origin/main` moving one merged PR ahead (#48)
+between an earlier in-session "main is synced" check and pre-flight — the
+`merge-tree` re-run showed zero conflicts (non-overlapping file regions), so
+the push proceeded with actual evidence instead of a stale assumption. See
+`.spark/lens-dispatch-registry/release.md` §1 for the worked example.
+
+## Pin a diff's file/line counts to a commit SHA the first time they're asserted
+
+A count like "N files changed, +X/−Y" drifts the moment another commit lands
+on the same branch — stating it as a bare present-tense fact invites the next
+reader (or the next round) to trust a number that's already gone stale, and
+a later "correction" can repeat the same mistake by restating the count in
+present tense again instead of anchoring it. Write the count with the commit
+SHA it was true at from the very first assertion, not only after a fix.
+`lens-dispatch-registry`'s round-2 review fix-mode pass corrected an
+undercounted file list (F2) but restated the new count in present tense too
+— and still undercounted by one file, since the fix commit's own edit
+wasn't included. The re-review caught it and pinned the final count to the
+exact commit SHA. See `.spark/lens-dispatch-registry/review.md` (F2) for the
+worked example.
