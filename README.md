@@ -348,7 +348,7 @@ of the 2026-09-10 figures above.
 |---|---|
 | The loop — 10 skills, 7 agents, 6 templates, `/spark` | **Proven** — full end-to-end run on a sample app, all five gates enforced, shipped as `v0.1.0` |
 | Spec-driven core — constitution, Clarify pass, NFRs, traceability | **Proven through Plan** — live review/QA traceability awaits a full `/increment` |
-| Situational lenses (`lenses/`) | **Shipped; verified against aSPARK itself and three real external projects' own completed loop history** — not a fresh run, a read of loops that already ran. Both success-signal legs confirmed, each via a substitute lens (no project here declares `seo`-on-`website` or `api`); suppression confirmed in aggregate, with one active-lens project's own gap checked properly rather than taken at the first read — that project has no feature at all postdating its profile, so the honest verdict is unproven, not refuted; the add-a-file guarantee refuted for one skill file. Full ledger: [`.spark/situational-lenses/evidence.md`](.spark/situational-lenses/evidence.md) |
+| Situational lenses (`lenses/`) | **Shipped; verified against aSPARK itself and three real external projects' own completed loop history** — not a fresh run, a read of loops that already ran. Both success-signal legs confirmed, each via a substitute lens (no project here declares `seo`-on-`website` or `api`); suppression confirmed in aggregate, with one active-lens project's own gap checked properly rather than taken at the first read — that project has no feature at all postdating its profile, so the honest verdict is unproven, not refuted; the add-a-file guarantee, refuted for one skill file at the time of this sweep, has since been closed across all eight resolved-instruction sites by `lens-dispatch-registry` — see [`.spark/lens-dispatch-registry/evidence.md`](.spark/lens-dispatch-registry/evidence.md). Two prose lens-count copies (`docs/status.md`, `docs/workflow.md`) remain stale as of that feature's own sweep — a separate, named documentation-accuracy finding, not a reopened dispatch gap. Full ledger: [`.spark/situational-lenses/evidence.md`](.spark/situational-lenses/evidence.md) |
 | Optional tools (`tools/`, `aspark-graph` only) | **25 of 30 criteria proven live** pre-sweep, six shipped `partial`; a 2026-08-26 verify-only sweep closed three of those six live, refuted one with a finding, and left two out of scope (still `unproven`) — see below |
 | Companion plugin (`aspark-guard`) | Self-tested by its own author (142 tests / 22 replayed artifacts), not independently verified by Core, never run through a third-party loop — see [§Optional Tools](#optional-tools) for the full statement |
 | PR-mode delivery (`handed-off`) | **Proven** on this repo's own release ([PR #3](https://github.com/a-lottes/aSPARK/pull/3)) |
@@ -367,10 +367,17 @@ evidence the lens was ever applied to a real feature — but that project turns 
 to have **no feature at all** that postdates its own profile, so there was never a
 chance for the lens to fire or fail to. The honest verdict is unproven, not
 refuted — the missing venue is a feature running after the profile exists, which
-nobody has shipped yet. The add-a-file guarantee is refuted for one skill file,
-which enumerates four lens filenames by name instead of the generic form every
-sibling instruction uses. None of this was fixed in the sweep — verify-only by
-design, findings routed onward — full ledger in
+nobody has shipped yet. The add-a-file guarantee was refuted for one skill file
+at the time of this sweep — findings routed onward, not fixed here, verify-only
+by design. That routed finding has since been closed: `lens-dispatch-registry`
+replaced every closed lens-name enumeration this sweep found (and two more of
+the same shape it didn't) with a rule read from `lenses/README.md`'s own
+registry and each lens's own frontmatter, across all eight resolved-instruction
+sites — see [`.spark/lens-dispatch-registry/evidence.md`](.spark/lens-dispatch-registry/evidence.md)
+for the worked proof against all 9 shipped lenses. Two prose lens-count copies
+outside any dispatch or activation path (`docs/status.md`, `docs/workflow.md`)
+remain stale as a separate, named documentation-accuracy finding — full ledger
+in
 [`.spark/situational-lenses/evidence.md`](.spark/situational-lenses/evidence.md).
 Lens compliance is still instruction-driven — no test enforces that a lens fires.
 If you run aSPARK

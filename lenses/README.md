@@ -45,8 +45,9 @@ profile records both, so:
 - **Type-triggered lenses** declare `applies-to: [<type>]` — `seo`←`website`,
   `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`, `library`←`library`.
 - **Characteristic-triggered lenses** declare `triggers: [<characteristic>]` —
-  `security`←`handles-auth`/`is-public`/`handles-payments`/`handles-pii`,
-  `i18n`←`is-multilingual`, `data`←`has-database`, `accessibility`←`must-be-accessible`.
+  see the *Characteristics* detection-signals table's `Activates` column below
+  for the current mapping; it is the single declaration of this fact, not
+  restated here.
 
 ## The lens contract (what every lens file guarantees)
 
@@ -111,19 +112,31 @@ A new concern is a new file, nothing else — no new agent, no skill rewrite:
 
 1. Create `lenses/<name>.md` following the contract above (copy an existing one).
    Declare `applies-to` (a project type) or `triggers` (a characteristic).
-2. Give each check a phase owner so a real agent verifies it.
-3. Add it to the *Available lenses* table here, and to the detection signals if
-   it binds to a new type or a new characteristic.
-4. Its checks flow automatically: the skills pass active lens paths to their
-   agents by name, so any activated lens is picked up without further wiring —
-   **with known exceptions.** `/story-time`, `/increment` and (with a caveat)
-   `/peer-review` are genuinely generic. `/look-and-feel` and `/demo-day`
-   select design-/QA-relevant lenses from a closed, named list rather than
-   reading the constitution's active-lens set directly, so a lens with
-   `design`/`qa` phases needs those two skills edited by hand until that's
-   fixed. The `/charter` activation path has the same shape one layer up: the
-   Facilitator's characteristic vocabulary and the shipped constitution
-   template are also closed lists, so a *new characteristic* needs both
-   updated before any project can declare it. See
-   [`.spark/accessibility-lens/evidence.md`](../.spark/accessibility-lens/evidence.md)
-   for the full, current account of what is and isn't yet generic.
+2. Give each check a phase owner in the lens's own `phases:` frontmatter field —
+   that field is what every dispatching skill reads to decide who receives the
+   lens file. A missing or misspelled `phases` entry silently drops the lens
+   from every phase it should reach, with no error to surface the mistake.
+3. Add it to the *Available lenses* table here and to the detection-signals
+   tables above; if it binds to a new **type**, also add it to the *Two ways a
+   lens activates* bullets (a new **characteristic** needs no edit there —
+   that section defers to the Characteristics table's `Activates` column,
+   which you've already updated above). These are the lists an author must
+   still update by hand for this file to stay the accurate single source of
+   truth. Three prose copies *outside* this file also name lenses for a human
+   reader and are not sourced from here, so they need the same hand update if
+   you want them to stay accurate: [`README.md`](../README.md)'s own lens
+   table, [`docs/status.md`](../docs/status.md), and
+   [`docs/workflow.md`](../docs/workflow.md).
+4. Its checks flow automatically: every dispatching skill and the `/charter`
+   activation path now read this file's tables and each lens's own `phases`
+   frontmatter, rather than a closed, named list — a lens declaring
+   `specify`, `design`, `review` or `qa`, and any new characteristic, reaches
+   its agents and becomes declarable at `/charter` with no skill, agent or
+   template edit. The one exception is `act`: `/increment` dispatches no
+   lens files at all, so an `act` check is realized through the checks a
+   spec author writes into §5 Non-Functional Requirements, not by dispatch —
+   unchanged by this fix. See
+   [`.spark/lens-dispatch-registry/evidence.md`](../.spark/lens-dispatch-registry/evidence.md)
+   for the worked proof (all 9 shipped lenses, both dispatch and activation)
+   and [`.spark/accessibility-lens/evidence.md`](../.spark/accessibility-lens/evidence.md)
+   for the original finding that prompted the fix.

@@ -48,9 +48,11 @@ the team to ignore all the others too.
    **type(s)** — `website`, `web-app`, `api`, `cli`, `library`, or a combination
    (framework, routing, `bin`/`exports`, public/indexable pages, SSR/SSG config,
    auth walls) — and its **characteristics**, the data/behavior facts that
-   activate concern lenses: `handles-auth`, `is-public`, `handles-payments`,
-   `handles-pii`, `has-database`, `is-multilingual`. A project can be several
-   types and carry several characteristics.
+   activate concern lenses. Read the current characteristic list from
+   `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`'s *Characteristics* detection-signals
+   table rather than working from a list here — it names each characteristic
+   and the signal that evidences it. A project can be several types and carry
+   several characteristics.
 2. **Locate the document.**
    - No `.spark/constitution.md` → this is a **first draft** from
      `templates/constitution.md`.
@@ -63,11 +65,12 @@ the team to ignore all the others too.
    assumption. For the **Project Profile**: state the type(s) and characteristics
    you detected and the *evidence* for each (the file or config that proves it),
    then derive the **active lenses** from both — types activate `seo`←`website`,
-   `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`, `library`←`library`;
-   characteristics activate `security`←`handles-auth`/`is-public`/
-   `handles-payments`/`handles-pii`, `i18n`←`is-multilingual`, `data`←
-   `has-database`. Recommend a lens only when it genuinely warrants it; a lens
-   the team won't act on is the same dead weight as a false principle. The active
+   `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`, `library`←`library`; for
+   characteristics, look up the current mapping in the `Activates` column of
+   `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`'s *Characteristics* detection-signals
+   table rather than working from a list here. Recommend a lens only when it
+   genuinely warrants it; a lens the team won't act on is the same dead weight
+   as a false principle. The active
    lenses bind downstream phases, so getting this right is what makes the loop
    situational. Record the **active-lens load** (the count) in the profile; there
    is no cap, but when **4 or more** lenses are active, add the elevated-load flag
