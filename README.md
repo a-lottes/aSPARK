@@ -180,6 +180,16 @@ claude --plugin-dir /path/to/aSPARK
 
 ## Usage
 
+### Start here
+
+New to a project — empty or already full of code — run `/charter` first. On
+an empty repo it asks a handful of hard product questions and ends by
+offering `/story-time` with the first slice named — on your go, never
+automatically. On an existing codebase it reads the repo and writes down
+what it found, for you to correct once. Either way, the team stops
+re-deriving what your project *is* on every feature. A project can run
+without it, but `/spark` and `/next-steps` point you here first if you skip it.
+
 No idea in hand? Let the Product Owner propose one from the project's current state:
 
 ```
@@ -353,6 +363,7 @@ of the 2026-09-10 figures above.
 | Companion plugin (`aspark-guard`) | Self-tested by its own author (142 tests / 22 replayed artifacts), not independently verified by Core, never run through a third-party loop — see [§Optional Tools](#optional-tools) for the full statement |
 | PR-mode delivery (`handed-off`) | **Proven** on this repo's own release ([PR #3](https://github.com/a-lottes/aSPARK/pull/3)) |
 | QA-method declaration (constitution §8) | **Shipped; declared path first exercised by this feature's own `/demo-day` and `/go-live`** — until then the fall-backs (absent, incomplete, unperformable, and a `yes`-surface project) are checked against constructed fixtures in `.spark/right-sizing/evidence.md`, and the declared path itself has not run. Not dogfooded on any other project. It removes one recurring per-feature question on a project that has no browser surface; it makes no other loop shorter and is not claimed to |
+| `/charter` as the single start-here + Project Context (constitution §9) | **Shipped; each path proven once, on a different venue.** The greenfield kickoff interview ran real, start to finish, on an empty scratch repo outside this tree — not a real product, not a field report. The brownfield discovery pass ran real on this repo's own constitution, migrating its improvised preamble into §9. Neither path has run on an external project; no saving is claimed beyond these two venues, and no first-run field report exists yet. Full ledger: [`.spark/project-kickoff/evidence.md`](.spark/project-kickoff/evidence.md) |
 
 **What the lens layer's verify-only sweep found:** the generalized form of both
 success-signal legs is confirmed from real project history — a UI lens QA-verified

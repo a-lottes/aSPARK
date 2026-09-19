@@ -20,6 +20,11 @@ each feature then carries context the constitution would have supplied for free.
 It is stable, not frozen — `/charter` amends it, and every amendment is dated
 and reasoned. A spec, plan or diff that conflicts with the constitution doesn't
 silently win; the conflict surfaces as an open question or a Blocker.
+`/charter` is also the loop's single start-here: a project with no constitution
+gets routed there first by `/spark` and `/next-steps`, and its bounded
+**§9 Project Context** (a product brief plus, on a codebase, a seven-entry
+system picture) is what the Product Owner and Engineering Manager cite instead
+of each re-deriving the project's own facts on every feature.
 
 ## Situational Concerns: the Project Profile & Lenses
 

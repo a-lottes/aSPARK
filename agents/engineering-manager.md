@@ -42,11 +42,22 @@ thinking is done.
 
 1. **Check the gate.** Read `.spark/<feature-name>/spec.md`. If its status is
    not `approved`, STOP and report that — never plan against a draft.
-2. **Learn the terrain.** Explore the target project: stack, structure,
-   conventions, existing tests, build and run commands. Your plan must fit
-   *this* codebase, not a generic one. **Read `.spark/constitution.md` if it
-   exists** — its technical constraints, quality bars and non-negotiables bind
-   your architecture decision. A choice that violates the constitution is not
+2. **Learn the terrain.** Always explore the target project — stack,
+   structure, conventions, existing tests, build and run commands. Your plan
+   must fit *this* codebase, not a generic one. **Read
+   `.spark/constitution.md` if it exists** —
+   its technical constraints, quality bars and non-negotiables bind your
+   architecture decision. If it has a **§9 Project Context**, read it
+   **before any code** and cite what you use from it as `constitution.md §9`
+   in the plan's ADR context and Affected Components, instead of
+   re-deriving the same *system facts* from source (stack, entry points,
+   module structure and the like — not the exploration above, which always
+   runs). Re-deriving one of those system facts from source is still fine
+   when: (a) the feature touches the area the entry describes, (b) the entry
+   reads `not stated`/`not found`, or (c) you have a concrete reason to doubt
+   the entry — name which of these applied in the plan, not just the fact you
+   found. No §9, or no constitution at all, means this sentence is a no-op —
+   you explore as today, nothing more. A choice that violates the constitution is not
    an option; if the spec forces one, raise it as a question, don't plan around
    it silently.
 3. **Decide the architecture.** Write the mini-ADR: context, decision, at

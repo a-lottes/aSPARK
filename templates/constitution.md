@@ -125,6 +125,51 @@
 - **Browser-observable surface:** `yes` \| `no` — whether this project has a UI a browser can drive. Default when absent: `yes`.
 - **Substitute verification method:** the named method the QA phase performs instead, e.g. `documented dry run against the installed plugin, one performed step per AC`. Read only when the surface is `no`. Default when absent: none — the QA phase asks the user, exactly as today.
 
+## 9. Project Context
+
+<!-- What this project actually is, so the Product Owner and Engineering Manager can cite one
+     confirmed picture instead of each re-deriving their own. Written once by /charter's kickoff
+     interview (a project with no source files or manifest to picture) or discovery pass (a project
+     with code), and confirmed by the user in the same round as §2's profile and §8's QA method —
+     never a separate round, never a separate ceremony.
+
+     Default when absent: every phase behaves exactly as it does today — no prompt, no warning, no
+     migration. Sole writer: /charter. A phase that finds an entry wrong records the contradiction
+     where it works (a spec assumption, a plan risk, a review finding) and points back to /charter;
+     it never edits this section itself.
+
+     Size caps, enforced at write time: the whole section ≤ 35 lines, the product brief ≤ 12, the
+     system picture ≤ 25. What doesn't fit is pointed at (README, CLAUDE.md, a doc) rather than
+     duplicated here. This is not a design doc and not a place for per-feature requirements — those
+     stay in spec.md. It is not kept fresh automatically; a stale entry is corrected at the next
+     /charter, not silently trusted or silently ignored.
+
+     Every entry is marked with where it came from: `inferred from <file:line>` (read, not asked),
+     `asked` (a kickoff question, answered), `confirmed by user` (offered, the user agreed as-is),
+     or `not stated` / `not found` (asked and skipped, or looked for and absent) — never a guess
+     dressed as a fact. -->
+
+- **Shape:** `greenfield` \| `brownfield` — a label, not a gate; no ceremony branches on it.
+
+**Product brief** (always present — ≤ 12 lines):
+
+- **Primary user:** e.g. `asked` — solo developers picking their first CLI framework.
+- **Problem today:** e.g. `asked` — no tool compares three or more options side by side.
+- **Smallest version:** e.g. `asked` — a two-framework comparison, hardcoded list.
+- **Success signal:** e.g. `asked` — a user picks a framework without opening five tabs.
+- **Stack:** e.g. `inferred from package.json:1-12`, or `undecided — the EM proposes at the first /sprint-plan`.
+- **Non-negotiables:** e.g. `asked` — never recommends an unmaintained package.
+
+**System picture** (only where the repo has source files or a manifest — ≤ 25 lines; omit this block entirely on a repo with neither):
+
+- **Stack & entry points:** e.g. `inferred from package.json:1-12, src/index.ts:1`.
+- **Module structure:** e.g. `inferred from src/:1` — feature-first folders under `src/`.
+- **Data model:** e.g. `inferred from prisma/schema.prisma:1-40`, or `not found` — no persistence.
+- **Test practice:** e.g. `inferred from package.json:8` — Vitest, run via `npm test`.
+- **Conventions:** e.g. `inferred from CONTRIBUTING.md:1-20`, or `not found`.
+- **How to run:** e.g. `inferred from README.md:12-18` — `npm run dev`.
+- **Known pain points:** e.g. `asked` — the auth module has no tests.
+
 ---
 
 ## Amendments

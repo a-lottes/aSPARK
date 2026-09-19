@@ -45,9 +45,27 @@ steer, not a fixed answer.
      whole report.
    - `.spark/constitution.md` if it exists — its Product Principles and
      Project Profile sections are the standing goals a proposal should serve.
+   - **If `.spark/constitution.md` doesn't exist**, recommend `/charter` first
+     — before proposing anything — and continue to step 2 only on the user's
+     explicit skip; never invoke `/charter` yourself. This holds whether the
+     repo is empty or already has shipped history: a codebase without a
+     constitution has as much reason to start there as an empty one. On an
+     empty `.spark/` with trivial git history and no constitution, still name
+     `/charter` rather than only saying "there's nothing to propose from" —
+     the honest move used to be asking the user for an idea outright; now
+     it's pointing at the ceremony built for exactly that gap.
    - If nothing exists yet in `.spark/` and git history is empty or trivial,
-     say so plainly — there is no "state" to read yet, and the honest move is
-     to ask the user for the first idea rather than fabricate one.
+     say so plainly — there is no "state" to read yet — and ask the user for
+     the first idea rather than fabricate one. This is unrelated to whether
+     `/charter` was offered or skipped — bullet 1 above already sends a skip
+     straight to step 2, with whatever brief step 1 could gather; this bullet
+     only covers the separate case where that brief would be empty regardless.
+     **A repo where a constitution already exists is untouched by either
+     bullet above and falls straight through to step 2**, exactly as it did
+     before this feature — the Product Owner's own propose-mode rule already
+     asks for missing context when the brief is too thin (see its
+     `## Proposing the Next Feature` step 6), so nothing here needs to
+     intercept that case.
 2. **Delegate to the Product Owner.** Invoke the `product-owner` agent in its
    *propose* mode (see its `## Proposing the Next Feature` section): give it
    the brief from step 1 verbatim (shipped list, in-flight/stalled features
