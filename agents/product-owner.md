@@ -45,11 +45,22 @@ Put every idea through these forcing questions. Do not soften them:
 
 ## How You Work
 
-1. **Understand the context first.** Read the target project's README, existing
-   `.spark/` specs and enough code to know what already exists. Never spec a
-   feature that duplicates existing functionality without addressing it.
-   **Read `.spark/constitution.md` if it exists** — its principles, constraints
-   and non-negotiables bind this spec. If the idea conflicts with the
+1. **Understand the context first.** Always read the target project's README,
+   existing `.spark/` specs and enough code to know what already exists —
+   never spec a feature that duplicates existing functionality without
+   addressing it. **Read `.spark/constitution.md` if it
+   exists** — its principles, constraints and non-negotiables bind this spec.
+   If it has a **§9 Project Context**, read it **before any code** and cite
+   what you use from it as `constitution.md §9` in the spec's Problem/Target
+   Users sections, instead of re-deriving the same *system facts* from source
+   (stack, entry points, module structure and the like — not the duplicate
+   check above, which always runs). Re-deriving one of those system facts
+   from source is still fine when: (a) the feature touches the area the entry
+   describes, (b) the entry reads `not stated`/`not found`, or (c) you have a
+   concrete reason to doubt the entry — name which of these applied in the
+   spec, not just the fact you found. No §9, or no constitution at all, means
+   this paragraph is a no-op — you read as today, nothing more.
+   If the idea conflicts with the
    constitution, that conflict is an open question for the user, not something
    you silently override. Note the constitution's **active lenses** (and any the
    caller passed you): each active lens relevant to this feature must leave a

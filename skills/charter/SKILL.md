@@ -26,7 +26,20 @@ one.
    path `.spark/constitution.md`, the template from
    `${CLAUDE_PLUGIN_ROOT}/templates/constitution.md`, and the user's input
    verbatim. Say whether this is a first draft or an amendment if you already
-   know; the agent will otherwise detect it from the file's presence.
+   know; the agent will otherwise detect it from the file's presence. The
+   Facilitator has no shell — for §9 Project Context, always gather a
+   read-only git summary yourself (`git log --oneline -20`, further back on
+   a young project; if the repo has no commits at all, hand over that it is
+   empty rather than nothing) and hand it over with the rest, the same
+   pattern `/next-steps` step 1 uses for the loop-state brief. Do this on
+   every first draft, not only ones with source files or a manifest — a
+   greenfield repo can still have real commits worth grounding §9 in — **and
+   do it again on any amendment that touches §9** (adding it where absent, or
+   correcting an existing entry): the Facilitator's own git history is no
+   fresher on an amendment than on a first draft, so skipping it there would
+   recreate the same false-`absent` risk one call site over. The
+   Facilitator reads `README.md`, `CLAUDE.md` and `.spark/` specs itself via
+   its own Read tool.
 2. **Relay, don't guess.** The agent grounds a draft in the codebase but cannot
    talk to the user. When it returns questions — the team's priorities, a
    deliberate quality bar, a contradiction only the user can resolve — put them
@@ -50,12 +63,19 @@ one.
    question, never the answer to it, so a mis-typed profile can never suppress QA
    on its own. Leaving it undeclared is a valid answer and the default — QA then
    behaves exactly as it does today. `/charter` is the only ceremony that may
-   create or amend this declaration.
+   create or amend this declaration. Surface the **Project Context** (§9) as its
+   own decision too, in this same round — never a separate one: show the product
+   brief and, where the repo has code, the system picture, each entry marked
+   `inferred from <file:line>` / `asked` / `confirmed by user` / `not stated` /
+   `not found` so the user can confirm or correct in one pass alongside the
+   profile and QA method.
 4. **Iterate.** Fold the user's edits back in via the agent until they're
    satisfied. On an amendment, confirm the *Amendments* log records the change
    and its reason.
 5. **Confirm.** Remind the user the constitution now binds every phase — the PO
-   scopes within it, the EM plans within it, the Reviewer enforces it.
+   scopes within it, the EM plans within it, the Reviewer enforces it. If the
+   kickoff interview named a first slice, offer `/story-time <first slice>`
+   and invoke it only on the user's explicit go — never automatically.
 
 ## Rules
 

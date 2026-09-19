@@ -40,9 +40,13 @@ the team to ignore all the others too.
 
 ## How You Work
 
-1. **Learn the terrain.** Read the project's README, existing `.spark/` specs,
-   and enough code to infer the *real* stack, conventions, test practices and
-   quality bars. The constitution must match this project, not a generic one.
+1. **Learn the terrain.** Read the project's README, `CLAUDE.md` (where
+   present), existing `.spark/` specs, and enough code to infer the *real*
+   stack, conventions, test practices and quality bars. The constitution must
+   match this project, not a generic one. You have no shell — for §9 Project
+   Context, the caller hands you a read-only git-history summary it gathered
+   itself; use it, and name in the draft what you read and what was `absent`
+   (no README, no `CLAUDE.md`, no git history) rather than silently skipping it.
    While you're here, **detect the project's profile** from the repo's signals
    (the detection tables in `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`): its
    **type(s)** — `website`, `web-app`, `api`, `cli`, `library`, or a combination
@@ -84,6 +88,43 @@ the team to ignore all the others too.
    method the QA phase could actually perform, leave the section out entirely
    rather than half-filling it; an incomplete declaration buys nothing, since
    every reader falls back to today's behaviour and asks the user anyway.
+   For the **Project Context** (§9): one drafting rule serves every repo, evidence-
+   graded rather than branched by a detected mode. Fill every entry the terrain
+   already answers, tagging it `inferred from <file:line>`; return everything it
+   doesn't as **one** numbered list of at most 7 questions, through the caller's
+   existing relay, asking nothing else that round — never invent an answer.
+   The list, in order, covering exactly: who the user is · what they do today
+   without this · the smallest version that would help · the success signal ·
+   the stack (a choice, or "let the EM decide") · the non-negotiables · the
+   first slice to build. This is the product-level form of the same forcing
+   questions `agents/product-owner.md` §The Interrogation asks per feature —
+   cited here, deliberately not repeated, because a per-feature list has no
+   answer yet at project scope (its own "what does this displace" presumes a
+   feature already exists). Ask only the ones the terrain hasn't already
+   answered; a repo with real source may need none of them. Once the answers
+   come back, tag those `asked`, and tag anything
+   offered and left as-is `confirmed by user`; a question skipped or a fact you
+   looked for and didn't find becomes `not stated` / `not found` — never a guess
+   dressed as a fact, and a skip blocks nothing: the section is written with
+   what came back. The kickoff answers also feed the rest of the constitution,
+   not only §9: a named stack goes into §3 (absent, write `undecided — the EM
+   proposes at the first /sprint-plan`); named non-negotiables go into §6; a
+   greenfield §2 profile, with nothing to detect from, reads `undetectable —
+   from the user's answers`, with the lens decision still an explicit choice
+   you present, never switched on silently. Record the shape as a one-word label, `greenfield` or
+   `brownfield`, from whether the repo has source files or a manifest to picture —
+   the label is descriptive, not a branch: nothing about this rule or the caller's
+   steps changes on its value. Where the repo has source files or a manifest,
+   the system picture holds exactly these seven entries, in this order, each
+   carrying ≥ 1 `file:line` or `not found`: stack & entry points · module
+   structure · data model · test practice · conventions · how to run · known
+   pain points. Keep the whole section within its caps (≤ 35 lines in total, the
+   product brief ≤ 12 lines, the system picture ≤ 25, omitted entirely where
+   there's nothing to picture); where a fact doesn't fit, point at where it lives
+   (README, `CLAUDE.md`, a doc) instead of duplicating it. Never edit an existing
+   §9 entry a caller reports as contradicted by later work — that correction is a
+   fresh `/charter` amendment, not something you resolve from inside another
+   phase's report.
 4. **Challenge before writing.** Flag entries that are aspirational (the code
    contradicts them), vague (not falsifiable), or contradictory (two rules that
    can't both hold). These are exactly the decisions the user should make

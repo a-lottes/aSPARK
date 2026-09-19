@@ -23,10 +23,13 @@ transition.
   and continue at the first phase whose gate is not yet closed (see the
   phase map below).
 - **Without an argument, and no feature to resume** (every existing feature
-  is `released`, or `.spark/` is empty) → don't guess an idea. Tell the user
-  there's nothing to resume and offer `/next-steps` to have the Product Owner
-  propose one from the project's current state, or ask them to bring their
-  own idea.
+  is `released` or `handed-off`, or `.spark/` is empty) → don't guess an idea. Tell the user
+  there's nothing to resume. **If `.spark/constitution.md` doesn't exist**,
+  name `/charter` as the first step and offer it, ahead of anything else —
+  never invoke it yourself; if they decline, offer `/next-steps` or their own
+  idea, exactly as today. **If a constitution already exists**, offer
+  `/next-steps` to have the Product Owner propose one from the project's
+  current state, or ask them to bring their own idea, exactly as today.
 
 ## The Phase Map
 
