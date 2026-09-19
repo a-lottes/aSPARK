@@ -11,6 +11,138 @@ Nothing here is aspirational. If something is unproven, it says so.
 
 ---
 
+## At a glance
+
+Moved here from the README on 2026-09-19 so the README can stay short; the
+content is unchanged and continues to be updated here.
+
+aSPARK is feature-complete — everything below ships today. The column that matters
+is **how well each part is proven**, because prompt material has no test suite: the
+only evidence is a documented run, written down. This section always reflects the
+current state.
+
+### Dogfooding to date
+
+The loop has been run on real projects, and the evidence for that is committed
+rather than asserted: three machine reports sit in [docs/reports/](reports/),
+and [docs/metrics.md](metrics.md) prints four `python3` commands that
+re-derive every figure below from those files. Standard library only — no
+install, no dependency, and no tool of this project's. So the arithmetic here is
+checkable without trusting this page, and without any of the machines.
+
+What that evidence cannot do is refresh itself. The counter that produced it is
+no longer in this repository (constitution §3 allows Markdown and JSON only), so
+the figures below are a closed measurement rather than a running total, and they
+are dated for that reason.
+
+#### Snapshot — 2026-09-10
+
+Dated **evidence**, taken 2026-09-10 and not updated since:
+
+| Spec | Plan | Review | QA | Release | Git tags | Role-agent runs | Human gate decisions |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 77 | 76 | 75 | 64 | 71 | 84 | 429 | 377 |
+
+The gaps are real and left in. QA reached 64 of 77 — eight of the shortfall sit
+in one library project with no browser surface, where `/demo-day` ran once across
+nine features. Release reached 71 of 77 — three unreleased features sit in one
+project that specified, planned, reviewed and QA'd them and shipped nothing, and
+this repository's own `situational-lenses` has a spec and a verify-only sweep, not a shipped increment — see below.
+
+**77 is a merge, not a sum.** The three machines report 51, 14 and 31 features,
+which would add to 96 — but 3 projects sit on more than one machine (aSPARK on
+all three) and 19 of their features are the same features, aSPARK's own 8 among
+them. Adding the totals would have overstated the count by about a fifth.
+Projects are matched on the hash of a repository's root commit, identical in
+every clone, which is what makes that deduplication checkable rather than
+claimed.
+
+The first six columns come from `.spark/` artifacts and git on disk — verifiable
+with `ls`, inferred from nothing. The last two come from Claude Code's own session
+logs, summed across machines, since a session elsewhere is genuinely another
+session; those logs are local to each machine and are the one input here a reader
+cannot audit back to its source. The projects are deliberately not named: a count
+needs no name to be checked. None of it is a token count, and
+[docs/metrics.md](metrics.md) explains why not, along with the method, the
+four rules several reports combine under, and the honest `n/a`s.
+
+The tool that produced these figures was removed in this repository's own
+`metrics-script-removal` loop. It remains recoverable from git history at commit
+`a2c0541` for anyone who wants to read what computed them.
+
+The snapshot ends here. What follows is not dated and not frozen — it tracks
+each part's proof state and is updated whenever that state changes, independent
+of the 2026-09-10 figures above.
+
+| Area | State |
+|---|---|
+| The loop — 10 skills, 7 agents, 6 templates, `/spark` | **Proven** — full end-to-end run on a sample app, all five gates enforced, shipped as `v0.1.0` |
+| Spec-driven core — constitution, Clarify pass, NFRs, traceability | **Proven through Plan** — live review/QA traceability awaits a full `/increment` |
+| Situational lenses (`lenses/`) | **Shipped; verified against aSPARK itself and three real external projects' own completed loop history** — not a fresh run, a read of loops that already ran. Both success-signal legs confirmed, each via a substitute lens (no project here declares `seo`-on-`website` or `api`); suppression confirmed in aggregate, with one active-lens project's own gap checked properly rather than taken at the first read — that project has no feature at all postdating its profile, so the honest verdict is unproven, not refuted; the add-a-file guarantee, refuted for one skill file at the time of this sweep, has since been closed across all eight resolved-instruction sites by `lens-dispatch-registry` — see [`.spark/lens-dispatch-registry/evidence.md`](.spark/lens-dispatch-registry/evidence.md). Two prose lens-count copies (`docs/status.md`, `docs/workflow.md`) remain stale as of that feature's own sweep — a separate, named documentation-accuracy finding, not a reopened dispatch gap. Full ledger: [`.spark/situational-lenses/evidence.md`](.spark/situational-lenses/evidence.md) |
+| Optional tools (`tools/`, `aspark-graph` only) | **25 of 30 criteria proven live** pre-sweep, six shipped `partial`; a 2026-08-26 verify-only sweep closed three of those six live, refuted one with a finding, and left two out of scope (still `unproven`) — see below |
+| Companion plugin (`aspark-guard`) | Self-tested by its own author (142 tests / 22 replayed artifacts), not independently verified by Core, never run through a third-party loop — see [`family.md` §Optional tools](family.md#optional-tools) for the full statement |
+| PR-mode delivery (`handed-off`) | **Proven** on this repo's own release ([PR #3](https://github.com/a-lottes/aSPARK/pull/3)) |
+| QA-method declaration (constitution §8) | **Shipped; declared path first exercised by this feature's own `/demo-day` and `/go-live`** — until then the fall-backs (absent, incomplete, unperformable, and a `yes`-surface project) are checked against constructed fixtures in `.spark/right-sizing/evidence.md`, and the declared path itself has not run. Not dogfooded on any other project. It removes one recurring per-feature question on a project that has no browser surface; it makes no other loop shorter and is not claimed to |
+| `/charter` as the single start-here + Project Context (constitution §9) | **Shipped; each path proven once, on a different venue.** The greenfield kickoff interview ran real, start to finish, on an empty scratch repo outside this tree — not a real product, not a field report. The brownfield discovery pass ran real on this repo's own constitution, migrating its improvised preamble into §9. Neither path has run on an external project; no saving is claimed beyond these two venues, and no first-run field report exists yet. Full ledger: [`.spark/project-kickoff/evidence.md`](../.spark/project-kickoff/evidence.md) |
+
+**What the lens layer's verify-only sweep found:** the generalized form of both
+success-signal legs is confirmed from real project history — a UI lens QA-verified
+and a Review-owned lens Review-verified, each under its own `NFR-n`, on a real
+project's own completed loop. The literal legs stay unproven: no project
+accessible to the sweep declares type `website` with `seo` active, or type `api`
+— those two venues are still missing, not substituted for. Suppression holds in
+aggregate (zero SEO/UX NFRs where no UI lens is active, non-zero where one is). The
+sweep also found a real gap the aggregate hides, and checked it properly rather
+than taking the first read: one project with an active UI lens shows zero
+evidence the lens was ever applied to a real feature — but that project turns out
+to have **no feature at all** that postdates its own profile, so there was never a
+chance for the lens to fire or fail to. The honest verdict is unproven, not
+refuted — the missing venue is a feature running after the profile exists, which
+nobody has shipped yet. The add-a-file guarantee was refuted for one skill file
+at the time of this sweep — findings routed onward, not fixed here, verify-only
+by design. That routed finding has since been closed: `lens-dispatch-registry`
+replaced every closed lens-name enumeration this sweep found (and two more of
+the same shape it didn't) with a rule read from `lenses/README.md`'s own
+registry and each lens's own frontmatter, across all eight resolved-instruction
+sites — see [`.spark/lens-dispatch-registry/evidence.md`](.spark/lens-dispatch-registry/evidence.md)
+for the worked proof against all 9 shipped lenses. Two prose lens-count copies
+outside any dispatch or activation path (`docs/status.md`, `docs/workflow.md`)
+remain stale as a separate, named documentation-accuracy finding — full ledger
+in
+[`.spark/situational-lenses/evidence.md`](.spark/situational-lenses/evidence.md).
+Lens compliance is still instruction-driven — no test enforces that a lens fires.
+If you run aSPARK
+on a real `website` or `api` project, [#4](https://github.com/a-lottes/aSPARK/issues/4)
+and [#5](https://github.com/a-lottes/aSPARK/issues/5) are still waiting for you —
+those two venues remain genuinely untested.
+
+**Post-sweep proof state for issues #8–#11** (verify-only sweep, 2026-08-26 —
+**[.spark/graph-gates-verification/evidence.md](.spark/graph-gates-verification/evidence.md)**):
+**proven** — [#9](https://github.com/a-lottes/aSPARK/issues/9) (`/demo-day`'s
+no-browser stop path) and [#11](https://github.com/a-lottes/aSPARK/issues/11)
+(the `aspark-graph build` hint fires exactly once; a stale graph is announced
+once, then treated as absent) both held live, start to finish, with a stated
+counting method. [#10](https://github.com/a-lottes/aSPARK/issues/10) (browser
+backends) is now **proven** for Playwright MCP and Chrome DevTools MCP, one
+real navigation-plus-assertion each; Claude in Chrome remains the only backend
+proven in an actual project run. **Refuted-with-finding** —
+[#8](https://github.com/a-lottes/aSPARK/issues/8) (MCP-first precedence): the
+MCP branch is real and is taken when tools are exposed, but repeated fresh
+sessions against an identical registered environment did not reliably
+reproduce the documented zero-probe-command guarantee, and the sweep's own
+evidence points at a specific fix: the tool file's "run no command" and the
+ceremony skills' "resolve both facts" give the MCP branch no documented,
+command-free way to satisfy both at once. **Unproven, out of this sweep's
+scope** — AC-1.2 (byte-identical output vs. the pre-change version) and AC-5.2
+(omitting a `files:` note for a genuinely unknowable-at-plan-time task): this
+feature never attempted either; they remain exactly as unproven as before.
+`docs/status.md`'s full criterion table predates this sweep and is not yet
+reconciled with it — a follow-up, not part of this diff.
+
+
+
+---
+
 ## The loop
 
 | | |
