@@ -12,10 +12,10 @@ aSPARK is a Claude Code plugin. No service, no account, no runtime: it is Markdo
 
 <div align="center">
   <a href="https://aspark.lottes.dev/en/#showcase">
-    <img src="assets/aspark-demo-poster.jpg" alt="Watch the 96-second demo: one real 47-minute aSPARK session, from /spark to /go-live, including QA in a real browser" width="720" />
+    <img src="assets/aspark-demo-poster.jpg" alt="Watch the 100-second narrated demo: one real 47-minute aSPARK session, from /spark to /go-live, including QA in a real browser" width="720" />
   </a>
   <br />
-  <sub><b>▶ Watch the 96-second demo</b> — one real 47-minute session, /spark to /go-live. Every time-lapse is marked.</sub>
+  <sub><b>▶ Watch the 100-second demo, narrated</b> — one real 47-minute session, /spark to /go-live. Every time-lapse is marked.</sub>
 </div>
 
 ---
