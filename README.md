@@ -10,7 +10,13 @@
 
 aSPARK is a Claude Code plugin. No service, no account, no runtime: it is Markdown that installs into your project and leaves a reviewable paper trail in `.spark/`.
 
-<!-- TODO: 90-second screencast of /spark → /go-live, including the QA Tester finding a bug in the browser. -->
+<div align="center">
+  <a href="https://aspark.lottes.dev/en/#showcase">
+    <img src="assets/aspark-demo-poster.jpg" alt="Watch the 96-second demo: one real 47-minute aSPARK session, from /spark to /go-live, including QA in a real browser" width="720" />
+  </a>
+  <br />
+  <sub><b>▶ Watch the 96-second demo</b> — one real 47-minute session, /spark to /go-live. Every time-lapse is marked.</sub>
+</div>
 
 ---
 
