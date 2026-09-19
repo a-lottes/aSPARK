@@ -6,24 +6,28 @@
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`, round 3), `qa.md` (`passed`, round 1) |
 | **Status** | `handed-off` |
-| **Version** | v0.11.0 (proposed, `pr` mode — not tagged; PR not yet opened) |
+| **Version** | v0.11.0 (proposed, `pr` mode — not tagged; PR [#50](https://github.com/a-lottes/aSPARK/pull/50) open against `main`) |
 | **Date** | 2026-09-19 |
 
 **Handoff**
-- **Status:** `handed-off` — the release-prep commit landed on `feat/project-kickoff`
-  (based on current `origin/main`), `claude plugin validate .` is green on it, but
-  the branch is **not pushed** and no PR is open. This pass is prepare-only.
+- **Status:** `handed-off` — the release-prep commit is on `feat/project-kickoff`
+  (pushed, `origin/feat/project-kickoff` tracking), and
+  [PR #50](https://github.com/a-lottes/aSPARK/pull/50) is **open** against
+  `main` (confirmed via `gh pr view 50`: `state: OPEN`, `baseRefName: main`,
+  `headRefName: feat/project-kickoff`, `mergeable: MERGEABLE`,
+  `isDraft: false`). `claude plugin validate .` is green on the pushed
+  commit. The real merge and tag still happen outside this ceremony's
+  control, so status stays `handed-off`, not `released`.
 - **Summary:** `/charter` becomes the first-stop ceremony for a project with no
   constitution — a kickoff interview on an empty repo, a discovery pass on an
   existing one — and writes one bounded, evidenced Project Context that the PO
   and EM now cite instead of re-deriving. Both gates `passed`; minor bump
-  `0.10.0` → `0.11.0` proposed; PR mode, prepared and awaiting the user's go to
-  publish.
-- **Open:** `2 outstanding` — (1) push the branch and open the PR against `main`
-  (owner: `a-lottes`, needs explicit go — see §3); (2) once open, the declared
-  approver (`a-lottes`, self-review-via-PR, constitution §7) still has to review
-  and merge it, and the real tag is cut at/after that merge — both outside this
-  ceremony's control.
+  `0.10.0` → `0.11.0` proposed; PR mode, PR open, published on the user's
+  explicit go relayed this session.
+- **Open:** `1 outstanding` — the declared approver (`a-lottes`,
+  self-review-via-PR, constitution §7) still has to review and merge
+  [PR #50](https://github.com/a-lottes/aSPARK/pull/50); the real tag is cut
+  at/after that merge, outside this ceremony's control.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below.
 - **On conflict:** the numbered body below wins for everything except
   `Status`/`Version`; log the mismatch as a finding at the next `/go-live` and
@@ -49,11 +53,10 @@
       release-branch tree, not the stale one review/QA ran against.
 - [x] Build succeeds from a clean checkout — N/A, no build step; the `validate`
       run above is the equivalent bar and passed.
-- [x] No uncommitted changes in the working tree — true after the release
-      commit below; before it, the tree held exactly this feature's 11
-      tracked-file diff plus untracked `.spark/project-kickoff/` and the
-      pre-existing, unrelated `.spark/.guard/` (aspark-guard's own ledger, out
-      of this feature's scope).
+- [x] No uncommitted changes in the working tree — held throughout; the tree
+      carried exactly the release commit plus the pre-existing, unrelated
+      `.spark/.guard/` (aspark-guard's own ledger, out of this feature's
+      scope) at every check, including immediately before pushing.
 
 **Branch staleness found and resolved (this repo's own `CLAUDE.md` house
 rule, re-checked live, not taken on trust).** The feature's work was sitting
@@ -75,6 +78,15 @@ agents / 9 lenses / 6 templates / 5 `/charter` steps, 0 new
 (`skills/spark/SKILL.md`, `skills/demo-day/SKILL.md`) still resolve to `QA
 Method`; `templates/constitution.md`'s `§1`–`§9` headings still in order,
 `§9` still appended after `§8`, before Amendments.
+
+**Re-confirmed immediately before pushing, per the caller's instruction:**
+`git fetch origin` → `origin/main` still `f67ef54` (unmoved since the prepare
+pass); `git branch --show-current` → `feat/project-kickoff`; `git log
+--oneline -3` → exactly one commit (`180f23c`) ahead of `origin/main`;
+`git merge-base feat/project-kickoff origin/main` → `f67ef54`, confirming
+the branch is still built on the current tip, not a stale one; `git status
+--porcelain` → only the pre-existing, unrelated `.spark/.guard/`. Nothing
+had changed since the prepare pass.
 
 ## 2. Changelog
 
@@ -108,10 +120,10 @@ Method`; `templates/constitution.md`'s `§1`–`§9` headings still in order,
 
 | Action | Result |
 |---|---|
-| Version bump & tag | **Proposed only.** `0.10.0` → `0.11.0` in `.claude-plugin/plugin.json` (minor: an additive, optional capability — NFR-1 pins zero new commands/agents/lenses/templates; NFR-2's two consumer repos confirmed non-readers of `constitution.md`) — staged in the release commit on `feat/project-kickoff`. **No tag created** (`pr` mode); the real tag is cut at/after merge, outside this ceremony's control. |
-| PR / merge | **Not opened — prepared only.** Release commit made on `feat/project-kickoff` (built off current `origin/main`, `f67ef54`). Target branch: `main` (constitution §7). Draft title: *"feat: project-kickoff — route to `/charter` first, add a bounded Project Context"*. Pending, on the user's explicit go: `git push -u origin feat/project-kickoff`; `gh pr create --base main --head feat/project-kickoff --title "feat: project-kickoff — route to /charter first, add a bounded Project Context" --body <drafted from §2>`. Approver per §7: self-review-via-PR (`a-lottes`). |
+| Version bump & tag | **Proposed, pushed, not tagged.** `0.10.0` → `0.11.0` in `.claude-plugin/plugin.json`, in release commit `180f23c` on `feat/project-kickoff` (pushed to `origin`). **No tag created** (`pr` mode); the real tag is cut at/after merge, outside this ceremony's control. |
+| PR / merge | **Opened.** [PR #50](https://github.com/a-lottes/aSPARK/pull/50), `feat/project-kickoff` → `main`. Established by a **read-only check I performed myself** (`gh pr view 50 --json url,state,baseRefName,headRefName,mergeable,isDraft,statusCheckRollup`), not self-attestation: `state: OPEN`, `baseRefName: main`, `headRefName: feat/project-kickoff`, `mergeable: MERGEABLE`, `isDraft: false`. Approver per §7: self-review-via-PR (`a-lottes`) — pending their own review and merge; no separate "request review" step applies (GitHub does not allow requesting review from the PR's own author, and the declared approver *is* the author here). Push and PR-open were executed on the user's explicit go, relayed by the caller this session. |
 | Deploy | N/A — `pr` mode, no deploy (a Claude Code plugin ships via marketplace install, not a server deploy). |
-| Post-release smoke check | N/A — `pr` mode, nothing deployed this pass; the first live-install check happens after merge, outside this ceremony. |
+| Post-release smoke check | N/A for a live app — `pr` mode, nothing was deployed. **What this pass does allow, performed:** confirmed the PR is real (above) and that no check shows broken — `statusCheckRollup: []`, which is correct, not a gap: `ls .github/workflows/` confirms this repo has **no CI workflow at all** (constitution §7), so an empty rollup is the expected state, not a missing signal. |
 
 **Rollback path.** The 10 non-constitution files (README, ROADMAP,
 `docs/workflow.md`, both skill files, three agent files,
@@ -125,9 +137,10 @@ would erase those records along with §9. If rollback is ever needed: revert
 the other 10 files normally; for `.spark/constitution.md`, decide by hand
 whether to (a) drop §9 while keeping the Amendments rows as history, noting
 the rollback, or (b) accept losing that record with a full revert — that
-choice belongs to whoever executes the rollback, not pre-decided here. No
-package or tag needs unpublishing; nothing beyond this local branch has
-shipped.
+choice belongs to whoever executes the rollback, not pre-decided here.
+Reverting after merge would also need a follow-up on `.claude-plugin/plugin.json`'s
+version (currently proposed `0.11.0`) and, if a tag was cut by then, a
+decision on whether to yank or leave it — neither exists yet at this state.
 
 ## 4. Learnings (Keep!)
 
@@ -147,7 +160,10 @@ shipped.
   feature itself touched, not just the branch tip. Candidate: widen that
   rule's own wording to name the release gate explicitly, and to recommend
   committing to a feature branch immediately rather than working uncommitted
-  on `main`.
+  on `main`. Also worth keeping: re-confirming branch/`origin` state
+  immediately before the outward-facing push, not just at prepare time — it
+  cost one `fetch` and caught nothing this time, but it is the check that
+  would have caught it had `origin/main` moved again in the gap.
 
 ---
 
@@ -158,23 +174,31 @@ shipped.
 - [x] All pre-flight checks passed at release time — including the
       branch-staleness discovery, resolved by rebuilding the release branch
       off current `origin/main` and re-verifying every structural fact review/
-      QA relied on, not by patching content
+      QA relied on, not by patching content; re-confirmed unchanged
+      immediately before the push
 - [x] Changelog written in user-facing language — no commit hashes, ticket
       IDs or `AC-`/`F-`/`T-` IDs in §2
 - [x] Release actions executed and verified (or `aborted` with reason) — `pr`
-      mode: release commit prepared on `feat/project-kickoff`,
-      `claude plugin validate .` green on it, rollback path written. **PR not
-      yet open, no approver requested yet** — both require the user's
-      explicit go, listed under §3 as pending commands, not executed here
+      mode: PR [#50](https://github.com/a-lottes/aSPARK/pull/50) open on
+      `main`, established by a read-only `gh pr view` check I performed
+      myself (not self-attestation); no CI configured in this repo so no
+      check can show broken, confirmed by `ls .github/workflows/`; approver
+      (`a-lottes`, self-review-via-PR) is the PR's own author, so "requested"
+      reduces to "the PR is open and theirs to act on" — no separate GitHub
+      action applies; rollback path written; Deploy and Post-release smoke
+      check correctly N/A
 - [x] Learnings recorded
-- [x] Line budget respected: Ist 152 / Soll ~100 — over, for a stated reason:
+- [x] Line budget respected: Ist 168 / Soll ~100 — over, for a stated reason:
       this feature carries 5 stories / 24 ACs / 8 NFRs (over double a typical
-      feature) and this pass additionally had to document a real
-      branch-staleness finding and its resolution in full rather than
-      asserting it away; not waived by the user, recorded here with its
-      reason per the template's own allowance
-- [x] Status set to `handed-off` — **what remains outstanding:** the branch
-      needs pushing and the PR opening (owner: `a-lottes`, on explicit go);
-      once open, the declared approver (`a-lottes`, self-review-via-PR,
-      constitution §7) still has to review and merge it, and the real tag is
-      cut at/after that merge — both outside this ceremony's control
+      feature), this pass documented a real branch-staleness finding and its
+      resolution in full, and this update pass added the real PR verification
+      and re-confirmation evidence rather than compressing it away; not
+      waived by the user, recorded here with its reason per the template's
+      own allowance
+- [x] Status set to `handed-off` — **stays `handed-off`, not `released`,
+      even with the PR open** (constitution §7: the real merge and tag
+      happen outside this ceremony). **What remains outstanding:** the
+      declared approver (`a-lottes`, self-review-via-PR) still has to review
+      and merge [PR #50](https://github.com/a-lottes/aSPARK/pull/50); the
+      real tag is cut at/after that merge, both outside this ceremony's
+      control
