@@ -25,6 +25,19 @@ don't discover this at the last gate. `/go-live` for `graph-gates-verification`
 had to resolve this as a surprise; catching it earlier (e.g. at `/spark`'s
 resume, or `/increment`'s first commit) avoids the detour.
 
+**This recurred.** `project-kickoff`'s whole loop ran uncommitted, directly on
+local `main`, which let it drift 8 commits behind `origin/main` unnoticed —
+including a fully merged sibling feature touching 4 of the same files
+`project-kickoff` itself changed. `/go-live`'s pre-flight caught it (a real
+3-way merge check, zero conflicts, then rebuilding the release branch off
+current `origin/main`), but only because the rule above was re-checked live
+there rather than assumed clean. The sharper fix this second occurrence
+argues for: don't work uncommitted on `main` at all — commit to a real
+feature branch at the *start* of a loop's work (e.g. `/story-time`'s first
+write, or `/increment`'s first task), not only when `/increment` or `/go-live`
+happen to check. A branch that exists from the start can't silently drift
+underneath work already sitting on it.
+
 ## An add-a-file scope check must examine every phase the artifact claims
 
 When planning a new lens (or any artifact whose frontmatter declares which
