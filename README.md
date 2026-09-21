@@ -104,13 +104,13 @@ Review or QA findings go back to the Developer and the phase re-runs. After thre
 |---|---|---|
 | `/charter` | 📜 Facilitator | Sets the project's standing principles and profile in `constitution.md`, once. |
 | `/next-steps` | 🧭 Product Owner | No idea in hand? Surveys the project and proposes one concrete next feature. |
-| `/story-time` | 🧭 Product Owner | Interrogates your idea, no yes-man. Writes stories, ACs and NFRs into `spec.md`. |
+| `/story-time` | 🧭 Product Owner | Interrogates your idea, no yes-man. Writes stories, ACs and NFRs into `spec.md`. Pass a GitHub issue number (`/story-time 42`) to start from that ticket instead of retyping it. |
 | `/look-and-feel` | 🎨 Designer | Usability heuristics, consistency, accessibility. Adds a design section to the spec. |
 | `/sprint-plan` | 🏗️ Engineering Manager | Locks the architecture, cuts ordered tasks into `plan.md`. |
 | `/increment` | 💻 Developer | Builds the increment following the plan. Also runs fix rounds. |
 | `/peer-review` | 🔍 Reviewer | Reviews the diff with a staff-engineer eye, writes `review.md`. |
 | `/demo-day` | 🧪 QA Tester | Clicks through the running app in a real browser, verifies every AC, writes `qa.md`. |
-| `/go-live` | 🚀 Release Manager | Pre-flight, changelog, tag or PR. Refuses while QA has open blockers. |
+| `/go-live` | 🚀 Release Manager | Pre-flight, changelog, tag or PR. Refuses while QA has open blockers. Opt-in: posts one status comment to the feature's GitHub issue. |
 | `/spark` | 🤹 Orchestrator | Runs the whole loop, or resumes a feature from wherever it stands. |
 
 Each ceremony can also be run on its own. The artifacts on disk *are* the state, so you can `/clear` after a heavy phase and pick the loop back up with `/spark`.

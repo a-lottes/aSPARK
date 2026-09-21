@@ -40,6 +40,7 @@ is worth more than a patch. Reports where it went badly are worth the most.
 | **Maturity labels in the handbook** | Every chapter of the architecture handbook carries a visible Delivery stage label, an overview table up front splits ambition from delivery, inline `Status.` markers name each target-state claim, and the title page separates the handbook revision from the shipped baseline (Core v0.7.0 · graph v0.7.0). Built as the `handbook-maturity` loop on this repo itself. |
 | **No executable code, the method published instead** | `scripts/spark-metrics.py` is gone along with the directory, closing the constitution's own exception for it. `docs/metrics.md` now prints four `python3` commands over the committed machine reports, each with its observed output — the same figures README publishes stay checkable by a stranger holding nothing but this repository, though they can no longer be refreshed from it. Built as the `metrics-script-removal` loop on this repo itself. |
 | **`/charter` as the single start-here, plus a Project Context (constitution §9)** | `/spark` and `/next-steps` now route a constitution-less project to `/charter` first, instead of pointing at each other; `/charter` runs a bounded greenfield kickoff interview or a brownfield discovery pass and writes one shared, evidenced `§9 Project Context` the Product Owner and Engineering Manager cite instead of each re-deriving the system. Each path proven once, on a different venue — greenfield on an empty scratch repo, brownfield on this repo's own constitution. Neither on an external project. Built as the `project-kickoff` loop on this repo itself. |
+| **Ticket import and status write-back** | `/story-time <issue-number>` seeds the spec from a GitHub issue; `/go-live` posts one status comment to it when a release reaches a terminal status, only where the constitution's `Tracker write-back` field opts in. One direction only, GitHub Issues only. Read half proven on this repo's own issue #19; write half proven in a disposable scratch repo, including that a second release pass does not post again. The failure-skip and `Ticket: none` branches are not proven live, and neither half has run on an external project — [`docs/status.md`](docs/status.md) has the detail. Built as the `ticket-import` loop on this repo itself. |
 
 ---
 
@@ -62,12 +63,6 @@ Doubt is currently a *phase*: `/peer-review` runs after the build. So a wrong pr
 is not challenged until task 12 stands on it. Task-level verification cannot catch this — a task built on
 a wrong assumption passes its own definition of done perfectly. Carries a real risk of making the longest
 phase longer; if it cannot be kept cheap and rare, it should not ship.
-
-**Ticket import and status write-back** · `ticket-import` · [#19](https://github.com/a-lottes/aSPARK/issues/19)
-Take a ticket number as the sole input to `/story-time`, read the ticket as the brief, and push status
-back to the tracker when a gate closes. One direction only — aSPARK never polls a tracker for its state.
-Unblocked now that PR-mode delivery has shipped the `Ticket` field it builds on. Optional and never
-blocking, like every external integration here.
 
 ---
 
