@@ -30,8 +30,15 @@ Optional argument: the feature name. Resolve as usual.
    `${CLAUDE_PLUGIN_ROOT}/templates/release-notes.md`, and `.spark/constitution.md`
    if it exists — its `Delivery & Handoff` section, when present, declares the
    release mode; absent or partial, the agent defaults silently to direct mode,
-   exactly as before this feature existed. Its `QA Method` section (§8), when
-   complete, tells the agent how to word §1's QA row: the row still requires
+   exactly as before this feature existed. The same section's `Tracker
+   write-back` field names whether this release, once it reaches a terminal
+   status, posts one status comment to the issue named in the feature's
+   `spec.md` header `Ticket` row — absent or `none` means zero tracker calls
+   and zero mention anywhere in the release plan or report, identical to
+   today, never a lighter special case of the same behavior. A `Ticket` row
+   of `none` means there is nothing to write back to, regardless of the
+   declaration. Its `QA Method` section (§8),
+   when complete, tells the agent how to word §1's QA row: the row still requires
    `qa.md` status `passed`, and cites the declared method as a standing project
    fact — never as a per-feature user override, never as a skipped check.
    Absent or incomplete → worded exactly as today. **Never** ask the user to
@@ -46,7 +53,11 @@ Optional argument: the feature name. Resolve as usual.
    deploy, no publish).
 3. **Present the release plan.** Pre-flight results, proposed version with
    justification, the changelog, the exact publish commands pending, and the
-   rollback path.
+   rollback path. When write-back is declared and the feature has a real
+   `Ticket` reference, the plan also names the pending status comment —
+   including the resolved `owner/repo` it will post to, echoed before it's
+   posted, same as the read half — among the outward-facing actions awaiting
+   step 4's go; it is never posted before that same authorization.
 4. **Get the go.** Ask the user explicitly whether to publish. Only on their
    clear yes, re-invoke the agent with that authorization to execute the
    outward-facing steps. No answer or a no → the release stays in
