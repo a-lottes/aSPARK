@@ -66,3 +66,26 @@ review round 1, review round 2, and QA — with zero drift in either the
 going stale between Plan and release; a single write-up trusted forward
 would not have caught a fix pass narrowing a citation range by one line
 (review round 2's own F9) or a wording change elsewhere going unnoticed.
+
+## A fix to one finding can silently invalidate another finding's waiver
+
+Fixing finding A can change a fact that finding B's already-recorded waiver
+depended on — re-derive a waiver's stated facts after any later fix pass in
+the same round, not only before it. This is distinct from the entry above
+("re-verify a disclosed limitation at every subsequent gate," which is about
+staleness *across* gates over time): this is about a fix landing *within
+the same round* quietly undercutting an earlier waiver's own grounding,
+before that round even closes.
+
+`graph-mcp-verification` review round 1 found an unlogged
+`--permission-mode bypassPermissions` execution mode (F2, Major) and the
+user waived it after being shown it was cwd-bound to disposable scratch
+trails, "never `~/aSPARK`." Fixing a separate Major in the same fix-mode
+pass (F3, a simulated-output defect) required re-running a step for real —
+which itself used the same bypassed mode, this time with `cwd=~/aSPARK`,
+inside the very repo the waiver said it would never touch. Round 2 caught
+this only because it re-derived F2's waiver from the raw session files
+rather than trusting the "waived" label; a shallower re-review would have
+shipped a stale waiver whose stated scope no longer matched what had
+actually run. See `.spark/graph-mcp-verification/review.md` (F11, round 2)
+for the worked example.
