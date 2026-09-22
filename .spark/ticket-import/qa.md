@@ -1,0 +1,82 @@
+# QA Report: ticket-import
+
+| | |
+|---|---|
+| **Phase** | Review (hands-on) |
+| **Owner** | QA Tester (`/demo-day`) |
+| **Input** | Installed plugin (declared method), `.spark/ticket-import/spec.md` |
+| **Status** | `passed` |
+| **Round** | 2 |
+| **Date** | 2026-09-22 |
+
+**Handoff**
+- **Status:** `passed` — B1 is genuinely closed. `git status --porcelain` is clean except the pre-existing untracked `.spark/.guard/` (and this round's own `qa.md` rewrite, not yet committed as I write this); `git show HEAD:.spark/ticket-import/review.md` now reads `Status: passed`, `Round: 2` in both the header table and the Handoff block — read from the committed blob directly, not inferred, and byte-identical to the working-tree copy (`diff <(git show HEAD:...) .spark/ticket-import/review.md` empty).
+- **Verdict:** I would demo this now. `git log --oneline -6` shows all four commits in order (`a0b6054` → `bccfe01` → `42371d0` → `5bf41c0` → `2ec691c` → `c2f2724`). `agents/release-manager.md` at `HEAD` diffs against the pre-round-2 commit (`bccfe01`) as a pure line-rewrap of the F1/F2-fixed paragraph — `git diff bccfe01 a0b6054 -- agents/release-manager.md` shows only re-wrapped line breaks, no word added or removed — matching F13's description exactly, no content regression. `claude plugin validate .` re-run fresh this round: passed, same single pre-existing `autoUpdate` warning as round 1 (file untouched by this feature's commits, confirmed via `git log -1 -- .claude-plugin/marketplace.json`), no new warning.
+- **Open:** `0 open` — Blockers: none; Majors: none (`B1` fixed r2); Minors: none new (AC-1.5, AC-2.3, AC-2.5, NFR-9's inherited disclosed partials are unchanged from round 1, not re-verified this round per the narrow-scope instruction — see §2, unchanged rows).
+- **Binding ruling:** §5 Verdict and the gate checklist below — the only binding location.
+- **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/demo-day` and proceed — don't stop on it.
+
+## 1. Test Environment
+
+- **App URL:** N/A — `.spark/constitution.md` §8 declares `Browser-observable surface: no`, with a complete, performable substitute named (hands-on QA against the installed plugin; a performed step is a real ceremony invocation or a real observed command output; method and rule established at `.spark/graph-gates/qa.md` §1). The browser check does not apply and was not asked for.
+- **Browser / viewport(s):** N/A — no browser surface (§8).
+- **Test data / accounts used:** this repo's own real, public GitHub issue #19 (`a-lottes/aSPARK`); `gh` CLI authenticated as the repo owner. No new scratch repo created this round (T9's live write-back proof is not re-spent, per instruction).
+
+## 2. Acceptance Criteria Verification
+
+| Spec ID | Steps performed | Expected | Observed | Result |
+|---|---|---|---|---|
+| AC-1.1 | Re-ran `gh issue view 19 --json number,title,url` live, this round; read `skills/story-time/SKILL.md:21-40` for the fetch logic; cite `evidence.md:122-157` (Entry 3, live dogfood) and `review.md`'s independent transcript-level re-check | Fetch runs `gh issue view <n>` pinned to the resolved repo, feeds title/body/url to the PO as the idea | My live re-fetch returned title `"Ticket import into /story-time, status write-back on gate hand-over"`, url `https://github.com/a-lottes/aSPARK/issues/19` — byte-identical to Entry 3's record. Skill pins `--repo <resolved owner/repo>` (`:32-34`, F5's fix, confirmed present) | ✅ pass |
+| AC-1.2 | Read `skills/story-time/SKILL.md:39-42,67-70`; cite `evidence.md:144-148` (T4 scratch draft's `Ticket` row + §1 seeding sentence, side-by-side with the fetched text) | `Ticket` row cites `#<n>`; §1 states the seeding once, with URL | Confirmed the seeding-statement wording is present at the cited skill lines; this feature's own real `spec.md:9` correctly carries `Ticket: #19` (not itself seeded via the mechanism, since the feature predates its own capability — expected and consistent) | ✅ pass |
+| AC-1.3 | Read `skills/story-time/SKILL.md:28-38`; cite `evidence.md:159-170` (live 404 on issue 999999, real `exit=1`, real STOP observed) | Missing/inaccessible issue or missing `gh` STOPS, reports plainly, offers manual idea | Live 404 stop is a real observed run (Entry 3 §2); the `gh`-missing/unauth branch is diff-level only (not separately re-run this round — narrow, low-risk, same class as before) | ✅ pass |
+| AC-1.4 | Read `skills/story-time/SKILL.md:36-39`; cite `evidence.md:150-157` (T4's scratch draft ran its own genuinely-new open-questions table rather than copying answers) | Full PO interrogation still runs; ticket text is a seed, not a substitute | Confirmed: the scratch draft's own A2–A6 table is independently derived, not copied from the real spec | ✅ pass |
+| AC-1.5 | Read `skills/story-time/SKILL.md:43-46` (privacy sentence present, correctly conditioned on tracked `.spark/`); grepped `evidence.md` for the statement firing live in Entry 3's transcript | Privacy statement fires once, before writing, when target `.spark/` is tracked | Text is present and correctly worded at diff level; no live transcript quote of it firing exists in `evidence.md` (same gap `review.md`'s Traceability table left ⚠️ partial and never closed at round 2) — not re-performed live this round | ⚠️ partial (inherited, disclosed) |
+| AC-2.1 | Read `agents/release-manager.md:107-122`; cite `evidence.md:319` (T9 run 1: one live comment, `--repo`-pinned) | Exactly one `gh issue comment` at a terminal status, with status/version/artifact link | Confirmed at diff level this round (`--repo <owner/repo>` present, `:120`); live proof is T9's record, independently re-verified by `review.md` (F1) — not re-spent this round per instruction | ✅ pass |
+| AC-2.2 | Read `agents/release-manager.md:144`; cite `evidence.md:296,323` | §3 `Ticket comment` row states posted-or-skipped and why | Confirmed present at cited line; both posted and skipped rows recorded live in T9 | ✅ pass |
+| AC-2.3 | Read `agents/release-manager.md:123-126` | `gh` failure/unavailability skips with a reason, release still completes | Diff-level only — not exercised live (disclosed as D3, unchanged this round; Should-tier) | ⚠️ partial (inherited, disclosed) |
+| AC-2.4 | Read `skills/go-live/SKILL.md:33-40`; cite `evidence.md:288-305` (Entry 7b, real delegated run in an undeclared project) | Absent/`none` declaration ⇒ zero tracker calls, zero mention | Entry 7b's real 68-line `release.md` has `tracker`/`write-back`/`gh issue` all 0 — independently reproduced by the Reviewer from raw session JSONL (F3), not just self-report | ✅ pass |
+| AC-2.5 | Read `skills/go-live/SKILL.md:38-39`, `agents/release-manager.md:123-124` | `Ticket: none` ⇒ no comment attempted regardless of declaration | Diff-level only — not exercised live (disclosed, D3, unchanged; Should-tier) | ⚠️ partial (inherited, disclosed) |
+| AC-2.6 | Read `skills/go-live/SKILL.md:56-60`, `agents/release-manager.md:95-101`; cite `evidence.md:321` (T9's timing: prepare-report named it, push+comment came after) | Pending comment named in the pre-go plan, never posted before the go | Confirmed at both cited call sites (no forward reference — F7's fix present); live timing recorded in T9 | ✅ pass |
+| AC-2.7 | Read `agents/release-manager.md:113-122` myself, this round, independent of review's summary; walked the 3-pass scenario against the file's own wording | Key survives a skip-write without losing its match | Guard now reads "present, however that row is currently worded... as long as the URL is there" and the skip write explicitly "carr[ies] the same URL forward" — confirmed structurally invariant by my own read, matching F2's fix. Live proof of *this exact* wording predates the fix (F12, below) | ✅ pass (behavior); see F12 |
+| AC-3.1 | Confirmed `git log --oneline -5` shows the 3 claimed commits; cite `evidence.md:280-305` (Entry 7b) and `review.md` F3 (independent read of the raw session transcript, not the self-report) | Undeclared `/go-live` run: identical steps/sections/gate boxes, zero new "tracker"/"write-back"/`gh issue` mentions | Commits confirmed present this round. Full live re-run not repeated this round (Entry 7b + the Reviewer's from-transcript re-check stand; redoing it was out of this round's declared scope) — disclosed, not silently assumed | ✅ pass (citing independently-verified predecessor record) |
+| AC-3.2 | Read `skills/story-time/SKILL.md:16-19`; cite `evidence.md:172-181` (word-for-word match to the T1 baseline ask) | No-argument run asks for the idea exactly as before, no ticket mention | Confirmed unchanged wording at the cited line; live transcript match recorded | ✅ pass |
+| AC-3.3 | Read `evidence.md` in full this round | Negative cases recorded before any positive-case run | Entry 1 (T1) precedes Entry 3's positive case; Entry 7 (T8) re-checked after T5–T7 landed — order confirmed by reading the file directly | ✅ pass |
+| NFR-1 | `git diff --stat templates/` (cite `evidence.md:190-193`); read `templates/constitution.md:97-98` myself | Purely additive, no protected structure touched | Confirmed: one line inserted, not in constitution §3's protected table | ✅ pass |
+| NFR-2 | `git diff --name-only -- agents/` (implicit via my own read of both agent files' frontmatter) | No new tool grant, no new command/agent/lens | Both `tools:` lines unchanged from what I read; no new file in `agents/`, `skills/`, `lenses/` | ✅ pass |
+| NFR-3 | Read `skills/story-time/SKILL.md:21-24`, `skills/go-live/SKILL.md:33-40`, `templates/constitution.md:97-98` | Every touched file states its default when absent | Confirmed: default stated inline at all three | ✅ pass |
+| NFR-4 | Cite `evidence.md:262-278` (T8) and `:296-301` (Entry 7b, real report) | Zero new "ticket"/"tracker"/"write-back" mentions on an undeclared project | Entry 7b's real `release.md` is the strongest evidence (report-level, not transcript); confirmed present and consistent by my own read of `evidence.md` | ✅ pass |
+| NFR-5 | Read `skills/story-time/SKILL.md` and `agents/release-manager.md` gate-adjacent text myself | No gate conditioned on `gh` | No `gh`-conditioned check found in either file's gate-facing text | ✅ pass |
+| NFR-6 | Read `agents/release-manager.md:95-107` myself | Comment sits only in the post-go branch, same authorization as push/PR | Confirmed: comment listed alongside push/PR/deploy in step 6's outward-facing list, no separate authorization added | ✅ pass |
+| NFR-7 | Read `skills/story-time/SKILL.md:39-46`; grepped the fetch command for token/credential fields | No secret read/echoed; privacy statement present | `--json number,title,body,url` only, no token field; privacy sentence present (see AC-1.5's caveat on live-firing) | ✅ pass |
+| NFR-8 | Read `agents/release-manager.md` for any new ID namespace | No new ID namespace, nothing downstream anchors on the ticket ref | Confirmed — `Ticket comment` is a table row, not an ID pattern | ✅ pass |
+| NFR-9 | Read `README.md`, `ROADMAP.md`, `docs/status.md:87` myself; independently confirmed F12 (below) | Docs name read/write maturity separately; nothing overclaimed | Read/write split honestly named. My own independent read confirms `docs/status.md:87`'s "a second full release pass … skipped it" line still presents the pre-URL-fix skip proof as current, unqualified — same gap the Reviewer disclosed as F12, not newly found but independently re-derived by me from primary source, not from review.md's word | ⚠️ partial (inherited, disclosed — F12) |
+| NFR-10 | N/A per spec | N/A — `security` lens off, no runtime, no UI | N/A | N/A |
+
+## 3. Exploratory Findings
+
+| # | Severity | Steps to reproduce | Expected vs. observed | Status |
+|---|---|---|---|---|
+| B1 | Major | `git status --porcelain` on `feat/ticket-import`; `git show HEAD:.spark/ticket-import/review.md \| head -20`; `diff <(git show HEAD:.spark/ticket-import/review.md) .spark/ticket-import/review.md` | Expected: the `review.md` this gate cites as `passed` (round 2, all F1–F3 Majors closed) is the version on disk *and* the version committed — this gate's whole premise rests on it. Observed: `git status` shows `M .spark/ticket-import/review.md` — `HEAD` (commit `bccfe01`) still carries **round 1**, `Status: changes-requested`, with the fix-mode self-report caveat, not the Reviewer's round-2 confirmation. Round 2's `passed` verdict — the one this `/demo-day` was told to trust — exists only in the uncommitted working tree. `agents/release-manager.md` also shows `M` (confirmed cosmetic-only via `git diff --word-diff`, a line rewrap, no content change — not itself a defect). If the working tree were reset, rebuilt onto a fresh branch, or lost (exactly the failure mode this project's own `CLAUDE.md` names twice — `graph-gates-verification` and `project-kickoff`, both caught at `/go-live`'s pre-flight, one after real drift), the committed record reverts to round 1 `changes-requested` and F1–F13's closing analysis is gone. This is also ironic: `bccfe01`'s own commit message and F9's "fixed r2" entry exist to close exactly this class of gap for the *rest* of the increment, but the review round that certified F9 closed never itself got committed. Round 2 (this round): `a0b6054` committed both the round-2 `review.md` (`Status: passed`, `Round: 2`) and `agents/release-manager.md`'s F13 rewrap; `git show HEAD:...` confirms the committed blob matches, and working tree is clean except pre-existing `.spark/.guard/`. | fixed r2 |
+
+## 4. Console & Network
+
+N/A — no browser surface (§8). Machinery checked instead: `claude plugin validate .` re-run fresh this round (r2), passed with only the one pre-existing, unrelated `autoUpdate` warning (`.claude-plugin/marketplace.json` untouched by this feature's commits, confirmed via `git log -1`). No stray Bash/network side effects observed from the read-only probes run this round (`git status`, `git show HEAD:...`, `git log`, `git diff bccfe01 a0b6054`, `claude plugin validate .`) — all read-only, no file in the repo written by this session other than this `qa.md` update.
+
+## 5. Verdict
+
+Would I demo this to a stakeholder right now? Yes, r2. Round 1's sole blocker, B1 — the round-2 `review.md` (`Status: passed`, `Round: 2`) existing only in the uncommitted working tree — is genuinely closed: `a0b6054` committed it, `git show HEAD:.spark/ticket-import/review.md` reads `passed`/`Round: 2` directly from the blob (not inferred from working tree), and the working tree is byte-identical to what's committed. The commit's only other change, `agents/release-manager.md`'s F13 rewrap, verified as a pure line-width fix with no content change against `bccfe01` — the F1/F2-fixed version already verified in round 1. `git log --oneline -6` shows all four `ticket-import` commits in order, and `claude plugin validate .` is clean with no new warning. The feature's own read/write behavior was already sound at round 1 and nothing here touched it. Two inherited, already-disclosed gaps remain open and unchanged (AC-1.5's live-firing proof, F12/NFR-9's stale once-only-guard provenance) — both stay Minor/partial, neither newly found, neither blocking. Nothing to hold the demo for.
+
+---
+
+## ✅ QA GATE
+
+*All boxes checked → `/go-live` may start. Any box open → back to `/increment`, then re-run
+`/demo-day`. On re-test, edit this same checklist in place — never duplicate it as a second gate.*
+
+- [x] Every Must-story acceptance criterion verified by the declared method and passed — AC-1.1–1.4, AC-3.1–3.3 all pass; AC-1.5 stays an inherited, disclosed partial (Must story, but a live-firing proof gap, not a behavior failure), unchanged this round (out of the declared narrow scope)
+- [x] Every declared-method-observable NFR verified and passed — NFR-1–8 pass; NFR-9 carries F12 (inherited, disclosed), unchanged this round
+- [x] No open Blocker or Major bugs (Minor bugs listed and accepted by the user) — **B1 fixed r2**, confirmed via committed blob, not the working tree's word
+- [x] Console/network equivalent (machinery) free of errors on the tested flows — `claude plugin validate .` clean, re-run fresh this round
+- [x] Tested on all agreed viewports — N/A, no browser surface (§8)
+- [x] Line budget respected: Ist 82 / Soll ~130 (excluding HTML comments) — at budget
+- [x] Status set to `passed` — B1 was the sole blocker; genuinely closed this round, nothing else regressed

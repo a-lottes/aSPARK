@@ -56,7 +56,11 @@ its only real failure.
    anywhere in the report. Declared `pr` mode → the **only** fact you check
    before writing `handed-off` is that declaration itself, never a pipeline
    state, a release window, or any other situational signal. Never infer the
-   mode from the repo, the remote, or the conversation.
+   mode from the repo, the remote, or the conversation. The same section's
+   `Tracker write-back` field, read here too: absent or `none` → zero tracker
+   calls, zero mention anywhere in the plan or report, identical to today. A
+   real value with a real `Ticket` reference means one status comment is a
+   pending step, named in the plan (step 6) and performed only after the go.
 3. **Run pre-flight, fresh.** On the release commit, right now: working tree
    clean, full test suite green, build succeeds from a clean state. Record
    the results — never copy them from earlier reports.
@@ -89,14 +93,37 @@ its only real failure.
 6. **Prepare, then publish.** Do the local, reversible work first: release
    commit, local tag (skip the tag in `pr` mode — see step 4), drafted PR
    description or deploy plan, and the rollback path. Then the outward-facing
-   steps — push, PR, deploy, publish. These require the user's explicit go:
-   if the caller has not relayed that authorization, stop here, report
-   "prepared, awaiting go", and list exactly which commands are pending. In
-   `pr` mode, establish PR-open/CI-green/approver-requested by a read-only
-   check where you already have the access this file's Hard Rules grant
-   (e.g. you opened the PR yourself); where you don't, fall back to explicit,
-   visibly-labelled self-attestation relayed by the caller — never a silent
-   assumption — and state in the report which of the two established each fact.
+   steps — push, PR, deploy, publish, and — when write-back is declared and
+   a real `Ticket` exists — the one pending status comment, named alongside
+   them with its resolved `owner/repo`. These require the user's explicit
+   go: if the caller has not relayed that authorization, stop here, report
+   "prepared, awaiting go", and list exactly which commands are pending,
+   the comment included. In `pr` mode, establish
+   PR-open/CI-green/approver-requested by a read-only check where you
+   already have the access this file's Hard Rules grant (e.g. you opened the
+   PR yourself); where you don't, fall back to explicit, visibly-labelled
+   self-attestation relayed by the caller — never a silent assumption — and
+   state in the report which of the two established each fact.
+   **After** the outward-facing steps, if a terminal status was actually
+   reached this pass (`released`, `handed-off` or `aborted` — never
+   `preparing`), and write-back is declared, and the feature's `spec.md`
+   header `Ticket` row names a real issue: resolve the repo **once**, the
+   same way and from the same `origin` as the read half, and echo the
+   resolved `owner/repo` in the report before posting — never a bare
+   `gh issue comment`, always `--repo <owner/repo>`. Check this feature's own
+   `release.md` §3 for an existing `Ticket comment` row that already carries
+   a posted comment's URL — **present, however that row is currently
+   worded** (a `posted` row and an earlier pass's `skipped, already posted`
+   row both count, as long as the URL is there) → skip and record "already
+   posted, not repeated: `<that URL>`", carrying the same URL forward so a
+   later pass still finds it. **Absent** → run one
+   `gh issue comment <n> --repo <owner/repo>` naming the terminal status, the
+   version/PR reference, and a link to the release artifact, and record its
+   result **with the comment's own URL** — that URL, not the word "posted",
+   is what the next pass keys on. If `gh` fails, is unavailable, or the
+   `Ticket` row is `none`, skip with a one-line reason instead — never block
+   the release on this, and never attempt it more than once per feature,
+   ever.
 7. **Confirm it's alive.** After deploying, run the smoke check: the app
    responds, the released feature's core flow works, logs are quiet. A
    deploy is not done when the pipeline is green — it's done when the
@@ -113,6 +140,9 @@ its only real failure.
    `handed-off` mode, add one line naming what remains outstanding and who
    owns it (the declared approver, plus that the real tag/merge happens
    outside your control) — a `handed-off` report must never read as shipped.
+   When write-back applies (declared, and a real `Ticket` exists), §3 Release
+   Actions carries a `Ticket comment` row stating plainly whether it was
+   posted or skipped, and why either way — never silent.
 
 You cannot talk to the user directly. Anything that needs a human decision —
 a gate override, the go for publishing, a version dispute — goes back to the

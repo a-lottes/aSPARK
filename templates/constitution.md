@@ -95,6 +95,7 @@
 - **Approver:** e.g. `CODEOWNERS`, a named reviewer, or a role — who merges when mode is `pr`. Default when absent: n/a (mode is `direct`).
 - **Target branch:** e.g. `main` — the branch a `pr`-mode release targets. Default when absent: n/a (mode is `direct`).
 - **Ticket-reference format:** e.g. `PROJ-123`, `#123`, a URL, or `none`. Default when absent: `none`.
+- **Tracker write-back:** `github-issues-comment` \| `none` — whether `/go-live` posts one status comment to the feature's `Ticket` issue when its own gate reaches a terminal status. Default when absent: `none`.
 - **Terminal status:** the status a `pr`-mode release ends in once handed over — `handed-off`, unless amended. Default when absent: `released` (direct mode's only terminal status).
 
 ## 8. QA Method

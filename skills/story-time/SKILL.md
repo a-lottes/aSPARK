@@ -18,6 +18,33 @@ idea; the outcome is a spec — or the insight that the idea shouldn't be built.
 The user's feature idea, usually passed as the command argument. If no idea
 was provided, ask for it before doing anything else.
 
+Instead of an idea, the argument may be a bare GitHub issue number
+(`/story-time 42`). Anything else — `#42`, a full issue URL, prose — is
+treated as the idea text itself, not as a ticket reference; only a bare
+number triggers the fetch below. Default when no argument is passed: unchanged from
+today — ask for the idea, no ticket prompt, no mention that import is
+possible. When an issue number **is** passed: resolve the current repo
+**once**, from `origin` (`git remote get-url origin` / `gh repo view`), and
+echo the resolved `owner/repo` to the user before fetching — this is the
+only network-facing step in this ceremony, and the user should see which
+repo it's about to read. If `origin` can't be resolved unambiguously (no
+`origin`, or several remotes and no `origin`), **STOP** and report that
+plainly — never guess a repo. Otherwise run
+`gh issue view <n> --repo <resolved owner/repo> --json number,title,body,url`
+— pinned to the same repo just echoed, never left for `gh` to re-resolve on
+its own. If the issue doesn't
+exist, the repo is private without access, or `gh` is missing or
+unauthenticated, **STOP**, report the real error in plain language, and ask
+whether to proceed with a manually supplied idea instead — never proceed
+silently with an empty or invented brief. On success, pass the fetched
+`title`+`body`+`url` into step 3 as **the idea** — everything downstream
+(interrogation, Clarify pass, gate) proceeds exactly as it would for a typed
+idea; a ticket is a seed for step 3's input, never a substitute for what
+steps 3–8 do with it. If the target project's `.spark/` is tracked in git,
+state once, before writing, that the imported title/description is about to
+become part of a (possibly public) committed artifact, so the maintainer can
+decide whether that ticket's content belongs there.
+
 ## Steps
 
 1. **Name the feature.** Derive a short kebab-case feature name from the idea
@@ -34,12 +61,17 @@ was provided, ask for it before doing anything else.
    every phase. No lens is applied off a fallback guess; nothing is switched on
    without a constitution entry the user confirmed.
 3. **Delegate to the Product Owner.** Invoke the `product-owner` agent with:
-   the user's idea verbatim, the feature name, the path
+   the user's idea verbatim (or the fetched title+body, if this run started
+   from an issue number — say so explicitly to the agent, don't let it
+   rediscover the source), the feature name, the path
    `.spark/<feature-name>/spec.md`, and the spec template from
    `${CLAUDE_PLUGIN_ROOT}/templates/spec.md`. Point it at
    `.spark/constitution.md` if that file exists — the spec must live within it.
    Pass the paths of any active lenses (`${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md`)
-   so the PO captures their concerns as measurable NFRs.
+   so the PO captures their concerns as measurable NFRs. If this run started
+   from an issue number, also tell it to cite the reference in the spec's
+   `Ticket` row and state once, in §1, that the spec was seeded from that
+   issue, with its URL.
 4. **Relay, don't guess.** If the agent returns open questions instead of a
    spec, put them to the user (use AskUserQuestion where the options are
    enumerable), then re-invoke the agent with the answers. Repeat until the
