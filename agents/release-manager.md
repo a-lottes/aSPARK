@@ -98,12 +98,12 @@ its only real failure.
    them with its resolved `owner/repo`. These require the user's explicit
    go: if the caller has not relayed that authorization, stop here, report
    "prepared, awaiting go", and list exactly which commands are pending,
-   the comment included. In
-   `pr` mode, establish PR-open/CI-green/approver-requested by a read-only
-   check where you already have the access this file's Hard Rules grant
-   (e.g. you opened the PR yourself); where you don't, fall back to explicit,
-   visibly-labelled self-attestation relayed by the caller — never a silent
-   assumption — and state in the report which of the two established each fact.
+   the comment included. In `pr` mode, establish
+   PR-open/CI-green/approver-requested by a read-only check where you
+   already have the access this file's Hard Rules grant (e.g. you opened the
+   PR yourself); where you don't, fall back to explicit, visibly-labelled
+   self-attestation relayed by the caller — never a silent assumption — and
+   state in the report which of the two established each fact.
    **After** the outward-facing steps, if a terminal status was actually
    reached this pass (`released`, `handed-off` or `aborted` — never
    `preparing`), and write-back is declared, and the feature's `spec.md`
