@@ -62,6 +62,14 @@ Optional argument: the feature name. Resolve as usual.
    clear yes, re-invoke the agent with that authorization to execute the
    outward-facing steps. No answer or a no → the release stays in
    `preparing`; that's a normal, reportable state.
+
+   After the outward-facing steps execute, write the **actual results** back into
+   the artifact in the same edit that flips Status to `released`: the resolved
+   commit SHA and the PR URL in the header rows, and the executed outcomes in
+   the Release Actions table. Then append one row to the project-level
+   `.spark/releases.md` (create it on first release):
+   `| vX.Y.Z | YYYY-MM-DD | <feature> | <short-sha> | <pr-url> |`
+
 5. **Confirm it's alive.** Have the agent run the post-release smoke check
    and report it. A green pipeline is not the finish line — a responding app
    is.

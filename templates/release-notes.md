@@ -8,6 +8,8 @@
 | **Status** | `preparing` \| `released` \| `aborted` \| `handed-off` |
 | **Version** | vX.Y.Z |
 | **Date** | YYYY-MM-DD |
+| **Commit** | `<full-sha>` — the commit the tag points at |
+| **PR** | `<url>` — merge PR, or `direct` |
 
 <!-- Handoff: read this block first, the numbered sections below by exception. Whoever
      writes to this report updates it in the same edit that changes status or actions:
