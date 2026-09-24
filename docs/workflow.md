@@ -26,6 +26,32 @@ gets routed there first by `/spark` and `/next-steps`, and its bounded
 system picture) is what the Product Owner and Engineering Manager cite instead
 of each re-deriving the project's own facts on every feature.
 
+
+## Context Budget: What Each Ceremony Reads
+
+Artifacts grow monotonically; a prompt does not. Every ceremony states what it
+**must read in full** and what it **may read as header** (title + Status row +
+IDs) only. This is the contract that keeps large features inside the prompt:
+
+| Ceremony | Must read in full | Header-only is enough |
+|---|---|---|
+| `/story-time` | `constitution.md` | — |
+| `/sprint-plan` | `spec.md` AC/NFR tables | spec Clarify transcript |
+| `/increment` | current task row from `plan.md` | all other task rows |
+| `/peer-review` | spec AC table, plan task list | review history rounds |
+| `/demo-day` | AC list from `spec.md` | plan, review transcripts |
+| `/go-live` | `release.md`, gate statuses | review/qa transcripts |
+
+Rules:
+
+- `/increment` **never** requires the full plan in context; it works task-by-task
+  from the plan's task table.
+- A ceremony that finds itself needing more than the contract allows records a
+  finding instead of silently overflowing — the plan gets re-cut, not the prompt
+  stretched.
+- Resuming (`/spark` without argument) reads **statuses first**, full text only
+  for the phase being resumed.
+
 ## Situational Concerns: the Project Profile & Lenses
 
 Not every quality concern applies to every project. SEO matters for a public
