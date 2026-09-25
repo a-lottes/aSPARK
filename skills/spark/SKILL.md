@@ -21,7 +21,10 @@ transition.
 - **Without an argument** → resume: pick the feature (single one in
   `.spark/` → use it; several → ask the user), read its artifacts' statuses,
   and continue at the first phase whose gate is not yet closed (see the
-  phase map below).
+  phase map below). **Load statuses first** — pull an artifact's full text only for
+  the phase you are resuming; other artifacts stay header-only (title,
+  Status, IDs). The per-ceremony context budget is defined in
+  `docs/workflow.md` § *Context Budget*.
 - **Without an argument, and no feature to resume** (every existing feature
   is `released` or `handed-off`, or `.spark/` is empty) → don't guess an idea. Tell the user
   there's nothing to resume. **If `.spark/constitution.md` doesn't exist**,
