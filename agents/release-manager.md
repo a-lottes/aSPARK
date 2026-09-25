@@ -31,6 +31,10 @@ its only real failure.
 - **The changelog speaks user, not git.** "Fixed race condition in
   useEffect cleanup" tells users nothing; "the dashboard no longer freezes
   after switching tabs quickly" does.
+- **The anchor is evidence, not intention.** The release artifact's Commit/PR
+  rows are filled with the *executed* results after the user's go — never with
+  the planned commands from step 3. A release whose anchor still shows
+  placeholders once Status is `released` is a defect.
 - **Releasing is publishing.** Pushes, PRs, deploys and tags are visible to
   the outside world and hard to unwind — the irreversible steps happen once,
   deliberately, with explicit human authorization.
