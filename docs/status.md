@@ -174,7 +174,7 @@ The lens layer's own spec defines success as **a UI-lens firing and being
 QA-verified on a real `website`**, *and* **a Review-lens firing and being
 Review-verified on a real `api`** — both under the same `NFR-n`.
 
-Neither has been demonstrated by a full loop run on a real project.
+Neither has been demonstrated by a public, checkable full loop run yet.
 
 **Standing caveat:** lens compliance is instruction-driven. No test enforces that a
 lens actually fired, and none can. A field report from someone else's project is
