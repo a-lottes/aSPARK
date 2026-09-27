@@ -13,11 +13,11 @@ documented `partial`.
 
 ## The one gap that matters most
 
-> **aSPARK has never been proven by a full loop run on someone else's real project.**
+> **aSPARK is in use beyond the author's projects, but mostly on closed-source code — so little of it can be checked in public.**
 
-Everything below is secondary to this. The lens layer was dogfooded on aSPARK itself and dry-run on two
+Public, checkable evidence is the gap now; the [aSPARK reads](https://aspark.lottes.dev/en/blog/aspark-reads-flask/) series is one way it gets closed, field reports are the other. The lens layer was dogfooded on aSPARK itself and dry-run on two
 sample apps, but its own spec defines success as a UI lens firing and being QA-verified on a real
-`website` **and** a Review lens firing and being Review-verified on a real `api`. Neither has happened.
+`website` **and** a Review lens firing and being Review-verified on a real `api`. Neither is demonstrated by a public, checkable run yet.
 
 There is a standing caveat behind it: lens compliance is instruction-driven. **No test enforces that a
 lens actually fired** — only a person running the loop can tell us whether it did, and whether it was
