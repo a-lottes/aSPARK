@@ -19,6 +19,7 @@ never edits an agent or a skill. Today one kind exists, [`migration-campaign`](m
 
 Frontmatter declares all seven keys. A file missing any of them is reported as **malformed,
 naming the key**, and is not used.
+**Best effort, not a guarantee:** this check is prompt material. In QA a kind with a key removed was reported malformed in 13 of 19 sessions (`stop-rules` 4 of 4, `roles` 2 of 5, `phases` 4 of 7); a miss said the kind "has all seven keys". The contribution review is the real gate for a new kind.
 
 | Key | Meaning |
 |---|---|
