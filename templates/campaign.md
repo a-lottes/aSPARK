@@ -8,16 +8,18 @@
 | **Goal approved by / date** | <user> / YYYY-MM-DD — the user's own statement, transcribed by them or by the agent on their instruction; the agent never invents it, and only the user sets `approved` |
 
 <!-- Copy this file to `.spark/campaigns/<campaign-name>/campaign.md`, then append the chosen kind's body as §8 (slice list and parity check under it; the token budget stays in §3) and replace the `SR-5…` row in §4 with the kind's rows.
-     Any element left blank = not startable. The agent may set Status only to `running` (at the start after
-     approval, and after `halted` once the cause is resolved and recorded in a `CK-` entry — unless the tripped
-     rule reserves the decision to the user) or `halted`;
-     `approved`, `complete` and `abandoned` are the user's: they count as set when the user says so in the conversation, and the agent writes it down as their statement. IDs: `S<n>` slices, `SR-<n>` stop rules,
+     Before instantiating from a kind, check its frontmatter has all seven keys — `name` (= the file name), `trigger`, `goal-kind`,
+     `roles`, `stop-rules`, `budget-defaults`, `phases`; if any is missing, report the kind as malformed, name the key, do not use it.
+     Any element left blank = not startable. The agent may set Status only to `running` (at the start after approval, and after
+     `halted` once the cause is resolved and recorded in a `CK-` entry — unless the tripped rule reserves the decision to the user)
+     or `halted`; `approved`, `complete` and `abandoned` are the user's: they count as set when the user says so in the conversation,
+     and the agent writes it down as their statement. IDs: `S<n>` slices, `SR-<n>` stop rules,
      `CK-<n>` checkpoints. Keep the file name `campaign.md`. -->
 
 ## 1. Goal
 - **Condition:** <one end state that a command or file state can confirm> · **Observable:** <command and expected output, or file state> · **Verifier:** <who or what runs it>
 - **Thresholds:** <numbers or states that separate done from not done>
-- "It looks good" is not decidable and is rejected. One undertaking, one goal, one budget: several independent goals or a set of stories go to the feature loop, not here. **Check this before the first iteration, and stop without iterating if it fails.**
+- "It looks good" is not decidable and is rejected. One undertaking, one goal, one budget: several independent goals or a set of stories go to the feature loop, not here. **Check this — in §1 and anywhere else the file adds scope, such as §8 notes — before the first iteration; if it fails, stop without iterating, change nothing and report.**
 
 ## 2. Veto record
 | Condition | Met / missed | Note |

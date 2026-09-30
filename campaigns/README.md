@@ -71,7 +71,7 @@ Naming rules, because [`aspark-graph`](../tools/README.md) reads `.spark/`:
   `running` (at the start, and after a halt once its cause is resolved and recorded in a `CK-` entry —
   unless the tripped rule reserves the decision to the user, as `SR-5` does; a goal, threshold or budget
   change still needs the whole spec approved afresh) and `halted`.
-- **Known limits:** the freeze is a stop only if the agent notices an edit to the approved sections; an edit amended into the approval commit was **not** noticed in QA. Nothing detects it. Overlapping slice paths are not flagged.
+- **Known limits:** the freeze is a stop only if the agent notices an edit to the approved sections; an edit amended into the approval commit was **not** noticed in QA. Nothing detects it. Overlapping slice paths are not flagged. The `SR-9` trip on a real diff spanning two slices could not be produced honestly in QA (the Migrator commits only its own paths), so that half of the rule is not verified live.
 - **Without `aspark-guard`:** nothing changes and nothing is reported. The rules are instructions.
 - **No skill reads a campaign definition from the target project.** Only the instantiated
   `campaign.md` is written there.

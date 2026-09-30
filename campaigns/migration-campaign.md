@@ -41,7 +41,7 @@ Each role brief — the Strategist included — runs as a **fresh general-purpos
   It never marks a slice parity-green and does not write the `CK-` entry.
 - **Parity Verifier** (review). Runs as a **separate invocation, in a context separate from the one that produced the slice**.
   It runs the parity check against old and new and reports the observed output verbatim (the campaign session copies it into the instance). It **edits neither the
-  migrated code nor the parity check**. Only its quoted output can mark a slice parity-green; when unsure it reports, it does not mark. **If a fresh Verifier cannot be dispatched or cannot run the check, halt and escalate:** the campaign session never runs the parity check itself, never stands in for the Verifier and never marks a slice green.
+  migrated code nor the parity check**. Only its quoted output can mark a slice parity-green; when unsure it reports, it does not mark. **If a fresh Verifier cannot be dispatched or cannot run the check, halt and escalate:** the campaign session never runs the parity check to verify a slice, never stands in for the Verifier and never marks a slice green. A read-only baseline run before the first iteration is allowed; it verifies nothing.
 
 ## Stop rules added to the four in the format
 All halt the run and escalate to the user (agent-followed, not enforced by Core).

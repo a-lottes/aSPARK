@@ -1143,3 +1143,7 @@ Round 3 passed the review and left four findings, all wording. The user chose to
 ## `/demo-day` round 1 — fix pass (not re-tested)
 
 QA round 1 (`qa.md`): 33 rows, 28 pass, 2 fail, 3 not-verified-live; three Majors (B1 AC-1.8, B2 AC-5.3, B3 start-up path) and eight lower findings. The user chose: fix B3 by documentation plus an agent rule (name the plugin folder; the agent asks and never invents a structure), fix B5–B8 and the Majors, and accept B4 and B9 as documented known limits. Text changes are recorded as plan §6 D-8. **None of them has been re-run.** `wc -l`: format 58 (cap ≤ 60), kind 64 (cap ≤ 90), `campaigns/README.md` 86 (cap ≤ 90); `claude plugin validate .` passes with the one pre-existing warning.
+
+## `/demo-day` round 2 — fix pass (not re-tested)
+
+QA round 2 (`qa.md`): 31 pass, 1 fail, 1 not-verified-live; both round-1 Majors held (4/4). New Major **B15**: only 1 of 4 sessions reported a kind with `stop-rules` deleted as malformed, because the seven-key contract lived only in `campaigns/README.md`, which those sessions did not open. Fixed: the check now stands in `templates/campaign.md`'s instantiation comment. B13 (one-goal check also covers scope added outside §1; a refusal changes nothing) and B12 (read-only baseline run allowed) fixed in text. The user accepted the `SR-9` gap as a documented partial verification. **None of these changes has been re-tested.** `wc -l`: format 60 (cap ≤ 60), kind 64, `campaigns/README.md` 86.
