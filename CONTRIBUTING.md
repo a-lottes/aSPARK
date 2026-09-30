@@ -20,6 +20,7 @@ the repo is full of `.spark/` directories.
 |---|---|
 | Something behaves wrong | [Open a bug report](../../issues/new?template=bug_report.yml) |
 | Add a lens for a concern aSPARK doesn't cover | [Propose a lens](../../issues/new?template=new_lens.yml) — and read *[Adding a lens](#adding-a-lens)* |
+| Add a campaign kind for a goal aSPARK doesn't cover | [Open an enhancement](../../issues/new?template=enhancement.yml) — and read *[Adding a campaign kind](#adding-a-campaign-kind)* |
 | An idea for the loop, a skill or an agent | [Open an enhancement](../../issues/new?template=enhancement.yml) |
 | You ran aSPARK on a real project | [File a field report](../../issues/new?template=field_report.yml) — **the most valuable thing you can send us right now** |
 | Docs are wrong or unclear | A PR straight away is fine |
@@ -129,6 +130,25 @@ Then wire it up: add the lens to the activation table in
 Docs ship in the same change as the capability.
 
 A lens **flags concerns and proposes NFRs. It never invents scope.**
+
+---
+
+## Adding a campaign kind
+
+Same rule as lenses: **a new kind is a new file, never an edit to an agent or a skill.**
+Copy [`campaigns/migration-campaign.md`](campaigns/migration-campaign.md) as your model and read
+the contract in [`campaigns/README.md`](campaigns/README.md). A kind needs:
+
+1. **Frontmatter** with all seven keys — `name`, `trigger`, `goal-kind`, `roles`, `stop-rules`,
+   `budget-defaults`, `phases`. A file missing one is reported as malformed and not used.
+2. **A decidable goal** — a named observable and verifier. A goal only expressible as "looks good"
+   belongs in the feature loop, not here.
+3. **Role briefs, not agent files** — roles run as fresh subagents from the brief.
+4. **Stop rules that tighten, never loosen** the four in [`templates/campaign.md`](templates/campaign.md).
+5. **Where it stays silent.** *Suppression is a feature* applies here too.
+
+Keep the file within the size cap (the kind ≤ 90 lines; the format in `templates/campaign.md` ≤ 60). Docs ship
+in the same change: the Campaigns section in `README.md` and the contract in `campaigns/README.md`.
 
 ---
 

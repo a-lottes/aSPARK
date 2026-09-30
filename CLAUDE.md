@@ -89,3 +89,37 @@ rather than trusting the "waived" label; a shallower re-review would have
 shipped a stale waiver whose stated scope no longer matched what had
 actually run. See `.spark/graph-mcp-verification/review.md` (F11, round 2)
 for the worked example.
+
+## Prompt material makes a check likely, never certain — say so in the doc
+
+Core is Markdown with no runtime, so any check it asks an agent to perform is
+an instruction, not an enforcement. Measure how often it holds before
+writing "the agent reports X", and write the measured rate into the doc that
+describes it. `campaign-core`'s rule "a kind missing a frontmatter key is
+reported malformed, not used" (AC-2.1) was caught in 1 of 4 sessions at QA
+round 2 and 13 of 19 sessions after the check was moved, yet the sessions
+that missed it still said the kind "has all seven keys" — a false
+reassurance, not an absence. A best-effort check that is documented as
+best-effort, with its observed rate, is honest; one documented as a guarantee
+is a defect. State up front, at Specify, which of a story's acceptance
+criteria prompt material can only make likely, so the QA rounds do not
+discover it as a Major on round three. See `.spark/campaign-core/qa.md`
+(B15, AC-2.1) for the worked example.
+
+## Put a rule in the file the agent actually reads
+
+An agent follows the file it was handed, not the contract that is documented
+somewhere else in the same plugin. When a check or a ruling must hold at a
+specific step, write it in the artifact that step reads — the instantiated
+instance, the template comment, the table row — and do not rely on a README,
+a frontmatter key or a sibling file the step never opens. Two findings in
+`campaign-core` had one cause. The user's `SR-5` ruling ("the breaking slice
+stays committed until the user decides") stood only in the kind file's
+frontmatter, which the merge rule drops when an instance is built, so with
+the resume rule an agent could have reverted the slice and continued without
+the user deciding (review F24, Major). The seven-key kind check lived only in
+`campaigns/README.md`, which the instantiating sessions never opened
+(QA B15). Both were fixed by moving the text to where the agent reads it;
+neither was found by reading the diff. Ask of every new rule: which file is
+open in the agent's context at the moment it must act, and is the rule in
+that file? See `.spark/campaign-core/review.md` (F24) and `qa.md` (B15).
