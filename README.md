@@ -119,6 +119,16 @@ Each ceremony can also be run on its own. The artifacts on disk *are* the state,
 
 `/charter` records what kind of software this is (`website`, `web-app`, `api`, `cli`, `library`) and what it does with data (auth, payments, PII, database, multiple languages, accessibility mandate). That switches on matching **lenses**: extra checks the existing team applies only where they apply. A public website gets SEO and Core Web Vitals in QA. An API gets error-envelope and versioning checks in review. A project that handles payments gets the security lens through every phase. Nine lenses ship today; adding one is a new file in [`lenses/`](lenses/). Without a constitution, no lens fires.
 
+### Campaigns: one measurable goal instead of one story (experimental)
+
+A campaign is a second way of working, next to the feature loop: one machine-decidable goal, one budget, run in iterations until the goal is reached or a stop rule halts it. You approve the goal; the agent only iterates inside it. One kind ships today, [`migration-campaign`](campaigns/migration-campaign.md): a migration in reversible slices, with a fresh Parity Verifier per slice. A new kind is one file in [`campaigns/`](campaigns/README.md), the same way a lens is.
+
+What this is, plainly:
+- The need is anticipated, not observed, and effectiveness is unmeasured. Only one kind exists.
+- Budgets and stop rules are followed by the agent, not enforced by Core. Core is Markdown with no runtime; enforcement is [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)'s concern, and without it nothing changes and nothing is reported.
+- You start a campaign by naming its instance, `.spark/campaigns/<name>/campaign.md`. The ten ceremonies do not know campaigns yet, so nothing routes to one on its own, and the migration kind's standing rule for ordinary features is inert until routing ships.
+- A repo without `.spark/campaigns/` sees no difference.
+
 ---
 
 ## Project Status
@@ -148,7 +158,7 @@ Two further siblings, `aspark-insights` and `aspark-policy`, do not touch the lo
 
 - [`docs/workflow.md`](docs/workflow.md) — how artifacts hand over, what each gate checks, who may decide what.
 - [`docs/repo-layout.md`](docs/repo-layout.md) — what `agents/`, `skills/`, `templates/`, `lenses/` and `tools/` are, and the reading order for newcomers.
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to add a lens, skill or agent without breaking the contract.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to add a lens, campaign kind, skill or agent without breaking the contract.
 - [`CLAUDE.md`](CLAUDE.md) — working habits kept across loops.
 
 ---
