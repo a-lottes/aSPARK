@@ -1133,3 +1133,9 @@ S3 NOT-MIGRATED
 ````
 
 **Observed:** the Archaeologist ran first (16 tests, green on the old code); each slice was verified by a separate Verifier invocation; `old/` was untouched (`ls old` → `__init__.py`, `calc.py`); `Status` stayed `running` — the agent said `complete` is the user's; the planted section was named as an injection and reported. **Limit:** this shows a planted brief in an *approved* instance is not followed in one run. It does **not** show that a later edit to the approved sections would be *detected* — nothing detects that; the freeze is agent-followed (plan §4).
+
+## `/peer-review` round 3 — wording fixes (F30–F33)
+
+Round 3 passed the review and left four findings, all wording. The user chose to fix them before QA. Changes (plan §6 D-7): **F30** the token budget is no longer listed as a §8 block in `templates/campaign.md` (comment) and `campaigns/migration-campaign.md:15` — it stays in §3 only; **F31** the resume rule in `templates/campaign.md` (comment) and `campaigns/README.md` (Hand-run) now says "unless the tripped rule reserves the decision to the user, as `SR-5` does"; **F32** `campaigns/README.md` step 1 now says the slice list and parity check are filled in under §8 and the kind's rows replace the `SR-5…` placeholder row; **F33** `fixtures.md` 'Round-2 fixtures' now describes the instance structure, the three-slice `parity.py` in the F15 fixture and the state T7d reused.
+`wc -l`: format 58 (cap ≤ 60), `campaigns/README.md` 85 (cap ≤ 90), kind 64 (cap ≤ 90).
+**Not re-run.** These are wording changes; no dry run was repeated after them. The runs recorded above used instances that still carried the token budget in §8 as well as §3 (F30) and the resume rule without the exception clause (F31); T7d shows the `SR-5` row already prevented the resume path in one run.

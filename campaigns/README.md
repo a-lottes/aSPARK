@@ -43,7 +43,7 @@ phase it declares in `phases` by adding one file — and only that file.
 ## Instantiating a campaign
 
 1. Copy `${CLAUDE_PLUGIN_ROOT}/templates/campaign.md` to
-   **`.spark/campaigns/<campaign-name>/campaign.md`**, then append the chosen kind's body (below its frontmatter) as §8 "Kind-specific"; the kind's added stop rules extend §4. The copy is **frozen at approval**: the user
+   **`.spark/campaigns/<campaign-name>/campaign.md`**, then append the chosen kind's body (below its frontmatter) as §8 "Kind-specific", with the slice list and parity check filled in under it; the kind's stop rules replace the `SR-5…` placeholder row in §4. The copy is **frozen at approval**: the user
    approves exactly the text that governs the run, and a later plugin update cannot change it.
 2. Fill every element. **Any blank element means the campaign is not startable.**
 3. The user records goal approval (their own statement, transcribed by them or, on their instruction, by the agent) and sets `approved`.
@@ -68,8 +68,9 @@ Naming rules, because [`aspark-graph`](../tools/README.md) reads `.spark/`:
 - **Hand-run:** the user names the instance; the agent reads it, refuses without recorded goal
   approval, iterates one step at a time inside the budget, logs a checkpoint after each iteration
   (`CK-<n>`), and sets `halted` and escalates when a stop rule trips. The agent may set only
-  `running` (at the start, and after a halt once its cause is resolved and recorded in a `CK-` entry;
-  a goal, threshold or budget change still needs the whole spec approved afresh) and `halted`.
+  `running` (at the start, and after a halt once its cause is resolved and recorded in a `CK-` entry —
+  unless the tripped rule reserves the decision to the user, as `SR-5` does; a goal, threshold or budget
+  change still needs the whole spec approved afresh) and `halted`.
 - **Without `aspark-guard`:** nothing changes and nothing is reported. The rules are instructions.
 - **No skill reads a campaign definition from the target project.** Only the instantiated
   `campaign.md` is written there.

@@ -12,7 +12,7 @@ phases: [specify, plan, act, review]
 
 Replace old code with new code **one reversible slice at a time**. Old and new coexist
 (expand-contract) until a slice is parity-green; the old code goes only on the user's go.
-Instantiate from `${CLAUDE_PLUGIN_ROOT}/templates/campaign.md`: sections 1–7 come from the format; append this file's body (below the frontmatter) as its §8 "Kind-specific", with the slice list, parity check and token budget filled in under it; replace §4's `SR-5…` placeholder row with the rows below.
+Instantiate from `${CLAUDE_PLUGIN_ROOT}/templates/campaign.md`: sections 1–7 come from the format; append this file's body (below the frontmatter) as its §8 "Kind-specific", with the slice list and parity check filled in under it (the token budget stays in the format's §3); replace §4's `SR-5…` placeholder row with the rows below.
 
 ## Goal, for the instance
 - **Condition:** every slice in the slice list is parity-green.

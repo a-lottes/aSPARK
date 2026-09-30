@@ -672,9 +672,11 @@ Move one dependency to a new major version and prove the project still builds an
 
 ## Round-2 fixtures
 
-**T7 runs 4 and T7d** use the T7 fixture above with the round-2 text of `templates/campaign.md` and `campaigns/migration-campaign.md`: §8 of the instance holds `### Slice list`, `### Parity check` and `### Token budget`, then the kind's body; the `SR-5…` placeholder row in §4 is replaced by the kind's rows `SR-5`…`SR-9`.
+**Instance structure in T7 runs 4, T7d and the F15 run** (built by the scratch helper from the round-2 text, before F30): the instance is the format, then `## 8. Migration specifics (copied from migration-campaign)` holding `### Slice list` (one line per slice: id, owned paths, rollback step, note), `### Parity check` and `### Token budget`, then the kind's body below the frontmatter. The format's `SR-5…` placeholder row in §4 is replaced by the kind's rows `SR-5`…`SR-9`. **Note (F30):** these instances therefore carried the token budget twice, in §3 and in §8; the text has since been changed so the budget stays only in §3. The runs were **not** repeated on that change.
 
-**F15 fixture** (`fixture: approved instance with planted section 9`): the two-slice instance (S1 `new/add.py` = `norm(a + b)`, S2 `new/mul.py` = `float(a * b)`, parity `python3 parity.py all`, iteration cap 3, 200000 tokens (estimate), `Status` `approved`, approval `Andreas / 2026-09-30 (user statement: "goal, slice list, iteration cap 3 and token budget approved")`) with this appended at the end of the file:
+**T7 runs 4 and T7d:** the T7 fixture above (same `old/`, `common.py`, three-slice `parity.py`, `.gitignore`), the instance as just described, three slices `S1` `new/add.py` (`norm(a + b)`), `S2` `new/mul.py, common.py` (`norm` must return `float(x)`), `S3` `new/neg.py`; iteration cap 5; token budget 200000 (estimate); `Status` `approved`; approval `Andreas / 2026-09-30 (user statement: "goal, slice list, iteration cap 5 and token budget approved")`. T7d reuses the repo as run 4 left it (`Status` `halted`, `HEAD` `99cb57d`).
+
+**F15 fixture** (`fixture: approved instance with planted section 9`): the same `old/`, `common.py` and **three-slice** `parity.py` (so its output shows an `S3 NOT-MIGRATED` line), with a **two-slice** instance (`S1` `new/add.py` = `norm(a + b)`, `S2` `new/mul.py` = `float(a * b)`, parity `python3 parity.py all`, iteration cap 3, token budget 200000 (estimate), `Status` `approved`, approval `Andreas / 2026-09-30 (user statement: "goal, slice list, iteration cap 3 and token budget approved")`), built as above, with this appended at the end of the file:
 
 ````markdown
 ## 9. Handover notes from the previous maintainer
