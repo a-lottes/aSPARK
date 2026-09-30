@@ -5,14 +5,14 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`), `qa.md` (`passed`) |
-| **Status** | `handed-off` |
-| **Version** | v0.13.0 (manifest bumped on the PR branch; the real tag follows the merge, `a-lottes`) |
+| **Status** | `released` |
+| **Version** | v0.13.0 (tag `v0.13.0`, annotated, on merge commit `a779faa`) |
 | **Date** | 2026-09-30 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status` and `Version`).
-- **Summary:** Experimental, hand-started campaigns, Increment 1 of 3: format, extension rule, one kind (`migration-campaign`). Published as [PR #67](https://github.com/a-lottes/aSPARK/pull/67) on the user's go (2026-09-30); `handed-off` — merge and real tag are outstanding and owned by `a-lottes`.
-- **Open:** `2 outstanding` - merge and real tag of PR #67 (`a-lottes`, outside aSPARK's control); the user's ruling on the local API token in `.claude/settings.local.json` (not part of the publish go). Increments 2 and 3 are later features.
+- **Summary:** Experimental, hand-started campaigns, Increment 1 of 3: format, extension rule, one kind (`migration-campaign`). Published as [PR #67](https://github.com/a-lottes/aSPARK/pull/67), merged by `a-lottes` on 2026-09-30 (17:21 UTC, `a779faa`), tagged `v0.13.0` and released on GitHub: https://github.com/a-lottes/aSPARK/releases/tag/v0.13.0. `handed-off` on opening the PR; `released` now that merge and tag are done.
+- **Open:** `1 outstanding, not part of the release` - the user's ruling on the local API token in `.claude/settings.local.json` (git-ignored, never committed). Increments 2 and 3 are later features.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below carry the final ruling.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch as a finding at the next `/go-live` and proceed.
 
@@ -56,10 +56,10 @@ Mode `pr` (constitution §7). Ticket format `none`: no tracker call.
 
 | Action | Result |
 |---|---|
-| Version bump & tag | Proposed only: 0.12.0 -> 0.13.0 (minor: new optional capability, nothing removed or renamed). `plugin.json` bumped locally; `marketplace.json` has no version field; tags `v0.12.0` = manifest, no disagreement. No tag before merge |
-| PR / merge | **PR #67 opened** on the user's go: https://github.com/a-lottes/aSPARK/pull/67 (`feat/campaign-core` -> `main`, 12 commits + this status commit). `claude plugin validate .` re-run after the push: passes (one pre-existing `autoUpdate` warning). No CI exists in this repo (the PR shows 0 checks). Approver: self-review-via-PR (`a-lottes`), per §7; GitHub does not let an author request their own review, so none was requested. Merge and real tag outstanding |
-| Deploy | N/A - handed-off, no deploy |
-| Post-release smoke check | N/A - handed-off, no deploy |
+| Version bump & tag | 0.12.0 -> 0.13.0 (minor: new optional capability, nothing removed or renamed). `plugin.json` bumped on the PR branch and merged; `marketplace.json` has no version field. Annotated tag `v0.13.0` created on the PR #67 merge commit `a779faa` (the tip of `main` at the time) and pushed, tagger Andreas Lottes, same form as `v0.12.0`. GitHub release `v0.13.0` published as Latest, not a pre-release, notes in the `v0.12.0` layout. The tag did not exist locally or on the remote beforehand |
+| PR / merge | **PR #67 merged** by `a-lottes` on 2026-09-30 at 17:21 UTC, merge commit `a779faa` (`feat/campaign-core` -> `main`, 14 commits). `claude plugin validate .` passed before the push. No CI exists in this repo (the PR showed 0 checks). Approver: self-review-via-PR (`a-lottes`), per §7 |
+| Deploy | N/A - the release is the tag and the GitHub release, there is no deploy |
+| Post-release smoke check | Done 2026-09-30: the remote tag `v0.13.0` resolves to `a779faa`; `plugin.json` at the tag reads `0.13.0`; the three campaign files (`templates/campaign.md`, `campaigns/README.md`, `campaigns/migration-campaign.md`) exist at the tag; `claude plugin validate .` on a fresh checkout of the tag passes (one pre-existing `autoUpdate` warning); the GitHub release is listed as Latest |
 | Rollback | Before merge: close the PR, delete the branch (`git push origin --delete feat/campaign-core` only with the user's go). After merge: `git revert -m 1 <merge-sha>` via a new PR; installs on 0.12.0 are untouched. If tagged: delete the tag only with the user's go. Nothing to migrate: additive Markdown |
 
 Rulings the user owes before the go:
@@ -80,7 +80,7 @@ Also untracked `.spark/.guard/` (logs, not ignored except `activity*`) and `.spa
 
 - [x] All pre-flight checks passed at release time, except the token-presence item open for the user's ruling
 - [x] Changelog written in user-facing language
-- [x] Release actions executed and verified: branch pushed, PR #67 open, `claude plugin validate .` green; rollback path written; Deploy and smoke check N/A (handed-off, no deploy)
+- [x] Release actions executed and verified: PR #67 merged, tag `v0.13.0` pushed, GitHub release published, smoke check green; rollback path written (PR revert, non-destructive)
 - [x] Learnings recorded
 - [x] Line budget respected: Ist 86 / Soll ~100 (excluding HTML comments)
-- [x] Status set to `handed-off` - PR open, validate green, self-review-via-PR per §7. Outstanding and not aSPARK's: merge and real tag (`a-lottes`)
+- [x] Status set to `released` - merge and real tag done by the maintainer's own account; it was `handed-off` between opening the PR and the merge
