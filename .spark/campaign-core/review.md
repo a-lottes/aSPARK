@@ -4,35 +4,34 @@
 |---|---|
 | **Phase** | Review |
 | **Owner** | Reviewer (`/peer-review`) |
-| **Input** | `git diff origin/main...HEAD` (8196c17, 2304ea5, aef71f5, eeee044, 0478363 on c5eb37d), `.spark/campaign-core/plan.md` |
+| **Input** | `git diff origin/main...HEAD` (8196c17, 2304ea5, aef71f5, eeee044, 0478363, 3a9fbc9 on c5eb37d), `.spark/campaign-core/plan.md` |
 | **Status** | `passed` |
-| **Round** | 3 |
+| **Round** | 4 |
 | **Date** | 2026-09-30 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`).
-- **Verdict:** round 3: passed. F24 and the six round-2 Minors hold on re-derivation; no Blocker or Major is open.
-- **Open:** `4 open` — F30, F31 (Minor), F32, F33 (Nit); none blocks the gate. All other findings `verified`. `/demo-day` items are listed in §6.
+- **Verdict:** round 4: passed. F30–F33 (fix `3a9fbc9`) hold on re-derivation; the fix introduced no new defect; no Blocker or Major is open.
+- **Open:** `none` — all 33 findings `verified`. `/demo-day` items are listed in §6.
 - **Binding ruling:** §6 Verdict and the gate checklist below. They are the only binding location; there is no other round to point to.
 - **On conflict:** the numbered body below wins for everything except `Status`. Log the mismatch as a finding at the next `/peer-review` and proceed; don't stop on it.
 
 ## 1. Scope
 
-- **Reviewed (r3):** fix pass `0478363` line by line: the three campaign files in full, `docs/status.md:88`, `README.md:122-130`, plan §4/§6 (`plan.md:14`, `:131`, `:164`), the ledger section "`/peer-review` round 2" (`evidence.md:998-1135`), `fixtures.md:113-192` and `:673-683`, and `spec.md` AC-1.5/1.6/1.9/5.5, NFR-9/11.
-- **Re-run by me (r3):** `wc -l` 57/64/84, standing rule 3 lines. `git ls-files '*.py'` is empty; `ls campaigns` shows 2 files. `git diff origin/main...HEAD` over `skills agents ROADMAP.md .spark/constitution.md .claude-plugin` is empty; under `templates/` only `campaign.md` is new. The kind's frontmatter parses (Ruby YAML) as 7 keys, `stop-rules` has 5 items, and the SR-5 parenthetical stays one item (re-parsed r3 with UTF-8). `claude plugin validate .` passes (only the existing `autoUpdate` warning). Every relative link in the touched docs resolves; the `issues/` links are GitHub-relative.
-- **Condition (a) re-derivation:** every `fixed` finding (F24, F27, F28, F8, F10, F11, F15, F25, F26, F29) was re-derived from the current text, not from the Handoff. **Tool:** `aspark-graph` was not queried (Markdown only; see plan §2).
+- **Reviewed (r4, narrow):** fix pass `3a9fbc9` line by line: `templates/campaign.md:10-15`, `campaigns/migration-campaign.md:15`, `:17-20`, `:51`, `:57-59`, `campaigns/README.md:45-49`, `:68-73`, `fixtures.md:673-679`, `evidence.md:1137-1141`, `plan.md:164`; read against `spec.md` AC-1.5/1.6/1.9 and `docs/status.md:88`. Condition (a): F30–F33 re-derived from the current text, not from the Handoff. Everything else was not re-examined this round.
+- **Re-run by me (r4):** `wc -l` 58/85/64 (caps 60/90/90), standing rule 3 lines. `git ls-files '*.py'` empty; `ls campaigns` 2 files. `git diff origin/main...HEAD` over `skills agents ROADMAP.md .spark/constitution.md .claude-plugin` empty (after `git fetch`); under `templates/` only `campaign.md` is added. Kind frontmatter parses (Ruby YAML, UTF-8) as 7 keys, 5 stop rules. `claude plugin validate .` passes (only the `autoUpdate` warning). **Tool:** `aspark-graph` not queried (Markdown only).
 - **Not reviewed:** I ran no session. Live claims were checked against the quoted transcripts only.
 
 ## 2. Plan Conformance
 
 | Task | Implemented as planned? | Note |
 |---|---|---|
-| T1, T2, T4, T5, T8, T10–T12 | ✅ | As in round 1. T2/T5 text was changed by D-7 (rounds 1 and 2); caps still hold (57/64) |
+| T1, T2, T4, T5, T8, T10–T12 | ✅ | As in round 1. T2/T5 text was changed by D-7 (rounds 1–3); caps still hold (58/64/85) |
 | T3 | ✅ | The re-run against the current format is quoted (`evidence.md:962-996`); fixtures are quoted (`fixtures.md:247-289`) |
 | T6 | ✅ | The re-run on `approved` instances can fail (F4 verified); fixtures are quoted |
 | T7 | ✅ | The re-run with a minimal prompt is quoted, with independent `git` observations (`evidence.md:885-960`). The fixture had a wrong `common.py` (F25, fixed) |
 | T9 | ⚠️ | Unchanged; the add-a-file walk has no dispatch (disclosed) |
-| D-1…D-7 | ✅ | D-1…D-6 were user-accepted 2026-09-30 (`plan.md:166`). D-7 (`plan.md:164`) is the fix pass reviewed here. D-6's SR-5 wording is now true of the instance text (`migration-campaign.md:51`) |
+| D-1…D-7 | ✅ | D-1…D-6 were user-accepted 2026-09-30 (`plan.md:166`). D-7 (`plan.md:164`, now covering rounds 1–3) is the fix pass reviewed here. D-6's SR-5 wording is now true of the instance text (`migration-campaign.md:51`) |
 
 ## 3. Findings
 
@@ -67,10 +66,10 @@
 | F27 | Minor | `campaigns/migration-campaign.md:54` | **Problem:** the SR-8 WIP commit is not scoped to the slice's paths, unlike `:31`. **Why it matters:** a broad `git add` sweeps the user's unrelated uncommitted edits into the WIP commit, and the revert then removes them from the working tree (recoverable from history, but surprising). **r3:** `:54` "commit **the in-flight slice's own paths only** … Other uncommitted files are left alone and nothing is discarded". Text only; not run | verified |
 | F28 | Minor | `campaigns/migration-campaign.md:20`, `:29-30` | **Problem:** the Strategist's cut branch (step 2) comes after the Archaeologist (step 1). But an empty list is not startable (`:20`), and the cut list needs approval "with the goal", so the cut can only happen before approval, outside a run. The empty-slices session had to reason this out (`evidence.md:840`). **r3:** `:30` "before approval, in a planning session, since an instance with an empty list is not startable". It kept the step-2 numbering rather than moving above step 1, but the timing is stated unambiguously | verified |
 | F29 | Nit | `plan.md:14` | **Problem:** the Handoff said "D-1…D-5 recorded" and omitted the acceptance. **Fix applied:** "D-1…D-7 … D-1…D-6 user-accepted". **r3:** present (`plan.md:14`) | verified |
-| F30 | Minor | `campaigns/migration-campaign.md:15`; `templates/campaign.md:10` vs `:32` | **Problem (new r3):** the merge rule puts the token budget under §8, while §3 already holds `Tokens`. The fixture carries both (`fixtures.md:147`, `:184-185`). **Why it matters:** two copies of one budget can diverge, and §6's freeze names §1–§3, the slice list and the parity check, not a §8 copy. **Fix:** drop "token budget" from the §8 list (it lives in §3) | fixed |
-| F31 | Minor | `templates/campaign.md:11-12`; `campaigns/README.md:70-72` vs `migration-campaign.md:51` | **Problem (new r3):** the general resume rule ("after `halted` once the cause is resolved and recorded in a `CK-` entry") has no carve-out for a rule that reserves the decision to the user. SR-5 wins only by specific-over-general. **Why it matters:** this is the self-resume path F24 closed. The only evidence it holds is one run (T7d). **Fix:** add "unless the tripped rule reserves the decision to the user" at both sites (format 57 → ≤58) | fixed |
-| F32 | Nit | `campaigns/README.md:46` | **Problem (new r3):** the contract still says "the kind's added stop rules extend §4". It names neither §8's filled blocks nor the `SR-5…` row replacement, and 0478363 did not touch this line, although the fix summary claims three sites. **Fix:** mirror `templates/campaign.md:10` | fixed |
-| F33 | Nit | `fixtures.md:675`, `:677` | **Problem (new r3):** the round-2 fixtures are described as deltas, not quoted. The §8 heading name and the new top comment are unstated, and the F15 fixture omits that `parity.py` is the three-slice one (`evidence.md:1122` prints S3). **Fix:** name the heading and the `parity.py` source | fixed |
+| F30 | Minor | `campaigns/migration-campaign.md:15`; `templates/campaign.md:10` vs `:32` | **Problem (new r3):** the merge rule puts the token budget under §8, while §3 already holds `Tokens`. The fixture carries both (`fixtures.md:147`, `:184-185`). **Why it matters:** two copies of one budget can diverge, and §6's freeze names §1–§3, the slice list and the parity check, not a §8 copy. **Fix:** drop "token budget" from the §8 list (it lives in §3). **r4:** `templates/campaign.md:10` and `migration-campaign.md:15` say it "stays in §3"; `README.md:46` lists only slice list and parity check. No §8 token-budget pointer remains: the kind's "Not startable" (`:20`) and Budget (`:58-59`, "as in the format's §3") name no section; §6 freezes §1–§3. The ledger (`evidence.md:1141`) and `fixtures.md:675` disclose that the runs carried a §8 copy and were not repeated; true of the round-2 runs and also of the T6 re-run (`evidence.md:872` cites both copies), which the ledger's "runs recorded above" covers | verified |
+| F31 | Minor | `templates/campaign.md:11-12`; `campaigns/README.md:70-72` vs `migration-campaign.md:51` | **Problem (new r3):** the general resume rule ("after `halted` once the cause is resolved and recorded in a `CK-` entry") has no carve-out for a rule that reserves the decision to the user. SR-5 wins only by specific-over-general. **Why it matters:** this is the self-resume path F24 closed. The only evidence it holds is one run (T7d). **Fix:** add "unless the tripped rule reserves the decision to the user" at both sites (format 57 → ≤58). **r4:** present at `templates/campaign.md:12-13` and `README.md:71-72` ("as `SR-5` does"); with `:51` ("does not resume after `SR-5` until they have") no agent-resolved resume path remains. Goal/list changes still route through fresh approval (§6, AC-1.6); AC-1.9's status set is unchanged. No unqualified "resume once resolved" remains in the three files or `docs/status.md`. Residue, fail-closed: the format's clause alone does not say resume is allowed once the user *has* decided; the `SR-5` row does. Text only; not run | verified |
+| F32 | Nit | `campaigns/README.md:46` | **Problem (new r3):** the contract still says "the kind's added stop rules extend §4". It names neither §8's filled blocks nor the `SR-5…` row replacement, and 0478363 did not touch this line, although the fix summary claims three sites. **Fix:** mirror `templates/campaign.md:10`. **r4:** `README.md:46` now names the slice list and parity check under §8 and the `SR-5…` row replacement; it agrees with `templates/campaign.md:10` and `migration-campaign.md:15`, no contradiction among the three | verified |
+| F33 | Nit | `fixtures.md:675`, `:677` | **Problem (new r3):** the round-2 fixtures are described as deltas, not quoted. The §8 heading name and the new top comment are unstated, and the F15 fixture omits that `parity.py` is the three-slice one (`evidence.md:1122` prints S3). **Fix:** name the heading and the `parity.py` source. **r4:** `fixtures.md:675-679` names the §8 heading (`Migration specifics …`, not the rule's `"Kind-specific"`; nothing keys on it), the three-slice `parity.py` (matches `evidence.md:1122`), caps 5/3 (matches `:469`, `:1108`) and T7d's `HEAD` `99cb57d` (matches `:1058`). Sufficient for a rebuild | verified |
 
 ## 4. Requirements Traceability
 
@@ -80,7 +79,7 @@
 | AC-1.3 | `templates/campaign.md:36-44` | ✅ met structurally r2 (SR-3 defined); only SR-1 is live |
 | AC-1.5 | `templates/campaign.md:8`, `:11`; `campaigns/README.md:49`, `:69` | ✅ met; live T3(a) plus the re-run. F8 resolved r3 |
 | AC-1.6 | `templates/campaign.md:53` | ✅ met r2; live T8(c), second run |
-| AC-1.9 | `templates/campaign.md:5`, `:11-13` | ✅ met r2 (the resume rule per the user's ruling). The SR-5 carve-out is implicit (F31) |
+| AC-1.9 | `templates/campaign.md:5`, `:11-13` | ✅ met r4: the resume rule per the user's ruling, with the SR-5 carve-out explicit (F31) |
 | AC-2.1, 2.2, 2.4, 2.5, 2.6 | `campaigns/README.md`; empty skills/agents diff; `ls` | ✅ met (re-run) |
 | AC-2.3 | `campaigns/README.md:37-41`, `:59-72` | ✅ met r2: dispatch observed under a bare prompt |
 | AC-5.1, 5.6 | `campaigns/migration-campaign.md:7`, `:20`, `:57-59` | ✅ met r2; the refusals can fail |
@@ -90,7 +89,7 @@
 | AC-5.5 | `campaigns/migration-campaign.md:47-55` | ⚠️ text met r3 (the SR-5 ruling is in the row; SR-8 is path-scoped). SR-5/SR-7 are live; SR-6/SR-8 read-verified |
 | AC-5.7 | `campaigns/migration-campaign.md:26`; `templates/campaign.md:50` | ✅ met r2: no contract step without a prompt |
 | AC-5.8 | `campaigns/migration-campaign.md:61-64`; `README.md:129` | ✅ met |
-| NFR-1, 2, 4, 5, 7, 8 | caps 57/64/84 and 3 rule lines; no `*.py`; validate passes | ✅ (the minor bump is due at `/go-live`) |
+| NFR-1, 2, 4, 5, 7, 8 | caps 58/64/85 and 3 rule lines; no `*.py`; validate passes | ✅ (the minor bump is due at `/go-live`) |
 | NFR-3 | `README.md:124-130`; `docs/status.md:88` | ✅ after F26 |
 | NFR-6 | `campaigns/README.md` | ✅ |
 | NFR-9 | `templates/campaign.md:8`, `:11-13`, `:29`, `:53` | ✅ r3 (F8) |
@@ -98,7 +97,7 @@
 
 ## 5. What Was Checked
 
-- [x] Correctness: every fix re-derived from the current text. r3: the SR-5 row, the resume rule, §6 and AC-1.5/1.6/1.9 read together (F31); the merge rule was checked against the fixture as built (F30, F33)
+- [x] Correctness: every fix re-derived from the current text. r3: the SR-5 row, the resume rule, §6 and AC-1.5/1.6/1.9 read together (F31); the merge rule was checked against the fixture as built (F30, F33). r4: F30–F33 re-derived; the resume rule read against AC-1.6/1.9 and the SR-5 row
 - [x] Non-functional: NFR-1…9 and 11, the constitution quality bars, and the `library` lens sections 1, 2 and 4 (frontmatter re-parsed)
 - [x] Error handling and security: halt, resume and rollback paths re-read. r3: no destructive git phrase, self-approval or self-resume path in the three files beyond F31's implicit precedence
 - [x] Tests: `validate` re-run. r3: the ledger's round-2 section is audited against its claims, including the discarded F15 attempt (`evidence.md:1002`), and against `docs/status.md:88`
@@ -106,13 +105,11 @@
 
 ## 6. Verdict
 
-**Passed. No Blocker or Major is open.**
+**Passed. No Blocker or Major is open, and no finding is open.**
 
-F24 is fixed where it matters. The SR-5 row that every instance carries now says the slice stays committed and the agent does not resume until the user decides. One bare-prompt run (T7d) refused "please continue" and left `HEAD` unchanged. The six round-2 Minors hold on re-derivation, and the ledger claims no more than its runs show: one run per case, the guard loaded, and edit detection absent.
+Round 4 verified the four round-3 wording findings against the current text. The token budget now lives only in §3 at all three merge sites, and no text points to a §8 copy (F30). The resume rule names its exception for a rule that reserves the decision to the user, so `SR-5` no longer wins only by precedence (F31). The three merge sentences agree (F32), and the round-2 fixtures are now rebuildable (F33). The fix changed only wording and introduced no new defect; caps, file set and plugin validation hold. None of these four changes was run live, and the ledger says so: every recorded run used the earlier text with the duplicate budget and without the exception clause. My only edit this round was a stale label (`plan.md:164`, "rounds 1 and 2" → "rounds 1–3").
 
-Four new findings are open, none of them a gate item. The general resume rule still has no explicit carve-out, so SR-5 prevails only as the more specific rule (F31). The merge rule creates a second copy of the token budget (F30). The README's merge sentence lags (F32), and the round-2 fixtures are described rather than quoted (F33). I recommend fixing F30 and F31 before `/go-live`, since both are one clause.
-
-**For `/demo-day`** (perform, or record `not-verified-live`): SR-8 in its path-scoped form with an unrelated dirty file present; the wait after the Strategist; an edit to an approved slice list; a user decision after SR-5 followed by a resume; and every guard-off claim.
+**For `/demo-day`** (perform, or record `not-verified-live`): SR-8 in its path-scoped form with an unrelated dirty file present; the wait after the Strategist; an edit to an approved slice list; a user decision after SR-5 followed by a resume (this also tests F31's clause); an instance built from the current merge text (budget in §3 only); and every guard-off claim.
 
 ---
 
@@ -124,7 +121,7 @@ re-review, edit this same checklist in place — never duplicate it as a second 
 - [x] No open Blocker findings
 - [x] No open Major findings (or explicitly waived by the user, with reason recorded here). F24 verified r3
 - [x] Every Must AC traces to implementing code; no constitution non-negotiable violated by the diff as shipped
-- [x] All plan deviations documented and accepted: D-1…D-6 user-accepted 2026-09-30; D-7 is the fix pass (rounds 1–2), reviewed here
-- [x] Test suite runs green: no suite exists (constitution §4); `claude plugin validate .` passes (only the `autoUpdate` warning), re-run by me r3
-- [x] Line budget respected: Ist 130 / Soll ~150 (no HTML comments)
+- [x] All plan deviations documented and accepted: D-1…D-6 user-accepted 2026-09-30; D-7 is the fix pass (rounds 1–3), reviewed here
+- [x] Test suite runs green: no suite exists (constitution §4); `claude plugin validate .` passes (only the `autoUpdate` warning), re-run by me r4
+- [x] Line budget respected: Ist 127 / Soll ~150 (no HTML comments)
 - [x] Status set to `passed`
