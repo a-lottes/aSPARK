@@ -29,7 +29,7 @@
 | Advisory: the budget is affordable | | |
 | Advisory: the agent has tools that run the check | | |
 
-A missed mandatory condition is a stop unless the user records a **waiver**: their statement transcribed, their reason, the date — if they give no reason, ask; the agent never writes it. Advisory misses are recorded, not stops. This is the **only** waiver: an unset budget, an undecidable goal, a stop rule or the one-goal rule are not waivable and need a changed, re-approved spec.
+A missed mandatory condition is a stop unless the user records a **waiver**: their statement transcribed, their reason, the date — if they give no reason, ask; the agent never writes it. Advisory misses are recorded, not stops. This is the **only** waiver: an unset budget, an undecidable goal, disabling a stop rule or the one-goal rule are not waivable and need a changed, re-approved spec.
 
 ## 3. Budget
 - **Iterations:** <n> · **Tokens:** <n>, observed by the user pasting `/cost` at a checkpoint, or by the agent's estimate labelled as an estimate.

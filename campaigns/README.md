@@ -64,7 +64,7 @@ Naming rules, because [`aspark-graph`](../tools/README.md) reads `.spark/`:
   campaign on by itself and no ceremony proposes one yet.
 - **Silence:** a repo without `.spark/campaigns/` sees no change in any ceremony — no notice,
   no question, no mention. The ten ceremonies have no campaign logic yet; routing and the
-  standing rule for ordinary feature loops arrive in a later increment. Observed meanwhile (not designed): in a repo
+  standing rule for ordinary feature loops arrive in a later increment. Observed meanwhile, in single non-deterministic runs (not designed): in a repo
   whose only `.spark/` subdirectory is `campaigns`, `/spark` reports there is no feature to resume and describes the halted campaign, and `/next-steps` lists it; `/spark campaigns` asks for another name.
 - **Hand-run:** the user names the instance; the agent reads it, refuses without recorded goal
   approval, iterates one step at a time inside the budget, logs a checkpoint after each iteration

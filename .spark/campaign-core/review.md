@@ -4,22 +4,22 @@
 |---|---|
 | **Phase** | Review |
 | **Owner** | Reviewer (`/peer-review`) |
-| **Input** | `git diff origin/main...HEAD` (8196c17, 2304ea5, aef71f5, eeee044, 0478363, 3a9fbc9 on c5eb37d), `.spark/campaign-core/plan.md` |
+| **Input** | `git diff origin/main...HEAD` (8196c17 … 3a9fbc9 on c5eb37d); r5: `git diff 7d28a5e..398f202` (QA fix passes a57ea0d, a3d2a47, 398f202), `.spark/campaign-core/plan.md` |
 | **Status** | `passed` |
-| **Round** | 4 |
+| **Round** | 5 |
 | **Date** | 2026-09-30 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`).
-- **Verdict:** round 4: passed. F30–F33 (fix `3a9fbc9`) hold on re-derivation; the fix introduced no new defect; no Blocker or Major is open.
-- **Open:** `none` — all 33 findings `verified`. `/demo-day` items are listed in §6.
+- **Verdict:** round 5: passed. The QA-driven text (plan D-8…D-10) has no Blocker or Major; the changed rules do not contradict each other on role play, baseline run, status-setting or refusal. Two stale counts in `docs/status.md:88` fixed by me (F35).
+- **Open:** F34, F36 (Minor), F37, F38 (Nit), F39 (Minor, qa.md), F40 (Nit, ledger). None blocks the gate. F1–F33 stay `verified`.
 - **Binding ruling:** §6 Verdict and the gate checklist below. They are the only binding location; there is no other round to point to.
 - **On conflict:** the numbered body below wins for everything except `Status`. Log the mismatch as a finding at the next `/peer-review` and proceed; don't stop on it.
 
 ## 1. Scope
 
-- **Reviewed (r4, narrow):** fix pass `3a9fbc9` line by line: `templates/campaign.md:10-15`, `campaigns/migration-campaign.md:15`, `:17-20`, `:51`, `:57-59`, `campaigns/README.md:45-49`, `:68-73`, `fixtures.md:673-679`, `evidence.md:1137-1141`, `plan.md:164`; read against `spec.md` AC-1.5/1.6/1.9 and `docs/status.md:88`. Condition (a): F30–F33 re-derived from the current text, not from the Handoff. Everything else was not re-examined this round.
-- **Re-run by me (r4):** `wc -l` 58/85/64 (caps 60/90/90), standing rule 3 lines. `git ls-files '*.py'` empty; `ls campaigns` 2 files. `git diff origin/main...HEAD` over `skills agents ROADMAP.md .spark/constitution.md .claude-plugin` empty (after `git fetch`); under `templates/` only `campaign.md` is added. Kind frontmatter parses (Ruby YAML, UTF-8) as 7 keys, 5 stop rules. `claude plugin validate .` passes (only the `autoUpdate` warning). **Tool:** `aspark-graph` not queried (Markdown only).
+- **Reviewed (r5, narrow):** only `git diff 7d28a5e..398f202`: `templates/campaign.md:10-17`, `:22`, `:32`; `campaigns/migration-campaign.md:23`, `:26`, `:34`, `:44`, `:53`; `campaigns/README.md:22`, `:46`, `:67-68`, `:75`; `README.md:129`; `docs/status.md:88`; `plan.md:165-169`; `evidence.md:1142-1149`; `qa.md` read in full as the source for every doc claim (condition (b): AC-2.1/AC-5.4 wording re-derived). Earlier QA rounds read at `a57ea0d`/`a3d2a47` for the guard-less runs.
+- **Re-run by me (r5):** `wc -l` 60/87/64 (format exactly at cap 60; README 87, ledger says 86 — README gained `:22` in 398f202), standing rule 3. `git ls-files '*.py'` empty; `ls campaigns` 2 files; after `git fetch`, `git diff origin/main...HEAD` over `skills agents ROADMAP.md .spark/constitution.md .claude-plugin` empty; under `templates/` only `A templates/campaign.md`. `claude plugin validate .` passes (only `autoUpdate`). **Tool:** `aspark-graph` not queried (Markdown only). Status row `docs/status.md:88`: 3 pipes, one row. New relative links resolve (`qa.md`, `evidence.md`).
 - **Not reviewed:** I ran no session. Live claims were checked against the quoted transcripts only.
 
 ## 2. Plan Conformance
@@ -31,6 +31,7 @@
 | T6 | ✅ | The re-run on `approved` instances can fail (F4 verified); fixtures are quoted |
 | T7 | ✅ | The re-run with a minimal prompt is quoted, with independent `git` observations (`evidence.md:885-960`). The fixture had a wrong `common.py` (F25, fixed) |
 | T9 | ⚠️ | Unchanged; the add-a-file walk has no dispatch (disclosed) |
+| D-8…D-10 | ✅ | r5: the QA fix passes and the user's rulings (B4, B9, B14, B15, B16, AC-2.1/AC-5.4 partials) are recorded (`plan.md:165-169`). D-9 still says B14 "stays open"; D-10 supersedes it |
 | D-1…D-7 | ✅ | D-1…D-6 were user-accepted 2026-09-30 (`plan.md:166`). D-7 (`plan.md:164`, now covering rounds 1–3) is the fix pass reviewed here. D-6's SR-5 wording is now true of the instance text (`migration-campaign.md:51`) |
 
 ## 3. Findings
@@ -70,6 +71,13 @@
 | F31 | Minor | `templates/campaign.md:11-12`; `campaigns/README.md:70-72` vs `migration-campaign.md:51` | **Problem (new r3):** the general resume rule ("after `halted` once the cause is resolved and recorded in a `CK-` entry") has no carve-out for a rule that reserves the decision to the user. SR-5 wins only by specific-over-general. **Why it matters:** this is the self-resume path F24 closed. The only evidence it holds is one run (T7d). **Fix:** add "unless the tripped rule reserves the decision to the user" at both sites (format 57 → ≤58). **r4:** present at `templates/campaign.md:12-13` and `README.md:71-72` ("as `SR-5` does"); with `:51` ("does not resume after `SR-5` until they have") no agent-resolved resume path remains. Goal/list changes still route through fresh approval (§6, AC-1.6); AC-1.9's status set is unchanged. No unqualified "resume once resolved" remains in the three files or `docs/status.md`. Residue, fail-closed: the format's clause alone does not say resume is allowed once the user *has* decided; the `SR-5` row does. Text only; not run | verified |
 | F32 | Nit | `campaigns/README.md:46` | **Problem (new r3):** the contract still says "the kind's added stop rules extend §4". It names neither §8's filled blocks nor the `SR-5…` row replacement, and 0478363 did not touch this line, although the fix summary claims three sites. **Fix:** mirror `templates/campaign.md:10`. **r4:** `README.md:46` now names the slice list and parity check under §8 and the `SR-5…` row replacement; it agrees with `templates/campaign.md:10` and `migration-campaign.md:15`, no contradiction among the three | verified |
 | F33 | Nit | `fixtures.md:675`, `:677` | **Problem (new r3):** the round-2 fixtures are described as deltas, not quoted. The §8 heading name and the new top comment are unstated, and the F15 fixture omits that `parity.py` is the three-slice one (`evidence.md:1122` prints S3). **Fix:** name the heading and the `parity.py` source. **r4:** `fixtures.md:675-679` names the §8 heading (`Migration specifics …`, not the rule's `"Kind-specific"`; nothing keys on it), the three-slice `parity.py` (matches `evidence.md:1122`), caps 5/3 (matches `:469`, `:1108`) and T7d's `HEAD` `99cb57d` (matches `:1058`). Sufficient for a rebuild | verified |
+| F34 | Minor | `templates/campaign.md:32` vs `:13-14`, `campaigns/README.md:72-74`, `campaigns/migration-campaign.md:51` | **Problem (new r5):** "a stop rule … [is] not waivable and need[s] a changed, re-approved spec" read literally also covers continuing after *any* trip, while the resume rule lets the agent set `running` once the cause is resolved and recorded, and SR-5's revert option needs no fresh approval (QA `dec` resumed that way, `qa.md:55`). **Why it matters:** two rules for one situation; fail-closed (more restrictive), so no destructive path. **Fix:** "disabling a stop rule is not waivable; resuming after a trip follows the Status rule above" | open |
+| F35 | Minor | `docs/status.md:88` | **Problem (new r5):** "every run had it loaded except one negative-case check, so … barely verified" contradicted the same row's "One full three-slice migration ran without `aspark-guard`" (guard-less: `negC` r1, `mign` r2 — `qa.md@a57ea0d:24`, `@a3d2a47:25`); "QA (two rounds, 33 rows)" while the row reports round 3. **Fix applied:** "except two sessions, one negative-case check and one full migration (below) … rests on those two runs"; "three rounds" | fixed r5 |
+| F36 | Minor | `docs/status.md:88` ("Known limits") | **Problem (new r5):** "ran a check or committed a log entry out of order when a subagent could not run (observed twice in round 3)". Per `qa.md:100` (B16) only `dn3` had a denied subagent; the `mig` CK ordering slip was in a normal run. **Why it matters:** the disclosure narrows the condition, so a reader thinks normal runs keep order. **Fix:** "once ran the Archaeologist's tests itself when that subagent could not (`dn3`), and once committed a CK entry late in a normal run (`mig`)" | open |
+| F37 | Nit | `templates/campaign.md:11-12` vs `campaigns/README.md:26` | **Problem (new r5):** "`name` (= the file name)" omits "without `.md`", and "if any is missing" does not cover a wrong `name`. QA read it as intended (`FPv`, `FPr`, `D`, `D2`, `qa.md:102`). **Fix:** "(= the file name without `.md`)", "missing or wrong". Not applied: this is the exact text QA measured at 13/19 | open |
+| F38 | Nit | `campaigns/README.md:67-68` | **Problem (new r5):** "Observed meanwhile" states `/spark`, `/next-steps` and `/spark campaigns` behaviour without "one run, non-deterministic" (`qa.md:94`); `/spark campaigns` rests on round 1 only, and round 2's `/next-steps` pointed to `/charter` and named the directory rather than listing the campaign. **Fix:** add "(one run each, not guaranteed)" | open |
+| F39 | Minor | `.spark/campaign-core/qa.md:110`, `:106` | **Problem (new r5):** §5 Verdict still reads "**Fail (not yet).**" while the header (`:8`), Handoff (`:14`) and gate (`:122`) say `passed` on the user's ruling, and the Handoff (`:18`) names §5 as binding. §4 quotes `wc -l` 58/86/64 against NFR-1's 60/86/64 (`:59`). Artifact wording; the gate answer is recorded correctly elsewhere. **Fix:** QA rewrites §5 to the user-accepted pass | open |
+| F40 | Nit | `.spark/campaign-core/evidence.md:1149` | **Problem (new r5):** the ledger has no `/demo-day` round-3 entry, though D-10 (`plan.md:167`) records doc changes (`campaigns/README.md:22`, `docs/status.md:88`); its last line count (86) is now 87. **Fix:** a two-line round-3 entry | open |
 
 ## 4. Requirements Traceability
 
@@ -80,12 +88,13 @@
 | AC-1.5 | `templates/campaign.md:8`, `:11`; `campaigns/README.md:49`, `:69` | ✅ met; live T3(a) plus the re-run. F8 resolved r3 |
 | AC-1.6 | `templates/campaign.md:53` | ✅ met r2; live T8(c), second run |
 | AC-1.9 | `templates/campaign.md:5`, `:11-13` | ✅ met r4: the resume rule per the user's ruling, with the SR-5 carve-out explicit (F31) |
-| AC-2.1, 2.2, 2.4, 2.5, 2.6 | `campaigns/README.md`; empty skills/agents diff; `ls` | ✅ met (re-run) |
+| AC-2.1 | `templates/campaign.md:11-12`; `campaigns/README.md:20-22` | ◐ partial r5: best effort, 13 of 19 (`qa.md:45`); user-accepted partial, B15 waived (`plan.md:167`) |
+| AC-2.2, 2.4, 2.5, 2.6 | `campaigns/README.md`; empty skills/agents diff; `ls` | ✅ met (re-run) |
 | AC-2.3 | `campaigns/README.md:37-41`, `:59-72` | ✅ met r2: dispatch observed under a bare prompt |
 | AC-5.1, 5.6 | `campaigns/migration-campaign.md:7`, `:20`, `:57-59` | ✅ met r2; the refusals can fail |
 | AC-5.2 | `campaigns/migration-campaign.md:28-44` | ✅ met r3 (F28) |
 | AC-5.3 | `campaigns/migration-campaign.md:31`, `:34`, `:42-44` | ✅ met r3: one writer (F10); live in run 4 |
-| AC-5.4 | `campaigns/migration-campaign.md:40`, `:55` | ⚠️ positive half observed; SR-9's trip was never exercised |
+| AC-5.4 | `campaigns/migration-campaign.md:40`, `:55` | ⚠️ positive half observed; SR-9's trip not verified live, user-accepted partial r5 (`plan.md:166`) |
 | AC-5.5 | `campaigns/migration-campaign.md:47-55` | ⚠️ text met r3 (the SR-5 ruling is in the row; SR-8 is path-scoped). SR-5/SR-7 are live; SR-6/SR-8 read-verified |
 | AC-5.7 | `campaigns/migration-campaign.md:26`; `templates/campaign.md:50` | ✅ met r2: no contract step without a prompt |
 | AC-5.8 | `campaigns/migration-campaign.md:61-64`; `README.md:129` | ✅ met |
@@ -101,15 +110,14 @@
 - [x] Non-functional: NFR-1…9 and 11, the constitution quality bars, and the `library` lens sections 1, 2 and 4 (frontmatter re-parsed)
 - [x] Error handling and security: halt, resume and rollback paths re-read. r3: no destructive git phrase, self-approval or self-resume path in the three files beyond F31's implicit precedence
 - [x] Tests: `validate` re-run. r3: the ledger's round-2 section is audited against its claims, including the discarded F15 attempt (`evidence.md:1002`), and against `docs/status.md:88`
-- [x] Readability: cross-file contradictions (F10, F11, F24, F28; r3: F30, F32)
+- [x] Readability: cross-file contradictions (F10, F11, F24, F28; r3: F30, F32; r5: F34, F37)
+- [x] r5: role play vs CK writer (`migration-campaign.md:31`, `:34`), baseline vs Verifier (`:44`), status-by-statement vs AC-1.9/NFR-9 (`templates/campaign.md:8`, `:15-16`), one-goal refusal (`:22`), contract gate (`:26`), SR-7 (`:53`), plugin-folder rule (`campaigns/README.md:46`); no destructive git, self-approval, self-resume after SR-5 or invented-structure path. Doc claims checked against `qa.md` (F35, F36, F38)
 
 ## 6. Verdict
 
-**Passed. No Blocker or Major is open, and no finding is open.**
+**Passed. No Blocker or Major is open.**
 
-Round 4 verified the four round-3 wording findings against the current text. The token budget now lives only in §3 at all three merge sites, and no text points to a §8 copy (F30). The resume rule names its exception for a rule that reserves the decision to the user, so `SR-5` no longer wins only by precedence (F31). The three merge sentences agree (F32), and the round-2 fixtures are now rebuildable (F33). The fix changed only wording and introduced no new defect; caps, file set and plugin validation hold. None of these four changes was run live, and the ledger says so: every recorded run used the earlier text with the duplicate budget and without the exception clause. My only edit this round was a stale label (`plan.md:164`, "rounds 1 and 2" → "rounds 1–3").
-
-**For `/demo-day`** (perform, or record `not-verified-live`): SR-8 in its path-scoped form with an unrelated dirty file present; the wait after the Strategist; an edit to an approved slice list; a user decision after SR-5 followed by a resume (this also tests F31's clause); an instance built from the current merge text (budget in §3 only); and every guard-off claim.
+Round 5 read only the QA-driven text (D-8…D-10). The changed rules hold together: the session "never plays a role" yet writes the CK entry as "(not a role)" (`migration-campaign.md:31`, `:34`); the baseline run is allowed only because it "verifies nothing", and every green still needs a fresh Verifier (`:44`); `approved`/`complete`/`abandoned` are set by the user's own statement, which the agent transcribes as it already does for approval (`templates/campaign.md:8`, `:15-16`), so AC-1.9 and NFR-9 hold; `complete` never implies the contract (`:26`). The format is exactly 60 lines. The docs match `qa.md`'s 13-of-19 figure, the SR-2/SR-6 planted and SR-4 real distinction, and both accepted partials. Two stale counts in `docs/status.md:88` contradicted the row itself; I fixed them (F35). Still open: the waiver sentence can be read as barring every resume (F34, fail-closed), one disclosure that names too narrow a condition (F36), `qa.md`'s §5, which still says "Fail" (F39), and three Nits. The behaviour text was re-run by QA rounds 2–3; 398f202 changed only doc lines, which need no run.
 
 ---
 
@@ -119,9 +127,9 @@ Round 4 verified the four round-3 wording findings against the current text. The
 re-review, edit this same checklist in place — never duplicate it as a second gate.*
 
 - [x] No open Blocker findings
-- [x] No open Major findings (or explicitly waived by the user, with reason recorded here). F24 verified r3
+- [x] No open Major findings (or explicitly waived by the user, with reason recorded here). F24 verified r3; QA's B15 (Major) waived by the user 2026-09-30 (`plan.md:167`)
 - [x] Every Must AC traces to implementing code; no constitution non-negotiable violated by the diff as shipped
-- [x] All plan deviations documented and accepted: D-1…D-6 user-accepted 2026-09-30; D-7 is the fix pass (rounds 1–3), reviewed here
-- [x] Test suite runs green: no suite exists (constitution §4); `claude plugin validate .` passes (only the `autoUpdate` warning), re-run by me r4
-- [x] Line budget respected: Ist 127 / Soll ~150 (no HTML comments)
+- [x] All plan deviations documented and accepted: D-1…D-6 user-accepted 2026-09-30; D-7…D-9 are fix passes, reviewed here; D-10 records the user's rulings
+- [x] Test suite runs green: no suite exists (constitution §4); `claude plugin validate .` passes (only the `autoUpdate` warning), re-run by me r5
+- [x] Line budget respected: Ist 135 / Soll ~150 (no HTML comments)
 - [x] Status set to `passed`
