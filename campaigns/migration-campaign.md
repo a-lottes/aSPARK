@@ -12,7 +12,7 @@ phases: [specify, plan, act, review]
 
 Replace old code with new code **one reversible slice at a time**. Old and new coexist
 (expand-contract) until a slice is parity-green; the old code goes only on the user's go.
-Instantiate from `${CLAUDE_PLUGIN_ROOT}/templates/campaign.md`: sections 1–7 come from the format; append this file's body (below the frontmatter) as its §8 "Kind-specific"; `SR-5`…`SR-9` below add to §4.
+Instantiate from `${CLAUDE_PLUGIN_ROOT}/templates/campaign.md`: sections 1–7 come from the format; append this file's body (below the frontmatter) as its §8 "Kind-specific", with the slice list, parity check and token budget filled in under it; replace §4's `SR-5…` placeholder row with the rows below.
 
 ## Goal, for the instance
 - **Condition:** every slice in the slice list is parity-green.
@@ -27,7 +27,7 @@ Instantiate from `${CLAUDE_PLUGIN_ROOT}/templates/campaign.md`: sections 1–7 c
 
 ## Order of a run
 1. **Archaeologist first.** No Migrator starts until the characterization tests are quoted **green on the old code**, even when the slice list is already approved.
-2. **Strategist** cuts the slice list, unless the instance already carries a user-approved one. After cutting one, **stop and wait** for the user to approve it with the goal; step 3 does not begin before that.
+2. **Strategist** cuts the slice list — before approval, in a planning session, since an instance with an empty list is not startable. After cutting one, **stop and wait** for the user to approve it with the goal; step 3 does not begin before that.
 3. **Each iteration:** the Migrator does one slice and commits **its paths only**; then a fresh Parity Verifier runs; then the campaign session (not a role) logs the `CK-` entry, quoting the Verifier's output verbatim, in a **separate commit** — so rolling a slice back never reverts the log.
 
 ## Roles
@@ -40,7 +40,7 @@ Each role brief runs as a **fresh general-purpose subagent** through the host's 
 - **Migrator** (act). Migrates **one slice per iteration**. Output: a diff that touches only that slice's paths.
   It never marks a slice parity-green and does not write the `CK-` entry.
 - **Parity Verifier** (review). Runs as a **separate invocation, in a context separate from the one that produced the slice**.
-  It runs the parity check against old and new, and quotes the observed output into the instance. It **edits neither the
+  It runs the parity check against old and new and reports the observed output verbatim (the campaign session copies it into the instance). It **edits neither the
   migrated code nor the parity check**. Only its quoted output can mark a slice parity-green; when unsure it reports, it does not mark.
 
 ## Stop rules added to the four in the format
@@ -48,10 +48,10 @@ All halt the run and escalate to the user (agent-followed, not enforced by Core)
 
 | ID | Trips when (observable) |
 |---|---|
-| SR-5 | a previously parity-green slice turns red in the Verifier's output |
+| SR-5 | a previously parity-green slice turns red in the Verifier's output. Halt; the breaking slice **stays committed**. Only the user decides between a revert, a changed slice list (fresh approval) or another approach. The agent does not resume after `SR-5` until they have |
 | SR-6 | rollback is used twice on the same slice |
 | SR-7 | the Archaeologist's tests are not green on the old code |
-| SR-8 | the budget runs out mid-slice: commit the in-flight work as a work-in-progress commit, revert that commit, then halt. Uncommitted work is never discarded |
+| SR-8 | the budget runs out mid-slice: commit **the in-flight slice's own paths only** as a work-in-progress commit, revert that commit, then halt. Other uncommitted files are left alone and nothing is discarded |
 | SR-9 | one iteration's diff spans two slices (`git diff --stat` names paths of two slices) |
 
 ## Budget

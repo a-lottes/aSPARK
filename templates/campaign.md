@@ -5,9 +5,9 @@
 | **Status** | `draft` \| `approved` \| `running` \| `halted` \| `complete` \| `abandoned` |
 | **Kind** | <kind name> |
 | **Kind source** | upstream `campaigns/<kind>.md`, copied below and frozen at approval |
-| **Goal approved by / date** | <user> / YYYY-MM-DD — the user's own statement, transcribed; the agent never invents it |
+| **Goal approved by / date** | <user> / YYYY-MM-DD — the user's own statement, transcribed by them or by the agent on their instruction; the agent never invents it, and only the user sets `approved` |
 
-<!-- Copy this file plus the chosen kind's content to `.spark/campaigns/<campaign-name>/campaign.md`.
+<!-- Copy this file to `.spark/campaigns/<campaign-name>/campaign.md`, then append the chosen kind's body as §8 (slice list, parity check and token budget under it) and replace the `SR-5…` row in §4 with the kind's rows.
      Any element left blank = not startable. The agent may set Status only to `running` (at the start after
      approval, and after `halted` once the cause is resolved and recorded in a `CK-` entry) or `halted`;
      `approved`, `complete` and `abandoned` are the user's. IDs: `S<n>` slices, `SR-<n>` stop rules,

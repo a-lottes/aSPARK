@@ -11,7 +11,7 @@
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`).
 - **Summary:** Campaign kinds are add-a-file under a new `campaigns/` (contract in `campaigns/README.md`, like `lenses/`). The format is a new `templates/campaign.md`, copied together with the kind into `.spark/campaigns/<campaign>/campaign.md`, so every campaign adds exactly one phantom graph node. Inc 1 touches zero skills and runs by hand. **User-ruled (R10-Q1 = A): this loop builds Inc 1 only (T1–T12) and closes at T12.** Inc 2 (T13–T21) and Inc 3 (T22–T27) stay here as `deferred` rows so their order is visible; each later runs as its own feature folder.
-- **Open:** `none` — T1–T12 `done`; the 15 `deferred` rows (T13–T27) are not open work of this loop; 0 open questions; 5 spec-text findings (R11) were reconciled by the PO with the user's OK; deviations D-1…D-5 recorded in §6
+- **Open:** `none` — T1–T12 `done`; the 15 `deferred` rows (T13–T27) are not open work of this loop; 0 open questions; 5 spec-text findings (R11) were reconciled by the PO with the user's OK; deviations D-1…D-7 recorded in §6 (D-1…D-6 user-accepted 2026-09-30; D-7 is the review fix pass)
 - **Binding ruling:** §3 Task Breakdown for current task status; a plan revision after review/QA findings updates §1/§3 in place, never a new section
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
 
@@ -128,6 +128,7 @@ Prompt material has no test suite (constitution §4). The analogue of **unit tes
   - the Verifier's "edits nothing" (T7 observes one run's `git diff`, which proves nothing about the next run);
   - "fresh context" (observable only as a separate subagent invocation in the transcript);
   - the token-budget observable (R3);
+  - the freeze at approval of §1–§3, the slice list and the parity check (nothing detects a later edit of an approved instance);
   - "told once" (Inc 2).
 - **NFR-10:** N/A as the spec states; the untrusted surface is carried by NFR-11 (T8, T20, T26).
 
@@ -160,7 +161,7 @@ Small corrections made inside the plan's scope, each found by a dry run. None ch
 | D-4 | T9, T10, T11 | The DoDs say `git diff main …`; local `main` is behind `origin/main`, so every such check is run against `origin/main`. | none |
 | D-5 | T7b | The S2 revert also rolled back the campaign log because both were in one commit. The kind's iteration step now says to commit the slice's paths and the campaign log separately. Added after the run; not re-run. | kind stays 63 lines |
 | D-6 | T7 | The DoD expected S2 to be rolled back at the halt. The kind text (AC-5.5) requires an in-flight rollback only for `SR-8`; `SR-5` halts and escalates and the slice stays committed until the user decides. **User-ruled 2026-09-30:** that is the intended rule, not a defect. The rollback path itself was exercised at the user's choice (T7b). Also: `SR-9` never tripped, so AC-5.4 was shown only for its positive half (one slice per iteration). | none |
-| D-7 | `/peer-review` round 1 | Fix-mode text changes for F1 (SR-8 no longer discards uncommitted work: WIP commit, revert, halt), F2/F15 (slice list and parity check frozen at approval, stated in the instance), F3 (the run stops after the Strategist until the user approves the list), F7 (user-ruled: the agent may set `running` after a halt once the cause is resolved and recorded), F8, F9 (SR-3 defined), F10 (the campaign session writes the `CK-` entry), F11/F12 (how the format and the kind merge; `${CLAUDE_PLUGIN_ROOT}` path). Format 56 → 57 lines, kind 63 → 64. Re-runs for F4, F5 and F6 recorded in the ledger. | format 57 (cap 60), kind 64 (cap 90) |
+| D-7 | `/peer-review` rounds 1 and 2 | Fix-mode text changes. *Round 1:* F1 (SR-8 no longer discards uncommitted work), F2/F15 (slice list and parity check frozen at approval, stated in the instance), F3 (the run stops after the Strategist until the user approves the list), F7 (user-ruled: the agent may set `running` after a halt once the cause is resolved and recorded), F8, F9 (SR-3 defined), F10, F11/F12 (format/kind merge; `${CLAUDE_PLUGIN_ROOT}` path). *Round 2:* F24 (the user's `SR-5` ruling now stands in the `SR-5` table row, not only in the frontmatter), F27 (SR-8's WIP commit limited to the in-flight slice's paths), F28 (the Strategist runs before approval), F8/F10/F11 wording. Format 56 → 57 lines, kind 63 → 64. Re-runs for F4, F5, F15, F24 recorded in the ledger. | format 57 (cap 60), kind 64 (cap 90) |
 
 **Acceptance:** the user accepted D-1…D-6 on 2026-09-30 (`/peer-review` round 1); D-7 is the fix pass itself.
 

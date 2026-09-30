@@ -46,7 +46,7 @@ phase it declares in `phases` by adding one file — and only that file.
    **`.spark/campaigns/<campaign-name>/campaign.md`**, then append the chosen kind's body (below its frontmatter) as §8 "Kind-specific"; the kind's added stop rules extend §4. The copy is **frozen at approval**: the user
    approves exactly the text that governs the run, and a later plugin update cannot change it.
 2. Fill every element. **Any blank element means the campaign is not startable.**
-3. The user records goal approval (their own statement, transcribed) and sets `approved`.
+3. The user records goal approval (their own statement, transcribed by them or, on their instruction, by the agent) and sets `approved`.
 
 Naming rules, because [`aspark-graph`](../tools/README.md) reads `.spark/`:
 - The file is always called `campaign.md`. No other stem may contain `spec`, `plan`, `review`,
