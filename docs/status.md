@@ -70,7 +70,35 @@ The tool that produced these figures was removed in this repository's own
 `metrics-script-removal` loop. It remains recoverable from git history at commit
 `a2c0541` for anyone who wants to read what computed them.
 
-The snapshot ends here. What follows is not dated and not frozen — it tracks
+### Adoption — snapshot 2026-09-30
+
+Dated **evidence**, taken 2026-09-30 from GitHub's traffic API (the 14 days
+from 16 to 29 Sep 2026), the repositories' public issue and PR lists, and
+pypistats.org. Anyone with push access can re-run the same queries
+(`gh api repos/a-lottes/aSPARK/traffic/clones`); the public lists need nothing.
+
+| Repository | Clones (14 d) | Unique cloners (14 d) | Unique cloners per day | Stars | Forks |
+|---|---:|---:|---:|---:|---:|
+| aSPARK (Core) | 720 | 484 | 26–60 | 24 | 1 |
+| aspark-graph | 148 | 69 | 0–40 | 3 | 1 |
+| aspark-guard | 117 | 44 | 0–19 | 0 | 0 |
+
+- **Core has a floor.** Even on the quietest days of the window, 26 to 30
+  unique sources cloned it. Installing the plugin clones the repository.
+- **Outside contributions come from real loops.** Four issues and three PRs from
+  one outside user (#58–#63, and #40, which added the third machine's metrics
+  report behind the snapshot above), one fix-mode issue from another (#28), and
+  the coverage-statement PR in aspark-graph (#2), which is shipped in v0.7.1.
+- **aspark-graph on PyPI:** 277 downloads without mirrors to 30 Sep 2026.
+
+What these figures **do not** show: a clone is not a project and not a user.
+One install serves every project on that machine, and bots, CI runs and
+mirrors clone too. So no project count is claimed here. The honest reading is
+several hundred installs in two weeks, and active users in the tens rather
+than the handful. Nor is a clone evidence that a loop worked: that evidence is
+the dogfooding snapshot above and the per-capability table below.
+
+The snapshots end here. What follows is not dated and not frozen — it tracks
 each part's proof state and is updated whenever that state changes, independent
 of the 2026-09-10 figures above.
 

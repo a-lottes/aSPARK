@@ -123,13 +123,13 @@ Each ceremony can also be run on its own. The artifacts on disk *are* the state,
 
 ## Project Status
 
-**In use on the author's projects and on a number of others, most of them closed source.**
+**In real use, not an experiment.** aSPARK runs on the author's projects and on a growing number of others, most of them closed source. In the two weeks to 29 Sep 2026 the repository was cloned from 484 unique sources, and even on the quietest days 26 to 30 of them turned up (a plugin install clones it). Outside users file issues and send pull requests that come out of their own loops; one of them contributed a third machine's metrics report. The numbers, their source and what they do not show: [`docs/status.md` § Adoption](docs/status.md#adoption--snapshot-2026-09-30).
 
-The loop has run end to end on sample apps and on this repository itself: as of the last count, 77 features across three machines, with 429 role-agent runs and 377 human gate decisions. Every figure is re-derivable from the committed reports in [`docs/reports/`](docs/reports/) with standard-library Python, see [`docs/metrics.md`](docs/metrics.md).
+The loop itself is measured, not claimed: 77 features across three machines, with 429 role-agent runs and 377 human gate decisions. Every figure is re-derivable from the committed reports in [`docs/reports/`](docs/reports/) with standard-library Python, see [`docs/metrics.md`](docs/metrics.md).
 
 **What one loop costs.** One complete run — `todo-filter-bar`, `/spark` to released tag, 47 minutes, 29 acceptance criteria — took 42,307,448 tokens, which is $35.52 at Opus 5 list prices. 96.3% of those are cache reads: without prompt caching the same loop would cost $217.37. The per-role breakdown, the method and what the figure does *not* say are in [what a full loop costs](https://aspark.lottes.dev/en/blog/was-ein-loop-kostet/) — it is one data point on one model at list prices, not a subscription bill.
 
-What is still thin is public evidence: most use beyond the author's projects is on closed-source code, so it can't be linked. The [aSPARK reads](https://aspark.lottes.dev/en/blog/aspark-reads-flask/) series runs aSPARK on well-known open-source code and publishes every source. If you run aSPARK on anything real, [a field report](https://github.com/a-lottes/aSPARK/issues/new?template=field_report.yml) is worth more than a patch, especially when it went badly. Per-capability proof state, every `partial` and why: [`docs/status.md`](docs/status.md). What ships next: [`ROADMAP.md`](ROADMAP.md).
+Most use beyond the author's projects is on closed-source code, so it can't be linked. The [aSPARK reads](https://aspark.lottes.dev/en/blog/aspark-reads-flask/) series runs aSPARK on well-known open-source code and publishes every source. If you run aSPARK on anything real, [a field report](https://github.com/a-lottes/aSPARK/issues/new?template=field_report.yml) is worth more than a patch, especially when it went badly. Per-capability proof state, every `partial` and why: [`docs/status.md`](docs/status.md). What ships next: [`ROADMAP.md`](ROADMAP.md).
 
 ---
 
