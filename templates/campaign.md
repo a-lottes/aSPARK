@@ -11,13 +11,13 @@
      Any element left blank = not startable. The agent may set Status only to `running` (at the start after
      approval, and after `halted` once the cause is resolved and recorded in a `CK-` entry — unless the tripped
      rule reserves the decision to the user) or `halted`;
-     `approved`, `complete` and `abandoned` are the user's. IDs: `S<n>` slices, `SR-<n>` stop rules,
+     `approved`, `complete` and `abandoned` are the user's: they count as set when the user says so in the conversation, and the agent writes it down as their statement. IDs: `S<n>` slices, `SR-<n>` stop rules,
      `CK-<n>` checkpoints. Keep the file name `campaign.md`. -->
 
 ## 1. Goal
 - **Condition:** <one end state that a command or file state can confirm> · **Observable:** <command and expected output, or file state> · **Verifier:** <who or what runs it>
 - **Thresholds:** <numbers or states that separate done from not done>
-- "It looks good" is not decidable and is rejected. One undertaking, one goal, one budget: several independent goals or a set of stories go to the feature loop, not here.
+- "It looks good" is not decidable and is rejected. One undertaking, one goal, one budget: several independent goals or a set of stories go to the feature loop, not here. **Check this before the first iteration, and stop without iterating if it fails.**
 
 ## 2. Veto record
 | Condition | Met / missed | Note |
@@ -27,7 +27,7 @@
 | Advisory: the budget is affordable | | |
 | Advisory: the agent has tools that run the check | | |
 
-A missed mandatory condition is a stop unless the user records a **waiver**: their statement transcribed, reason, date. Advisory misses are recorded, not stops.
+A missed mandatory condition is a stop unless the user records a **waiver**: their statement transcribed, their reason, the date — if they give no reason, ask; the agent never writes it. Advisory misses are recorded, not stops. This is the **only** waiver: an unset budget, an undecidable goal, a stop rule or the one-goal rule are not waivable and need a changed, re-approved spec.
 
 ## 3. Budget
 - **Iterations:** <n> · **Tokens:** <n>, observed by the user pasting `/cost` at a checkpoint, or by the agent's estimate labelled as an estimate.

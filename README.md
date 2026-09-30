@@ -126,7 +126,7 @@ A campaign is a second way of working, next to the feature loop: one machine-dec
 What this is, plainly:
 - The need is anticipated, not observed, and effectiveness is unmeasured. Only one kind exists.
 - Budgets and stop rules are followed by the agent, not enforced by Core. Core is Markdown with no runtime; enforcement is [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)'s concern, and without it nothing changes and nothing is reported.
-- You start a campaign by naming its instance, `.spark/campaigns/<name>/campaign.md`. The ten ceremonies do not know campaigns yet, so nothing routes to one on its own, and the migration kind's standing rule for ordinary features is inert until routing ships.
+- You start a campaign by naming its instance, `.spark/campaigns/<name>/campaign.md`, and by naming the plugin folder in your prompt (an agent cannot resolve the plugin path on its own outside a skill). The ten ceremonies have no campaign logic yet, so nothing routes to one on its own, and the migration kind's standing rule for ordinary features is inert until routing ships.
 - A repo without `.spark/campaigns/` sees no difference.
 
 ---

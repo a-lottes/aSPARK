@@ -42,7 +42,7 @@ phase it declares in `phases` by adding one file — and only that file.
 
 ## Instantiating a campaign
 
-1. Copy `${CLAUDE_PLUGIN_ROOT}/templates/campaign.md` to
+1. Outside a skill the agent cannot resolve `${CLAUDE_PLUGIN_ROOT}`: **name the plugin folder in your prompt** — the folder of the installed aSPARK plugin, the one that contains `campaigns/` and `templates/` (under `~/.claude/plugins/`). If the agent cannot find it, it asks you and never invents a structure. Then copy `${CLAUDE_PLUGIN_ROOT}/templates/campaign.md` to
    **`.spark/campaigns/<campaign-name>/campaign.md`**, then append the chosen kind's body (below its frontmatter) as §8 "Kind-specific", with the slice list and parity check filled in under it; the kind's stop rules replace the `SR-5…` placeholder row in §4. The copy is **frozen at approval**: the user
    approves exactly the text that governs the run, and a later plugin update cannot change it.
 2. Fill every element. **Any blank element means the campaign is not startable.**
@@ -62,15 +62,16 @@ Naming rules, because [`aspark-graph`](../tools/README.md) reads `.spark/`:
   for example "run the campaign at `.spark/campaigns/<name>/campaign.md`". Nothing switches a
   campaign on by itself and no ceremony proposes one yet.
 - **Silence:** a repo without `.spark/campaigns/` sees no change in any ceremony — no notice,
-  no question, no mention. The ten ceremonies do not know this directory yet; routing and the
-  standing rule for ordinary feature loops arrive in a later increment. Until then, in a repo
-  whose only `.spark/` subdirectory is `campaigns`, `/spark` with no argument treats it as a feature.
+  no question, no mention. The ten ceremonies have no campaign logic yet; routing and the
+  standing rule for ordinary feature loops arrive in a later increment. Observed meanwhile (not designed): in a repo
+  whose only `.spark/` subdirectory is `campaigns`, `/spark` reports there is no feature to resume and describes the halted campaign, and `/next-steps` lists it; `/spark campaigns` asks for another name.
 - **Hand-run:** the user names the instance; the agent reads it, refuses without recorded goal
   approval, iterates one step at a time inside the budget, logs a checkpoint after each iteration
   (`CK-<n>`), and sets `halted` and escalates when a stop rule trips. The agent may set only
   `running` (at the start, and after a halt once its cause is resolved and recorded in a `CK-` entry —
   unless the tripped rule reserves the decision to the user, as `SR-5` does; a goal, threshold or budget
   change still needs the whole spec approved afresh) and `halted`.
+- **Known limits:** the freeze is a stop only if the agent notices an edit to the approved sections; an edit amended into the approval commit was **not** noticed in QA. Nothing detects it. Overlapping slice paths are not flagged.
 - **Without `aspark-guard`:** nothing changes and nothing is reported. The rules are instructions.
 - **No skill reads a campaign definition from the target project.** Only the instantiated
   `campaign.md` is written there.
