@@ -5,14 +5,14 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`), `qa.md` (`passed`) |
-| **Status** | `preparing` |
-| **Version** | v0.13.0 (proposed only, pr mode) |
+| **Status** | `handed-off` |
+| **Version** | v0.13.0 (manifest bumped on the PR branch; the real tag follows the merge, `a-lottes`) |
 | **Date** | 2026-09-30 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status` and `Version`).
-- **Summary:** Experimental, hand-started campaigns, Increment 1 of 3: format, extension rule, one kind (`migration-campaign`). Prepared, awaiting the user's go.
-- **Open:** `3 outstanding` - the go to push/open the PR; rulings on local-token presence and ledger paths (see §3); Increments 2 and 3 are later features.
+- **Summary:** Experimental, hand-started campaigns, Increment 1 of 3: format, extension rule, one kind (`migration-campaign`). Published as [PR #67](https://github.com/a-lottes/aSPARK/pull/67) on the user's go (2026-09-30); `handed-off` — merge and real tag are outstanding and owned by `a-lottes`.
+- **Open:** `2 outstanding` - merge and real tag of PR #67 (`a-lottes`, outside aSPARK's control); the user's ruling on the local API token in `.claude/settings.local.json` (not part of the publish go). Increments 2 and 3 are later features.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below carry the final ruling.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch as a finding at the next `/go-live` and proceed.
 
@@ -57,15 +57,15 @@ Mode `pr` (constitution §7). Ticket format `none`: no tracker call.
 | Action | Result |
 |---|---|
 | Version bump & tag | Proposed only: 0.12.0 -> 0.13.0 (minor: new optional capability, nothing removed or renamed). `plugin.json` bumped locally; `marketplace.json` has no version field; tags `v0.12.0` = manifest, no disagreement. No tag before merge |
-| PR / merge | Not opened. Pending on the user's go: `git push -u origin feat/campaign-core`; `gh pr create --repo a-lottes/aSPARK --base main --head feat/campaign-core --title "feat: campaign-core - experimental campaigns, increment 1 (v0.13.0)"` with the §2 changelog as body; then self-review request (approver `a-lottes`) and `claude plugin validate .` re-run. Merge and the real tag happen outside aSPARK's control |
+| PR / merge | **PR #67 opened** on the user's go: https://github.com/a-lottes/aSPARK/pull/67 (`feat/campaign-core` -> `main`, 12 commits + this status commit). `claude plugin validate .` re-run after the push: passes (one pre-existing `autoUpdate` warning). No CI exists in this repo (the PR shows 0 checks). Approver: self-review-via-PR (`a-lottes`), per §7; GitHub does not let an author request their own review, so none was requested. Merge and real tag outstanding |
 | Deploy | N/A - handed-off, no deploy |
 | Post-release smoke check | N/A - handed-off, no deploy |
 | Rollback | Before merge: close the PR, delete the branch (`git push origin --delete feat/campaign-core` only with the user's go). After merge: `git revert -m 1 <merge-sha>` via a new PR; installs on 0.12.0 are untouched. If tagged: delete the tag only with the user's go. Nothing to migrate: additive Markdown |
 
 Rulings the user owes before the go:
-1. `.claude/settings.local.json` (ignored, never pushed) holds a live API token; a local-directory install copies ignored files (§3, §6). Move it out of the tree or rotate the token.
-2. `evidence.md` (36 scratch paths under `/private/tmp/...`, `/Users/andreaslottes/` twice) and `qa.md` (once) quote the local username. Not a secret; 20+ shipped ledgers already do. Accept or scrub.
-3. `.spark/campaign-core/` is 280 KB / about 2,760 lines (evidence 1,153, fixtures 685); other ledgers are comparable. Accept, or trim before merge.
+1. `.claude/settings.local.json` (ignored, never pushed) holds a live API token; a local-directory install copies ignored files (§3, §6). Move it out of the tree or rotate the token. **Open — the user's to rule; not executed by the release.**
+2. `evidence.md` (36 scratch paths under `/private/tmp/...`, `/Users/andreaslottes/` twice) and `qa.md` (once) quote the local username. Not a secret; 20+ shipped ledgers already do. Accept or scrub. **Ruled: accepted (user, 2026-09-30).**
+3. `.spark/campaign-core/` is 280 KB / about 2,760 lines (evidence 1,153, fixtures 685); other ledgers are comparable. Accept, or trim before merge. **Accepted with the go (user, 2026-09-30).**
 Also untracked `.spark/.guard/` (logs, not ignored except `activity*`) and `.spark/adversarial-gates/` are excluded: the PR carries tracked commits only.
 
 ## 4. Learnings (Keep!)
@@ -80,7 +80,7 @@ Also untracked `.spark/.guard/` (logs, not ignored except `activity*`) and `.spa
 
 - [x] All pre-flight checks passed at release time, except the token-presence item open for the user's ruling
 - [x] Changelog written in user-facing language
-- [ ] Release actions executed and verified: PR not yet open (awaiting go); rollback path written; Deploy and smoke check N/A
+- [x] Release actions executed and verified: branch pushed, PR #67 open, `claude plugin validate .` green; rollback path written; Deploy and smoke check N/A (handed-off, no deploy)
 - [x] Learnings recorded
 - [x] Line budget respected: Ist 86 / Soll ~100 (excluding HTML comments)
-- [ ] Status set to `handed-off` - pending: PR open, validate green, approver requested. Outstanding: the go (user); real merge and tag (`a-lottes`, outside aSPARK)
+- [x] Status set to `handed-off` - PR open, validate green, self-review-via-PR per §7. Outstanding and not aSPARK's: merge and real tag (`a-lottes`)
