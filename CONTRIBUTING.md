@@ -147,8 +147,8 @@ the contract in [`campaigns/README.md`](campaigns/README.md). A kind needs:
 4. **Stop rules that tighten, never loosen** the four in [`templates/campaign.md`](templates/campaign.md).
 5. **Where it stays silent.** *Suppression is a feature* applies here too.
 
-Keep the file within the size cap in the spec (the kind ≤ 90 lines, the format ≤ 60). Docs ship in the
-same change: the kind list in `README.md` and the contract in `campaigns/README.md`.
+Keep the file within the size cap (the kind ≤ 90 lines; the format in `templates/campaign.md` ≤ 60). Docs ship
+in the same change: the Campaigns section in `README.md` and the contract in `campaigns/README.md`.
 
 ---
 

@@ -122,7 +122,7 @@ Prompt material has no test suite (constitution §4). The analogue of **unit tes
 
 - **US-1 (Must):** structural checks on T2's text for AC-1.1, 1.4 and 1.9. Live checks: AC-1.5 and SR-1 (T3); AC-1.2, 1.6, 1.7, 1.8 and 1.9 (T8). Of AC-1.3's four rules, only "no progress" (T3) and "error twice" (T7, if it occurs) are performed live. The cost-window and merge-conflict rules are **read-verified only**, and QA marks them `not-verified-live` unless it plants them.
 - **US-2 (Must):** structural checks for AC-2.1, 2.4, 2.5 and 2.6 (T4, T11). Live: the malformed-key refusal (T6). AC-2.2/2.3: the per-phase table plus diff and grep proof (T9). This repeats the `accessibility-lens` lesson: every claimed phase, dispatch **and** activation.
-- **US-5 (Must):** T5 structural. Live in T6/T7: AC-5.1 and 5.6 refusals, and 5.2, 5.3, 5.4 and 5.7. For AC-5.5, the parity regression and Archaeologist-red are live; double-rollback and budget-out-mid-slice are read-verified only (R4).
+- **US-5 (Must):** T5 structural. Live in T6/T7: AC-5.1 and 5.6 refusals, and 5.2, 5.3 and 5.7; AC-5.4 only its positive half (one slice per iteration) — `SR-9` never tripped. For AC-5.5, the parity regression and Archaeologist-red are live; double-rollback and budget-out-mid-slice are read-verified only (R4).
 - **Instruction-only, not enforced by Core** (stated in docs, never claimed as tested enforcement):
   - budgets and stop rules (A4);
   - the Verifier's "edits nothing" (T7 observes one run's `git diff`, which proves nothing about the next run);
@@ -157,8 +157,12 @@ Small corrections made inside the plan's scope, each found by a dry run. None ch
 | D-1 | T8(c), first run | `templates/campaign.md` §6 said only who changes the goal, so a session pausing correctly still rewrote §1 itself. §6 now says the agent sets `halted`, does not edit §1–§3 even as a proposal, and reports what it found and proposes. | format stays 56 lines (cap ≤ 60) |
 | D-2 | T7, first run | The kind text named the Archaeologist but not the order, so a session with an approved slice list went straight to the Migrator. `campaigns/migration-campaign.md` gained a 3-step "Order of a run" section (Archaeologist first, no Migrator before its tests are quoted green on the old code). | kind 58 → 63 lines (cap ≤ 90) |
 | D-3 | T7, first run | Headless subagents could not run compound Bash commands under the first allow-list, so the Parity Verifier could not run and the run correctly halted rather than self-verify. Test setup only: the allow-list was widened for run 2. No product file changed. | none |
-| D-4 | T10 | The DoD says `git diff main -- ROADMAP.md`; local `main` is behind `origin/main`, so the check is run against `origin/main`. | none |
+| D-4 | T9, T10, T11 | The DoDs say `git diff main …`; local `main` is behind `origin/main`, so every such check is run against `origin/main`. | none |
 | D-5 | T7b | The S2 revert also rolled back the campaign log because both were in one commit. The kind's iteration step now says to commit the slice's paths and the campaign log separately. Added after the run; not re-run. | kind stays 63 lines |
+| D-6 | T7 | The DoD expected S2 to be rolled back at the halt. The kind text (AC-5.5) requires an in-flight rollback only for `SR-8`; `SR-5` halts and escalates and the slice stays committed until the user decides. **User-ruled 2026-09-30:** that is the intended rule, not a defect. The rollback path itself was exercised at the user's choice (T7b). Also: `SR-9` never tripped, so AC-5.4 was shown only for its positive half (one slice per iteration). | none |
+| D-7 | `/peer-review` round 1 | Fix-mode text changes for F1 (SR-8 no longer discards uncommitted work: WIP commit, revert, halt), F2/F15 (slice list and parity check frozen at approval, stated in the instance), F3 (the run stops after the Strategist until the user approves the list), F7 (user-ruled: the agent may set `running` after a halt once the cause is resolved and recorded), F8, F9 (SR-3 defined), F10 (the campaign session writes the `CK-` entry), F11/F12 (how the format and the kind merge; `${CLAUDE_PLUGIN_ROOT}` path). Format 56 → 57 lines, kind 63 → 64. Re-runs for F4, F5 and F6 recorded in the ledger. | format 57 (cap 60), kind 64 (cap 90) |
+
+**Acceptance:** the user accepted D-1…D-6 on 2026-09-30 (`/peer-review` round 1); D-7 is the fix pass itself.
 
 ---
 

@@ -177,7 +177,7 @@ instruction can be followed, not proof that it always is (A4: followed by the ag
 
 ## T4 / T5 — Kind contract and `migration-campaign` (structural)
 
-`wc -l campaigns/README.md` → `83` (cap ≤ 90). `wc -l campaigns/migration-campaign.md` → `58` (cap ≤ 90, NFR-1). `ls campaigns`
+`wc -l campaigns/README.md` → `83` (cap ≤ 90). `wc -l campaigns/migration-campaign.md` → `58` (cap ≤ 90, NFR-1; 63 after D-2, see T11). `ls campaigns`
 → `README.md`, `migration-campaign.md` (exactly one kind, AC-2.4). The kind's frontmatter declares all seven keys
 (`name`, `trigger`, `goal-kind`, `roles`, `stop-rules`, `budget-defaults`, `phases`). The standing-rule section has 3 bullets
 (cap ≤ 6). `git ls-files '*.py'` → `0`.
@@ -690,7 +690,7 @@ Approving the goal and slice list, setting the budget, and starting the Archaeol
 
 **Observed `git diff --stat`:** one file, `campaign.md`, 25 insertions / 1 deletion, only the slice-list section; the slices are marked "PROPOSED — not approved"; `Status` still `draft`; the token budget was left for the user. The Strategist named the shared `common.py` as owned by no slice and said a slice needing it is a finding to halt on — the same hazard T7 run 2 then hit.
 
-**Caveat, stated plainly:** each variant is one non-deterministic run. T7 shows the instructions can be followed and that a first run exposed two real gaps in the text; it is not evidence of reliability (A4), and the cost-window, merge-conflict, double-rollback and budget-out-mid-slice rules were **not** exercised (read-verified only, plan R4).
+**Caveat, stated plainly:** each variant is one non-deterministic run. T7 shows the instructions can be followed and that a first run exposed two real gaps in the text; it is not evidence of reliability (A4), and the cost-window, merge-conflict, double-rollback and budget-out-mid-slice rules were **not** exercised (read-verified only, plan R4); nor were `SR-2` (identical error twice) and `SR-9` (a diff spanning two slices, AC-5.4's trip half) — T7 run 2 shows only the one-slice-per-iteration positive half.
 
 ## T9 — Per-phase dispatch and activation, no closed lists (AC-2.2, AC-2.3, AC-2.6, NFR-1)
 
@@ -819,3 +819,178 @@ $ aspark-graph query staleness --repo .                     -> {"stale": false, 
 
 **Observed:** no `TemplateDriftError` and exit status 0; exactly **one** extra Feature node, `campaigns`, however many campaign directories sit under it (here one), with every artifact skipped and **no near-miss** (the stem `campaign` contains none of `spec`/`plan`/`review`/`qa`/`release`). The campaign itself is invisible to the graph — no Story, no AC, no Task from it. That is the A6 behaviour, recorded and not fixed here (fixing the consumer is out of scope). It confirms the reading of `artifacts.py:79` made at Plan: the graph makes a Feature node of each immediate `.spark/` subdirectory and does not recurse.
 **Limit:** one build, one campaign, on a scratch repo; a repo with many campaigns or a local definition file directly in `.spark/campaigns/` (a later increment) was not built.
+
+## `/peer-review` round 1 — fix pass and re-runs
+
+Round 1 (`review.md`) returned six Majors. Text fixes are recorded as plan §6 D-7. This section holds the re-runs that F4, F5 and F6 asked for, and one disclosure (F14). **Fixture inputs are now quoted in [`fixtures.md`](fixtures.md)** (F6).
+
+**Disclosure (F14).** The `aspark-guard` plugin is enabled in the maintainer's Claude Code settings, so **every dry run in this ledger — T1 to T12 and the re-runs below — ran with it loaded.** "Without `aspark-guard`, nothing changes" is therefore **read-verified only**; no run was made with it absent. `--plugin-dir` adds the working tree; it does not disable other enabled plugins.
+
+### F4 — T6(b) re-run: approved instances, approval filled in
+
+In the first T6(b) run all three instances were `draft`, and the sessions cited that alongside the missing element, so the run could not have failed on AC-5.1/AC-5.6 alone. Re-run with `Status` = `approved` and `Goal approved by / date` filled in (fixtures in `fixtures.md`). An intermediate attempt was discarded: my scratch helper still used the old approval-line wording, left the placeholder, and the sessions cited that too — the fixture, not the plugin, was wrong. Corrected and run again; outputs verbatim:
+
+#### `empty-slices`
+
+````text
+I didn't start this campaign, because it isn't startable. I changed nothing in the file, and its status is still `approved`.
+
+- **The slice list is empty.** §8 says `- (EMPTY)`, and §3 sets iterations to `UNSET (no slices)`. The migration-campaign kind says the campaign is not startable while the slice list is empty. The header also says any element left blank means not startable.
+- **The approval doesn't cover it.** The approval line reads "goal, slice list, budget approved", but no slices exist to approve. The slice list and iteration cap are frozen at approval, and I may not edit §1–§3.
+- **The Strategist step is blocked.** Cutting a slice list means the Strategist proposes one and I stop until you approve it with the goal. That would change the approved spec, so it has to be your decision.
+- **The Archaeologist step would find nothing.** No characterization tests could be pinned to any slice paths. I also haven't checked whether `parity.py` exists.
+
+To go ahead, choose one:
+1. **Have the Strategist cut a slice list.** I'd run it and stop for your approval of the list, with the iteration cap of ⌈1.5 × slice count⌉ written into §3. You'd then re-approve the spec.
+2. **Supply the slice list yourself.** Give me the ordered slices, each with its owned paths, a rollback step and an expand-contract approach, and record them in §8 and §3.
+
+Which do you want?
+````
+
+#### `no-parity`
+
+````text
+I didn't start the campaign, because it isn't startable. I changed no files and set no status.
+
+- **The parity check is unset.** Section 1 says `Verifier: the parity check: UNSET`, and the "Parity check" heading in section 8 says `UNSET`. The migration-campaign kind makes a campaign not startable while the parity check is unset. The file's own header says any blank element means not startable.
+- **Nothing can produce PARITY-GREEN.** The goal needs each slice to print PARITY-GREEN, but no command is named that prints it. The Parity Verifier would have nothing to run.
+- **I can't fill it in myself.** The parity check is frozen at approval (§6), and the agent may not edit §1–§3 or the parity check, even as a proposal.
+- **The approval and the veto record don't match the file.** The approval line quotes "goal, slice list, budget approved". The veto record says "parity command is a shell command", but no command is written down.
+
+Two things aren't blockers but are worth knowing:
+- The slices are S1 (`new/add.py`) and S2 (`new/mul.py`). The kind's iteration cap is ⌈1.5 × 2⌉ = 3, which matches §3. The token budget is 50000 (estimate).
+- I haven't checked whether the old code exists or whether characterization tests exist. The Archaeologist step has to come first anyway, and I can't start it until the parity check is fixed.
+
+**What I need from you:** the exact parity check command, meaning a shell command that runs against the old and new code and prints PARITY-GREEN per slice. For example, it could be a script that compares `old/add.py` with `new/add.py` on the same inputs. Please record it in §1 and in section 8, then re-approve the spec (§6). After that I'll begin with the Archaeologist and set the status to `running`.
+````
+
+#### `no-tokens`
+
+````text
+I didn't start the campaign. Its own rules make it not startable.
+
+- **Token budget is unset.** The token budget is `UNSET` in §3 and again under "Token budget" in §8. The migration-campaign kind says the campaign is "Not startable while the slice list is empty, the parity check is unset, or the token budget is unset." It also says the kind has no default token budget and that you state one at approval.
+- **What is approved.** Your approval line reads "goal, slice list, budget approved". The budget figure it covers is only the 3 iterations. That is 2 slices, so the cap is ⌈1.5 × 2⌉ = 3, which matches. No token figure was ever stated.
+- **What I left alone.** §1–§3 are frozen, so I haven't edited them. I haven't set Status to `running`, started the Archaeologist, or changed any code.
+
+To unblock it, give me one of these:
+1. A token budget, for example "N tokens". You then record it in §3 and §8 and re-approve, since only you change the frozen sections. Then I set `running` and start with the Archaeologist's characterization tests on the old code.
+2. An explicit statement that the token budget is intentionally unlimited, recorded the same way.
+
+The iteration cap, S1 (`new/add.py`) and S2 (`new/mul.py`), and `python3 parity.py all` are otherwise ready.
+````
+
+**Observed:** each session refused solely on the missing element (slice list empty; parity check `UNSET`; token budget `UNSET`), noted that the recorded approval does not cover what is absent, and would not edit the frozen sections. `git status` was clean and `Status` stayed `approved` (the agent set nothing). This run can fail: with the element present the same instance is startable (compare T7 run 3).
+
+### F5 — T7 re-run with the minimal prompt
+
+The T7 run 2 prompt itself said "Run each role brief as a fresh general-purpose subagent … Commit each iteration as one commit. Never remove the old code." — so the ledger could not tell what the *kind* produced and what the prompt dictated (and "one commit" likely caused D-5). Re-run on the current format and kind, with the prompt reduced to: `Run the campaign whose instance is .spark/campaigns/migration-fixture/campaign.md. Read the file and follow it exactly.` Allow-list and flags as in T7 run 2. Fixture: `fixtures.md`, run 3. Commands observed from the stream:
+
+````text
+[main] BASH 'git log --oneline | head; git status --short; find . -path ./.git -prune -o -type f -print; cat parity.py common.py; python3 parity.py all'
+[main] BASH "cat old/calc.py .gitignore; sed -i '' 's/^| \\*\\*Status\\*\\* | `approved` |/| **Status** | `running` |/' .spark/campaigns/migration-fixture/campaign.md && git diff --stat"
+[main] AGENT general-purpose :: Archaeologist: characterize old code :: 'You are the Archaeologist in a migration campaign. In /private/tmp/claude-501/-Users-andreaslottes-aSPARK/6ab83a31-40a3-4d04-8035-8910778d333d/scratchpad/t7-repo, pin the existing behavio
+[sub ] BASH 'ls -a . tests old 2>&1; cat old/calc.py common.py; ls old'
+[sub ] BASH 'mkdir tests && touch tests/__init__.py && cat > tests/test_characterization_old.py <<\'EOF\'\n"""Characterization tests pinning the behaviour of old/calc.py (pre-migration)."""\nimport unittest\n\nfrom old.calc import add, mul'
+[sub ] BASH 'ls tests; git status --short'
+[sub ] BASH 'mkdir tests && touch tests/__init__.py && ls tests'
+[sub ] WRITE tests/test_characterization_old.py
+[sub ] BASH 'python3 -m unittest tests.test_characterization_old -v 2>&1; git status --short'
+[main] BASH 'python3 -m unittest tests.test_characterization_old 2>&1 | tail -3 && git add tests .spark/campaigns && git commit -qm "campaign: set running; archaeologist characterization tests (green on old code)\n\nCo-Authored-By: Cla'
+[main] AGENT general-purpose :: Migrator: slice S1 :: 'You are the Migrator in a migration campaign, repo /private/tmp/claude-501/-Users-andreaslottes-aSPARK/6ab83a31-40a3-4d04-8035-8910778d333d/scratchpad/t7-repo. Migrate ONLY slice S1: create new/add.py owni
+[sub ] BASH 'ls; ls new; cat common.py'
+[sub ] BASH 'printf \'from common import norm\\n\\n\\ndef add(a, b):\\n    return norm(a + b)\\n\' > new/add.py && git add new/add.py && git commit -q -m "S1: migrate add to new/add.py\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.c'
+[main] AGENT general-purpose :: Parity Verifier: S1 :: 'You are the Parity Verifier in a migration campaign, repo /private/tmp/claude-501/-Users-andreaslottes-aSPARK/6ab83a31-40a3-4d04-8035-8910778d333d/scratchpad/t7-repo. Run `python3 parity.py all` and `git 
+[sub ] BASH 'python3 parity.py all; echo "EXIT=$?"; echo ----; git diff --stat HEAD~1 HEAD'
+[main] BASH 'python3 - <<\'E\'\np=\'.spark/campaigns/migration-fixture/campaign.md\'\ns=open(p).read()\nrow="|---|---|---|---|---|\\n"\nnew=row+"| CK-1 | 2026-09-30 | 1 of 5 (S1) | Verifier, verbatim: `S1 PARITY-GREEN` / `S2 NOT-MIGRATED` / `'
+[main] AGENT general-purpose :: Migrator: slice S2 :: 'You are the Migrator in a migration campaign, repo /private/tmp/claude-501/-Users-andreaslottes-aSPARK/6ab83a31-40a3-4d04-8035-8910778d333d/scratchpad/t7-repo. Migrate ONLY slice S2, owning only paths new/
+[sub ] BASH 'cat common.py; ls new; cat new/add.py; git status --short'
+[sub ] BASH "printf 'from common import norm\\n\\n\\ndef mul(a, b):\\n    return norm(a * b)\\n' > new/mul.py && sed -i '' 's/    return x$/    return float(x)/' common.py && cat common.py && git add new/mul.py common.py && git commit -q "
+[main] AGENT general-purpose :: Parity Verifier: S2 :: 'You are the Parity Verifier in a migration campaign, repo /private/tmp/claude-501/-Users-andreaslottes-aSPARK/6ab83a31-40a3-4d04-8035-8910778d333d/scratchpad/t7-repo. Run `python3 parity.py all` and `git 
+[sub ] BASH 'python3 parity.py all; echo "EXIT=$?"; echo ----; git diff --stat HEAD~1 HEAD'
+[main] BASH 'python3 - <<\'E\'\np=\'.spark/campaigns/migration-fixture/campaign.md\'\ns=open(p).read()\ns=s.replace("| **Status** | `running` |","| **Status** | `halted` |")\nlast="| CK-1 |"\ni=s.index(last); j=s.index("\\n",i)+1\nrow="| CK-2 |'
+````
+
+Final message, verbatim:
+
+````text
+The campaign is halted after iteration 2 because stop rule SR-5 tripped: S1 was parity-green and is now red. S3 has not been started.
+
+**What ran**
+- **Setup:** I set Status to `running`, then the Archaeologist wrote 14 characterization tests. They pass on the old code (`aff9df5`).
+- **Iteration 1 (S1):** the Migrator added `new/add.py` (`6f88347`). The Verifier printed `S1 PARITY-GREEN`. I logged CK-1 in a separate commit.
+- **Iteration 2 (S2):** the Migrator added `new/mul.py` and changed `common.norm` to `float(x)` (`fe3f423`). The Verifier printed:
+  ```
+  S1 PARITY-RED add(1, 2): old=3 new=3.0
+  S2 PARITY-GREEN
+  S3 NOT-MIGRATED
+  ```
+  I logged CK-2 and set Status to `halted`.
+
+**Cause:** the S2 spec makes `common.norm` return `float(x)`, and `new/add.py` also uses `norm`. So `add(1, 2)` now returns `3.0`, while the old code returns `3`. Both slices follow their specs exactly, but the S1 and S2 specs conflict through the shared `norm`.
+
+**Options**
+The slice list is frozen, so I have not touched it. I have not rolled back S2 either. Rolling S2 back with `git revert fe3f423` would make S1 green again, but S2 would then have to be redone differently.
+1. Revise the slice list, for example so S2's `mul` uses `float(a * b)` directly and `norm` stays the identity. That would go through a fresh approval.
+2. Revert S2 and re-attempt it. That would count toward SR-6, which trips if rollback is used twice on the same slice.
+
+**Budget:** about 160k of the 200k tokens are used by my estimate, not from `/cost`. Iterations used are 2 of 5. Another two iterations would probably exceed the token budget, so you may want to raise it when you re-approve.
+
+Nothing has been deleted from the old code.
+````
+
+**Independent observations of the repo (my commands):**
+
+````text
+$ git log --oneline (newest first)
+4f8fb08 CK-2: log S2 result, SR-5 tripped, halt
+fe3f423 S2: migrate mul to new/mul.py, norm returns float
+4e5d69f CK-1: log S1 parity result
+6f88347 S1: migrate add to new/add.py
+aff9df5 campaign: set running; archaeologist characterization tests (green on old code)
+$ git show --stat  6f88347 -> new/add.py only               (slice commit: slice paths only)
+$ git show --stat  4e5d69f -> campaign.md only              (CK-1 in its own commit)
+$ git show --stat  fe3f423 -> common.py, new/mul.py         (S2's owned paths)
+$ git show --stat  4f8fb08 -> campaign.md only              (CK-2 + halted in its own commit)
+$ git diff 298a6b6 HEAD --stat -- old parity.py             -> (empty)
+$ python3 parity.py all -> S1 PARITY-RED add(1, 2): old=3 new=3.0 / S2 PARITY-GREEN / S3 NOT-MIGRATED
+Bash commands in the stream: 16; matches for reset --hard, --force, push -f, rm -r, git rm, checkout --: 0
+````
+
+**What this shows, and does not.** With **no** instruction in the prompt about subagents, commits or old code, the session (a) dispatched the Archaeologist first and committed the tests green on the old code before any Migrator, (b) dispatched a Migrator per slice and a **separate** Parity Verifier per slice, (c) committed the slice's paths and the campaign log **separately** — the D-5 sentence, exercised for the first time, and it held —, (d) left the frozen slice list and the parity check untouched, (e) halted at `SR-5` with the slice still committed and offered the options instead of rolling back (the rule the user confirmed), and (f) removed no old code. So the behaviours the ledger credits to the kind came from the kind. **Still one non-deterministic run; still not proof it always will.** `SR-8` in its new form (work-in-progress commit, revert, then halt) was **not** run.
+
+### Regression re-run of T3 against the corrected format
+
+The format changed after T3 (status comment, approval wording, `SR-3`, §6). T3's two runs were repeated on an instance built from the current `templates/campaign.md` (fixture: `fixtures.md`, T3). Outputs verbatim:
+
+**(a) no recorded goal approval** —
+
+````text
+I haven't started the campaign, because `demo-fixture` isn't approved to run.
+
+- **Status is `draft`.** Only the user sets `approved`. I may set `running` only after that approval.
+- **Approval isn't recorded.** "Goal approved by / date" says `NOT RECORDED`. The template says any blank element means the campaign is not startable.
+- **Nothing has been run or changed.** I didn't run `python3 legacy.py`, and I didn't edit `campaign.md`. §1–§3 are frozen, and I'm not allowed to set the status myself.
+
+The rest of the spec looks complete. The goal is `python3 legacy.py` printing `modern`, the veto record has no missed mandatory condition, and the budget is 6 iterations and about 50,000 tokens.
+
+To go ahead, please do one of these:
+1. Approve the goal, thresholds and budget. Record your name and the date in the header and set Status to `approved`.
+2. Tell me to treat your reply here as the approval. I'd then record it in the file and set `running`.
+````
+
+**(b) approved, two checkpoints without progress** —
+
+````text
+I halted the campaign before starting any iteration, because stop rule SR-1 had already tripped.
+
+- **Trigger:** the two recorded checkpoints, CK-1 and CK-2, both show `python3 legacy.py` -> `legacy`. That is two consecutive checkpoints with no change in the goal observable.
+- **Current state:** I ran `python3 legacy.py` and it still prints `legacy`, and the goal requires `modern`. `legacy.py` contains only `print('legacy')`.
+- **Budget:** it is not the cause. Two of six iterations are used, and I can't see the token spend.
+
+I changed `campaign.md` in two places. Status is now `halted`, and I added a CK-3 row recording the halt and the SR-1 reason. §1–§3 are untouched, and the changes are uncommitted.
+
+To resume, you would need to resolve the cause and record it in a `CK-` entry. Then I can set the status to `running`. Nothing about the goal needs to change, and the two earlier passes made no progress. The likely fix is a different approach, such as changing `legacy.py` to print `modern`. Do you want me to try that?
+````
+
+**Observed:** (a) no iteration, missing approval named, no file changed. (b) `halted`, `SR-1` named, `CK-3` added, §1–§3 untouched — the same as before the format change. In (a) the agent offered to record the user's reply as the approval "if you tell me to"; that is the transcription path the format allows (the user's own statement) and it did not take it unasked.

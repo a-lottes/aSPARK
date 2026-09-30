@@ -11,7 +11,7 @@
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`).
 - **Summary:** Work whose finish line is a machine-decidable state ("all slices parity-green") has no home in a story-shaped loop. Add a second working mode, the campaign: one human-approved goal, a budget, stop rules, a rollback path. Ships in three gated increments: **Inc 1** = campaign-spec format + extension rule + the first template `migration-campaign`; **Inc 2** = routing + a standing rule on only while a campaign runs; **Inc 3** = project-local definitions, gated on a user-made constitution amendment. This feature folder closes at Inc 1; Inc 2 and Inc 3 each run later as their own feature folder (see §4).
-- **Open:** `0 open` — Q5, Q6, Q7, A8 user-ruled; only C8 remains a PO decision, overridable at approval. Awaiting the user's approval.
+- **Open:** `0 open` — Q5, Q6, Q7, A8 user-ruled; only C8 remains a PO decision, overridable at approval.
 - **Binding ruling:** §4 User Stories for the current stories; §7 Clarifications for what changed since the last round and why
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
 

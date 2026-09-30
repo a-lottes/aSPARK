@@ -157,7 +157,7 @@ Two further siblings, `aspark-insights` and `aspark-policy`, do not touch the lo
 ## Going deeper
 
 - [`docs/workflow.md`](docs/workflow.md) — how artifacts hand over, what each gate checks, who may decide what.
-- [`docs/repo-layout.md`](docs/repo-layout.md) — what `agents/`, `skills/`, `templates/`, `lenses/` and `tools/` are, and the reading order for newcomers.
+- [`docs/repo-layout.md`](docs/repo-layout.md) — what `agents/`, `skills/`, `templates/`, `lenses/`, `campaigns/` and `tools/` are, and the reading order for newcomers.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to add a lens, campaign kind, skill or agent without breaking the contract.
 - [`CLAUDE.md`](CLAUDE.md) — working habits kept across loops.
 
