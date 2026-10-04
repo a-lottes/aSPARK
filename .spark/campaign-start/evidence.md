@@ -391,3 +391,79 @@ Scratch plugin copies, outside the repo (`rsync` of the working tree minus `.git
 - 4.3: both texts write nothing, name the one kind that exists, and give the two options (the feature loop, or contributing a kind).
 - 4.4: both texts propose the single kind and wait for the user's yes/no; the session ends at the question and nothing is written (porcelain empty).
 - **`not-verified-live`:** the unexpanded-token branch of AC-3.4 (`${CLAUDE_PLUGIN_ROOT}` still literally present) cannot be produced without editing the product under test, because the host expands the token before the model sees the text (T2(a)). It is verified by reading step 3's wording only: it names the three conditions and the stop. The *unreadable-path* branch is the live case above (4.1).
+
+
+## T5 — Goal at the door (step 5), one live session per case
+
+Fresh scratch copies of fixture A; the goal text is part of the prompt after the first line.
+
+- **5.1 undecidable goal (AC-2.1)** — prompt `/campaign clean-up migration-campaign  +  Goal: clean up the code in src.`
+  - tool calls: `Bash ls -la .spark/campaigns/ 2>&1; ls .spark/campaigns/clean-up 2>&1; ls /Users/andreaslottes/aSPARK/cam`; `Read /Users/andreaslottes/aSPARK/templates/campaign.md`; `Glob *`; `Glob .spark/campaigns/**`; `Glob src/**`; `Read /Users/andreaslottes/aSPARK/campaigns/migration-campaign.md`
+  - porcelain after: (empty)
+  - reply (first 600 chars):
+    > I haven't written anything. The goal can't go into a draft yet.
+    > 
+    > **Kind check.** `migration-campaign.md` has all seven keys:
+    > - `name: migration-campaign`
+    > - `trigger: replacing a legacy component, module or system in verified, reversible slices`
+    > - `goal-kind: every slice in the slice list is parity-green`
+    > - `roles: [archaeologist, strategist, migrator, parity-verifier]`
+    > - `stop-rules: [SR-5 … SR-9]`
+    > - `budget-defaults: iterations = ceil(1.5 x slice count), unmeasured; tokens = no default (unset = not startable)`
+    > - `phases: [specify, plan, act, review]`
+    > 
+    > No `.spark/campaigns/clean-up/` exists, s
+
+- **5.2 several goals (AC-2.2)** — prompt `/campaign three-things migration-campaign  +  Goal: migrate the logger to structlog, add dark mode to the UI and fix the login bug.`
+  - tool calls: `Glob *.md`; `Bash ls -d .spark/campaigns/three-things 2>&1`
+  - porcelain after: (empty)
+  - reply (first 700 chars):
+    > I refused this campaign draft and wrote nothing.
+    > 
+    > **Why:** a campaign has exactly one goal, and you gave three:
+    > 1. Migrate the logger to structlog.
+    > 2. Add dark mode to the UI.
+    > 3. Fix the login bug.
+    > 
+    > None of the three has a named Observable yet (a command with its expected output, or a file state). The kind `migration-campaign` exists, but it covers only the first goal. Dark mode and the login bug are feature and bugfix work, not migrations, so no kind fits them.
+    > 
+    > **Next steps:**
+    > - **Split the three goals.** Run `/story-time` to turn dark mode and the login bug into separate specs. These then go through the normal feature loop (`/spark`).
+    > - **Campaign for the logger migration.** Re-run `/camp
+
+- **5.3 no fitting kind (AC-2.3)** — prompt `/campaign translate-docs  +  Goal: translate every doc in the repo into German so that no English paragraph remains.`
+  - tool calls: `Bash ls -d .spark/campaigns/translate-docs 2>&1; ls .spark/campaigns 2>&1; ls /Users/andreaslottes/aSPARK`; `Read /Users/andreaslottes/aSPARK/templates/campaign.md`; `Glob *.md`; `Read /Users/andreaslottes/aSPARK/campaigns/migration-campaign.md`
+  - porcelain after: (empty)
+  - reply (first 700 chars):
+    > I wrote nothing. The goal fails at the door on two counts.
+    > 
+    > **1. The goal has no named Observable.** "No English paragraph remains" can't be checked by a command or file state as it stands. To make it decidable, the goal needs:
+    > - a file set, for example `**/*.md`, with the exclusions named (`LICENSE`, `CHANGELOG`, code blocks, and so on);
+    > - a check, such as a language-detection script or a grep, together with its expected output, for example "0 files with an English paragraph".
+    > 
+    > **2. No existing kind fits.** `campaigns/` has one kind, `migration-campaign`. All seven keys are present in its frontmatter:
+    > - `name: migration-campaign`
+    > - `trigger: replacing a legacy component, module or system in
+
+Reading: 5.1 named the missing Observable and threshold ("'Cleaner' is the same kind of judgment as 'looks good'"), offered a decidable cleanup goal ("`<linter command>` reports 0 findings in `src/`") and pointed to `/story-time` or contributing a kind. 5.2 refused for several goals and named `/story-time`. 5.3 named the missing Observable and said "No existing kind fits ... I won't stretch the kind or invent a new one"; its two options are the feature loop and contributing a kind, and **no kind-less instance was offered**. All three: porcelain empty, nothing written.
+
+
+## T6 — Interview and the single write (in progress)
+
+**6.1 Happy path, goal given up front** (fresh copy of fixture A, session `t6`): prompt `/campaign logger-structlog migration-campaign` followed by `Goal: replace the stdlib logging in src/log.py with structlog. Observable: grep -c "import logging" src/log.py prints 0 and grep -c "import structlog" src/log.py prints 1. Verifier: a fresh Parity Verifier per slice.`
+
+Tool calls: `Bash` (existing-instance check), `Read` templates/campaign.md, `Glob`, `Glob`, `Read` campaigns/migration-campaign.md, `Bash` (`ls src/log.py`, grep), `Write` .spark/campaigns/logger-structlog/campaign.md. No question was asked: everything the kind leaves open that the user had not stated was written as a visible blank and listed in the closing report. Porcelain after: `?? .spark/campaigns/` (plus `.spark/.guard/` from `aspark-guard`); `find .spark -type f` shows exactly one new file, `.spark/campaigns/logger-structlog/campaign.md`; `git log --oneline | wc -l` = `1` (unchanged, no commit).
+
+Checks on the written file (127 lines):
+- Status row `draft`; Kind `migration-campaign`; "Goal approved by / date" is empty.
+- §1: Condition, Observable and Verifier are the user's words; Thresholds restate the two `grep -c` values and say so ("from the user's stated Observable; no further thresholds stated").
+- §2 veto record: all four condition rows have empty Met/missed cells. §7 checkpoints: header only.
+- §3: Iterations `___` (kind default noted, slice count unknown); **Tokens `___ (not stated by the user)`**: no figure invented.
+- §4: SR-1 to SR-4 followed by the kind's SR-5 to SR-9; no `SR-5…` placeholder row (`grep -c 'SR-5…'` = 2, both in the template's own HTML comment).
+- §8: the kind's body below its frontmatter, byte-identical to `campaigns/migration-campaign.md` apart from the appended `### Slice list ... _empty_` and `### Parity check _unset_ (user stated only: Verifier = ...)` placeholders; a `diff` of the two bodies shows only those added lines.
+
+Closing report (quoted): *"Still blank: Goal approved by / date: only you set this. §2 veto record: no check has been run. §3 tokens: you didn't state a budget, and the kind has no default. §3 iterations ... §8 slice list: empty ... §8 parity check: unset ... §7 checkpoints: empty ... Next step: run an Archaeologist session to pin the current `src/log.py` behaviour ... Then run a Strategist session to cut the slice list. Neither has been dispatched. Once you have a slice list, a parity check and a token budget, approve the campaign."* It also flagged one mismatch for the user (the kind's goal is "every slice parity-green"; the user's grep observable is a different end-state check).
+
+**Still to run for T6 (blocked, see below):** a multi-turn interview (goal not given up front, answered via `--resume`) and a variant that states a token budget.
+
+**Blocker recorded at this point.** The 6.2 multi-turn run's first turn returned `You've hit your session limit · resets 11:50pm (Europe/Berlin)`: the account's usage limit, not a product fault. No further live session can run until it resets. Nothing was written by that session (porcelain empty).
