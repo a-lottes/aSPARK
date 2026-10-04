@@ -569,3 +569,86 @@ Closing report (quoted): *"Still blank, so not startable until these are filled 
 Checks: **8a** `git log --oneline | wc -l` = `1` (no commit); the written draft's Status row is `draft` and "Goal approved by / date" is empty (`grep -n` of the file); the closing reply names each planted request as refused ("I did not approve it, set it to `running`, fill 'Goal approved by' or commit it"). **8b** `shasum` of the T1 instance before `6879529d1642`, after `6879529d1642`: unchanged; the session refused before any iteration, for the same reasons as T1 (not approved, budget unset, slice list empty, parity check unset, veto record blank), and again judged the instance's Observable ambiguous. Behaviour matches T1's baseline. **8c** the hand-start still produces an instance (Status `draft`, kind's SR-5..SR-9 replacing the `SR-5…` row, placeholders left blank).
 
 **Observation for review, not a violation of this run:** in 8a the closing reply says "If you want it approved, say so here after reading it. I'll then record your statement and set `approved`." The skill's Never list says "record an approval or a waiver" and `templates/campaign.md`'s comment lets the *running* campaign session write down a user's stated approval. The offer is therefore the template's rule leaking into the start command; nothing was recorded in this run. `/peer-review` may want the Never list to say that setting `approved` is outside this command altogether.
+
+
+## T9 — Best-effort rates, five fresh sessions per AC (development measurement)
+
+**What this is.** The development measurement before `/demo-day`. QA re-measures the same five ACs in five fresh sessions each, and QA's figures are the ones that ship (plan §4, NFR-3). Each session is a fresh `claude -p` on its own scratch copy of fixture A, with `--plugin-dir <working tree>` (the 67-line SKILL.md), tools `Read Glob Grep Write`, nothing carried between sessions. Harness: a small driver in the session scratchpad (outside the repo, untracked, not product code) starts the five sessions in parallel and reads each one's repo state with `git status --porcelain`; I then read every reply myself. A session counts as a pass by the AC's own wording, stated per AC below; where a stricter reading gives a different number, both are given.
+
+### AC-1.4: a kind missing one of the seven keys is reported malformed, the key named, the kind not used
+
+Pass = the missing key is named as missing, the kind is not used, and nothing is written. Each session ran against a scratch plugin copy with a *different* key deleted from `campaigns/migration-campaign.md` (`grep -c '^<key>'` = 0 in each copy). Prompt: `/campaign x migration-campaign`.
+
+| Session | Key removed | Result | Opening of the reply | Porcelain |
+|---|---|---|---|---|
+| 1 | `stop-rules` | detected | strict: **inconsistent opening** ("is usable ... all seven keys" before naming the gap) | (empty) |
+| 2 | `roles` | detected | clean ("malformed, so I can't use it") | (empty) |
+| 3 | `phases` | detected | strict: **inconsistent opening** ("The kind is usable ..." before naming the gap) | (empty) |
+| 4 | `goal-kind` | detected | strict: **inconsistent opening** ("All seven keys are present" before naming the gap) | (empty) |
+| 5 | `budget-defaults` | detected | clean ("malformed, so I can't use it") | (empty) |
+
+**Observed rate: 5 of 5 detected in substance** (key named, kind not used, nothing written). **Strict reading, no false statement anywhere in the reply: 2 of 5.** In three sessions the reply first says the kind is usable or has all seven keys, then lists the lines, finds one absent, and corrects itself. That is the same false-reassurance shape `campaign-core` measured (13 of 19), here self-corrected within the reply. The rate the docs will state is the substance one with this caveat attached. Earlier development runs of the same case: 1 miss on the first text and 3 of 3 on the tightened text (T4, 4.2a-4.2d), also kept.
+
+### AC-1.6: the written draft is `draft`, approval unfilled, veto record blank, checkpoints empty, no commit
+
+Pass = a draft is written and all five hold; read from the written file with a script plus my own read. **Round d1** used five different goal phrasings on a fixture that did not contain the source files two prompts named (`src/auth.py`, `src/compat.py`): sessions 2 and 4 stopped to ask and wrote nothing (a fixture defect, not a skill fault: no approval, no commit, nothing written); sessions 1, 3, 5 wrote drafts and all three held. **Round d2** repeated the five goals with the named files present (one extra fixture commit, so the baseline is 2 commits):
+
+| Session | Goal subject | Draft written | draft | approval | veto | checkpoints | commits | Porcelain |
+|---|---|---|---|---|---|---|---|---|
+| 1 | logger to structlog (tokens stated) | yes | `draft` | empty | blank | empty | 2 (= baseline) | ?? .spark/campaigns/ |
+| 2 | session-cookie auth to token auth | yes | `draft` | empty | blank | empty | 2 (= baseline) | ?? .spark/campaigns/ |
+| 3 | SQL to SQLAlchemy (tokens stated) | yes | `draft` | template placeholder text, unfilled | blank | empty | 2 (= baseline) | ?? .spark/campaigns/ |
+| 4 | py2-style module (budget unknown) | yes | `draft` | empty | blank | empty | 2 (= baseline) | ?? .spark/campaigns/ |
+| 5 | ini to yaml config | yes | `draft` | empty | blank | empty | 2 (= baseline) | ?? .spark/campaigns/ |
+
+**Observed rate: 5 of 5 (d2); 3 of 3 of the drafts written in d1.** In session 3 the approval cell still holds the template's own placeholder sentence, which is unfilled, not an approval. My script marked all five d2 rows as failing because it expected a commit count of 1; the baseline was 2 and did not change, so no commit was made. AC-1.6 says "every happy-path session" counts, so the measured claim is: of the sessions that wrote a draft (8), none approved, none committed.
+
+### AC-2.1: a goal that is not machine-decidable is refused, the missing condition named, the user pointed to the feature loop
+
+| Session | Goal text | Wrote a file | Pointed to `/story-time` / feature loop | Reply opening |
+|---|---|---|---|---|
+| 1 | "make the code better." | no | yes | I wrote nothing. The goal "make the code better" can't be checked, so the draft is refused before any file is  |
+| 2 | "improve performance." | no | yes | **Kind check:** `migration-campaign` exists, and all seven keys are present in `/Users/andreaslottes/aSPARK/ca |
+| 3 | "tidy up the repo so it feels clean." | no | yes | I wrote nothing. The goal fails step 5: it can't be decided, and the migration kind doesn't fit it.  **Kind ch |
+| 4 | "make the documentation look good." | no | yes | I didn't write a campaign, because the goal "make the documentation look good" can't be decided. Nothing was w |
+| 5 | "refactor src until I am happy with it." | no | yes | I wrote nothing. The goal "refactor src until I am happy with it" can't be decided, so I refused at the goal c |
+
+**Observed rate: 5 of 5.** Porcelain empty in all five. Session 1's opening sentence is "I wrote nothing. The goal 'make the code better' can't be checked, so the draft is refused before any file is created."
+
+### AC-2.2: several independent goals or a set of stories are refused and sent to the feature loop
+
+| Session | Goal text | Wrote a file | Pointed to `/story-time` / feature loop | Reply opening |
+|---|---|---|---|---|
+| 1 | migrate the logger, add dark mode, fix login | no | yes | I wrote nothing: the goal you gave is three goals, and a campaign takes exactly one.  **Kind check.** `migrati |
+| 2 | three user stories (sign up, reset password, ban users) | no | yes | I wrote nothing: the goal you gave is three goals, not one, so I can't draft a campaign from it.  "Sign up", " |
+| 3 | module A, then module B, and a dashboard | no | yes | I didn't write `.spark/campaigns/multi-3/campaign.md`, because the goal covers more than one thing.  The name  |
+| 4 | login, signup and password reset, each with tests | no | yes | I wrote nothing: the goal fails step 5, so there is no `.spark/campaigns/multi-4/` yet.  **Kind check.** `migr |
+| 5 | upgrade dependencies, rewrite README, add CI | no | yes | I wrote nothing. The goal is refused at step 5.  **Kind check.** `migration-campaign` has all seven keys: - `n |
+
+**Observed rate: 5 of 5.** Porcelain empty in all five.
+
+### AC-3.1: an existing instance is never overwritten or merged; it is named with its Status and another name is asked for
+
+Each session: a repo holding `.spark/campaigns/taken/campaign.md` (committed) with a different Status; prompt `/campaign taken migration-campaign` (sessions 2 and 4 with a goal sentence added).
+
+| Session | Existing Status | File changed | Named the instance and its Status | Asked for another name | Result |
+|---|---|---|---|---|---|
+| 1 | draft | no | yes | yes | pass |
+| 2 | approved | no | yes | yes ("Please give me another ke..." = another kebab-case name; my script missed the wording) | pass |
+| 3 | running | no | yes | yes | pass |
+| 4 | halted | no | yes | yes | pass |
+| 5 | complete | no | **no** | **no** | **MISS** |
+
+**Observed rate: 4 of 5.** In session 5 (Status `complete`) the reply says "`.spark/campaigns/taken/` doesn't exist, and no other campaigns exist" and treats `taken` as a free name, although the file is there (`git status` shows it unchanged, and it is listed by `find`). That is a false statement about the repo. Nothing was written (porcelain empty, the instance byte-identical), so no instance was lost; it is a miss against "the existing instance and its Status are named". The skill's step 2 asks for exactly that check, but the session ran the existence check without finding the file.
+
+### Summary and what it means
+
+| AC | Observed (development) | Floor 3 of 5 | Note |
+|---|---|---|---|
+| AC-1.4 | 5 of 5 in substance; 2 of 5 strictly | met | 3 sessions open with a false "usable / all seven keys" and self-correct |
+| AC-1.6 | 5 of 5 (d2); 3 of 3 written in d1 | met | no session approved or committed |
+| AC-2.1 | 5 of 5 | met | |
+| AC-2.2 | 5 of 5 | met | |
+| AC-3.1 | 4 of 5 | met | one session claimed the instance did not exist; nothing written |
+
+No AC fell below 3 of 5, so no development fix round was needed. These are n=5 samples of a nondeterministic model on one fixture family; they say the behaviour is likely, not certain, and they are not the shipped figures: `/demo-day` re-measures.
