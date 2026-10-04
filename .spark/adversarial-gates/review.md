@@ -5,23 +5,23 @@
 | **Phase** | Review |
 | **Owner** | Reviewer (`/peer-review`) |
 | **Input** | The diff of `/increment`, `.spark/adversarial-gates/plan.md` |
-| **Status** | `changes-requested` |
-| **Round** | 1 |
+| **Status** | `passed` |
+| **Round** | 2 |
 | **Date** | 2026-10-04 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`).
-- **Verdict:** Round 1: `changes-requested`, no Blocker or Major; Increment 1 correct and honest, refuted-with-finding upheld, E2's `other` stands (accepted by the user). All open Minors and the Nit are now fixed in place, including the two plan Deviations entries (F3, F6); awaiting re-review.
-- **Open:** `0 open` — Blockers: none; Majors: none; F1–F3, F6–F8 fixed, awaiting re-review (see §3)
+- **Verdict:** Round 2: `passed`. All round-1 findings confirmed fixed from source; two new Minors (F9, F10) found and fixed by the reviewer; refuted-with-finding and E2 `other` stand.
+- **Open:** `0 open` — Blockers: none; Majors: none; F1–F10 all `fixed` (see §3)
 - **Binding ruling:** §6 Verdict and the gate checklist below — the only binding location; there is no other round to point to
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
 
 ## 1. Scope
 
-- **Reviewed:** `git diff origin/main...HEAD`, base `fa33f2c` (= current `origin/main` after `git fetch`, so the branch is not stale), 8 commits `fe2025a..8d9aff8`, 6 files: `.spark/adversarial-gates/{spec,plan,evidence}.md`, `README.md`, `ROADMAP.md`, `docs/status.md`. The untracked `.spark/.guard/` is outside the diff (plan R9 routes it to `/go-live`).
-- **Re-derived from source, not cited:** all 10 corpus entries, all 18 raw term counts and the Blocker sweep over the 51 scope files at `fa33f2c` (condition (b): they decide Must AC-1.7, and plan §4 requires it). I also re-ran AC-1.5's negative dry run myself (condition (b)), and swept all 140 `waiv`/`silently` lines (condition (d), see F6).
-- **Tool (`tools/aspark-graph.md`, review slice):** `query staleness` → `stale: false`. `query impact --diff origin/main...HEAD` → `found: true`, `files: []`, and all 6 changed paths under `unknown_files`. That matches plan §2's prediction (Markdown is not indexed), so it means "not indexed", not "nothing at risk". Scope came from `git diff`, and every location below was read by hand.
-- **Lens `library` (review phase):** §1 public surface and §2 semver: no skill, agent, template or frontmatter changed, so no export or command changed (NFR-3). §3 packaging: no dependency, no build. The new `evidence.md` ships via `source: "./"`, which is intended because the README links it. §4 contract clarity: covered by AC-4.x. No lens finding.
+- **Reviewed (round 2):** the fix pass `git diff 8d9aff8..HEAD` (`ce3300a`: `evidence.md`, `plan.md`, `README.md`, `ROADMAP.md`, `docs/status.md`, plus this report), read against the full `git diff origin/main...HEAD`. Base `fa33f2c` = `origin/main` after `git fetch` = merge-base, so the branch is not stale. The untracked `.spark/.guard/` is outside the diff (plan R9 routes it to `/go-live`).
+- **Re-derived from source, not cited (condition (a), verifying fixes):** `right-sizing/evidence.md:980-990` and `qa.md:103-105` for F1; the Blocker sweep over the 51 scope files at `fa33f2c` (literal 3, severity-cell 7) for F2; folder count (18) for F3; the Method section of `evidence.md` diffed against `7416328` (identical except one trailing blank line) for F3/F6; `waiv`/`silently` line count (140) and `lean-rounds/review.md:67` for F6; README/ROADMAP/`docs/status.md` re-read in full for AC-4.1–4.5 (condition (b)).
+- **Tool (`tools/aspark-graph.md`, review slice):** `query staleness` → `stale: false`, `files_checked: 0` (nothing indexed, not "fresh"). `query impact --diff 8d9aff8..HEAD` → `files: []`, all 6 paths under `unknown_files`: Markdown is not indexed, as plan §2 predicts. Scope came from `git diff`; every location below was read by hand.
+- **Lens `library` (review phase):** fix pass touches no skill, agent, template, frontmatter or packaging; no lens finding.
 - **Not reviewed:** T10–T15 (`deferred`, Inc 2). The `/go-live` version bump is not this phase's.
 
 ## 2. Plan Conformance
@@ -29,26 +29,28 @@
 | Task | Implemented as planned? | Note |
 |---|---|---|
 | T1 | ✅ | Branch cut from `origin/main`. Spec + plan are the first commit (`fe2025a`). Base SHA, validate, `*.py` and `wc -l` are quoted at `evidence.md:7-34`. |
-| T2 | ⚠️ | The Method is its own commit `7416328` with 0 entries. Its text is unchanged at every later commit (only a trailing blank line differs). Scope count is wrong (F3). |
-| T3 | ⚠️ | 10/10 quotes match their `file:line` verbatim. All 18 raw counts reproduce exactly. The Blocker sweep count does not reproduce (F2), and the reading shortcut is undocumented (F6). |
-| T4 | ✅ | Refuted-with-finding upheld (ruling in §6). The E2 note's premise is wrong (F1), but the outcome does not change. |
+| T2 | ✅ r2 | The Method is its own commit `7416328` with 0 entries; its text is unchanged at head (only a trailing blank line differs). Folder-count error documented as a deviation (`plan.md:181`), Method not edited. |
+| T3 | ✅ r2 | 10/10 quotes verbatim; 18 raw counts reproduce. Sweep count corrected (`evidence.md:80`, reproduces); reading shortcut documented (`plan.md:180`); sweep pattern in the plan corrected (F9). |
+| T4 | ✅ | Refuted-with-finding upheld. E2 note now matches the source (F1 fixed). |
 | T5 | ✅ | Transcript quoted (`evidence.md:143-166`). Skills diff empty. |
 | T6, T7 | ✅ `N/A — AC-1.7` | Correct per D5. |
 | T8 | ✅ | The three docs state the true state. Re-open condition corrected (F5, fixed). Nit F8. The "Stricter verdict rules" rename is a documented deviation (`plan.md:177`). |
-| T9 | ✅ | All audits reproduce at head. Stale stat corrected (F4, fixed). |
+| T9 | ✅ | All audits reproduce at head (diffs 0, no `*.py`, validate green). File list extended for `review.md` (F10). |
 
 ## 3. Findings
 
 | # | Severity | Location | Finding | Status |
 |---|---|---|---|---|
-| F1 | Minor | `.spark/adversarial-gates/evidence.md:106`, `:131` | **Problem:** the E2 note says "the same forbidden act … is recorded as recurring: B1 and B4 earlier, B5 here" and concludes `/demo-day` step 1 "would reach 3". The source says the opposite: `right-sizing/evidence.md:980` reads "The one leak was not a repeat of B1/B4's failure mode". B1 is mentioning the absent declaration (`:770-771`) and B4 is announcing a silent check (`:820-821`); both are narration, which the current rule rates "Fine, not a violation" or "capped at Minor" (`skills/demo-day/SKILL.md:36-39`). **Why it matters:** it gives the user a false path to qualification on the one call flagged for them. **Fix:** replace the premise with the source's distinction, and state that reclassifying E2 alone leaves step 1 at 1. | fixed |
-| F2 | Minor | `evidence.md:80` | **Problem:** "A `Blocker` sweep (`\| Blocker \|` rows, 11 lines)" does not reproduce. Over the 51 files at `fa33f2c`, `grep -F '\| Blocker \|'` gives **3** lines, `\| *Blocker` gives 6, and any Blocker-cell row gives 7. **Why it matters:** a count in a search that decides a Must AC must be recountable. **Fix:** record the exact pattern and its real count. | fixed |
-| F3 | Minor | `evidence.md:52` (Method, frozen per `:76`) | **Problem:** "51 files across **17** feature folders": the 51 files span **18** folders. **Why it matters:** the Method is frozen, so the error can only be corrected the way the Method itself prescribes. **Fix:** a one-line `plan.md` Deviations entry plus a correction note in §Corpus. Do not edit the Method. | fixed |
-| F4 | Minor | `evidence.md:196` | **Problem:** "observed at branch head … (6 files, 533 insertions, 5 deletions)" was measured at `50e45cd` (T8). Head reads 576/5. **Fixed by reviewer:** the line now names the commit and gives the head figure. | fixed |
-| F5 | Minor | `README.md:127`, `ROADMAP.md:57`, `docs/status.md:266` | **Problem:** dual review was "re-open only on a recorded single-reviewer miss", but spec §6 (`spec.md:117`) says "Re-open only on a new argument or observation, for example a recorded single-reviewer miss". AC-4.4 requires the §6 condition, and the docs had narrowed it. **Fixed by reviewer** in all three docs: "a new argument or observation, such as a recorded single-reviewer miss". | fixed |
-| F6 | Minor | `evidence.md:54` vs `:80`; `plan.md:178` | **Problem:** the Method requires that "Every hit is read in context (±5 lines)". The Corpus says the 142 `waiv`/`silently` hits were "read through their per-file counts and the lines that name an agent act". That is a deviation from the frozen Method, and the plan's T3 deviation note does not mention it. Treatment is also inconsistent: E5 (an act the user later waived) is an entry, while `lean-rounds/review.md:67` F10 (fix-mode amended an `approved` spec, later user-ratified) is absent. **Why it matters:** the Method exists so nobody can quietly loosen the search. **Reviewer check:** all 140 matching lines read; none is a `SKILL.md` gate-step evasion, so T4 is unaffected. **Fix:** add a Deviations line. | fixed |
-| F7 | Minor | `docs/status.md:265` | **Problem:** "The classification of one borderline entry (E2) is open and flagged for review" goes stale once the user takes this round's E2 ruling (§6). **Fix:** reword it to the ruling as accepted. | fixed |
-| F8 | Nit | `ROADMAP.md:44` | **Problem:** the Shipped row omits "whether a row would fire cannot be tested in Core", which T8's DoD lists for each doc. NFR-8 itself is met (`README.md:126`, `docs/status.md:266`). **Fix:** append the clause. | fixed |
+| F1 | Minor | `.spark/adversarial-gates/evidence.md:106`, `:131` | **Problem:** the E2 note says "the same forbidden act … is recorded as recurring: B1 and B4 earlier, B5 here" and concludes `/demo-day` step 1 "would reach 3". The source says the opposite: `right-sizing/evidence.md:980` reads "The one leak was not a repeat of B1/B4's failure mode". B1 is mentioning the absent declaration (`:770-771`) and B4 is announcing a silent check (`:820-821`); both are narration, which the current rule rates "Fine, not a violation" or "capped at Minor" (`skills/demo-day/SKILL.md:36-39`). **Why it matters:** it gives the user a false path to qualification on the one call flagged for them. **Fix:** replace the premise with the source's distinction, and state that reclassifying E2 alone leaves step 1 at 1. | fixed r2 |
+| F2 | Minor | `evidence.md:80` | **Problem:** "A `Blocker` sweep (`\| Blocker \|` rows, 11 lines)" does not reproduce. Over the 51 files at `fa33f2c`, `grep -F '\| Blocker \|'` gives **3** lines, `\| *Blocker` gives 6, and any Blocker-cell row gives 7. **Why it matters:** a count in a search that decides a Must AC must be recountable. **Fix:** record the exact pattern and its real count. | fixed r2 |
+| F3 | Minor | `evidence.md:52` (Method, frozen per `:76`) | **Problem:** "51 files across **17** feature folders": the 51 files span **18** folders. **Why it matters:** the Method is frozen, so the error can only be corrected the way the Method itself prescribes. **Fix:** a one-line `plan.md` Deviations entry plus a correction note in §Corpus. Do not edit the Method. | fixed r2 |
+| F4 | Minor | `evidence.md:196` | **Problem:** "observed at branch head … (6 files, 533 insertions, 5 deletions)" was measured at `50e45cd` (T8). Head reads 576/5. **Fixed by reviewer:** the line now names the commit and gives the head figure. | fixed r1 |
+| F5 | Minor | `README.md:127`, `ROADMAP.md:57`, `docs/status.md:266` | **Problem:** dual review was "re-open only on a recorded single-reviewer miss", but spec §6 (`spec.md:117`) says "Re-open only on a new argument or observation, for example a recorded single-reviewer miss". AC-4.4 requires the §6 condition, and the docs had narrowed it. **Fixed by reviewer** in all three docs: "a new argument or observation, such as a recorded single-reviewer miss". | fixed r1 |
+| F6 | Minor | `evidence.md:54` vs `:80`; `plan.md:178` | **Problem:** the Method requires that "Every hit is read in context (±5 lines)". The Corpus says the 142 `waiv`/`silently` hits were "read through their per-file counts and the lines that name an agent act". That is a deviation from the frozen Method, and the plan's T3 deviation note does not mention it. Treatment is also inconsistent: E5 (an act the user later waived) is an entry, while `lean-rounds/review.md:67` F10 (fix-mode amended an `approved` spec, later user-ratified) is absent. **Why it matters:** the Method exists so nobody can quietly loosen the search. **Reviewer check:** all 140 matching lines read; none is a `SKILL.md` gate-step evasion, so T4 is unaffected. **Fix:** add a Deviations line. | fixed r2 |
+| F7 | Minor | `docs/status.md:265` | **Problem:** "The classification of one borderline entry (E2) is open and flagged for review" goes stale once the user takes this round's E2 ruling (§6). **Fix:** reword it to the ruling as accepted. | fixed r2 |
+| F8 | Nit | `ROADMAP.md:44` | **Problem:** the Shipped row omits "whether a row would fire cannot be tested in Core", which T8's DoD lists for each doc. NFR-8 itself is met (`README.md:126`, `docs/status.md:266`). **Fix:** append the clause. | fixed r2 |
+| F9 | Minor | `.spark/adversarial-gates/plan.md:178` | **Problem:** the T3 Deviations line still said the sweep was "`\| Blocker \|` rows" and "found E2 and E7"; the literal pattern gives 3 rows and misses E2's source row (`right-sizing/qa.md:103`, `\| B5 \| Blocker → confirmed fixed \|`). F2 corrected `evidence.md` only. **Why it matters:** the plan and evidence disagreed on a search that decides Must AC-1.7. **Fixed by reviewer:** the line now names the severity-cell form (7 rows) and says the literal form gives 3 and misses E2. | fixed r2 |
+| F10 | Minor | `.spark/adversarial-gates/evidence.md:196` | **Problem:** the audit "observed at branch head" says `git diff --stat origin/main` "lists only" the 6 §2 paths; since `ce3300a` it also lists this `review.md` (7 files, 676 insertions). **Why it matters:** the audit is cited as current. **Fixed by reviewer:** one clause added naming `review.md` from `ce3300a` on. | fixed r2 |
 
 ## 4. Requirements Traceability
 
@@ -80,7 +82,7 @@
 
 ## 6. Verdict
 
-The increment does what the spec asks, and it does it honestly: no rows shipped, every skill is byte-identical, and the docs say exactly that. I checked the corpus from source rather than taking T3's word. All ten quotes sit verbatim on their cited lines, all eighteen raw term counts reproduce exactly, the Method was committed alone before any entry and never edited afterwards, and my own sweep of the hits T3 skimmed found no missed gate evasion. **Ruling on E2:** `other` is defensible under the committed rules. The agent breached a rule but still stopped at the gate, so it did not "skip, bypass or satisfy by assertion" the gate; Method rule 1 needs that, and the tie-break picks the non-counting class. One caveat: `other` is defined as an over-claim and E2 is a rule breach, so it lands there only as the residual class. More importantly, no classification of E2 changes T4. On its own it would put step 1 at 1, and the B1/B4 counterfactual rests on a premise the source explicitly denies (F1). Calling B1/B4 gate evasions would itself be rounding up. **Refuted-with-finding stands.** I fixed two issues myself: a narrowed re-open condition in all three public docs (F5) and a stale audit figure (F4). Status is `changes-requested`, not `passed`, for one reason: the gate's "all plan deviations documented" box is false. F6 (hits not read per the frozen Method) and F3 (the folder count can only be corrected via a deviation) each need a one-line plan Deviations entry. F1, F2 and F7 are cheap corrections to the same artifact and should land in the same pass. None of the open items is a Blocker or a Major, and none changes the outcome. The E2 ruling is mine as reviewer; the user may overrule it.
+Round 2 passes. I checked every round-1 fix from the source, not from the fix notes. The E2 note and the T4 bullet now quote `right-sizing/evidence.md:980` correctly, and no file in the diff still says "would reach 3" or treats B1/B4 as a recurrence. The Blocker sweep figures reproduce exactly: 3 literal rows, 7 severity-cell rows, and the 7-row form contains both E7 (`situational-lenses/review.md:55`) and E2's source row (`right-sizing/qa.md:103`). Both new Deviations entries are accurate: 18 folders, 142 hits on 140 lines, and the E5 vs `lean-rounds` F10 inconsistency recorded without being repaired. The frozen Method text is unchanged since `7416328`. The doc edits (F5, F7, F8) add no unshipped claim and leave nothing stale, so AC-4.1–4.5 still hold. I found two more Minor drifts and fixed both myself: the plan still described the sweep by its literal pattern (F9), and the head audit's file list did not include this report (F10). No Blocker or Major is open, and no waiver is needed. Refuted-with-finding and the user-accepted E2 ruling (`other`) stand.
 
 ---
 
@@ -92,7 +94,7 @@ re-review, edit this same checklist in place — never duplicate it as a second 
 - [x] No open Blocker findings
 - [x] No open Major findings (or explicitly waived by the user, with reason recorded here)
 - [x] Every Must AC traces to implementing code; no constitution non-negotiable violated
-- [ ] All plan deviations documented and accepted — F6 (reading shortcut) and F3 (frozen-Method count) are undocumented
-- [x] Test suite runs green — no suite (constitution §4); `claude plugin validate .` passes after reviewer edits
-- [x] Line budget respected: Ist 98 / Soll ~150 (excluding HTML comments) — self-reported, no linter checks this
-- [ ] Status set to `passed`
+- [x] All plan deviations documented and accepted — F6 and F3 at `plan.md:180-181`, sweep pattern corrected at `plan.md:178` (F9); the user routed them to fix-mode at round 1
+- [x] Test suite runs green — no suite (constitution §4); `claude plugin validate .` passes after round-2 reviewer edits
+- [x] Line budget respected: Ist 100 / Soll ~150 (excluding HTML comments) — self-reported, no linter checks this
+- [x] Status set to `passed`

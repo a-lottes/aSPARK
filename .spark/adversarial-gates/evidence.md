@@ -193,7 +193,7 @@ Which one do you want? I won't invoke `/charter` myself.
 
 **Audits, observed at branch head vs `origin/main` (`fa33f2c`):**
 
-- `git diff --stat origin/main` lists only: `.spark/adversarial-gates/{evidence,plan,spec}.md`, `README.md`, `ROADMAP.md`, `docs/status.md` — all §2 Inc 1 paths. Measured at T8's commit `50e45cd` (6 files, 533 insertions, 5 deletions), before this section was written; the same 6 files at `8d9aff8` read 576 insertions, 5 deletions (corrected at `/peer-review` round 1, F4).
+- `git diff --stat origin/main` lists only: `.spark/adversarial-gates/{evidence,plan,spec}.md`, `README.md`, `ROADMAP.md`, `docs/status.md` — all §2 Inc 1 paths. Measured at T8's commit `50e45cd` (6 files, 533 insertions, 5 deletions), before this section was written; the same 6 files at `8d9aff8` read 576 insertions, 5 deletions (corrected at `/peer-review` round 1, F4). From `ce3300a` on, the list also holds `.spark/adversarial-gates/review.md`, the review report (added at `/peer-review` round 2, F10).
 - Every skill, including every skill outside T4's list (T4's list is empty): `git diff origin/main -- skills` is empty.
 - `git diff origin/main -- skills agents templates lenses .spark/constitution.md | wc -l` → `0`.
 - `git diff origin/main -- .claude-plugin | wc -l` → `0` (no version bump; that is the Release Manager's at `/go-live`).
