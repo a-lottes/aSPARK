@@ -43,6 +43,10 @@ phase it declares in `phases` by adding one file — and only that file.
 
 ## Instantiating a campaign
 
+**Start with `/campaign <name> [kind]`.** It reads the kinds and the template from the plugin itself (no path to name), asks only what the kind leaves open and writes one draft: Status `draft`, approval blank, veto record blank, no commit. It is instructed to refuse an undecidable goal, several goals or a set of stories, a goal that fits no kind, an existing name, a malformed kind and a name that is not kebab-case, and never to approve, run or commit. The hand-start below stays valid.
+
+**Best effort, not a guarantee:** these checks are prompt material. Measured in development, five fresh sessions each (`/demo-day` re-measures): a kind with a key removed was reported malformed 5 of 5 (2 of 5 without a false "usable" opening sentence); the draft state held 5 of 5; an undecidable goal was refused 5 of 5; several goals 5 of 5; an existing instance was named 4 of 5 (one session claimed it did not exist; nothing was overwritten). A first draft creates `.spark/campaigns/`, which gives `aspark-graph` one phantom node and the `/spark` behaviour below.
+
 1. Outside a skill the agent cannot resolve `${CLAUDE_PLUGIN_ROOT}`: **name the plugin folder in your prompt** — the folder of the installed aSPARK plugin, the one that contains `campaigns/` and `templates/` (under `~/.claude/plugins/`). If the agent cannot find it, it asks you and never invents a structure. Then copy `${CLAUDE_PLUGIN_ROOT}/templates/campaign.md` to
    **`.spark/campaigns/<campaign-name>/campaign.md`**, then append the chosen kind's body (below its frontmatter) as §8 "Kind-specific", with the slice list and parity check filled in under it; the kind's stop rules replace the `SR-5…` placeholder row in §4. The copy is **frozen at approval**: the user
    approves exactly the text that governs the run, and a later plugin update cannot change it.
@@ -63,7 +67,7 @@ Naming rules, because [`aspark-graph`](../tools/README.md) reads `.spark/`:
   for example "run the campaign at `.spark/campaigns/<name>/campaign.md`". Nothing switches a
   campaign on by itself and no ceremony proposes one yet.
 - **Silence:** a repo without `.spark/campaigns/` sees no change in any ceremony — no notice,
-  no question, no mention. The ten ceremonies have no campaign logic yet; routing and the
+  no question, no mention. The loop ceremonies have no campaign logic yet; routing and the
   standing rule for ordinary feature loops arrive in a later increment. Observed meanwhile, in single non-deterministic runs (not designed): in a repo
   whose only `.spark/` subdirectory is `campaigns`, `/spark` reports there is no feature to resume and describes the halted campaign, and `/next-steps` lists it; `/spark campaigns` asks for another name.
 - **Hand-run:** the user names the instance; the agent reads it, refuses without recorded goal

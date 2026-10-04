@@ -652,3 +652,19 @@ Each session: a repo holding `.spark/campaigns/taken/campaign.md` (committed) wi
 | AC-3.1 | 4 of 5 | met | one session claimed the instance did not exist; nothing written |
 
 No AC fell below 3 of 5, so no development fix round was needed. These are n=5 samples of a nondeterministic model on one fixture family; they say the behaviour is likely, not certain, and they are not the shipped figures: `/demo-day` re-measures.
+
+
+## T10 — Docs in step (done)
+
+**Files edited and added lines (`git diff --numstat`, working tree vs the T9 commit):** `README.md` 2 (+1 removed), `campaigns/README.md` 5 (+1), `docs/status.md` 2 (+1), `docs/repo-layout.md` 1 (+1), `docs/family.md` 1 (+1): **11 added lines in total** (cap 25, NFR-1). `git diff origin/main -- ROADMAP.md CONTRIBUTING.md` is empty (both unchanged, as planned; `CONTRIBUTING.md:138` stays true because kinds are found by rule).
+
+**What they now say.**
+- `README.md` §Campaigns: `/campaign <name> [kind]` is the start path and writes a draft; the old hand-start still works; *running* is still hand-run by naming the instance; "The loop ceremonies" (not "ten") have no campaign logic; routing and the standing rule are unbuilt; one kind exists so the command serves migrations only; the need is anticipated, not observed (existing line above it).
+- `campaigns/README.md` "Instantiating a campaign": a start paragraph naming the command, what it writes and what it is instructed to refuse; a best-effort paragraph with the development rates (malformed kind 5 of 5, 2 of 5 without a false opening sentence; draft state 5 of 5; undecidable goal 5 of 5; several goals 5 of 5; existing instance 4 of 5) labelled development, with the phantom-node side effect (A7); and `:66` reworded to "The loop ceremonies".
+- `docs/status.md`: the increment-1 row no longer says "hand-started only" or that a first-time user must name the plugin folder, and says "The loop ceremonies"; one new row for the start command with scope, evidence link, rates and the limits (including that the unexpanded-token branch is not verified live).
+- `docs/repo-layout.md:9`: "Experimental; `/campaign` writes a draft, running is hand-run."
+- `docs/family.md:16`: "10 skills" → "11 skills".
+
+**Wording check (AC, plan T10).** Every sentence about the command's behaviour is phrased as an instruction ("is instructed never to approve, run or commit", "is instructed to refuse"); the added lines contain `guarantee` only as "never a guarantee". An earlier draft said "It never approves, runs or commits"; that read as a guarantee and was reworded before commit.
+
+**Not claimed anywhere:** routing, the standing rule, project-local kinds, a second kind, effectiveness, outside proof. The rates are stated as the development measurement; `/demo-day` re-measures and fix-mode updates the line if QA's figures differ (precedent: campaign-core D-10).

@@ -13,7 +13,7 @@ two of the four siblings do not touch the loop at all today.
 
 | Repo | What it is | Hooks into Core today? | How you get it |
 |---|---|---|---|
-| **aSPARK** ([Core](https://github.com/a-lottes/aSPARK)) | The loop: 10 skills, 7 agents, 9 lenses, 6 templates | — it *is* Core | `/plugin install aspark@aspark` |
+| **aSPARK** ([Core](https://github.com/a-lottes/aSPARK)) | The loop: 11 skills, 7 agents, 9 lenses, 6 templates | — it *is* Core | `/plugin install aspark@aspark` |
 | [**aspark-guard**](https://github.com/a-lottes/aSPARK-guard) `v0.2.0` | Denies a `.spark/` write that violates a gate precondition; records every write with its hash; a local activity log of Claude sessions and subagent runs | **Yes** — as a second plugin from the same marketplace | `/plugin install aspark-guard@aspark` |
 | [**aspark-graph**](https://github.com/a-lottes/aSPARK-graph) `v0.7.1` | Deterministic graph over your `.spark/` artifacts and source code | **Yes** — `/sprint-plan`, `/peer-review` and `/demo-day` probe for it and pass it by path | `pip install aspark-graph` (PyPI) |
 | [**aspark-insights**](https://github.com/a-lottes/aSPARK-insights) `v0.12.0` | Metrics over the graph's facts: traceability coverage, an offline HTML report, a release board, MCP queries | **No** — standalone; it reads the graph, not Core | source only, not on PyPI |
