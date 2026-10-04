@@ -668,3 +668,69 @@ No AC fell below 3 of 5, so no development fix round was needed. These are n=5 s
 **Wording check (AC, plan T10).** Every sentence about the command's behaviour is phrased as an instruction ("is instructed never to approve, run or commit", "is instructed to refuse"); the added lines contain `guarantee` only as "never a guarantee". An earlier draft said "It never approves, runs or commits"; that read as a guarantee and was reworded before commit.
 
 **Not claimed anywhere:** routing, the standing rule, project-local kinds, a second kind, effectiveness, outside proof. The rates are stated as the development measurement; `/demo-day` re-measures and fix-mode updates the line if QA's figures differ (precedent: campaign-core D-10).
+
+
+## T11 — Post-change negative re-run and audits (done)
+
+**Re-run of T1(a)** on the working tree (now with `skills/campaign/` and the doc edits), fresh copies of fixture A, same prompts, `--plugin-dir <working tree> --max-turns 10 < /dev/null`.
+
+1. `/aspark:spark`:
+
+```
+There's no feature to resume. `.spark/` has a constitution (`constitution.md`), plus `.guard` and `notes`, but no feature directory with a spec, plan, or release in progress.
+
+You can go one of two ways:
+
+1. **Bring your own idea.** Run `/spark <your idea>` and I'll start a fresh loop at Specify (`/story-time`).
+2. **Have the Product Owner propose one.** `/next-steps` looks at the project's current state and suggests a concrete next feature, which you can then hand to `/spark`.
+
+Which would you like?
+```
+
+2. `/aspark:next-steps` (first 12 lines):
+
+```
+**Recommendation: finish `notes` (US-1, "add a note") by planning and building it.**
+
+- **Gap:** The product doesn't exist yet. The repo has one commit, and `src/log.py` is only `import logging`. There's no CLI, storage or tests, and the README promises a CLI that stores notes. The spec is approved and has one Must story. Nothing is planned or built, so there are no open review or QA findings.
+- **Why now:** The approved spec is the only validated demand on record, and it's the smallest slice that gives the product any value. Any other feature would sit on a product that can't store a note. It also fits "Small and honest" and the standard-library-only constraint.
+- **Size:** S. It needs a plan, one command, a persistence mechanism and a test for AC-1.1.
+- **Displaces:** Nothing. No other work is in flight.
+
+**Caveats for planning:**
+1. **AC-1.1 is thin.** It doesn't say where notes are stored or how the user can tell it worked. It doesn't cover empty text or whether a second add appends or overwrites. Without a way to read notes back, "stores it" can't really be verified. The spec is approved, so only you can approve changes to it.
+2. **No reader command is implied.** I wouldn't add `notes list` unless you ask for it.
+3. **Don't build logging unless a story needs it.** The README mentions the logger, but nothing in the spec requires it.
+
+[... 11 further lines omitted from this file; the cut is mine]
+```
+
+3. `plan how we migrate the logger module to structlog` (first 14 lines of the final reply; run with stream-json so tool calls show: `Bash`, `Bash`, `Read` x4, no `Skill` call):
+
+```
+# Plan: migrate `src/log.py` to structlog
+
+## What's there today
+- `src/log.py` is one line: `import logging`. It has no handlers, formatters, or helpers.
+- Nothing else in the repo imports it. The only other source is the README and the `.spark` notes.
+- There are no tests, no dependency manifest, and no call sites to port.
+
+This is closer to a greenfield setup than a migration. There is no behavior to preserve.
+
+## Blocker: the constitution forbids structlog
+`.spark/constitution.md` §3 says **"Python 3, standard library only."** structlog is third-party, so the migration would violate that rule. You need to pick one of these before any code changes:
+
+1. **Amend the constitution** with `/charter` to allow structlog as a dependency. This is the honest route if you want structlog. It also forces the repo to add a `pyproject.toml` or `requirements.txt`, which doesn't exist yet.
+2. **Stay on stdlib** and get most of the benefit with `logging` plus a small JSON formatter and a `LoggerAdapter` for bound context. It's less ergonomic and has no processors pipeline.
+```
+
+**Comparison with T1 (routing and questions, not bytes):** identical. `/spark`: no feature to resume, offers "bring your own idea" or `/next-steps`, asks one question; the only difference is that the reply now mentions the `.guard` directory, which `aspark-guard` wrote into the fixture's `.spark/` during these sessions. `/next-steps`: recommends finishing `notes` (plan and build US-1), the same recommendation as T1. The unrelated prompt: an ordinary plan, the same constitution conflict (stdlib only vs structlog) found, no campaign, no skill call. `grep -c -i campaign` over the first two outputs: `0`, `0`; over the third: no campaign in the reply. Porcelain of all three fixtures, apart from `.spark/.guard/`: empty. **The skill is not invoked in any of the three.**
+
+**Audits, observed at the working tree vs `origin/main` (`460d6fc`):**
+
+- `claude plugin validate .` → `✔ Validation passed with warnings` (the two existing warnings: `autoUpdate` in the marketplace manifest, root `CLAUDE.md`).
+- `git ls-files '*.py'` → `0`.
+- `git diff --stat origin/main` lists: `.spark/campaign-start/{evidence,plan,spec}.md`, `README.md` (3), `campaigns/README.md` (6), `docs/family.md` (2), `docs/repo-layout.md` (2), `docs/status.md` (3), `skills/campaign/SKILL.md` (67 new). 9 files; only §2 paths plus `.spark/campaign-start/`.
+- 0 diff lines in each existing skill (`charter demo-day go-live increment look-and-feel next-steps peer-review spark sprint-plan story-time`), `agents/`, `templates/`, `campaigns/migration-campaign.md`, `.claude-plugin/`, `.spark/constitution.md`, `ROADMAP.md`, `CONTRIBUTING.md`.
+- `git diff origin/main -U0 -- skills | grep -c '^-name:'` → `0`: no command or frontmatter `name` changed; `ls skills | wc -l` → `11` (one added, none removed or renamed).
+- **AC-4.3:** `plugin.json` still reads `"version": "0.13.1"`; the Release Manager bumps it to `0.14.0` at `/go-live`. Not done by this task.
