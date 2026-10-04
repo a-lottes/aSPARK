@@ -164,3 +164,40 @@ I haven't run `/charter` or written anything to `.spark/`.
 ```
 
 Routing: no constitution → recommends `/charter` first, offers 3 options (charter / skip / own idea), writes nothing. Compare at T9 by routing and questions asked, not bytes.
+
+## Negative re-run and audits (T9)
+
+**Re-run of T5** on the branch head: same fixture `fx2` (unchanged, `git status --short` empty), `claude -p "/aspark:next-steps" --plugin-dir <this branch's working tree> --max-turns 10`, exit 0. Output, verbatim:
+
+```
+This project has no `.spark/constitution.md`, so I'm recommending `/charter` before I propose anything.
+
+**What I found**
+- **Git:** one commit, `init`.
+- **Code:** a README ("Notes app: a tiny CLI that stores notes") and nothing else. There is no implementation yet.
+- **`.spark/notes/spec.md`:** status `approved`, with one story, US-1 (Must): `notes add "x"` stores a note. Its only acceptance criterion, AC-1.1, is unchecked.
+- **No plan, review or QA artifacts.** The `notes` feature is approved but unplanned and unbuilt, so it's in flight rather than stalled.
+
+**Why `/charter` first**
+Without a constitution, the Product Owner has no standing goals to weigh a proposal against. That includes the stack, the quality bar and what the product is for. A proposal made now would mostly be a guess.
+
+**Options**
+1. **Run `/charter`** (recommended). It's quick, and every later phase then has ground rules.
+2. **Skip the charter and continue.** I'd hand the Product Owner this thin brief. It would most likely recommend finishing `notes` (`/sprint-plan` on the approved spec) before starting anything new. It might also ask you what the CLI is for.
+3. **Bring your own idea** and go straight to `/story-time`.
+
+Which one do you want? I won't invoke `/charter` myself.
+```
+
+**Comparison (routing and questions asked, not bytes):** identical. Both runs found no constitution, recommended `/charter` first, asked one question with three options (charter / skip and continue / own idea), and wrote nothing. Neither mentions rebuttals, rows or any gate-hardening item. Wording differs, as expected of nondeterministic runs. This is one run each, so it is a recorded check, not a proof (AC-1.5).
+
+**Audits, observed at branch head vs `origin/main` (`fa33f2c`):**
+
+- `git diff --stat origin/main` lists only: `.spark/adversarial-gates/{evidence,plan,spec}.md`, `README.md`, `ROADMAP.md`, `docs/status.md` (6 files, 533 insertions, 5 deletions) — all §2 Inc 1 paths.
+- Every skill, including every skill outside T4's list (T4's list is empty): `git diff origin/main -- skills` is empty.
+- `git diff origin/main -- skills agents templates lenses .spark/constitution.md | wc -l` → `0`.
+- `git diff origin/main -- .claude-plugin | wc -l` → `0` (no version bump; that is the Release Manager's at `/go-live`).
+- `git diff origin/main -U0 -- skills | grep -c '^[+-]name:'` → `0`; no slash command, frontmatter `name` or ID changed.
+- `claude plugin validate .` → `✔ Validation passed with warnings` (the one warning is the same `CLAUDE.md` at the plugin root as in T1).
+- `git ls-files '*.py' | wc -l` → `0`.
+- `grep -n -i "anti-generosity"` over README, ROADMAP, `docs/status.md` → no hits. The planned standard appears there as "Stricter verdict rules for review and QA", `planned, not built`.
