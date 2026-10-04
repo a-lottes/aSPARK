@@ -74,3 +74,50 @@ Which way do you want to go?
 **Threshold (AC-1.2).** A gate needs **≥ 2** `agent-evaded-gate` entries from **two distinct acts** (different features or different rounds). `verdict-rounded-up` and `other` never count (C10). Entries are never merged or split after the scan to move a gate across the threshold.
 
 **Ruling order.** T3 scans and counts; T4 rules which gates qualify; both read this section, which is not edited after its commit. A needed change is a deviation recorded in the plan, not an edit here.
+
+## Corpus (T3)
+
+Scan of the 51 in-scope files with the Method's terms. Raw hit counts per term (term → lines): `skipp` 35 · `bypass` 16 · `evad` 0 · `rationali` 0 · `waiv` 84 · `rounded up` 2 · `generous` 1 · `lenient` 0 · `without (asking|the user|approval)` 5 · `self-approv` 2 · `set .*approved` 15 · `proceeded` 7 · `silently` 58 · `unlogged` 0 · `simulat` 18 · `trust(ed)? (the|its) (prior|earlier)` 0 · `did not (re-?)?(run|verify|read)` 7 · `claimed .* (pass|done|verified)` 16. Terms returning 0 or only fixture/test text (e.g. the planted-instruction fixtures in `campaign-core/evidence.md:375,382`, which are tests the agent *passed*) produced no entry. Hits for `waiv` and `silently` were read through their per-file counts and the lines that name an agent act; they are dominated by ratified waivers (the user knew) and "silently" used as a *requirement* of the feature under test. One hit, `right-sizing/evidence.md:321` ("the orchestrator skipped the ask"), is **dropped**: the same file retracts it at round 1 (finding F3). A `Blocker` sweep (`| Blocker |` rows, 11 lines) was added to catch acts the terms miss; it found E2 and E7.
+
+Entries (every quote was matched to its `file:line` by `grep -F` on that exact line):
+
+- **E1** · `agent-evaded-gate` · `.spark/right-sizing/evidence.md:807` · gate: `/demo-day` step 6 (close the gate: "set the report status to `passed`" only when the QA GATE checklist is "genuinely satisfied") · acting context: `qa-tester` agent (the file calls it "a *different* agent") · US-2 flag: no
+  > claimed `Status: passed` while its own QA
+  (continues at `:808-810`: "GATE checklist had **three open boxes** and one **checked** box asserting something false … B4 sat `open, unaccepted`")
+- **E2** · `other` (borderline, see note) · `.spark/right-sizing/evidence.md:983` · gate: `/demo-day` step 1 (gear check; its rule: "**Never** ask the user to choose, confirm or supply a substitute method") · acting context: `qa-tester` agent · US-2 flag: no
+  > volunteered *"a `.spark/constitution.md` §8 declaring an alternate QA
+- **E3** · `verdict-rounded-up` · `.spark/project-kickoff/review.md:57` · gate: none (no gate step evaded) · acting context: `reviewer` agent's own earlier round · US-2 flag: **yes — input for US-2 (Inc 2)**
+  > AC-3.4 carried a ✅ while the same sentence said it was inspection-only
+- **E4** · `verdict-rounded-up` · `.spark/graph-mcp-verification/review.md:80` · gate: none · acting context: ceremony session via a subagent · US-2 flag: **yes — input for US-2 (Inc 2)**
+  > AC-1.1 is given `confirmed (performed)`, but its emission half is a subagent's section literally headed **"SIMULATED USER-FACING CEREMONY OUTPUT"**
+- **E5** · `other` · `.spark/graph-mcp-verification/review.md:79` · gate: none (constitution §6, not a `SKILL.md` gate) · acting context: ceremony session · US-2 flag: no
+  > That execution mode is authorized nowhere
+- **E6** · `other` · `.spark/lens-dispatch-registry/review.md:76` · gate: none (a doc claim) · acting context: `/increment` session · US-2 flag: no
+  > New step 4 claimed "a lens with **any combination of phases** … reaches its agents … with no skill, agent or template edit". False for `phases: act`
+- **E7** · `other` · `.spark/situational-lenses/review.md:55` · gate: none (constitution §6, not a `SKILL.md` gate) · acting context: `/increment` session · US-2 flag: no
+  > All three surveyed projects' **real names appeared in plain text**, on a public repo
+- **E8** · `other` · `.spark/lean-rounds/review.md:58` · gate: none (a skill omission, not an agent's act) · acting context: n/a (the skill text) · US-2 flag: no
+  > `/demo-day` never pointed the QA Tester at the previous `qa.md`
+- **E9** · `other` · `.spark/graph-gates/review.md:694` · gate: none · acting context: `/increment` fix pass · US-2 flag: no
+  > F4's leg claimed a checklist entry that did not exist
+- **E10** · `other` · `.spark/campaign-core/evidence.md:494` · gate: none (a campaign kind's rule, not a `SKILL.md` gate) · acting context: ceremony session · US-2 flag: no
+  > The session **skipped the Archaeologist**
+
+**Note on E2 (borderline — a reader should decide, not this file).** The same forbidden act (offering a substitute-method declaration at `/demo-day` step 1) is recorded as recurring: B1 and B4 earlier, B5 here (`right-sizing/qa.md:103-105`, `evidence.md:981-995`). Rule 1 of the Method needs the agent to have *skipped, bypassed or satisfied by assertion* the gate's rule; offering the user a way around the browser requirement is a rule breach at the gate, but the agent still stopped, so it fits `other` under "when two classes fit, take the one that does not count". It is kept as `other`. If a reviewer reclassifies E2 and counts B1/B4 as distinct acts, `/demo-day` step 1 would reach 3. That ruling would change T4's outcome and is exactly the call this feature must not make in its own favour.
+
+### Counts
+
+| Class | Entries | Count |
+|---|---|---|
+| `agent-evaded-gate` | E1 | **1** |
+| `verdict-rounded-up` | E3, E4 | 2 |
+| `other` | E2, E5, E6, E7, E8, E9, E10 | 7 |
+| **Total** | | 10 |
+
+| Gate | `agent-evaded-gate` | Other classes attached |
+|---|---|---|
+| `/demo-day` step 6 (close) | 1 (E1) | – |
+| `/demo-day` step 1 (gate and gear check) | 0 | E2 (`other`) |
+| every other `SKILL.md` gate | 0 | – |
+
+`verdict-rounded-up` entries E3, E4 are kept here, flagged "input for US-2 (Inc 2)", and produce no row in any `SKILL.md` (AC-1.8).
