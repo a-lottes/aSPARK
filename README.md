@@ -124,7 +124,7 @@ Each ceremony can also be run on its own. The artifacts on disk *are* the state,
 The gates are prompt-enforced: an agent can reason its way past one, and Core, being Markdown with no runtime, cannot stop it. Code-level enforcement is the optional sibling [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)'s concern.
 - Rebuttal rows were to go only where an evasion was actually recorded. A search of this repo's own 51 review, QA and evidence files ([`evidence.md`](.spark/adversarial-gates/evidence.md)) found one recorded gate evasion where the bar was two at the same gate, so **no rows shipped at any gate**; every skill is unchanged.
 - The grounding is in-repo trails, not field reports. The search was fixed-term, not a census. Effectiveness is unmeasured, and whether a row would fire cannot be tested in Core.
-- Stricter verdict rules for `/peer-review` and `/demo-day` are planned and not built; they change nothing today. A second, independent reviewer is not built (re-open only on a recorded single-reviewer miss).
+- Stricter verdict rules for `/peer-review` and `/demo-day` are planned and not built; they change nothing today. A second, independent reviewer is not built (re-open only on a new argument or observation, such as a recorded single-reviewer miss).
 
 ### Campaigns: one measurable goal instead of one story (experimental)
 

@@ -41,7 +41,7 @@ is worth more than a patch. Reports where it went badly are worth the most.
 | **No executable code, the method published instead** | `scripts/spark-metrics.py` is gone along with the directory, closing the constitution's own exception for it. `docs/metrics.md` now prints four `python3` commands over the committed machine reports, each with its observed output — the same figures README publishes stay checkable by a stranger holding nothing but this repository, though they can no longer be refreshed from it. Built as the `metrics-script-removal` loop on this repo itself. |
 | **`/charter` as the single start-here, plus a Project Context (constitution §9)** | `/spark` and `/next-steps` now route a constitution-less project to `/charter` first, instead of pointing at each other; `/charter` runs a bounded greenfield kickoff interview or a brownfield discovery pass and writes one shared, evidenced `§9 Project Context` the Product Owner and Engineering Manager cite instead of each re-deriving the system. Each path proven once, on a different venue — greenfield on an empty scratch repo, brownfield on this repo's own constitution. Neither on an external project. Built as the `project-kickoff` loop on this repo itself. |
 | **Ticket import and status write-back** | `/story-time <issue-number>` seeds the spec from a GitHub issue; `/go-live` posts one status comment to it when a release reaches a terminal status, only where the constitution's `Tracker write-back` field opts in. One direction only, GitHub Issues only. Read half proven on this repo's own issue #19; write half proven in a disposable scratch repo, including that a second release pass does not post again. The failure-skip and `Ticket: none` branches are not proven live, and neither half has run on an external project — [`docs/status.md`](docs/status.md) has the detail. Built as the `ticket-import` loop on this repo itself. |
-| **Gate-evasion search, no rebuttal rows** | The repo's 51 review, QA and evidence files were searched under rules committed before the scan ([`.spark/adversarial-gates/evidence.md`](.spark/adversarial-gates/evidence.md)); it found 1 recorded gate evasion where the bar was 2 at the same gate, so **no rebuttal rows shipped** and no skill changed. In-repo trails, not field reports; effectiveness unmeasured; gates remain prompt-enforced. |
+| **Gate-evasion search, no rebuttal rows** | The repo's 51 review, QA and evidence files were searched under rules committed before the scan ([`.spark/adversarial-gates/evidence.md`](.spark/adversarial-gates/evidence.md)); it found 1 recorded gate evasion where the bar was 2 at the same gate, so **no rebuttal rows shipped** and no skill changed. In-repo trails, not field reports; effectiveness unmeasured, and whether a row would fire cannot be tested in Core; gates remain prompt-enforced. |
 
 ---
 
@@ -54,7 +54,7 @@ finding without a cited reason. It would change verdict behaviour for installed 
 own release and a README statement when it ships. Its grounding is in-repo trails only and its effect
 would be unmeasured. The gates stay prompt-enforced; code enforcement belongs to
 [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard). A second, independent reviewer is not built —
-re-open only on a recorded single-reviewer miss.
+re-open only on a new argument or observation, such as a recorded single-reviewer miss.
 
 **An observability lens** · [#15](https://github.com/a-lottes/aSPARK/issues/15)
 Between the `api` lens (the contract) and the `security` lens (what must never be logged) sits a concern
