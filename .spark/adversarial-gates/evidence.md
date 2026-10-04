@@ -121,3 +121,13 @@ Entries (every quote was matched to its `file:line` by `grep -F` on that exact l
 | every other `SKILL.md` gate | 0 | – |
 
 `verdict-rounded-up` entries E3, E4 are kept here, flagged "input for US-2 (Inc 2)", and produce no row in any `SKILL.md` (AC-1.8).
+
+## Qualification ruling (T4, the D5 fork)
+
+**Gates with ≥ 2 `agent-evaded-gate` entries from two distinct acts: none.** The best gate, `/demo-day` step 6, has 1 (E1). Per D5 and AC-1.7 the outcome is **refuted-with-finding** (`CLAUDE.md`): the assumption (spec A2) that the trails hold two or more recorded gate evasions at any one gate **did not hold in this search**.
+
+- **Finding (verbatim basis):** `.spark/right-sizing/evidence.md:807` ("claimed `Status: passed` while its own QA") is the only entry that fits the stricter class. Of the 10 entries, 7 are `other` and 2 are `verdict-rounded-up`; the trails mostly record reviewers catching defects in *documents and verdicts*, not agents walking past a gate.
+- **Consequence:** no rebuttal table ships. T6 and T7 are `N/A — AC-1.7` in the plan. T8 states "none, refuted-with-finding" in the docs. `skills/*/SKILL.md` stays byte-identical, so every skill has an empty diff (AC-1.2, NFR-1).
+- **Open call, flagged for `/peer-review`:** E2's classification (see the Corpus note). If it is reclassified and B1/B4 are counted as distinct acts, `/demo-day` step 1 qualifies and D3 would place its row in the delegation step, because the acting context is the `qa-tester` agent. That would reopen T6/T7 through a plan revision, not an inline edit. The rules stay as committed: this file does not move E2 to reach a threshold.
+- **Not claimed:** that the evasions do not happen. This is a search with fixed terms over 51 files, not a census (Method). Absence here is not evidence of absence.
+- **Uncovered ceremony for T5/T9:** `/next-steps`, on a scratch mid-loop feature.
