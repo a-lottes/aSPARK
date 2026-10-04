@@ -34,10 +34,11 @@ iterations; a story or a wish is not one.
    stop, name the cause, write nothing, invent no structure or tracker.
 4. **Kind.** A kind is every file in `campaigns/` except `README.md`, judged by its
    frontmatter; no kind names live here. All seven keys (`name`, `trigger`,
-   `goal-kind`, `roles`, `stop-rules`, `budget-defaults`, `phases`) must be present:
-   a missing key means the kind is malformed, so name the key and do not use it. A
-   named kind with no file: list the kinds that exist, write nothing. One kind and
-   none named: propose it and wait for the user's yes.
+   `goal-kind`, `roles`, `stop-rules`, `budget-defaults`, `phases`) must be present.
+   Before you call a kind usable, quote each key's line from the file; a key with no
+   line means the kind is malformed, so name the key and do not use it. A named kind
+   with no file: list the kinds that exist, write nothing. One kind and none named:
+   propose it and wait for the user's yes.
 5. **Goal at the door.** One goal only: several goals or a set of stories go to
    `/story-time`. It must be decidable, a named Observable (a command and its
    expected output, or a file state); "looks good" is rejected, naming what is

@@ -165,3 +165,229 @@ Write {"file_path": ".../scratchpad/cs/c2/.spark/campaigns/skel/campaign.md", ..
 
 **Outcome:** no stop condition fired (a, b-as-used, d, e hold; c holds as observed). No user ruling is needed on D2's fallback or on the guard.
 
+
+
+## T3 — The door (steps 1–2), one live session per case
+
+All six ran against the full 66-line SKILL.md (steps 1–8 were written in one pass; see the plan's Deviations), each in a fresh scratch copy of fixture A (a repo *with* a constitution) except 3.6 (a bare repo). Sessions were read with stream-json, so tool calls are shown.
+
+- **3.1 no argument (AC-1.8)** — prompt `/campaign`
+  - tool calls: none
+  - porcelain after: (empty)
+  - reply:
+    > Usage: `/campaign <name> [kind]`
+    > 
+    > I need a campaign name to start. It must be kebab-case, for example `migrate-auth-module`, and it can't be `campaigns`. The kind is optional. If you leave it out, I'll list the kinds that exist and help you pick one.
+    > 
+    > A campaign is one measurable goal run in iterations. It needs a decidable Observable, such as a command and its expected output, or a file state. What name do you want to use?
+
+- **3.2 reserved name (AC-3.2)** — prompt `/campaign campaigns migration-campaign`
+  - tool calls: none
+  - porcelain after: (empty)
+  - reply (first 500 chars):
+    > I didn't write anything. `campaigns` can't be a campaign name because it's the name of the directory that holds all campaigns (`.spark/campaigns/`). A campaign called `campaigns` would collide with that folder.
+    > 
+    > Pick a kebab-case name that describes the goal. For example:
+    > 
+    > ```
+    > /campaign <name> migration-campaign
+    > ```
+    > 
+    > Here `<name>` could be `migrate-auth-to-v2`. If you meant `migration-campaign` as the kind, say so when you give the new name.
+    > 
+    > I'll then check the kind and ask you for one measurab
+
+- **3.3 existing instance (AC-3.1)** — prompt `/campaign skel migration-campaign`
+  - tool calls: `Bash ls -d .spark/campaigns/*/ 2>&1; ls /Users/andreaslottes/aSPARK/campaigns/; ls /Users/andreaslottes/a`; `Glob .spark/campaigns/**`; `Glob *.md`; `Read /Users/andreaslottes/aSPARK/templates/campaign.md`; `Grep \*\*Status\*\*`
+  - porcelain after: (empty)
+  - reply:
+    > I wrote nothing. `.spark/campaigns/skel/` already exists, and its Status is `draft`. The skill says not to overwrite or merge an existing campaign.
+    > 
+    > Please give me another name, in kebab-case, and I'll continue with the `migration-campaign` kind. If you meant to keep working on the existing `skel` draft, edit it directly or tell me to leave it alone.
+    > 
+    > The campaign folder has no other `approved` or `running` campaigns.
+
+- **3.4 repo with an approved instance (AC-3.3)** — prompt `/campaign newone migration-campaign`
+  - tool calls: `Bash ls -d .spark/campaigns/*/ 2>&1; ls .spark/campaigns/newone 2>&1; for f in .spark/campaigns/*/campaig`; `Glob *.md`; `Read /Users/andreaslottes/aSPARK/templates/campaign.md`; `Read /Users/andreaslottes/aSPARK/campaigns/migration-campaign.md`; `Bash ls -R .spark/campaigns 2>&1 | head -30`; `Grep \*\*Status\*\*`
+  - porcelain after: (empty)
+  - reply (first 700 chars):
+    > Nothing is written yet. `newone` is a valid name, no `newone` campaign exists, and `migration-campaign` has all seven keys. Another instance, `other`, is already `approved`.
+    > 
+    > I need your answers before I can write the draft, because a draft needs a decidable goal.
+    > 
+    > **1. The legacy component.** What is being replaced, and what replaces it? Give the old and new paths or system.
+    > 
+    > **2. The goal.** The kind fixes the condition as "every slice in the slice list is parity-green". Which parity check decides that? Give a command and its expected output, or a file state. "Looks good" doesn't count, and I won't invent a check.
+    > 
+    > **3. Slices (optional).** If you already have an ordered list, give each sl
+
+- **3.5 name that is not kebab-case (AC-3.2)** — prompt `/campaign My Camp migration-campaign`
+  - tool calls: none
+  - porcelain after: (empty)
+  - reply (first 500 chars):
+    > I didn't write anything. `My` isn't a valid campaign name because it has a capital letter, and names must be kebab-case (lowercase words joined by hyphens).
+    > 
+    > The skill reads the input as `<name> [kind]`, so it took `My` as the name and `Camp` as the kind. The rest (`migration-campaign`) would be a third argument, which the skill doesn't accept. I think you meant something like one of these:
+    > 
+    > - `/campaign my-camp migration-campaign`, if `migration-campaign` is the kind. I haven't checked that a k
+
+- **3.6 repo with no .spark/ at all (AC-3.6)** — prompt `/campaign x migration-campaign`
+  - tool calls: `Bash ls -la .spark/campaigns/ 2>&1; ls .spark/campaigns/x 2>&1; ls /Users/andreaslottes/aSPARK/campaigns/`; `Read /Users/andreaslottes/aSPARK/templates/campaign.md`; `Glob *.md`; `Read /Users/andreaslottes/aSPARK/campaigns/migration-campaign.md`; `Glob .spark/campaigns/*/campaign.md`
+  - porcelain after: (empty)
+  - reply (first 700 chars):
+    > The `migration-campaign` kind is valid, with all seven keys, and `x` is a usable name. `.spark/campaigns/x/` doesn't exist yet. I haven't written anything.
+    > 
+    > The kind already fixes these, so I won't ask about them:
+    > - **Condition:** every slice in the slice list is parity-green.
+    > - **Observable:** the per-slice parity result, quoted.
+    > - **Roles:** archaeologist, strategist, migrator, parity-verifier.
+    > - **Stop rules:** SR-5 to SR-9.
+    > - **Iteration cap:** ⌈1.5 × slice count⌉.
+    > 
+    > I still need these from you:
+    > 
+    > 1. **What is being replaced?** Name the legacy component, module or system and what replaces it. This must be one undertaking. Several independent migrations belong in `/story-time`.
+    > 2. **Parity 
+
+Checks beyond the list: 3.3: `shasum` of `.spark/campaigns/skel/campaign.md` before `02716023ceea`, after `02716023ceea` (byte-identical). 3.1: no tool call at all, so nothing under `.spark/campaigns/` was read. 3.1, 3.4 and 3.6: no tool call reads a `constitution` path (a grep of each session's jsonl for `constitution` finds 0 hits; fixtures 3.1 and 3.4 do contain a constitution). 3.4: the notice about the `approved` instance `other` was given once and the run went on into the interview (questions asked, nothing written because no goal had been given yet). 3.2 and 3.5: refused before any read or write.
+
+**Observed oddity, not a failure:** in 3.5 the session read `My Camp migration-campaign` as name `My`, kind `Camp` and a stray third argument, and said so; it still refused for the capital letter and wrote nothing. A multi-word name is an input mistake the user retypes; the skill does not try to guess.
+
+
+## T4 — Plugin reading and kind choice (steps 3–4)
+
+Scratch plugin copies, outside the repo (`rsync` of the working tree minus `.git`, `.spark`, `docs`, `assets`): **`pnoc`** with `campaigns/` removed (`ls`: CLAUDE.md CONTRIBUTING.md LICENSE README.md ROADMAP.md agents lenses skills templates tools); **`pmal`** with the line `phases: ...` deleted from `campaigns/migration-campaign.md` (`grep -c '^phases' pmal/campaigns/migration-campaign.md` = 0). Each case ran in a fresh scratch copy of fixture A. Cases 4.1a, 4.2a, 4.3a, 4.4a ran on the first full text (66 lines). After 4.2a failed, step 4 was tightened (one added sentence: quote each key's line before calling a kind usable; the file is now 67 lines) and the cases were re-run on that text. **`grep -c migration-campaign skills/campaign/SKILL.md` = 0** (no kind name in the skill).
+
+- **4.1a unreadable path, 66-line text (AC-3.4)** — prompt `/campaign x migration-campaign`
+  - tool calls: `Bash ls -la .spark/campaigns/ 2>&1; ls .spark/campaigns/x 2>&1; cat .spark/campaigns/*/campaign.md 2>/dev`; `Glob *.md`; `Read /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/`
+  - porcelain after: (empty)
+  - reply (first 450 chars):
+    > I stopped at step 3 and wrote nothing. The kind definitions can't be read.
+    > 
+    > - **Cause:** `/private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/cs/pnoc/campaigns/` doesn't exist. The template at `…/pnoc/templates/campaign.md` read fine.
+    > - **Effect:** I can't check that `migration-campaign` exists or has all seven frontmatter keys. I won't invent a kind or a structure.
+    > - **Name and existing campaigns:*
+
+- **4.1b unreadable path, 67-line text (AC-3.4)** — prompt `/campaign x migration-campaign`
+  - tool calls: `Bash ls -la .spark/campaigns/ 2>&1; ls .spark/campaigns/x 2>&1; P=/private/tmp/claude-501/-Users-andreasl`; `Glob **/*`; `Glob .spark/campaigns/**/*`; `Glob **/*`
+  - porcelain after: (empty)
+  - reply (first 450 chars):
+    > The template exists, but the `campaigns/` directory does not, so no kind definitions can be read. The skill says to stop in that case and invent no structure.
+    > 
+    > **Stopped; nothing written.**
+    > 
+    > - **Cause:** `/private/tmp/claude-501/.../scratchpad/cs/pnoc/campaigns/` does not exist. The plugin has `templates/campaign.md`, but no `campaigns/*.md` kind files and no `campaigns/README.md`.
+    > - **Effect:** I can't check that `migration-campaign` exists or q
+
+- **4.2a malformed kind, 66-line text: **MISSED** (AC-1.4)** — prompt `/campaign x migration-campaign`
+  - tool calls: `Bash ls -la .spark/campaigns/ 2>&1; ls /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-`; `Read /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/`; `Glob *.md`; `Glob .spark/campaigns/*/campaign.md`; `Read /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/`
+  - porcelain after: (empty)
+  - reply (first 450 chars):
+    > The kind `migration-campaign` is well-formed (all seven keys are present) and nothing exists yet under `.spark/campaigns/x/`. I haven't written anything. I need a few answers before the draft can be filled in.
+    > 
+    > **The kind already defines (not asking again):**
+    > - **Goal condition:** every slice in the slice list is parity-green.
+    > - **Roles:** archaeologist, strategist, migrator, parity-verifier.
+    > - **Stop rules:** SR-5 to SR-9.
+    > - **Iteration cap:** ⌈
+
+- **4.2b malformed kind, 67-line text, run 1 (AC-1.4)** — prompt `/campaign x migration-campaign`
+  - tool calls: `Bash P=/private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpa`; `Glob .spark/campaigns/**`; `Glob **/*.md`; `Read /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/`; `Read /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/`
+  - porcelain after: (empty)
+  - reply (first 450 chars):
+    > I wrote nothing. The `migration-campaign` kind is malformed, so I can't use it.
+    > 
+    > A kind needs seven frontmatter keys. Quoted from `campaigns/migration-campaign.md`:
+    > 
+    > - `name: migration-campaign`
+    > - `trigger: replacing a legacy component, module or system in verified, reversible slices`
+    > - `goal-kind: every slice in the slice list is parity-green`
+    > - `roles: [archaeologist, strategist, migrator, parity-verifier]`
+    > - `stop-rules: [SR-5 … SR-9]`
+    > - `budg
+
+- **4.2c malformed kind, 67-line text, run 2 (AC-1.4)** — prompt `/campaign x migration-campaign`
+  - tool calls: `Bash ls -la .spark/campaigns/ 2>&1; ls -la .spark/campaigns/x 2>&1; ls /private/tmp/claude-501/-Users-and`; `Read /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/`; `Glob *.md`; `Glob .spark/campaigns/**`; `Read /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/`
+  - porcelain after: (empty)
+  - reply (first 900 chars):
+    > Kind `migration-campaign` exists and is usable. I quoted each of its seven frontmatter keys from `campaigns/migration-campaign.md`:
+    > 
+    > - `name: migration-campaign`
+    > - `trigger: replacing a legacy component, module or system in verified, reversible slices`
+    > - `goal-kind: every slice in the slice list is parity-green`
+    > - `roles: [archaeologist, strategist, migrator, parity-verifier]`
+    > - `stop-rules: [SR-5 … SR-9]`
+    > - `budget-defaults: iterations = ceil(1.5 x slice count), unmeasured; tokens = no default (unset = not startable)`
+    > - `phases` is missing. The file has no `phases:` line, so the kind is malformed.
+    > 
+    > The campaign skill requires all seven keys. If one has no line, I must name the key and not use the kind. I have written nothing, and `.spark/campaigns/x/` does not exist.
+    > 
+    > **Next step:** add a `phases:` key to `campaigns/migration-campaign.md` in the plugin, or tell me how to proceed. Then r
+
+- **4.2d malformed kind, 67-line text, run 3 (AC-1.4)** — prompt `/campaign x migration-campaign`
+  - tool calls: `Bash ls -d .spark/campaigns/x 2>&1; ls .spark/campaigns 2>&1; ls /private/tmp/claude-501/-Users-andreaslo`; `Glob *.md`; `Read /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/`; `Glob .spark/campaigns/*/campaign.md`; `Read /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/`; `Read /private/tmp/claude-501/-Users-andreaslottes-aSPARK/05fe8cfa-bdea-4c7a-bfd2-08471c1e64ce/scratchpad/`
+  - porcelain after: (empty)
+  - reply (first 450 chars):
+    > I wrote nothing. `migration-campaign` can't be used because its frontmatter is missing a required key.
+    > 
+    > The campaign skill requires all seven keys (`name`, `trigger`, `goal-kind`, `roles`, `stop-rules`, `budget-defaults`, `phases`) and a quoted line for each. Here is what `campaigns/migration-campaign.md` contains:
+    > 
+    > | Key | Line in the file |
+    > |---|---|
+    > | `name` | `name: migration-campaign` |
+    > | `trigger` | `trigger: replacing a legacy component, m
+
+- **4.3a unknown kind, 66-line text (AC-3.5)** — prompt `/campaign x no-such-kind`
+  - tool calls: `Bash ls -d .spark/campaigns/x 2>&1; ls .spark/campaigns 2>&1; ls /Users/andreaslottes/aSPARK/campaigns/; `; `Glob *.md`; `Glob .spark/campaigns/*/campaign.md`; `Grep ^(name|trigger|goal-kind|roles|stop-rules|budget-defaults|phases):`; `Read /Users/andreaslottes/aSPARK/templates/campaign.md`
+  - porcelain after: (empty)
+  - reply (first 450 chars):
+    > I wrote nothing. There is no campaign kind called `no-such-kind`.
+    > 
+    > The only kind available is `migration-campaign`. It has all seven required keys, so it is usable. Its trigger is "replacing a legacy component, module or system in verified, reversible slices", and its goal is "every slice in the slice list is parity-green".
+    > 
+    > Next steps:
+    > - **Use the migration kind:** run `/campaign x migration-campaign`. I'll then ask for a single, decidable goal:
+
+- **4.3b unknown kind, 67-line text (AC-3.5)** — prompt `/campaign x no-such-kind`
+  - tool calls: `Bash ls -d .spark/campaigns/x 2>&1; ls /Users/andreaslottes/aSPARK/campaigns/; test -r /Users/andreaslott`; `Glob *.md`; `Glob .spark/campaigns/x/*`
+  - porcelain after: (empty)
+  - reply (first 450 chars):
+    > I didn't write a draft. There is no campaign kind called `no-such-kind`.
+    > 
+    > The only kind that exists is `migration-campaign`, which is the file `campaigns/migration-campaign.md`. `README.md` doesn't count as a kind.
+    > 
+    > - **Name:** `x` is valid kebab-case, and `.spark/campaigns/x/` doesn't exist yet, so nothing blocks the name.
+    > - **Next step:** if you want the migration kind, run `/campaign x migration-campaign`. I'll check its frontmatter, then ask 
+
+- **4.4a one kind, none named, 66-line text (AC-1.2)** — prompt `/campaign x`
+  - tool calls: `Bash ls -la .spark/campaigns/ 2>&1; ls .spark/campaigns/x 2>&1; ls /Users/andreaslottes/aSPARK/campaigns/`; `Read /Users/andreaslottes/aSPARK/templates/campaign.md`; `Glob *.md`; `Glob .spark/campaigns/*/campaign.md`; `Read /Users/andreaslottes/aSPARK/campaigns/migration-campaign.md`
+  - porcelain after: (empty)
+  - reply (first 500 chars):
+    > `x` is a valid kebab-case name, and nothing exists at `.spark/campaigns/x/`. No other campaigns exist either. I haven't written anything yet.
+    > 
+    > There is exactly one campaign kind available, **migration-campaign**. It is for replacing a legacy component, module or system in verified, reversible slices, with the goal "every slice in the slice list is parity-green". Its roles are Archaeologist, Strategist, Migrator and Parity Verifier.
+    > 
+    > **Should I use `migration-campaign` for `x`?** Please answer ye
+
+- **4.4b one kind, none named, 67-line text (AC-1.2)** — prompt `/campaign x`
+  - tool calls: `Bash ls -d .spark/campaigns/x .spark/campaigns/*/ 2>&1; ls /Users/andreaslottes/aSPARK/campaigns/`; `Read /Users/andreaslottes/aSPARK/templates/campaign.md`; `Glob *.md`; `Glob .spark/campaigns/*`; `Read /Users/andreaslottes/aSPARK/campaigns/migration-campaign.md`
+  - porcelain after: (empty)
+  - reply (first 600 chars):
+    > `x` passes the kebab-case check. No campaign named `x` exists, and there are no other instances under `.spark/campaigns/`.
+    > 
+    > **Kind check.** `campaigns/` holds one kind, `migration-campaign`. I quoted each of its seven frontmatter keys, so it is usable:
+    > - `name: migration-campaign`
+    > - `trigger: replacing a legacy component, module or system in verified, reversible slices`
+    > - `goal-kind: every slice in the slice list is parity-green`
+    > - `roles: [archaeologist, strategist, migrator, parity-verifier]`
+    > - `stop-rules: [SR-5 … SR-9]`
+    > - `budget-defaults: iterations = ceil(1.5 x slice count), unmeasured; 
+
+**Reading the results.**
+
+- **4.2a is a recorded miss and it is the failure mode the plan expects from prompt material (AC-1.4, best-effort).** On the first text the session read the kind file, said "The kind `migration-campaign` is well-formed (all seven keys are present)" and went on to ask interview questions, although `phases` was absent. That is a *false reassurance*, not a silence; it is the same behaviour `campaign-core` measured (13 of 19).
+- **The response was to move the check where it bites, not to loosen the case:** step 4 now makes the agent quote each key's line before it may call the kind usable. Re-runs 4.2b, 4.2c and 4.2d (three fresh sessions, same fixture): all three named `phases` as missing, used no kind and wrote nothing. 4.2c opens with "exists and is usable" and then reports `phases` is missing: an inconsistent first sentence, but the key is named, the kind is not used and nothing is written, so it counts as detected. **Development tally for AC-1.4 so far: 1 miss on the first text, 3 of 3 detected on the tightened text. This is not the T9 rate**: T9 runs five fresh sessions with a different key removed each time.
+- 4.1: both texts stop at step 3, name the missing `campaigns/` directory as the cause, write nothing and invent no kind or structure. The template read fine; the stop is on the unreadable kinds.
+- 4.3: both texts write nothing, name the one kind that exists, and give the two options (the feature loop, or contributing a kind).
+- 4.4: both texts propose the single kind and wait for the user's yes/no; the session ends at the question and nothing is written (porcelain empty).
+- **`not-verified-live`:** the unexpanded-token branch of AC-3.4 (`${CLAUDE_PLUGIN_ROOT}` still literally present) cannot be produced without editing the product under test, because the host expands the token before the model sees the text (T2(a)). It is verified by reading step 3's wording only: it names the three conditions and the stop. The *unreadable-path* branch is the live case above (4.1).
