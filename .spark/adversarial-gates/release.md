@@ -77,5 +77,5 @@ Mode `pr` (constitution §7). Ticket format `none`: no tracker call.
 - [x] Changelog written in user-facing language
 - [x] Release actions executed and verified: pushed, PR #69 open against `main`, `claude plugin validate .` passes (1 pre-existing warning). Rollback path written
 - [x] Learnings recorded
-- [x] Line budget respected: Ist 80 / Soll ~100 (excluding HTML comments)
+- [x] Line budget respected: Ist 81 / Soll ~100 (excluding HTML comments)
 - [x] Status set to `handed-off` after the PR is open; outstanding: PR, merge and real tag, owned by `a-lottes` outside aSPARK's control
