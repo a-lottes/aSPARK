@@ -86,7 +86,7 @@ Entries (every quote was matched to its `file:line` by `grep -F` on that exact l
   (continues at `:808-810`: "GATE checklist had **three open boxes** and one **checked** box asserting something false … B4 sat `open, unaccepted`")
 - **E2** · `other` (borderline, see note) · `.spark/right-sizing/evidence.md:983` · gate: `/demo-day` step 1 (gear check; its rule: "**Never** ask the user to choose, confirm or supply a substitute method") · acting context: `qa-tester` agent · US-2 flag: no
   > volunteered *"a `.spark/constitution.md` §8 declaring an alternate QA
-- **E3** · `verdict-rounded-up` · `.spark/project-kickoff/review.md:57` · gate: none (no gate step evaded) · acting context: `reviewer` agent's own earlier round · US-2 flag: **yes — input for US-2 (Inc 2)**
+- **E3** · `verdict-rounded-up` · `.spark/project-kickoff/review.md:57` · gate: none (no gate step evaded) · acting context: `/increment` build session (wrote the ✅ at `.spark/project-kickoff/evidence.md:321-325`); the `reviewer` agent caught it at the cited line · US-2 flag: **yes — input for US-2 (Inc 2)**
   > AC-3.4 carried a ✅ while the same sentence said it was inspection-only
 - **E4** · `verdict-rounded-up` · `.spark/graph-mcp-verification/review.md:80` · gate: none · acting context: ceremony session via a subagent · US-2 flag: **yes — input for US-2 (Inc 2)**
   > AC-1.1 is given `confirmed (performed)`, but its emission half is a subagent's section literally headed **"SIMULATED USER-FACING CEREMONY OUTPUT"**
