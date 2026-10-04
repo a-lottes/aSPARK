@@ -143,15 +143,15 @@ I stopped before the first iteration. I changed nothing, and the campaign is not
 **(a) Paths and the single write** (`claude -p "/campaign skel migration-campaign" --plugin-dir <working tree> --allowedTools "Read Glob Grep Write" --max-turns 12 < /dev/null`, fresh scratch repo `c2`, one commit, no `.spark/`). Tool calls, in order:
 
 ```
-Glob  {{"pattern": "/Users/andreaslottes/aSPARK/campaigns/*.md"}}
+Glob  {"pattern": "/Users/andreaslottes/aSPARK/campaigns/*.md"}
   -> /Users/andreaslottes/aSPARK/campaigns/README.md | /Users/andreaslottes/aSPARK/campaigns/migration-campaign.md
-Read  {{"file_path": "/Users/andreaslottes/aSPARK/templates/campaign.md"}}
-Read  {{"file_path": "/Users/andreaslottes/aSPARK/campaigns/migration-campaign.md"}}
-Write {{"file_path": ".../scratchpad/cs/c2/.spark/campaigns/skel/campaign.md", ...}}
+Read  {"file_path": "/Users/andreaslottes/aSPARK/templates/campaign.md"}
+Read  {"file_path": "/Users/andreaslottes/aSPARK/campaigns/migration-campaign.md"}
+Write {"file_path": ".../scratchpad/cs/c2/.spark/campaigns/skel/campaign.md", ...}
   -> File created successfully
 ```
 
-`${{CLAUDE_PLUGIN_ROOT}}` **was expanded** to an absolute path in the skill text the session saw (the glob pattern is absolute). **A8 is resolved: expansion works for a directory glob.** No path was asked. Porcelain after: only `.spark/` (new) holding `.spark/campaigns/skel/campaign.md`; one file written by the skill. An earlier plain-text run in `c` gave the same result and its closing message ("It is the only file I wrote").
+`${CLAUDE_PLUGIN_ROOT}` **was expanded** to an absolute path in the skill text the session saw (the glob pattern is absolute). **A8 is resolved: expansion works for a directory glob.** No path was asked. Porcelain after: only `.spark/` (new) holding `.spark/campaigns/skel/campaign.md`; one file written by the skill. An earlier plain-text run in `c` gave the same result and its closing message ("It is the only file I wrote").
 
 **(b) The glob and `README.md`.** The Glob **returned both** `README.md` and `migration-campaign.md`; a glob pattern cannot exclude a name. The exclusion of `README.md` is the skill's instruction ("every file there except `README.md`"), and the session followed it: it read only `migration-campaign.md`. So plan T2(b)'s wording ("the glob returned the kind file and not `README.md`") is not literally what happened; what holds is "only the kind file was used". This is the reason AC-1.2's rule must stay in `SKILL.md` text, not rely on the pattern.
 
