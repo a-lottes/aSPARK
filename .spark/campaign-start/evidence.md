@@ -135,3 +135,33 @@ I stopped before the first iteration. I changed nothing, and the campaign is not
 `shasum` of the instance after: `6879529d1642` (unchanged); `git log --oneline | wc -l` = `1`; porcelain unchanged.
 
 **What this baseline says.** The hand-start works as documented when the user names the plugin folder in the prompt; the kind file was found and all seven keys were present; the run refuses without goal approval. The loop ceremonies show no campaign mention in a repo without `.spark/campaigns/`. The unrelated migration prompt was answered as an ordinary plan; the output is an ordinary plan with no campaign content. (Headless text output does not show tool calls, so "no skill was invoked" is inferred from that content, not observed directly; T2(c) uses the same prompt with the skill present and records what a session shows.) This is the state T8(b), T8(c) and T11 compare against.
+
+## T2 — Walking skeleton
+
+`skills/campaign/SKILL.md` (skeleton, not the final text): frontmatter `name: campaign`, `description`, `argument-hint: <name> [kind]`, `disable-model-invocation: true`; body = glob the kinds, read the template, write one draft. Observed with `--output-format stream-json --verbose`, which, unlike plain `-p` text, shows the tool calls.
+
+**(a) Paths and the single write** (`claude -p "/campaign skel migration-campaign" --plugin-dir <working tree> --allowedTools "Read Glob Grep Write" --max-turns 12 < /dev/null`, fresh scratch repo `c2`, one commit, no `.spark/`). Tool calls, in order:
+
+```
+Glob  {{"pattern": "/Users/andreaslottes/aSPARK/campaigns/*.md"}}
+  -> /Users/andreaslottes/aSPARK/campaigns/README.md | /Users/andreaslottes/aSPARK/campaigns/migration-campaign.md
+Read  {{"file_path": "/Users/andreaslottes/aSPARK/templates/campaign.md"}}
+Read  {{"file_path": "/Users/andreaslottes/aSPARK/campaigns/migration-campaign.md"}}
+Write {{"file_path": ".../scratchpad/cs/c2/.spark/campaigns/skel/campaign.md", ...}}
+  -> File created successfully
+```
+
+`${{CLAUDE_PLUGIN_ROOT}}` **was expanded** to an absolute path in the skill text the session saw (the glob pattern is absolute). **A8 is resolved: expansion works for a directory glob.** No path was asked. Porcelain after: only `.spark/` (new) holding `.spark/campaigns/skel/campaign.md`; one file written by the skill. An earlier plain-text run in `c` gave the same result and its closing message ("It is the only file I wrote").
+
+**(b) The glob and `README.md`.** The Glob **returned both** `README.md` and `migration-campaign.md`; a glob pattern cannot exclude a name. The exclusion of `README.md` is the skill's instruction ("every file there except `README.md`"), and the session followed it: it read only `migration-campaign.md`. So plan T2(b)'s wording ("the glob returned the kind file and not `README.md`") is not literally what happened; what holds is "only the kind file was used". This is the reason AC-1.2's rule must stay in `SKILL.md` text, not rely on the pattern.
+
+**(c) The unrelated prompt does not invoke the skill.** Session `c3` (fixture A, the skill present): `plan how we migrate the logger module to structlog`. Tool uses: `Bash`, `Bash`, `Read` x4; **no `Skill` call**; the init record lists the command as `aspark:campaign`. Session `c5` (fixture A, a campaign-shaped request without the slash: `I want to start a campaign to migrate logging in src/log.py to structlog. Please set up the campaign draft, call it log-mig.`): tool uses `Grep`, `Bash`, `Bash`, `Write`; **no `Skill` call**. The session wrote `.spark/notes/log-mig.md` and said "the format is my own guess. Nothing in this repo defines 'campaign'". That is the QA-B14 improvisation, observed again; it is how a request without the slash behaves today, with or without this skill.
+
+*Control for `disable-model-invocation`* (session `c6`, same prompt as `c5`, a scratch plugin copy whose `SKILL.md` had that line deleted, `Skill` allowed): tool uses `Bash`, `Bash` only; **no `Skill` call, nothing written** (porcelain empty). So in this one pair the description wording alone ("Only when the user types /campaign") also kept the model from invoking the skill. **The key is accepted and the unrelated case held with it, but this n=1 does not show the key is what holds it**; D3's premise (a description-only guard is probabilistic) is neither confirmed nor refuted here. The key stays as planned (it costs one line and is accepted by `validate`); `/peer-review` can weigh whether it earns its place as a new pattern.
+
+**(d) Validate.** `claude plugin validate .` → `✔ Validation passed with warnings`; the two warnings are the existing ones (`autoUpdate` in the marketplace manifest, root `CLAUDE.md` not loaded); neither names `skills/campaign` or the two new keys.
+
+**(e) With and without `aspark-guard`.** With: session `c` (the init plugin list of `c3` shows `aspark-guard` loaded; `.spark/.guard/ledger.jsonl` appeared in `c`): the write to `.spark/campaigns/skel/campaign.md` **succeeded**, not denied. Without: session `c4` with `--setting-sources project` (init plugins `aspark, cc-plugin-agents-md, cc-plugin-telemetry, cc-plugin-plugin-authoring`, no guard; no `.spark/.guard/` created): `/campaign noguard migration-campaign` wrote `.spark/campaigns/noguard/campaign.md`, the same four calls as (a). R5 (guard denies the write) **did not materialise**; no ruling needed.
+
+**Outcome:** no stop condition fired (a, b-as-used, d, e hold; c holds as observed). No user ruling is needed on D2's fallback or on the guard.
+
