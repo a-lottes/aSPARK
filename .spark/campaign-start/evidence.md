@@ -467,3 +467,40 @@ Closing report (quoted): *"Still blank: Goal approved by / date: only you set th
 **Still to run for T6 (blocked, see below):** a multi-turn interview (goal not given up front, answered via `--resume`) and a variant that states a token budget.
 
 **Blocker recorded at this point.** The 6.2 multi-turn run's first turn returned `You've hit your session limit · resets 11:50pm (Europe/Berlin)`: the account's usage limit, not a product fault. No further live session can run until it resets. Nothing was written by that session (porcelain empty).
+
+
+## T6 — Interview and the single write (done)
+
+**6.2 Multi-turn interview** (fresh copy of fixture A, session `t6b`, turn 2 by `--resume` of the same session). Turn 1: `/campaign logger-structlog migration-campaign`, no goal. Tool calls: existing-instance check, `Read` template, `Glob`, `Read` kind. Nothing written (porcelain empty). The session quoted the seven keys of the kind and then asked **four questions**: (1) the one decidable goal with its Observable and thresholds, (2) the parity check, (3) the token budget ("The kind has no default, so how many tokens do you allow? If you leave it blank it stays a visible blank"), (4) rollback and scope, optional. It said the slice list is not asked for because the Strategist cuts it later. **None of the four re-asks something the kind defines** (condition shape, roles, stop rules, iteration formula are named as already fixed).
+
+Turn 2, the user's answer: `1. Goal: src/log.py uses structlog and no stdlib logging. Observable: grep -c "import logging" src/log.py prints 0 and grep -c "import structlog" src/log.py prints 1. Thresholds: exactly those two values. 2. Parity check: I have not decided yet, leave it unset. 3. Token budget: 200000. 4. Rollback: the kind default, scope is src/log.py only. Verifier: a fresh Parity Verifier per slice.` Tool calls: one `Write` of `.spark/campaigns/logger-structlog/campaign.md`. Porcelain after: `?? .spark/campaigns/` (plus the guard's `.spark/.guard/`); `git log --oneline | wc -l` = `1`. Observed in the file: Status `draft`; "Goal approved by / date" empty; §3 **Tokens `200000`** (the user's figure) and Iterations the kind's formula with the number left blank; parity check left unset as the user said, and listed as still blank in the report.
+
+Closing report (quoted): *"Still blank, so not startable until these are filled and you approve: Parity check: unset, as you said ... Slice list (S1…Sn): empty until the Strategist cuts it. Iteration cap ... Goal approved by / date: unfilled. §2 veto record: blank, because no check has been run. §7 checkpoints: empty ... Next step: run an Archaeologist and Strategist planning session yourself ... I have dispatched nothing and started no iteration."* It also pointed out that `grep -c` exits 1 when it prints 0, which could make a Verifier misreport the first observable.
+
+6.1 (goal up front, tokens not stated: §3 Tokens left as `___ (not stated by the user)`) and 6.2 (tokens stated: `200000`) together cover the "user gives no budget" and "user gives a budget" variants; no figure was ever invented.
+
+**DoD check, T6:** porcelain lists only the one file (guard dir aside); `git log` count unchanged (1 and 1); Status `draft`; approval row empty; §2 and §7 empty; §4 = SR-1..SR-4 plus the kind's SR-5..SR-9 and no `SR-5…` row; §8 = the kind body; the budget never invented; the questions asked are listed above and none re-asks what the kind defines.
+
+
+## T7 — End report, rule placement and size (done)
+
+**End report (D4 step 8), from sessions 6.1 and 6.2:** both list every element still holding a placeholder (slice list, parity check where unnamed, iteration cap, token budget where unstated, goal approval, veto record, checkpoints), both say it is not startable until these are filled and the user approves, and both name the Archaeologist session and the Strategist session as the user's next step. Neither session made an `Agent` tool call (tool-call lists in 6.1 and 6.2 show `Bash`, `Read`, `Glob`, `Write` only), and none iterated.
+
+**Size.** `wc -l skills/campaign/SKILL.md` = `67` (NFR-1 cap 70; no yield needed).
+
+**Rule placement, one row per NFR-4 rule (`grep -n` over `skills/campaign/SKILL.md`):**
+
+| NFR-4 rule | Line in SKILL.md | Text (shortened) |
+|---|---|---|
+| Never approve, never run | 65-66 (Never list), 61 | "Set any Status beyond `draft` · record an approval or a waiver · run or resume a campaign"; step 8 "Dispatch nothing, iterate nothing" |
+| No overwrite | 28 | "overwrite and merge nothing, ask for another name" |
+| One-goal and named-Observable tests | 42-43 | "One goal only ... decidable, a named Observable" |
+| The seven keys | 36-38 | "All seven keys (...) must be present" and the quote-each-line check |
+| File name `campaign.md` and reserved directory | 57 and 26 | "file name `campaign.md`"; "`campaigns`, is refused with the reason" |
+| Exactly one file written | 19 and 57 and 66 | "no second file"; "One Write"; "write a second file" in the Never list |
+| Unresolved path means stop, no invented tracker | 33-34 | "not absolute, still contain `$` or braces, or cannot be read: stop, name the cause, write nothing, invent no structure or tracker" |
+| No commit | 66 | "commit or use any git command" |
+
+**Reads from the target repo.** In the transcripts of 6.1 and 6.2, the target-repo reads are: the `.spark/campaigns/` existence checks, and (6.1) `ls src/log.py` and a grep of `src/log.py` to see the user's own named Observable (the user's source file, not a campaign definition). No transcript reads `.spark/constitution.md` or any campaign definition outside the plugin. Kind and template reads are all under the plugin path.
+
+**Input/Output block and Never list** are present (lines 15-20 and 63-67); the Input/Output block states the input, the one output file and that every refusal writes nothing (NFR-8).
