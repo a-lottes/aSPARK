@@ -257,6 +257,14 @@ was an explicit, informed shipping decision, not an oversight.
 | **Evidence** | Dogfooded negative-case-first ([`.spark/lean-artifacts/evidence.md`](../.spark/lean-artifacts/evidence.md)): old-shape artifacts keep working unchanged, a real fix-mode edit overwrote the block in place instead of appending, and the sibling `aspark-graph` parser was read directly and confirmed structurally blind to the block (no new `##` heading, no second `Status`/`Version` row) — independently re-verified by both the Reviewer and the QA Tester against the parser's actual source, not each other's citation of it. |
 | **State** | **Proven**, with a recorded, user-accepted waiver: two Must ACs (the zero-open-items rendering, an exact block/body value-contradiction) are `partial` rather than `pass` — neither has a naturally-occurring specimen in this repo yet, only the mechanism exercised on adjacent/constructed cases. **No token or byte saving is claimed anywhere** — the mechanism is a prompt instruction, not an enforced one. |
 
+## Gate hardening (rebuttal rows)
+
+| | |
+|---|---|
+| **Scope** | Short rebuttal rows at a ceremony gate, only where the repo's own trails record at least two agent gate evasions at that same gate. **Shipped: none.** The only shipped part is the search itself and its finding. |
+| **Evidence** | [`.spark/adversarial-gates/evidence.md`](../.spark/adversarial-gates/evidence.md): rules committed before the scan, 51 files searched with fixed terms, 10 entries (1 `agent-evaded-gate`, 2 `verdict-rounded-up`, 7 `other`). The one qualifying entry is not enough at any gate, so the outcome is **refuted-with-finding** and every `skills/*/SKILL.md` is byte-identical. A negative-case dry run of `/next-steps` is recorded there. One borderline entry (E2) was ruled `other` at review and would not qualify a gate under any reading. |
+| **State** | **Unproven by design.** Grounding is in-repo trails, not field reports, and it is a search, not a census. Whether a row would fire cannot be tested in Core, and no effectiveness is claimed. The gates remain prompt-enforced; code-level enforcement is the optional sibling [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)'s concern. Rows apply at no gate today and stay silent everywhere. The stricter-verdict standard for `/peer-review` and `/demo-day` is planned, not built. A second, independent reviewer is not built; re-open only on a new argument or observation, such as a recorded single-reviewer miss. |
+
 ## Browser backends for `/demo-day`
 
 | | |
