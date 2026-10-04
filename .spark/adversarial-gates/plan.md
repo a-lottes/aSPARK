@@ -11,7 +11,7 @@
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`).
 - **Summary:** Inc 1 (T1–T9) commits a schema-first corpus at `.spark/adversarial-gates/evidence.md`, forks at T4 on the ≥2 `agent-evaded-gate` threshold, and adds rebuttal tables (≤ 8 lines each) only at qualifying gates. Each table goes at the `SKILL.md` step that the *acting context* of the evasion actually reads. Docs are updated to the true state. Inc 2 (T10–T15, `deferred`) adds one always-on file, `standards/anti-generosity.md`. `/peer-review` and `/demo-day` pass it by a named path, unconditionally. No agent, template or constitution edit.
-- **Open:** `9 tasks not done` (T1–T9). T10–T15 are `deferred`, not open work of this loop. Q1 ruled **A** (Inc 2 runs as a new feature folder); Q2 ruled: reword AC-2.2 later via `/story-time` (2026-10-04).
+- **Open:** `0 tasks open` (T1–T5, T8, T9 `done`; T6, T7 `N/A — AC-1.7`). T10–T15 are `deferred`, not open work of this loop. Q1 ruled **A** (Inc 2 runs as a new feature folder); Q2 ruled: reword AC-2.2 later via `/story-time` (2026-10-04).
 - **Binding ruling:** §3 Task Breakdown for current task status; a plan revision after review/QA findings updates §1/§3 in place, never a new section
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
 
