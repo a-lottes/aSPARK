@@ -734,3 +734,26 @@ This is closer to a greenfield setup than a migration. There is no behavior to p
 - 0 diff lines in each existing skill (`charter demo-day go-live increment look-and-feel next-steps peer-review spark sprint-plan story-time`), `agents/`, `templates/`, `campaigns/migration-campaign.md`, `.claude-plugin/`, `.spark/constitution.md`, `ROADMAP.md`, `CONTRIBUTING.md`.
 - `git diff origin/main -U0 -- skills | grep -c '^-name:'` → `0`: no command or frontmatter `name` changed; `ls skills | wc -l` → `11` (one added, none removed or renamed).
 - **AC-4.3:** `plugin.json` still reads `"version": "0.13.1"`; the Release Manager bumps it to `0.14.0` at `/go-live`. Not done by this task.
+
+
+## T12 — Count sweep and the `/charter` checkpoint (the sweep is done; the checkpoint waits for the user)
+
+**Sweep.** `git grep -n -i -P '\b(ten|10|eleven|11)\b.{0,20}(skill|command|ceremon)'` over every tracked file (this feature's own folder excluded), plus the same pattern over the handbook text (`unzip -p docs/aSPARK_Enterprise_Architecture_Handbook.docx word/document.xml`, tags stripped), plus a targeted grep of `.spark/constitution.md` for the line-broken form (`ten slash` at a line end, `skills/` (10)`). Every hit is classified. Rule from the spec (AC-4.2): a count of the plugin's skills **as a total** becomes eleven; "ten ceremonies" of the loop stays ten, because `/campaign` is the eleventh skill but not a loop ceremony.
+
+| Hit | Class | Action |
+|---|---|---|
+| `docs/family.md:16` "11 skills, 7 agents ..." | total count | already eleven (T10) |
+| `.spark/constitution.md:41` (§2) "the ten slash commands" | **total count, stale** | **the user's `/charter` amendment** (not edited by any agent) |
+| `.spark/constitution.md:287` (§9 Shape) "10 skills" | **total count, stale** | same |
+| `.spark/constitution.md:300` (§9 Stack and entry points) "10 slash commands" | **total count, stale** | same |
+| `.spark/constitution.md:301` (§9 Module structure) "`skills/` (10)" | **total count, stale** | same |
+| `ROADMAP.md:35` "ten ceremonies" | loop count | stays (ruled, C9): it counts the loop's ceremonies |
+| `docs/status.md:181` "10 ceremony skills ..., the `/spark` orchestrator" and `:285` "The ten ceremony skills" | loop count (the loop section's scope and its build checklist) | stays |
+| `docs/status.md:107` "The loop — 10 skills ... shipped as `v0.1.0`" | dated v0.1.0 snapshot row | not edited (C9) |
+| `.spark/campaign-core/{plan,spec,release}.md` and every other `.spark/<feature>/` trail hit (about 45 lines) | dated feature trails: counts and quotations recorded at the time of that loop | not edited; a trail is a record, not a live claim |
+| `docs/aSPARK_Enterprise_Architecture_Handbook.docx` | one hit, "11.6 Graph-Assisted Ceremonies" | false positive (a section number); no skill count in the handbook text |
+| `README.md`, `campaigns/README.md`, `docs/repo-layout.md`, `CONTRIBUTING.md` | none | no count of skills in these files |
+
+**Result.** Live total-count statements that still say ten: **four lines, all in `.spark/constitution.md` (§2 line 41; §9 lines 287, 300, 301).** Everything else is a loop count, a dated snapshot or a trail. No tracked doc says eleven except `docs/family.md:16`, as AC-4.5 requires until the amendment.
+
+**The checkpoint (AC-4.4, AC-4.5, plan D7).** The constitution is the user's. T12 is done only when the user has run `/charter` so that: a new row exists in the Amendments table; the four lines above say eleven where they mean all skills or commands; and `git log -p -- .spark/constitution.md` shows only that `/charter` change on this branch. No agent edits the constitution. If this is not done when `/peer-review` would close, the Reviewer records a finding and `/go-live` stops (only the user can waive it, with a reason). **Status at the time of writing: not done; waiting for the user.**
