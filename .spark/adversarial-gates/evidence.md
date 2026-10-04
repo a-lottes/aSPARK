@@ -131,3 +131,36 @@ Entries (every quote was matched to its `file:line` by `grep -F` on that exact l
 - **Open call, flagged for `/peer-review`:** E2's classification (see the Corpus note). If it is reclassified and B1/B4 are counted as distinct acts, `/demo-day` step 1 qualifies and D3 would place its row in the delegation step, because the acting context is the `qa-tester` agent. That would reopen T6/T7 through a plan revision, not an inline edit. The rules stay as committed: this file does not move E2 to reach a threshold.
 - **Not claimed:** that the evasions do not happen. This is a search with fixed terms over 51 files, not a census (Method). Absence here is not evidence of absence.
 - **Uncovered ceremony for T5/T9:** `/next-steps`, on a scratch mid-loop feature.
+
+## Negative baseline (T5) — before any `SKILL.md` edit
+
+Uncovered ceremony: `/next-steps` (no table is planned for it or any skill). Fixture `fx2` (outside the repo), full text:
+
+- `README.md`: `# Notes app` / `A tiny CLI that stores notes.`
+- `.spark/notes/spec.md`: `# Spec: notes`, header table row `| **Status** | `approved` |`, one story `US-1 (Must): add a note` with `AC-1.1: Given text, when `notes add "x"` runs, then it is stored.`
+- one commit `init`; no constitution, no plan.
+
+At run time `git diff --stat origin/main -- skills` printed nothing (empty). Command: `claude -p "/aspark:next-steps" --plugin-dir <base worktree> --max-turns 10`, exit 0. Output, verbatim:
+
+```
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+There's no `.spark/constitution.md` in this project, so I'm recommending `/charter` before I propose anything.
+
+**Where the project stands**
+- **Git history:** one commit, `init`. The repo holds only a README ("Notes app — a tiny CLI that stores notes") and no code.
+- **`notes` feature:** it has an approved spec with one story, US-1 (add a note), and no acceptance criteria checked off. It has no plan, no review and no QA. I'd call it **in-flight, at the start**: specified but never planned or built.
+- **Standing goals:** there are none on record, so I have no principles to hold a proposal against. That covers stack, quality bar and non-negotiables, which `/charter` would set.
+
+**Recommendation:** run `/charter` first. It's quick, and it fixes the stack and quality bar that every later feature gets planned against. For a tiny CLI that matters, because the language and storage choices come before any code.
+
+**Next feature, once that's done:** I'd finish `notes` rather than start something new. It's specced but not planned or built, so `/sprint-plan notes` is the natural next move. That would deliver `notes add` as the smallest useful slice. Reading the stored notes back (`notes list`) would be the obvious feature after it, because a tool that can only write isn't useful yet.
+
+How would you like to go?
+1. Run `/charter` now, which I'd recommend.
+2. Skip it, and I'll have the Product Owner propose from this brief, with `/sprint-plan notes` as the likely answer.
+3. Bring your own idea.
+
+I haven't run `/charter` or written anything to `.spark/`.
+```
+
+Routing: no constitution → recommends `/charter` first, offers 3 options (charter / skip / own idea), writes nothing. Compare at T9 by routing and questions asked, not bytes.
