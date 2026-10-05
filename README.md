@@ -134,7 +134,7 @@ What this is, plainly:
 - The need is anticipated, not observed, and effectiveness is unmeasured. Only one kind exists.
 - Budgets and stop rules are followed by the agent, not enforced by Core. Core is Markdown with no runtime; enforcement is [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)'s concern, and without it nothing changes and nothing is reported.
 - `/campaign <name> [kind]` starts a campaign: it reads the plugin's kinds itself, asks only what the kind leaves open and writes a **draft** `.spark/campaigns/<name>/campaign.md`, then stops. It is instructed never to approve, run or commit, and to refuse an undecidable goal, several goals, an existing name or a goal that fits no kind. That is prompt-followed, measured as best-effort, never a guarantee ([`campaigns/README.md`](campaigns/README.md)). With one kind it serves migrations only. The old hand-start (naming the plugin folder in a prompt) still works.
-- **Running** a campaign is still hand-run: you name the instance. The loop ceremonies have no campaign logic yet, so nothing routes to one on its own, and the migration kind's standing rule for ordinary features is inert until routing ships.
+- **Running** a campaign is still hand-run: you name the instance. The loop ceremonies have no campaign logic yet, so nothing routes to one on its own, and the migration kind's standing rule for ordinary features is inert until routing ships. Project-local kinds are not built either: only the plugin's own kinds are read.
 - A repo without `.spark/campaigns/` sees no difference.
 
 ---
