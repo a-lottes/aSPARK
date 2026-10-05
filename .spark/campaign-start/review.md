@@ -24,7 +24,7 @@
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`).
 - **Verdict:** round 2: passed. F1 and F2 (Majors) and every Minor the user ruled on are confirmed fixed from source and by live re-runs. Open: F8 (Minor, constitution wording, routed to a later `/charter` by the user, non-blocking) and F12 (Nit, step 7 does not name the title line).
-- **Open:** `2 open` — Blockers: none; Majors: none; F8 (Minor, later `/charter`), F12 (Nit). F1-F7, F9-F11 and F13 fixed r2
+- **Open:** `1 open` — Blockers: none; Majors: none; F8 (Minor, later `/charter`, non-blocking). F12 (Nit) accepted by the user, QA measures it. F1-F7, F9-F11 and F13 fixed r2
 - **Binding ruling:** §6 Verdict and the gate checklist below — the only binding location; there is no other round to point to
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
 
@@ -59,7 +59,7 @@
 | F9 | Nit | `plan.md` Deviations | One Deviations line, facts verified (see §2) | fixed r2 |
 | F10 | Nit | `campaigns/README.md:48` | "usable" dropped | fixed r2 |
 | F11 | Minor | `docs/status.md:116` | Unevidenced parenthetical removed | fixed r2 |
-| F12 | Nit | `skills/campaign/SKILL.md:58-59` | **New (introduced by the F2 fix).** "Change only the Kind row, the Status cell, the answers… and the `SR-5…` row" omits the title line `# Campaign: <campaign-name>`. `e1-f2-4` followed the text literally: it kept the placeholder title and listed it as unfilled. The other 5 drafts filled it. The impact is cosmetic (the path carries the name). **Fix:** add "the title" to the change list | open |
+| F12 | Nit | `skills/campaign/SKILL.md:58-59` | **New (introduced by the F2 fix).** "Change only the Kind row, the Status cell, the answers… and the `SR-5…` row" omits the title line `# Campaign: <campaign-name>`. `e1-f2-4` followed the text literally: it kept the placeholder title and listed it as unfilled. The other 5 drafts filled it. The impact is cosmetic (the path carries the name). **Fix:** add "the title" to the change list | accepted by the user (2026-10-05): /demo-day measures the title as part of fidelity |
 | F13 | Minor | `evidence.md:491,642` | **New.** The T9 paragraph still said "so no instance was lost" with no pointer to the fix-round correction. The T7 NFR-4 table carries the 67-line numbers and the old "use any git command" quote with no staleness note. Artifact wording. **Reviewer fixed it:** a one-sentence pointer at each place, wording otherwise untouched | fixed r2 |
 
 ## 4. Requirements Traceability
