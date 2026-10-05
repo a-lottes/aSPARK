@@ -488,7 +488,7 @@ Closing report (quoted): *"Still blank, so not startable until these are filled 
 
 **Size.** `wc -l skills/campaign/SKILL.md` = `67` (NFR-1 cap 70; no yield needed).
 
-**Rule placement, one row per NFR-4 rule (`grep -n` over `skills/campaign/SKILL.md`):**
+**Rule placement, one row per NFR-4 rule (`grep -n` over `skills/campaign/SKILL.md`):** *(T7 snapshot of the 67-line text; after the fix round the file has 73 lines and the current line numbers are in `review.md` §4, NFR-4.)*
 
 | NFR-4 rule | Line in SKILL.md | Text (shortened) |
 |---|---|---|
@@ -639,7 +639,7 @@ Each session: a repo holding `.spark/campaigns/taken/campaign.md` (committed) wi
 | 4 | halted | no | yes | yes | pass |
 | 5 | complete | no | **no** | **no** | **MISS** |
 
-**Observed rate: 4 of 5.** In session 5 (Status `complete`) the reply says "`.spark/campaigns/taken/` doesn't exist, and no other campaigns exist" and treats `taken` as a free name, although the file is there (`git status` shows it unchanged, and it is listed by `find`). That is a false statement about the repo. Nothing was written (porcelain empty, the instance byte-identical), so no instance was lost; it is a miss against "the existing instance and its Status are named". The skill's step 2 asks for exactly that check, but the session ran the existence check without finding the file.
+**Observed rate: 4 of 5.** In session 5 (Status `complete`) the reply says "`.spark/campaigns/taken/` doesn't exist, and no other campaigns exist" and treats `taken` as a free name, although the file is there (`git status` shows it unchanged, and it is listed by `find`). That is a false statement about the repo. Nothing was written (porcelain empty, the instance byte-identical), so no instance was lost; it is a miss against "the existing instance and its Status are named". The skill's step 2 asks for exactly that check, but the session ran the existence check without finding the file. *(Corrected in "Fix round after `/peer-review` round 1", F1: "so no instance was lost" held only because the session stopped at its question; continued, it overwrote the instance.)*
 
 ### Summary and what it means
 
