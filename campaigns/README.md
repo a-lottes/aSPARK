@@ -19,7 +19,7 @@ never edits an agent or a skill. Today one kind exists, [`migration-campaign`](m
 
 Frontmatter declares all seven keys. A file missing any of them is reported as **malformed,
 naming the key**, and is not used.
-**Best effort, not a guarantee:** this check is prompt material. In QA a kind with a key removed was reported malformed in 13 of 19 sessions (`stop-rules` 4 of 4, `roles` 2 of 5, `phases` 4 of 7); a miss said the kind "has all seven keys". The contribution review is the real gate for a new kind.
+**Best effort, not a guarantee:** this check is prompt material. In QA a kind with a key removed was reported malformed and not used in 1 of 5 sessions at round 1 and 24 of 24 at round 2, after the key check moved to open the reply (17 of 17 with the goal on the command line); a miss said the kind "has all seven keys". The contribution review is the real gate for a new kind.
 
 | Key | Meaning |
 |---|---|
@@ -43,6 +43,10 @@ phase it declares in `phases` by adding one file — and only that file.
 
 ## Instantiating a campaign
 
+**Start with `/campaign <name> [kind]`.** It reads the kinds and the template from the plugin itself (no path to name), asks only what the kind leaves open and writes one draft: Status `draft`, approval blank, veto record blank, no commit. It is instructed to refuse an undecidable goal, several goals or a set of stories, a goal that fits no kind, an existing name, a malformed kind and a name that is not kebab-case, and never to approve, run or commit. The hand-start below stays valid.
+
+**Best effort, not a guarantee:** these checks are prompt material. Measured in development, five fresh sessions each (`/demo-day` re-measures): a kind with a key removed was reported malformed and not used 1 of 5 at `/demo-day` round 1 when the goal came in the same line as the command (the check sat at the kind step, and the agent went on to the goal), then 5 of 5 after the key check was moved to open the reply and gate the write; the draft state held 5 of 5; an undecidable goal was refused 5 of 5; several goals 5 of 5; an existing instance was named 4 of 5 at first (one session claimed it did not exist, and a review run showed that miss would then have overwritten it; the existence check now reads the instance file itself and held 5 of 5 with the goal given up front). A first draft creates `.spark/campaigns/`, which gives `aspark-graph` one phantom node and the `/spark` behaviour below.
+
 1. Outside a skill the agent cannot resolve `${CLAUDE_PLUGIN_ROOT}`: **name the plugin folder in your prompt** — the folder of the installed aSPARK plugin, the one that contains `campaigns/` and `templates/` (under `~/.claude/plugins/`). If the agent cannot find it, it asks you and never invents a structure. Then copy `${CLAUDE_PLUGIN_ROOT}/templates/campaign.md` to
    **`.spark/campaigns/<campaign-name>/campaign.md`**, then append the chosen kind's body (below its frontmatter) as §8 "Kind-specific", with the slice list and parity check filled in under it; the kind's stop rules replace the `SR-5…` placeholder row in §4. The copy is **frozen at approval**: the user
    approves exactly the text that governs the run, and a later plugin update cannot change it.
@@ -63,7 +67,7 @@ Naming rules, because [`aspark-graph`](../tools/README.md) reads `.spark/`:
   for example "run the campaign at `.spark/campaigns/<name>/campaign.md`". Nothing switches a
   campaign on by itself and no ceremony proposes one yet.
 - **Silence:** a repo without `.spark/campaigns/` sees no change in any ceremony — no notice,
-  no question, no mention. The ten ceremonies have no campaign logic yet; routing and the
+  no question, no mention. The loop ceremonies have no campaign logic yet; routing and the
   standing rule for ordinary feature loops arrive in a later increment. Observed meanwhile, in single non-deterministic runs (not designed): in a repo
   whose only `.spark/` subdirectory is `campaigns`, `/spark` reports there is no feature to resume and describes the halted campaign, and `/next-steps` lists it; `/spark campaigns` asks for another name.
 - **Hand-run:** the user names the instance; the agent reads it, refuses without recorded goal

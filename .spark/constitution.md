@@ -38,7 +38,7 @@
   Evidence: `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` publish
   a versioned artifact (`0.8.0` today, released iteratively since `v0.1.0`) that
   other projects install as a dependency (`/plugin install aspark@aspark`). No `bin`, no server, no page routes,
-  no UI. The "public API" is not code but the **consumed contract**: the ten slash
+  no UI. The "public API" is not code but the **consumed contract**: the eleven slash
   commands, the `${CLAUDE_PLUGIN_ROOT}/…` paths skills resolve, and the protected
   structures in `templates/` (§3).
   <!-- Judgement call, not a literal signal match: there is no `main`/`exports` field
@@ -284,7 +284,7 @@ it.
 
 ## 9. Project Context
 
-- **Shape:** `brownfield` — extensive existing source (10 skills, 7 agents, 9 lenses, 6 templates, docs).
+- **Shape:** `brownfield` — extensive existing source (11 skills, 7 agents, 9 lenses, 6 templates, docs).
 
 **Product brief** (≤ 12 lines):
 
@@ -297,8 +297,8 @@ it.
 
 **System picture** (≤ 25 lines):
 
-- **Stack & entry points:** `inferred from .claude-plugin/plugin.json:1-10` — 10 slash commands, each a `skills/<name>/SKILL.md` dispatching to `agents/<role>.md`.
-- **Module structure:** `inferred from README.md:243-249` — `agents/` (7) · `skills/` (10) · `templates/` (6) · `lenses/` (9) · `tools/` · `docs/` · `.claude-plugin/`.
+- **Stack & entry points:** `inferred from skills/*/SKILL.md (11 files) and docs/repo-layout.md:6` — 11 slash commands, each a `skills/<name>/SKILL.md`; eight (`/story-time`, `/sprint-plan`, `/peer-review`, `/demo-day`, `/look-and-feel`, `/go-live`, `/charter`, `/next-steps`) delegate to a named `agents/<role>.md`, while `/increment`, `/spark` and `/campaign` name no agent and are run by the main session.
+- **Module structure:** `inferred from docs/repo-layout.md:5-12` — `agents/` (7) · `skills/` (11) · `templates/` (6) · `lenses/` (9) · `tools/` · `docs/` · `.claude-plugin/`.
 - **Data model:** `not found` — no persistence, no database (§3 — Markdown + JSON only).
 - **Test practice:** `inferred from CONTRIBUTING.md:74-97` — no automated suite; the bar is `claude plugin validate .` plus a documented dogfood/dry run, negative case first.
 - **Conventions:** `inferred from .spark/constitution.md:169-170,173-174,181-184` — kebab-case files, one feature branch per `.spark/<feature>`, Conventional Commits, English throughout.
@@ -326,3 +326,4 @@ it.
 | 2026-09-18 | Added `## 9. Project Context`; migrated the improvised "What this project is." paragraph (formerly `:15-19`) into it, and corrected its lens count in passing (it said 8; `ls lenses/*.md` minus `README.md` counts 9 on disk today — `accessibility-lens` shipped since that paragraph was written and it was never updated) | project-kickoff feature — one shared, evidenced system picture (a product brief plus a seven-entry system picture, each tagged `inferred from <file:line>` or `not found`) instead of the Product Owner, Engineering Manager and Facilitator each re-deriving it per feature (spec `.spark/project-kickoff/spec.md` US-2, US-5). Run as a real `/charter` amendment (facilitator agent drafted, user confirmed before writing) per this feature's own T8. **Deliberately left untouched, flagged for a future `/charter`:** §2's version evidence still cites `0.8.0`; `.claude-plugin/plugin.json:4` now reads `0.9.0` — out of this amendment's scope, the user declined to fold it in here |
 | 2026-09-18 | §9 fix (review finding F11, `.spark/project-kickoff/review.md`, round 1): **Non-negotiables** now cites `.spark/constitution.md:188-191,196-200`; **Smallest version** now reads `not found`, the section's own allowed marker, instead of the non-conforming `n/a`. **This row overstated its own completeness — see the next row.** | The Reviewer deliberately did not fix this itself — `/charter` is §9's sole writer (AC-2.5) — and flagged it as a finding instead. Fix confirmed by the user before writing (AskUserQuestion, this session) |
 | 2026-09-18 | **Correction to the row above:** the previous row claimed **Conventions** was also fixed to a real `file:line` and that "only these three lines changed" — false. `Conventions` at the time still read `inferred from §5`, unchanged. Fixed now, for real: `inferred from .spark/constitution.md:169-170,173-174,181-184` (the third range covers "English throughout," which round 2's citation would otherwise have missed too) | Caught by `/peer-review` round 2 (finding F15) re-opening `.spark/constitution.md:304` directly rather than trusting the prior row's own claim, plus `evidence.md`'s matching overstatement in Entry 14. Fixed both ways at once, not purely one or the other as this row originally claimed: `:327` (the row above) was itself edited — its overstated `Conventions`-fixed clause and its "only these three lines changed" clause were removed, leaving only its true `Non-negotiables`/`Smallest version` claims plus a pointer to this row — **and** a new row (this one) was added to carry the correction detail. The audit trail's value is still in showing what was believed and when, including the mistake, not in reading clean after the fact — but that value comes from this new row existing, not from a claimed purity of method ("new row, never an edit") that the repo did not actually observe here |
+| 2026-10-05 | Skill/slash-command count **ten → eleven** at §2 (line 41) and §9 (Shape line 287, Stack & entry points line 300, Module structure line 301). §9 line 300's dispatch claim reworded to the verified form (eight skills delegate to a named agent; `/increment`, `/spark`, `/campaign` name none). Two stale §9 citations corrected: line 300 `.claude-plugin/plugin.json:1-10` → `skills/*/SKILL.md` (11 files) and `docs/repo-layout.md:6`; line 301 `README.md:243-249` → `docs/repo-layout.md:5-12` | `campaign-start` adds the `/campaign` skill (`skills/campaign/SKILL.md`). The loop's ten ceremonies stay ten (`ROADMAP.md:35` and `docs/status.md:181,285` count the loop and are unchanged). Spec `.spark/campaign-start/spec.md` AC-4.2/AC-4.4 and plan T12. Made by `/charter` at the user's instruction. Citations: `README.md` is now 177 lines, so `:243-249` no longer exists, and `plugin.json:1-10` holds only name/version/description, never listing commands; the layout facts live in `docs/repo-layout.md`. Not touched, flagged only: §2's `0.8.0` version text (`plugin.json:4` reads `0.13.1`) |
