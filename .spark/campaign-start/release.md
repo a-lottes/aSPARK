@@ -5,17 +5,17 @@
 | **Phase** | Keep |
 | **Owner** | Release Manager (`/go-live`) |
 | **Input** | `review.md` (`passed`), `qa.md` (`passed`) |
-| **Status** | `preparing` |
-| **Version** | v0.14.0 (proposed only, no tag before merge) |
+| **Status** | `handed-off` |
+| **Version** | v0.14.0 (tag `v0.14.0` exists, on the release commit; see §3) |
 | **Date** | 2026-10-07 |
 | **Ticket** | none |
-| **Commit** | pending: release commit sha, filled after the go |
-| **PR** | pending: url, filled after the go |
+| **Commit** | `1ce9dc6` (release commit); merged as `2ba7629` (merge commit `2ba7629a4d26068b0b1efa91efbfd98342515cef`) |
+| **PR** | https://github.com/a-lottes/aSPARK/pull/72 (merged 2026-10-07T19:22:36Z) |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status` and `Version`).
-- **Summary:** Adds the optional `/campaign <name> [kind]` command, which writes a draft campaign file and stops. Prepared locally, awaiting the user's go to push and open the PR.
-- **Open:** `3 outstanding` — push, PR into `main`, requesting the approver (self-review by `a-lottes`); the real tag and merge happen outside aSPARK's control after merge.
+- **Summary:** Adds the optional `/campaign <name> [kind]` command, which writes a draft campaign file and stops. Pushed, PR #72 opened and merged into `main` (2ba7629); tag `v0.14.0` pushed on the release commit.
+- **Open:** `1 outstanding` — the tag `v0.14.0` points at the release commit `1ce9dc6`, not the merge commit `2ba7629` (precedent v0.13.1 tags the merge commit); recorded, not re-tagged. Pushing this record (branch `docs/v0.14.0-released`) and its PR await the user's go.
 - **Binding ruling:** §3 Release Actions and the KEEP GATE below carry the final ruling.
 - **On conflict:** the numbered body below wins for everything except `Status`/`Version`; log the mismatch as a finding at the next `/go-live` and proceed — don't stop on it.
 
@@ -57,12 +57,12 @@
 
 | Action | Result |
 |---|---|
-| Version bump & tag | Proposed 0.13.1 -> 0.14.0 in `.claude-plugin/plugin.json`, committed locally. Minor: one new optional command, nothing renamed or removed (spec AC-4.3, plan D8, semver; matches the v0.13.0 minor precedent). `pr` mode: no tag created. The tag `v0.14.0` is created after merge on the merge commit, outside aSPARK. |
-| PR / merge | Prepared, awaiting go. Repo `a-lottes/aSPARK` (from `origin` `git@github.com:a-lottes/aSPARK.git`). Pending: (1) `git push -u origin feat/campaign-start`; (2) `gh pr create --repo a-lottes/aSPARK --base main --head feat/campaign-start --title "feat: /campaign starts a campaign draft (v0.14.0)" --body-file <PR body from §2 changelog plus link to .spark/campaign-start/release.md>`; (3) approver `a-lottes` reviews and merges (self-review via PR). PR-open and validate-green: not yet established. |
+| Version bump & tag | Bumped 0.13.1 -> 0.14.0 in `.claude-plugin/plugin.json` (release commit `1ce9dc6`). Minor: one new optional command, nothing renamed or removed (spec AC-4.3, plan D8, semver). Annotated tag `v0.14.0` (tag object `4c5fca0`) is pushed (`git ls-remote`) and points at `1ce9dc6`, **not** the merge commit `2ba7629`. v0.13.1 tags its merge commit (`9536fa1`); this deviates and is recorded, no re-tag. |
+| PR / merge | Repo `a-lottes/aSPARK`. Branch `feat/campaign-start` pushed; PR https://github.com/a-lottes/aSPARK/pull/72 opened and merged 2026-10-07T19:22:36Z as a regular merge commit `2ba7629` (`gh pr view 72`: state MERGED). Approver `a-lottes` (self-review via PR). |
 | Deploy | N/A — handed-off, no deploy |
-| Post-release smoke check | N/A — handed-off, no deploy |
+| Post-release smoke check | Run 2026-10-07 on `origin/main` @ `2ba7629` (detached scratch worktree, not in `~/aSPARK`): `plugin.json` version `0.14.0`; `claude plugin validate .` = "Validation passed with warnings" (same one pre-existing `CLAUDE.md` warning); `skills/campaign/SKILL.md` present; `.py` files on `origin/main` = 0. Real `claude -p "/campaign smoke-x"` with `--plugin-dir` in a fresh scratch git repo: first run stopped for lack of read access to the plugin dir and wrote nothing; rerun with `--add-dir` read the kind, found the name free, proposed the one kind `migration-campaign`, asked what it leaves open (no goal given, so none invented) and wrote nothing (`git status` clean, no files). Command responds. |
 
-**Rollback path:** before merge, nothing is published: `git reset --hard 6b7af60` on the branch drops the release commit, or close the PR and delete the remote branch (`git push origin --delete feat/campaign-start`). After merge, `git revert -m 1 <merge-commit>` through a PR restores `0.13.1` and removes the command (additive release, no data migration); users already on `0.14.0` update to the reverting version. Campaign drafts users already wrote are plain files and stay valid for hand-running.
+**Rollback path:** before merge, nothing is published: `git reset --hard 6b7af60` on the branch drops the release commit, or close the PR and delete the remote branch (`git push origin --delete feat/campaign-start`). After merge, `git revert -m 1 2ba7629` through a PR restores `0.13.1` and removes the command (additive release, no data migration); users already on `0.14.0` update to the reverting version. Campaign drafts users already wrote are plain files and stay valid for hand-running.
 
 ## 4. Learnings (Keep!)
 
@@ -78,7 +78,7 @@
 
 - [x] All pre-flight checks passed at release time
 - [x] Changelog written in user-facing language
-- [ ] Release actions executed and verified (or `aborted` with reason) — in declared `pr` mode: PR open on the target branch, validate passing, the declared approver requested, rollback path written; Deploy and Post-release smoke check are N/A. **Pending the user's go:** push and PR not yet done; rollback path is written
+- [x] Release actions executed and verified (or `aborted` with reason) — in declared `pr` mode: PR open on the target branch, validate passing, the declared approver requested, rollback path written; Deploy N/A. PR #72 merged (read-only `gh pr view`), validate passes on `origin/main`, post-release smoke check done (§3). Tag sits on `1ce9dc6`, a recorded deviation
 - [x] Learnings recorded
-- [x] Line budget respected: Ist 80 / Soll ~100 (excluding HTML comments), self-reported; the changelog's honest limits bullet is the longest line
-- [ ] Status set to `handed-off` — outstanding: push, PR, approver review and merge, owned by `a-lottes` (declared approver); the real tag `v0.14.0` and the merge happen outside aSPARK's control. Not shipped until then.
+- [x] Line budget respected: Ist 83 / Soll ~100 (excluding HTML comments), self-reported; the changelog's honest limits bullet is the longest line
+- [x] Status set to `handed-off` — outstanding: this record's own push and PR (awaiting the user's go); the tag/merge happened outside aSPARK's control (user), owned by `a-lottes` (declared approver). Not a direct-mode deploy.

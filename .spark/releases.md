@@ -7,3 +7,4 @@
 | Version | Date | Feature | Commit | PR |
 |---|---|---|---|---|
 | v0.13.1 | 2026-10-04 | adversarial-gates | 0ee4577 | https://github.com/a-lottes/aSPARK/pull/69 |
+| v0.14.0 | 2026-10-07 | campaign-start | 1ce9dc6 | https://github.com/a-lottes/aSPARK/pull/72 |
