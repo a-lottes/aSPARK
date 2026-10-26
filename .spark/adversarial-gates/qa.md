@@ -6,12 +6,12 @@
 | **Owner** | QA Tester (`/demo-day`) |
 | **Input** | Installed plugin at branch head (declared substitute method, constitution §8), `.spark/adversarial-gates/spec.md` (Increment 1: US-1, US-4) |
 | **Status** | `passed` |
-| **Round** | 1 |
-| **Date** | 2026-10-04 |
+| **Round** | 2 (Increment 2) |
+| **Date** | 2026-10-26 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`).
-- **Verdict:** Yes, I would demo this: the negative case held live, every doc claim matched what shipped; two Minor wording findings, no Blocker or Major.
+- **Verdict:** Round 2 (Increment 2): `passed` with one disclosed gap (B3, Minor: live runs `⚠ not-verified-live`, accepted by this round, not by the user); `anti-generosity` applied. Round 1 (Increment 1): Yes, I would demo this: the negative case held live, every doc claim matched what shipped; two Minor wording findings, no Blocker or Major.
 - **Open:** `0 open` — Blockers: none; Majors: none; B1 fixed, B2 accepted by the user (see §3)
 - **Binding ruling:** §5 Verdict and the gate checklist below — the only binding location; there is no other round to point to
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/demo-day` and proceed — don't stop on it.
@@ -68,6 +68,31 @@ N/A: no browser. Command output observed: all four headless sessions exited 0; n
 ## 5. Verdict
 
 Yes, I would demo this to a stakeholder right now. The corpus quotes reproduce from source, the skill diff is empty, the live negative runs routed identically with no gate-hardening trace, and every doc claim is "none shipped, in-repo, unmeasured, prompt-enforced, standard planned". Nothing unshipped is described as delivered. Limits I could not remove: each live run is n=1 (nondeterministic wording and question counts), and the corpus is a fixed-term search, not a census. B1 and B2 are Minor wording items for the user to accept or fix. AC-1.3, AC-1.4, AC-1.6 are N/A by AC-1.7, not passed. No row is `⚠ not-verified-live`.
+
+## 6. Round 2: Increment 2 (AC-2.x, `skills/*/SKILL.md` dispatch)
+
+Standard `anti-generosity` applied (read in full before this section). Evaluation mode: **declared substitute method (constitution §8), degraded**: command output and file reads only. No `claude` CLI is installed (`which claude` empty), so no ceremony could be invoked; every "an agent does X" check is `⚠ not-verified-live`. No browser surface exists.
+
+| Spec ID | Steps performed | Observed | Result |
+|---|---|---|---|
+| AC-2.1 | Read `standards/anti-generosity.md` rules 1, 2 | Tendency stated; six phrases banned | PASS (text); agent behaviour ⚠ not-verified-live |
+| AC-2.2 | Read rules 3, 4 | Binary items; partial written exactly `⚠ not-verified-live` | PASS (text); agent behaviour ⚠ not-verified-live |
+| AC-2.3 | Read rule 5 | Evaluation mode named, static result degraded | PASS (text) |
+| AC-2.4 | Read rule 6 | No withdrawal without cited evidence | PASS (text) |
+| AC-2.5 | `wc -l` = 35; `git diff --stat 659382a -- agents templates lenses .spark/constitution.md` empty | One file, no agent change | PASS |
+| AC-2.6 | `grep -rn "standards/" skills agents templates lenses` | Two hits: `peer-review/SKILL.md:56`, `demo-day/SKILL.md:89` | PASS |
+| AC-2.7 | `git diff --stat 659382a -- templates` empty | Protected headings untouched | PASS |
+| AC-2.8 | Read both dispatch lines and the step 3/4 lines | Unconditional wording, no flag, user told if report omits it | PASS (instruction); that a run passes it and names it ⚠ not-verified-live |
+| AC-2.9 | Read rules 4, 7 and `evidence.md:222` | E3, E4 cited; rules 1, 2 labelled | PASS with Minor (B4) |
+| AC-4.6 | Read README, ROADMAP, `docs/status.md` diffs | Always active, verdict change for installed projects, unmeasured | PASS |
+| Dispatch edits | `git diff 659382a -- skills` | Added lines only in step 2 and the report step; no `name:` or other frontmatter change; both files 5/1 numstat | PASS |
+
+| # | Severity | Steps to reproduce | Expected vs. observed | Status |
+|---|---|---|---|---|
+| B3 | Minor | `which claude`; read `evidence.md` Increment 2 section | Dry-run evidence (negative case, dispatch k=6, verdict k=3) expected by the issue; none exists. Docs disclose it. Accepted by this round as a disclosed gap, no user waiver claimed; run where the CLI exists. | open, accepted by this round |
+| B4 | Minor | Read `standards/anti-generosity.md` rules 3, 5, 6, 8, 9 | AC-2.9 wants a "not grounded in the corpus" label on every non-corpus element; only rules 1, 2 carry it. Same as review F12. | open, routed to `/increment` |
+
+**Verdict (Increment 2).** The text and dispatch checks pass and reproduce. I did not observe an agent following the standard, so no AC that depends on that is passed. No Blocker or Major is open. `anti-generosity` applied.
 
 ---
 
