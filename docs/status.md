@@ -265,7 +265,15 @@ was an explicit, informed shipping decision, not an oversight.
 |---|---|
 | **Scope** | Short rebuttal rows at a ceremony gate, only where the repo's own trails record at least two agent gate evasions at that same gate. **Shipped: none.** The only shipped part is the search itself and its finding. |
 | **Evidence** | [`.spark/adversarial-gates/evidence.md`](../.spark/adversarial-gates/evidence.md): rules committed before the scan, 51 files searched with fixed terms, 10 entries (1 `agent-evaded-gate`, 2 `verdict-rounded-up`, 7 `other`). The one qualifying entry is not enough at any gate, so the outcome is **refuted-with-finding** and every `skills/*/SKILL.md` is byte-identical. A negative-case dry run of `/next-steps` is recorded there. One borderline entry (E2) was ruled `other` at review and would not qualify a gate under any reading. |
-| **State** | **Unproven by design.** Grounding is in-repo trails, not field reports, and it is a search, not a census. Whether a row would fire cannot be tested in Core, and no effectiveness is claimed. The gates remain prompt-enforced; code-level enforcement is the optional sibling [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)'s concern. Rows apply at no gate today and stay silent everywhere. The stricter-verdict standard for `/peer-review` and `/demo-day` is planned, not built. A second, independent reviewer is not built; re-open only on a new argument or observation, such as a recorded single-reviewer miss. |
+| **State** | **Unproven by design.** Grounding is in-repo trails, not field reports, and it is a search, not a census. Whether a row would fire cannot be tested in Core, and no effectiveness is claimed. The gates remain prompt-enforced; code-level enforcement is the optional sibling [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)'s concern. Rows apply at no gate today and stay silent everywhere. The stricter-verdict standard ships separately, see below. A second, independent reviewer is not built; re-open only on a new argument or observation, such as a recorded single-reviewer miss. |
+
+## Anti-generosity standard (review and QA verdicts)
+
+| | |
+|---|---|
+| **Scope** | `standards/anti-generosity.md` (35 lines), passed by literal path by `/peer-review` and `/demo-day` in every run, with no constitution setting. Binary PASS/FAIL per check, partial checks written `⚠ not-verified-live`, evaluation mode named, no downgrading a finding without a cited reason. Silent in every other ceremony. |
+| **Evidence** | Structural checks performed (line count, empty diff of `agents/` and `templates/`, the two dispatch hits, no `*.py`). The dry runs (negative case, dispatch k=6, verdict behaviour k=3) were **not performed**: no `claude` CLI here. Recorded in [`evidence.md`](../.spark/adversarial-gates/evidence.md). |
+| **State** | **Unproven.** Prompt material: likely, never certain; effect unmeasured; rates unknown. A changed verdict behaviour for installed projects (minor bump). Gates stay prompt-enforced; code enforcement is `aspark-guard`'s. A second, independent reviewer is not built. |
 
 ## Browser backends for `/demo-day`
 

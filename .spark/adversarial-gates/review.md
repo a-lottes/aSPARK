@@ -6,12 +6,12 @@
 | **Owner** | Reviewer (`/peer-review`) |
 | **Input** | The diff of `/increment`, `.spark/adversarial-gates/plan.md` |
 | **Status** | `passed` |
-| **Round** | 2 |
-| **Date** | 2026-10-04 |
+| **Round** | 3 (Increment 2) |
+| **Date** | 2026-10-26 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`).
-- **Verdict:** Round 2: `passed`. All round-1 findings confirmed fixed from source; two new Minors (F9, F10) found and fixed by the reviewer; refuted-with-finding and E2 `other` stand.
+- **Verdict:** Round 3 (Increment 2): `passed` with one disclosed gap (F11, Minor: dry runs `⚠ not-verified-live`, accepted by this round, not by the user); `anti-generosity` applied. Round 2 (Increment 1): `passed`. All round-1 findings confirmed fixed from source; two new Minors (F9, F10) found and fixed by the reviewer; refuted-with-finding and E2 `other` stand.
 - **Open:** `0 open` — Blockers: none; Majors: none; F1–F10 all `fixed` (see §3)
 - **Binding ruling:** §6 Verdict and the gate checklist below — the only binding location; there is no other round to point to
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
@@ -83,6 +83,37 @@
 ## 6. Verdict
 
 Round 2 passes. I checked every round-1 fix from the source, not from the fix notes. The E2 note and the T4 bullet now quote `right-sizing/evidence.md:980` correctly, and no file in the diff still says "would reach 3" or treats B1/B4 as a recurrence. The Blocker sweep figures reproduce exactly: 3 literal rows, 7 severity-cell rows, and the 7-row form contains both E7 (`situational-lenses/review.md:55`) and E2's source row (`right-sizing/qa.md:103`). Both new Deviations entries are accurate: 18 folders, 142 hits on 140 lines, and the E5 vs `lean-rounds` F10 inconsistency recorded without being repaired. The frozen Method text is unchanged since `7416328`. The doc edits (F5, F7, F8) add no unshipped claim and leave nothing stale, so AC-4.1–4.5 still hold. I found two more Minor drifts and fixed both myself: the plan still described the sweep by its literal pattern (F9), and the head audit's file list did not include this report (F10). No Blocker or Major is open, and no waiver is needed. Refuted-with-finding and the user-accepted E2 ruling (`other`) stand.
+
+## 7. Round 3: Increment 2 (anti-generosity standard, issue #13 / #87)
+
+Standard `anti-generosity` applied (`standards/anti-generosity.md`, read in full before writing this section). Evaluation mode: **static read plus shell commands** (`wc`, `grep`, `git diff`); no `claude` CLI is installed here, so no agent run was possible. Results that rest on reading alone are degraded and say so.
+
+**Scope.** `git diff 659382a..HEAD` (commit `c5dc4c7`): `standards/anti-generosity.md`, `skills/peer-review/SKILL.md`, `skills/demo-day/SKILL.md`, `README.md`, `ROADMAP.md`, `docs/status.md`, `docs/repo-layout.md`, `CONTRIBUTING.md`, `evidence.md`. Plan T10–T15 and AC-2.1–AC-2.9, AC-4.6.
+
+| Item | Observable | Result |
+|---|---|---|
+| AC-2.5 one file, ≤ ~40 lines | `wc -l standards/anti-generosity.md` = 35 | PASS |
+| AC-2.5 / AC-2.7 no `agents/`, `templates/`, `lenses/`, constitution, `.claude-plugin` change | `git diff --stat 659382a -- agents templates lenses .spark/constitution.md .claude-plugin` empty | PASS |
+| AC-2.6 dispatch and activation, per claimed phase (review, qa) | `grep -rn "standards/" skills agents templates lenses` = `skills/peer-review/SKILL.md:56`, `skills/demo-day/SKILL.md:89` only; `/charter`, facilitator, `templates/constitution.md`, `lenses/README.md` do not mention it | PASS |
+| AC-2.8 unconditional dispatch (static half) | Both lines read "Always pass … with no constitution read and no flag"; step 3/4 adds "If the report does not name the anti-generosity standard as applied, tell the user" (`peer-review:63-64`, `demo-day:102-103`) | PASS (instruction present) |
+| AC-2.8 an agent was handed it and the report names it | No run performed | ⚠ not-verified-live |
+| AC-2.1 tendency + banned list | Standard rules 1, 2 (six phrases) | PASS (text present); agent compliance ⚠ not-verified-live |
+| AC-2.2 binary, partial = `⚠ not-verified-live` | Rules 3, 4 | PASS (text present); compliance ⚠ not-verified-live |
+| AC-2.3 evaluation mode, degraded | Rule 5 | PASS (text present) |
+| AC-2.4 no withdrawal without cited reason | Rule 6 | PASS (text present) |
+| AC-2.9 citations | Rules 4, 7 cite E3, E4 (both `verdict-rounded-up`, `evidence.md:89,91`); rules 1, 2 labelled "not grounded in the corpus"; rules 3, 5, 6, 8, 9 carry no label (derive from spec ACs, see F12) | PASS for derived rules; see F12 |
+| NFR-1 added lines per SKILL.md ≤ 12 | `git diff --numstat 659382a -- skills` = 5/1 and 5/1 | PASS |
+| NFR-6 no executable code | `git ls-files '*.py'` = 0 | PASS |
+| AC-4.6 docs | README, ROADMAP, `docs/status.md` state: always active, changes verdicts for installed projects, unmeasured; Inc 1 claims retained | PASS |
+| `claude plugin validate .` | CLI not installed | ⚠ not-verified-live |
+| T13 dispatch k=6, T14 verdict behaviour k=3, negative-case dry run | Not performed (`evidence.md` Increment 2 section) | ⚠ not-verified-live |
+
+| # | Severity | Location | Finding | Status |
+|---|---|---|---|---|
+| F11 | Minor | `evidence.md` Increment 2 section | **Problem:** the negative-case dry run, T13 and T14 are `⚠ not-verified-live` (no `claude` CLI). The issue asks for dry-run evidence, which does not exist. **Disposition:** this round accepts the gap as disclosed: every doc that mentions the standard says the effect is unmeasured and the runs were not performed (`docs/status.md`, `evidence.md`), and no cell claims a pass. A user waiver is **not** claimed; the runs stay owed and should be done where the CLI exists, before or at `/go-live`. | open, accepted by this round |
+| F12 | Minor | `standards/anti-generosity.md` rules 3, 5, 6, 8, 9 | **Problem:** AC-2.9 wants every non-corpus element labelled "not grounded in the corpus"; only rules 1 and 2 carry the label, the others are covered by a sentence in `evidence.md:222`. The file is at 35 of ~40 lines, so a label per rule fits. **Not fixed here:** the finding is outside this fix's scope (the three named problems); route to `/increment`. | open |
+
+**Verdict.** Round 3 passes for Increment 2 on the structural checks above, which reproduce at head. I did not verify that any agent follows the standard; that is `⚠ not-verified-live`, not a pass. `anti-generosity` applied. No Blocker or Major is open.
 
 ---
 

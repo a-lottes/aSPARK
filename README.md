@@ -120,12 +120,12 @@ Each ceremony can also be run on its own. The artifacts on disk *are* the state,
 
 `/charter` records what kind of software this is (`website`, `web-app`, `api`, `cli`, `library`) and what it does with data (auth, payments, PII, database, multiple languages, accessibility mandate). That switches on matching **lenses**: extra checks the existing team applies only where they apply. A public website gets SEO and Core Web Vitals in QA. An API gets error-envelope and versioning checks in review. A project that handles payments gets the security lens through every phase. Nine lenses ship today; adding one is a new file in [`lenses/`](lenses/). Without a constitution, no lens fires.
 
-### Gate hardening: searched, no rebuttal rows shipped
+### Gate hardening: an always-on verdict standard, no rebuttal rows
 
 The gates are prompt-enforced: an agent can reason its way past one, and Core, being Markdown with no runtime, cannot stop it. Code-level enforcement is the optional sibling [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)'s concern.
 - Rebuttal rows were to go only where an evasion was actually recorded. A search of this repo's own 51 review, QA and evidence files ([`evidence.md`](.spark/adversarial-gates/evidence.md)) found one recorded gate evasion where the bar was two at the same gate, so **no rows shipped at any gate**; every skill is unchanged.
 - The grounding is in-repo trails, not field reports. The search was fixed-term, not a census. Effectiveness is unmeasured, and whether a row would fire cannot be tested in Core.
-- Stricter verdict rules for `/peer-review` and `/demo-day` are planned and not built; they change nothing today. A second, independent reviewer is not built (re-open only on a new argument or observation, such as a recorded single-reviewer miss).
+- **Shipped: an anti-generosity standard**, [`standards/anti-generosity.md`](standards/anti-generosity.md), always active in every `/peer-review` and `/demo-day` run (no opt-in, no opt-out). This changes verdict behaviour for already-installed projects: every check is PASS or FAIL with its deciding observable, a partial or unperformed check is written `⚠ not-verified-live` and never PASS, a static-only result is stated as degraded, and a finding is not downgraded without a cited reason. It applies only to those two phases; every other ceremony is unchanged. It is prompt material: stricter verdicts are likely, not certain, and the effect is unmeasured (the dry runs were not performed, see [`evidence.md`](.spark/adversarial-gates/evidence.md)). A second, independent reviewer is not built (re-open only on a new argument or observation, such as a recorded single-reviewer miss).
 
 ### Campaigns: one measurable goal instead of one story (experimental)
 

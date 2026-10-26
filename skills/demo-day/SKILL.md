@@ -86,6 +86,9 @@ user for it, and how to start the app if it isn't running.
    If a tool resolved as available in step 1, pass
    `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md` the same way — one more path
    alongside the lens paths, nothing else.
+   Always pass `${CLAUDE_PLUGIN_ROOT}/standards/anti-generosity.md` too, with no
+   constitution read and no flag, and tell the agent to read it in full before
+   writing any verdict and to name it as applied in the report.
    Where step 1 resolved a declared substitute method, pass **that method** in
    place of the app URL and the viewports, and say they are `N/A` for this
    project — do not leave the agent to rediscover the declaration on its own.
@@ -95,7 +98,8 @@ user for it, and how to start the app if it isn't running.
    seeded data, a second account), get them from the user and re-invoke.
 4. **Present the report.** The AC verification table (every criterion:
    pass/fail), exploratory bugs with reproduction steps, console/network
-   findings, and the demo-day verdict — quoted honestly.
+   findings, and the demo-day verdict — quoted honestly. If the
+   report does not name the anti-generosity standard as applied, tell the user.
 5. **Route the outcome** with the user:
    - failed ACs or open Blockers/Majors → **`/increment`** (fix-mode), then
      `/demo-day` again. Re-tests cover the fixed bugs *and* their

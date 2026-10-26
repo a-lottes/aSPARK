@@ -102,6 +102,14 @@ a well-meaning patch.
 
 ---
 
+## Standards
+
+[`standards/`](standards/) holds always-on rules the review and QA agents are handed in every run
+(today: `anti-generosity`). A standard has no activation setting, so adding or changing one changes
+verdicts for every installed project: it needs its own minor release and a README statement.
+
+---
+
 ## Adding a lens
 
 The most self-contained way to contribute, and the reason `lenses/` exists as a
