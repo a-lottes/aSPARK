@@ -73,11 +73,13 @@ phase longer; if it cannot be kept cheap and rare, it should not ship.
 ## Blocked
 
 **A template version handshake** · `template-version-marker`
-Artifacts shaped by `templates/` are parsed by [`aspark-graph`](https://github.com/a-lottes/aSPARK-graph),
-which pins a supported template version — but no template carries a version marker, so drift surfaces as
-a structural guess rather than a named version conflict. Adding the marker here is a harmless comment
-until the consuming side reads it. **Both repos ship it together or neither does**, otherwise the result
-is a marker nobody reads.
+Artifacts shaped by `templates/` are parsed outside this repo by two consumers:
+[`aspark-graph`](https://github.com/a-lottes/aSPARK-graph), which pins `SUPPORTED_TEMPLATE`, and
+[`aspark-guard`](https://github.com/a-lottes/aSPARK-guard), which re-encodes the same structures.
+**Core's side is shipped:** every template carries `<!-- aspark-template: aspark/0.1.0 -->`. Still open,
+in the consuming repos: `aspark-graph` asserting it (replacing its structural guess with a named version
+conflict) and `aspark-guard` reading it instead of its own copy. Until both do, the marker is read by
+nobody; the rule stands that all repos ship the reading side together.
 
 **Machine-readable release evidence** · `release-evidence`
 Turning release notes into a real `Release` node with a date and a commit, so delivery metrics become

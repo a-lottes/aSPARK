@@ -1,5 +1,7 @@
 # Campaign: <campaign-name>
 
+<!-- aspark-template: aspark/0.1.0 -->
+
 | | |
 |---|---|
 | **Status** | `draft` \| `approved` \| `running` \| `halted` \| `complete` \| `abandoned` |
