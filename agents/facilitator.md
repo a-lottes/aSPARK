@@ -69,7 +69,7 @@ the team to ignore all the others too.
    assumption. For the **Project Profile**: state the type(s) and characteristics
    you detected and the *evidence* for each (the file or config that proves it),
    then derive the **active lenses** from both — types activate `seo`←`website`,
-   `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`, `library`←`library`; for
+   `ux`←`web-app`/`website`, `api`←`api`, `observability`←`api` (only if the service is deployed), `cli`←`cli`, `library`←`library`; for
    characteristics, look up the current mapping in the `Activates` column of
    `${CLAUDE_PLUGIN_ROOT}/lenses/README.md`'s *Characteristics* detection-signals
    table rather than working from a list here. Recommend a lens only when it

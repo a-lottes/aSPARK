@@ -118,7 +118,7 @@ Each ceremony can also be run on its own. The artifacts on disk *are* the state,
 
 ### The loop adapts to what you're building
 
-`/charter` records what kind of software this is (`website`, `web-app`, `api`, `cli`, `library`) and what it does with data (auth, payments, PII, database, multiple languages, accessibility mandate). That switches on matching **lenses**: extra checks the existing team applies only where they apply. A public website gets SEO and Core Web Vitals in QA. An API gets error-envelope and versioning checks in review. A project that handles payments gets the security lens through every phase. Nine lenses ship today; adding one is a new file in [`lenses/`](lenses/). Without a constitution, no lens fires.
+`/charter` records what kind of software this is (`website`, `web-app`, `api`, `cli`, `library`) and what it does with data (auth, payments, PII, database, multiple languages, accessibility mandate). That switches on matching **lenses**: extra checks the existing team applies only where they apply. A public website gets SEO and Core Web Vitals in QA. An API gets error-envelope and versioning checks in review, and a deployed service also gets an observability check (logs, correlation IDs, health, alertable failures). A project that handles payments gets the security lens through every phase. Ten lenses ship today; adding one is a new file in [`lenses/`](lenses/). Without a constitution, no lens fires.
 
 ### Gate hardening: an always-on verdict standard, no rebuttal rows
 

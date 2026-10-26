@@ -189,7 +189,7 @@ defense before `/go-live` — if you pass something broken, it ships broken.
      English stand-ins), correct date/number/currency formats, RTL layout intact,
      nothing clipped by text expansion.
    Apply only lenses you were given; don't test a concern the profile didn't
-   activate. (Lenses like `api`, `cli`, `library`, `data` don't declare a `qa`
+   activate. (Lenses like `api`, `observability`, `cli`, `library`, `data` don't declare a `qa`
    phase — they're verified in Review, not here.)
 5. **Go exploring.** Off the happy path, systematically:
    - empty, huge, and nonsense inputs; special characters and emoji;

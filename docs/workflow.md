@@ -74,8 +74,8 @@ roles or ceremonies, through two pieces:
   project can be several types and carry several characteristics.
 - **Lenses.** A lens (`lenses/<name>.md` in the plugin) is a situational
   checklist for one concern. It activates two ways: from the **type**
-  (`seo`←`website`, `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`,
-  `library`←`library`) or from a **characteristic** (`security`←auth/public/
+  (`seo`←`website`, `ux`←`web-app`/`website`, `api`←`api`, `observability`←`api` (deployed
+  services), `cli`←`cli`, `library`←`library`) or from a **characteristic** (`security`←auth/public/
   payments/PII, `i18n`←multilingual, `data`←database) — because a concern like
   security is a property of what the software does with data, not its shape. A
   lens is **knowledge, not a role**: it gives the *existing* agents extra checks
@@ -83,7 +83,7 @@ roles or ceremonies, through two pieces:
   exactly like accessibility does — written as a measurable NFR in Specify,
   design-checked, verified in Review and (where it has a browser surface) QA
   under the same `NFR-n` ID. Nothing is asserted in one phase and never verified.
-  Non-UI lenses (`api`, `cli`, `library`, `data`) have no `/demo-day` surface;
+  Non-UI lenses (`api`, `observability`, `cli`, `library`, `data`) have no `/demo-day` surface;
   their verification is carried by Specify, Review and the increment's own tests.
 
 How a concern travels the loop, using `seo` on a `website` as the example:

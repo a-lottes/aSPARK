@@ -34,7 +34,7 @@ is worth more than a patch. Reports where it went badly are worth the most.
 |---|---|
 | **The SPARK loop** | Five phases, five gates, ten ceremonies, seven agents. End-to-end on a sample app: PO → Designer → EM → build → review → real-browser QA → release. |
 | **Spec-driven core** | Project constitution (`/charter`), the Specify-phase Clarify pass, non-functional requirements, and the `US-` / `AC-` / `NFR-` / `T` / `F` ID chain running unbroken from spec through plan, review and QA. |
-| **Situational lenses** | Eight lenses activated by project **type** and **characteristics**, applied by the agents who already own each phase. New concerns are add-a-file: no agent is rewritten. |
+| **Situational lenses** | Ten lenses activated by project **type** and **characteristics**, applied by the agents who already own each phase. New concerns are add-a-file: no agent is rewritten. |
 | **Optional tools** | `tools/`, wired into `/sprint-plan`, `/peer-review` and `/demo-day`. Dogfooded in both directions — the absent case first, in a repo without the tool, where nothing may change. |
 | **Honest PR-mode delivery** | `/go-live` reaches a `handed-off` terminal status where the project delivers by pull request instead of by tag. Proven on this repo's own release. |
 | **Maturity labels in the handbook** | Every chapter of the architecture handbook carries a visible Delivery stage label, an overview table up front splits ambition from delivery, inline `Status.` markers name each target-state claim, and the title page separates the handbook revision from the shipped baseline (Core v0.7.0 · graph v0.7.0). Built as the `handbook-maturity` loop on this repo itself. |
@@ -49,10 +49,10 @@ is worth more than a patch. Reports where it went badly are worth the most.
 ## Next
 
 **An observability lens** · [#15](https://github.com/a-lottes/aSPARK/issues/15)
-Between the `api` lens (the contract) and the `security` lens (what must never be logged) sits a concern
+Shipped in 0.15.0 as [`lenses/observability.md`](lenses/observability.md), dry-run only (a read of the dispatch rules, 0 agent sessions run): it is expected to fire in Specify and Review on a hypothetical sample `api` and to stay silent on this `library` repo ([evidence](.spark/observability-lens/evidence.md)). No public run on a real `api` yet. Between the `api` lens (the contract) and the `security` lens (what must never be logged) sits a concern
 nobody owns: whether a correct, secure, well-specified service can be diagnosed once it is running.
-Alongside the accessibility ([#6](https://github.com/a-lottes/aSPARK/issues/6)) and performance
-([#7](https://github.com/a-lottes/aSPARK/issues/7)) lens proposals.
+Alongside the performance ([#7](https://github.com/a-lottes/aSPARK/issues/7)) lens proposal; the
+accessibility lens (formerly #6) already shipped.
 
 **In-flight doubt inside `/increment`** · [#14](https://github.com/a-lottes/aSPARK/issues/14)
 Doubt is currently a *phase*: `/peer-review` runs after the build. So a wrong premise adopted in task 2
