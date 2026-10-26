@@ -4,71 +4,69 @@
 |---|---|
 | **Phase** | Review |
 | **Owner** | Reviewer (`/peer-review`) |
-| **Input** | Commit `6c40f26` on `factory/issue-89`, `.spark/observability-lens/plan.md` |
-| **Status** | `changes-requested` |
-| **Round** | 1 |
+| **Input** | Commits `6c40f26` and `08e1299` on `factory/issue-89`, `.spark/observability-lens/plan.md`, `spec.md` |
+| **Status** | `passed` |
+| **Round** | 2 |
 | **Date** | 2026-10-26 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status`).
-- **Verdict:** Lens content and dispatch are sound; spec carries no acceptance criteria, so the gate cannot be traced. Changes requested.
-- **Open:** `3 open` — Blockers: none; Majors: `F1` (Minors/Nits: see §3)
+- **Verdict:** The spec now carries AC-1..AC-6. Every round-1 Major and Minor is confirmed fixed from source. Passed. Three Nits remain open.
+- **Open:** `3 open` — Blockers: none; Majors: none (Minors/Nits: see §3)
 - **Binding ruling:** §6 Verdict and the gate checklist below — the only binding location; there is no other round to point to
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/peer-review` and proceed — don't stop on it.
 
 ## 1. Scope
 
-Reviewed all 12 files of `6c40f26` (`git show 6c40f26`), plus surrounding context: `lenses/security.md`, `lenses/api.md`, `lenses/README.md`, the dispatch sites in `skills/{story-time,peer-review,demo-day}/SKILL.md`, `agents/{facilitator,product-owner,qa-tester}.md`, `templates/constitution.md`, `.spark/constitution.md`, `CONTRIBUTING.md`. Full-repo grep (excluding `.spark/`) for closed lens lists and lens counts. No tool file passed. Not reviewed: issue #89 itself (`gh` not installed, no network) — see F1. Branch is current: `main` is an ancestor of `HEAD`, one commit ahead. Active lens applied: `library` (this repo's only one, `.spark/constitution.md:58`).
+Round 2 re-derived every round-1 fact from source rather than from the round-1 rows (condition (a): every one is a fix being verified). Read: `git show 08e1299` in full, the current `spec.md`, `lenses/observability.md:1-60`, `lenses/security.md` section headings and `:42,:54`, `lenses/api.md:48-49`, `lenses/library.md:35-39`, `CONTRIBUTING.md:189`, `lenses/README.md:46,102`, `agents/facilitator.md:72`, `templates/constitution.md:27`, `skills/{story-time,peer-review,demo-day}/SKILL.md` dispatch lines, `.spark/constitution.md:56-62`. Ran a fresh repo-wide sweep (excluding `.spark/`) for closed type→lens lists and lens counts. This sweep found F10. `lenses/` holds 10 lens files. `plugin.json` parses and reads `0.15.0`. `origin/main` is an ancestor of `HEAD`, so the branch is current. No tool file was passed. Active lens: `library`. Open question: issue #89 is still unreadable here because `gh` is not installed and there is no network. So the spec's AC text is checked for presence and internal consistency, not for fidelity to the issue. The ACs were added to an `approved` spec during fix-mode, not by `/story-time`. Recorded here, not as a finding: the caller confirmed the ACs.
 
 ## 2. Plan Conformance
 
 | Task | Implemented as planned? | Note |
 |---|---|---|
-| T1 | ✅ | `lenses/observability.md` follows the lens contract (frontmatter, owner table, phase-tagged checks, phase notes). |
-| T2 | ⚠️ | Dispatch side clean; activation audit missed three sites (F2, fixed at review). |
-| T3 | ✅ | `evidence.md` E2/E3 written and labelled as dry runs; public-doc wording overclaimed (F4, fixed). |
-| T4 | ⚠️ | Docs updated; `docs/family.md` count missed (F2). Version bump contradicts `CONTRIBUTING.md:189`; justified by an AC-6 not in the repo (F3). |
+| T1 | ✅ | Lens follows the lens contract. Round-1 citation and conflict fixes (F5, F6) confirmed. |
+| T2 | ✅ | Three activation gaps were missed by T2 and fixed at review (F2). The deviation is documented in `evidence.md` E1 and accepted. |
+| T3 | ✅ | E2/E3 are labelled dry runs with 0 sessions run, and the public docs now match (F4). |
+| T4 | ✅ | Docs updated. The version bump is now required by spec AC-6. The conflict with `CONTRIBUTING.md:189` is a documented exception (E4, F3). |
 
 ## 3. Findings
 
 | # | Severity | Location | Finding | Status |
 |---|---|---|---|---|
-| F1 | Major | `.spark/observability-lens/spec.md:1-8`, `plan.md:1-12` | Spec has no AC or NFR rows, only "AC-1..AC-6 are the issue's, verbatim in intent". Plan has no test strategy. Why it matters: Review and QA trace against the spec. The issue text is not in the repo, so every AC verdict in §4 is reconstructed from plan/evidence labels and cannot be checked; AC-6's version-bump override (F3) rests on text nobody can read here. Fix: `/story-time` copies the six ACs (and the prompt-material caveat per AC) into `spec.md` using `templates/spec.md`. | open |
-| F2 | Minor | `docs/workflow.md:77`, `docs/family.md:16`, `agents/qa-tester.md:192` | AC-2 sweep incomplete. `workflow.md` kept the closed type→lens list without `observability` (the same defect fixed in `facilitator.md`/`constitution.md`). `family.md` still said "9 lenses". `qa-tester.md`'s non-`qa` example list omitted it. Why it matters: E1 claimed completeness. None of these sites gates dispatch, so behaviour is unchanged. Fix applied: all three updated, and an E1 row records them. | fixed |
-| F3 | Minor | `.claude-plugin/plugin.json:4`, `evidence.md` E4 | Version bump `0.14.3→0.15.0` contradicts `CONTRIBUTING.md:189` ("Don't bump the version"). The override cites an AC-6 that is not in the spec (F1). Why it matters: a factory PR setting the release version pre-empts the maintainer. Fix: confirm AC-6 from issue #89 and record it in the spec, or revert the line. Minor: E4 already discloses it. | open |
-| F4 | Minor | `ROADMAP.md:60`, `docs/status.md:110` | Public docs said the lens "fires in Review on a sample `api`". Evidence E3 says the sample is hypothetical and 0 sessions ran. Why it matters: it overclaims an observation that never happened (CLAUDE.md "Prompt material makes a check likely"). Fix applied: reworded to "expected to fire … 0 agent sessions run, inferred, not observed". | fixed |
-| F5 | Minor | `lenses/observability.md:24` | Boundary cited `security.md` "§1 and §5". §1 is Transport & headers. "No credential logged" is §2 (`security.md:42`) and PII-in-logs is §5 (`security.md:54`). Why it matters: the AC-1 non-overlap pointer sent the Reviewer to the wrong section. Fix applied: §2 and §5. | fixed |
-| F6 | Minor | `lenses/observability.md:56` | Health check asks for an "unauthenticated" endpoint. `api.md:49` requires every endpoint to state its auth and none to be accidentally public. With both lenses active on every `api`, the two checks read as conflicting. Fix applied: "(stated as deliberately public, per `api` §4)". | fixed |
-| F7 | Minor | `evidence.md` E4 | `lenses/library.md:37` covers only breaking→major. "Additions are backward compatible" is `:39`. Fix applied: citation changed to `:37-39`. | fixed |
-| F8 | Nit | `lenses/observability.md:47` | §1 item 2 ("no swallowed exception, no `catch {}`") restates the Reviewer's baseline error-handling hunt (`agents/reviewer.md:50`), although the lens says it does not re-run that hunt. Its observability angle (logged with context) is the part to keep. Fix: trim it to "each failure path logs once, at the right level, with context". | open |
-| F9 | Nit | `lenses/observability.md:19`, `lenses/README.md:102`; `lenses/observability.md:18` (typo fixed at review) | The README row lists silent types `library`, `cli`, `website`, but the lens also names `web-app`. Fix: add `web-app` to the README row. The typo "A `api`"→"An `api`" was also fixed at review. | open |
+| F1 | Major | `.spark/observability-lens/spec.md:1-8`, `plan.md:1-12` | Spec has no AC or NFR rows, only "AC-1..AC-6 are the issue's, verbatim in intent". Plan has no test strategy. Why it matters: Review and QA trace against the spec. Fix: copy the six ACs and the prompt-material caveat into `spec.md`. r2: `spec.md:12-21` now lists AC-1..AC-6, the caveat (`:8`) and a test strategy. | fixed r2 |
+| F2 | Minor | `docs/workflow.md:77`, `docs/family.md:16`, `agents/qa-tester.md:192` | AC-2 sweep incomplete: a closed type→lens list, the "9 lenses" count, and the non-`qa` example list all lacked `observability`. Fix applied at review. Re-verified r2: all three sites carry it, and E1 records them. | fixed r2 |
+| F3 | Minor | `.claude-plugin/plugin.json:4`, `evidence.md` E4 | Version bump `0.14.3→0.15.0` contradicts `CONTRIBUTING.md:189` ("Don't bump the version"). r2: spec AC-6 (`spec.md:19`) now requires a semver bump per the library lens. An additive change is minor (`library.md:37-39`), so `0.15.0` is correct. The conflict is accepted as a documented exception (E4). | fixed r2 |
+| F4 | Minor | `ROADMAP.md:60`, `docs/status.md:110` | Public docs said the lens "fires" on a sample `api`. Evidence says 0 sessions ran. Fix applied. Re-verified r2: both now say "expected to fire … hypothetical sample … 0 agent sessions run". | fixed r2 |
+| F5 | Minor | `lenses/observability.md:24` | The boundary cited `security.md` "§1 and §5". Fixed to §2 and §5. Re-verified r2: "no credential logged" is at `security.md:42` (§2) and PII-in-logs at `:54` (§5). | fixed r2 |
+| F6 | Minor | `lenses/observability.md:56` | The unauthenticated health endpoint conflicted with `api.md:49`. Fixed to "(stated as deliberately public, per `api` §4)". Re-verified r2: `api.md:48` is §4. | fixed r2 |
+| F7 | Minor | `evidence.md` E4 | The semver citation was `library.md:37`; "additions are backward compatible" is `:39`. Fixed to `:37-39`. Re-verified r2. | fixed r2 |
+| F8 | Nit | `lenses/observability.md:47` | §1 item 2 ("no swallowed exception, no `catch {}`") restates the Reviewer's baseline error-handling hunt, although the lens says it does not re-run that hunt. Fix: trim it to "each failure path logs once, at the right level, with context". | open |
+| F9 | Nit | `lenses/README.md:102` | The README row lists silent types `library`, `cli`, `website`, but the lens (`observability.md:18`) also names `web-app`. Fix: add `web-app` to the row. The "A `api`" typo, fixed in round 1, is confirmed fixed. | open |
+| F10 | Nit | `ROADMAP.md:37` | The Shipped table still says "Eight lenses"; `lenses/` holds ten and `README.md:121` says "Ten". This was stale before this feature, but E1 claims the count sweep is complete. Why it matters: it is a public count that disagrees with README. Fix: "Eight"→"Ten", unless that row is meant as a historical snapshot. That ambiguity is why it was not fixed at review. | open |
 
 ## 4. Requirements Traceability
 
-ACs reconstructed from `plan.md` Covers and `evidence.md`. They are not in the spec (F1).
-
 | Spec ID | Implemented at | Verdict |
 |---|---|---|
-| AC-1 (lens, non-overlap with `security`) | `lenses/observability.md:1-78`, boundary `:23-27` | ✅ met after F5/F6 fixes. Logging hygiene is deferred to `security`, the checklist adds no PII/credential check, and the cross-lens wording is corrected. |
-| AC-2 (dispatch + activation for claimed phases) | Dispatch: `skills/story-time/SKILL.md:70-71`, `skills/peer-review/SKILL.md:49-52`, `skills/demo-day/SKILL.md:82-85` (all re-read: condition b). Activation: `agents/facilitator.md:72`, `templates/constitution.md:27`, `lenses/README.md:46` | ✅ met after F2 fix. No skill holds a closed name list. All E1 citations verified. |
-| AC-3 (silent on `library`) | `.spark/constitution.md:37,58,61`; `observability.md:3` | ⚠️ inferred by a read, not observed. Honestly labelled in E2. |
-| AC-4 (fires on `api`) | `evidence.md` E3 | ⚠️ inferred by a read on a hypothetical sample, 0 sessions. Labelled as a dry run in E3. Public docs corrected (F4). |
-| AC-5 (docs) | `README.md:121`, `ROADMAP.md:59-63`, `docs/status.md:110,199`, `docs/workflow.md:77,86`, `docs/family.md:16`, `lenses/README.md:102` | ✅ after F2 fix |
-| AC-6 (version) | `.claude-plugin/plugin.json:4` | ⚠️ done, but the AC is unverifiable and conflicts with `CONTRIBUTING.md:189` (F3) |
-| NFR (library lens: semver) | `plugin.json:4` | ✅ additive change, so a minor bump is correct if a bump is wanted at all |
+| AC-1 (activation, silent profiles, non-overlap with `security`) | `lenses/observability.md:3,9,16-27,50` | ✅ met r2. `applies-to: [api]`; silent for `library`, `cli`, static `website` and `web-app`; logging hygiene is deferred to `security` §2/§5, with no PII or credential check restated. |
+| AC-2 (dispatch + activation for claimed phases) | Dispatch: `skills/story-time/SKILL.md:70-71`, `skills/peer-review/SKILL.md:48-52`, `skills/demo-day/SKILL.md:83`. Activation: `agents/facilitator.md:72`, `templates/constitution.md:27`, `lenses/README.md:46` | ✅ met. Re-derived r2 (condition b). No skill holds a closed name list, and every activation site names `observability`←`api`. Residual: `.spark/constitution.md` has no row, disclosed in E1 as `/charter`'s to amend. |
+| AC-3 (silent on `library`) | `evidence.md` E2; `.spark/constitution.md:58-62` | ⚠️ met as a dry run: inferred by a read, not observed, and labelled so. |
+| AC-4 (fires in Review on `api`) | `evidence.md` E3 | ⚠️ met as a dry run. Hypothetical sample, 0 sessions run. The hold rate is stated as "none measured", not as a guarantee, which is what AC-4 requires. |
+| AC-5 (docs, honest labels, stale #6) | `README.md:121`, `ROADMAP.md:59-63`, `docs/status.md:110`, `docs/workflow.md:77,86`, `docs/family.md:16`, `lenses/README.md:102` | ✅ met r2. Labels say "dry-run only, unproven". The #6 mention now reads "formerly #6, already shipped". F10 is a residual Nit. |
+| AC-6 (Markdown only, semver bump) | `lenses/observability.md`, `.claude-plugin/plugin.json:4` | ✅ met r2. There is no executable code. The minor bump is correct for an additive lens. |
 
 ## 5. What Was Checked
 
-- [x] Correctness: lens content, frontmatter, dispatch and activation traced site by site
+- [x] Correctness: every round-1 fix re-read at source, and all six ACs traced
 - [x] Non-functional: `library` lens (semver/public surface); constitution profile unchanged
-- [x] Error handling: N/A, Markdown/JSON only, no executable code
-- [x] Security: no secrets; lens defers logging hygiene to `security` correctly
-- [ ] Tests: no test suite exists (constitution §3, Markdown only). `plugin.json` parses as valid JSON. `claude plugin validate` is not available here.
+- [x] Error handling: N/A, Markdown/JSON only
+- [x] Security: no secrets; lens defers logging hygiene to `security`
+- [ ] Tests: no test suite exists (constitution §3). `plugin.json` is valid JSON. `claude plugin validate` is not available here.
 - [x] Readability: lens reads consistently with `api.md`/`security.md`
 
 ## 6. Verdict
 
-The lens itself is good work. It owns a real gap ("can someone who was not there find out what happened?") with falsifiable checks. Its `phases: [specify, review]` claim matches the dispatch rules, which read `phases` generically. Its boundary with `security` is explicit. The three activation sites that needed hand edits were found. Review found and fixed six low-risk defects: three missed closed-list or count sites, a wrong `security` section citation, a latent conflict with `api` §4, and a public-doc overclaim that turned a hypothetical sample into an observed firing. The evidence is honest about being a read with 0 sessions run. The change still does not pass, because F1 is open. The spec contains no acceptance criteria, so every AC verdict above is reconstructed from labels in the plan and evidence rather than traced to a contract. The one AC that overrides a written contribution rule (AC-6's version bump) cannot be checked at all. Once the spec carries AC-1..AC-6 from issue #89 and F3 is resolved against them, this should pass on re-review without code changes. The reviewer's fixes are uncommitted in the working tree.
+Passed. Round 1 blocked on F1, a spec with no acceptance criteria. The spec now carries AC-1..AC-6, a prompt-material caveat and a test strategy. Every AC traces to a concrete location. AC-3 and AC-4 are met only as dry runs, and both the evidence and the public docs label them as reads with 0 sessions run. F3 is resolved because spec AC-6 now requires the bump. Its conflict with `CONTRIBUTING.md:189` is accepted as a documented exception, and the maintainer can revert one line. All six reviewer fixes from round 1 were re-derived at source and hold. Three Nits stay open for the developer: F8, F9 and the new F10. None affects dispatch, activation or any AC verdict. One thing cannot be verified here: whether the spec's ACs match issue #89 word for word.
 
 ---
 
@@ -78,9 +76,9 @@ The lens itself is good work. It owns a real gap ("can someone who was not there
 re-review, edit this same checklist in place — never duplicate it as a second gate.*
 
 - [x] No open Blocker findings
-- [ ] No open Major findings — F1 open
-- [ ] Every Must AC traces to implementing code; no constitution non-negotiable violated — no AC is in the spec (F1); no non-negotiable violated
-- [ ] All plan deviations documented and accepted — T2/T4 deviations documented here, not yet accepted
+- [x] No open Major findings
+- [x] Every Must AC traces to implementing code; no constitution non-negotiable violated
+- [x] All plan deviations documented and accepted — T2 (E1), T4 version (AC-6, E4)
 - [x] Test suite runs green — N/A (no suite exists); `plugin.json` is valid JSON
-- [x] Line budget respected: Ist ~75 / Soll ~150 (excluding HTML comments)
-- [ ] Status set to `passed`
+- [x] Line budget respected: Ist ~85 / Soll ~150 (excluding HTML comments)
+- [x] Status set to `passed`

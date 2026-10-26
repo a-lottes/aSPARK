@@ -34,7 +34,7 @@ is worth more than a patch. Reports where it went badly are worth the most.
 |---|---|
 | **The SPARK loop** | Five phases, five gates, ten ceremonies, seven agents. End-to-end on a sample app: PO → Designer → EM → build → review → real-browser QA → release. |
 | **Spec-driven core** | Project constitution (`/charter`), the Specify-phase Clarify pass, non-functional requirements, and the `US-` / `AC-` / `NFR-` / `T` / `F` ID chain running unbroken from spec through plan, review and QA. |
-| **Situational lenses** | Eight lenses activated by project **type** and **characteristics**, applied by the agents who already own each phase. New concerns are add-a-file: no agent is rewritten. |
+| **Situational lenses** | Ten lenses activated by project **type** and **characteristics**, applied by the agents who already own each phase. New concerns are add-a-file: no agent is rewritten. |
 | **Optional tools** | `tools/`, wired into `/sprint-plan`, `/peer-review` and `/demo-day`. Dogfooded in both directions — the absent case first, in a repo without the tool, where nothing may change. |
 | **Honest PR-mode delivery** | `/go-live` reaches a `handed-off` terminal status where the project delivers by pull request instead of by tag. Proven on this repo's own release. |
 | **Maturity labels in the handbook** | Every chapter of the architecture handbook carries a visible Delivery stage label, an overview table up front splits ambition from delivery, inline `Status.` markers name each target-state claim, and the title page separates the handbook revision from the shipped baseline (Core v0.7.0 · graph v0.7.0). Built as the `handbook-maturity` loop on this repo itself. |

@@ -99,7 +99,7 @@ and carries any number of characteristics.
 | [`seo.md`](seo.md) | type `website` | Discoverability, rendering/indexability, metadata, Core Web Vitals, structured data |
 | [`ux.md`](ux.md) | type `web-app`, `website` | Interaction depth beyond base heuristics: flows, forms, responsive/mobile, feedback & motion |
 | [`api.md`](api.md) | type `api` | Resource/method design, error-envelope consistency, versioning & breaking-change detection, auth surface |
-| [`observability.md`](observability.md) | type `api` (deployed services; silent for `library`, `cli`, `website`) | Diagnosability: structured logs, correlation IDs, health/readiness, metrics and alertable failure signals; logging hygiene stays in `security` |
+| [`observability.md`](observability.md) | type `api` (deployed services; silent for `library`, `cli`, `website`, `web-app`) | Diagnosability: structured logs, correlation IDs, health/readiness, metrics and alertable failure signals; logging hygiene stays in `security` |
 | [`cli.md`](cli.md) | type `cli` | Help/discoverability, stdout/stderr & scriptability, exit codes, safety flags |
 | [`library.md`](library.md) | type `library` | Public API surface, semver/deprecation discipline, packaging & footprint, contract clarity |
 | [`security.md`](security.md) | char. `handles-auth`, `is-public`, `handles-payments`, `handles-pii` | Depth beyond the Reviewer baseline: header/transport hardening, auth lifecycle, authz matrix, supply chain, PII/privacy |
