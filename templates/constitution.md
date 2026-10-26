@@ -1,5 +1,7 @@
 # Constitution: <project-name>
 
+<!-- aspark-template: aspark/0.1.0 -->
+
 | | |
 |---|---|
 | **Scope** | Project-wide — binds every SPARK phase and every feature |

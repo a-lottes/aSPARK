@@ -88,9 +88,12 @@
     never edited in place, never read from the target project.
 - **The template contract (cross-repo, hard).** The sibling repo `aspark-graph`
   parses artifacts shaped by `templates/` and raises `TemplateDriftError` on a
-  mismatch. There is **no version handshake** — no template carries a version
-  marker, while the consumer pins `SUPPORTED_TEMPLATE = "aspark/0.1.0"`. Renaming
-  or removing any of these is a silent breaking change in another repo:
+  mismatch. Every template now carries a version marker,
+  `<!-- aspark-template: aspark/0.1.0 -->` (line 3, after the title); the consumer
+  pins `SUPPORTED_TEMPLATE = "aspark/0.1.0"`. The marker is the contract version, not
+  the plugin version: bump it only when a protected structure below changes. Until
+  the consumers read it (`aspark-graph`, `aspark-guard`), renaming or removing any of
+  these remains a silent breaking change in another repo:
 
   | Template | Protected — do not rename, do not remove |
   |---|---|

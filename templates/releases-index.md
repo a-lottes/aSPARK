@@ -1,5 +1,7 @@
 # Releases
 
+<!-- aspark-template: aspark/0.1.0 -->
+
 <!-- Project-level, append-only. One row per release; copied to .spark/releases.md on first release; never edit or reorder
      existing rows. `/go-live` appends the row in the same edit that flips the
      feature's release.md Status to `released`. -->
