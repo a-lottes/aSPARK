@@ -1,0 +1,48 @@
+# agent.yaml for a project repo of the aSPARK Factory. All fields are optional.
+source: github            # M6: jira
+mode: supervised          # manual, supervised, autonomous, dark. factoryctl new --mode overrides it
+# base_branch: main       # default: the repo's default branch
+spark_dir: .spark         # folder of the aSPARK feature trails
+aspark_plugin: image      # image: aSPARK from the runner image; checkout: repo is aSPARK itself; off
+
+labels:
+  ready: factory:ready              # the line picks up issues with this label
+  in_progress: factory:in-progress  # claim while working
+  failed: factory:failed            # failure; remove to retry
+  proposed: factory:proposed        # next-steps proposal waiting for approval
+  rejected: factory:rejected        # proposal rejected or replaced by a revision
+  parked: factory:parked            # a question expired with park; remove to continue
+  blocked: factory:blocked          # dark: a gate stopped the pull request, it waits for a person
+  report: factory:report            # dark: the issue that collects the daily reports
+
+ask:
+  timeout_seconds: 900    # after this the question is denied
+  # deny answers no; park ends the session and labels the issue parked. Default: park in autonomous, else deny.
+  # timeout_action: deny
+
+proposals:                # next-steps (the Leitstand asks the line for its next step)
+  max_issue_depth: 3      # proposals following proposals; deeper ones are not filed
+  approval_timeout_seconds: 86400   # unanswered, the proposal stays open and can be approved in GitHub
+
+limits:
+  sessions_per_day: 20
+  poll_interval_seconds: 60
+
+tools:
+  # These tools run without asking; all others (e.g. Bash) ask at the Leitstand.
+  allow: [Read, Glob, Grep, Edit, Write, TodoWrite]
+
+dark:                     # mode dark: the line merges on its own when policy, review agent and CI are green
+  integration_branch: factory/main    # created from the base; a person merges the release pull request to main
+  protected_paths: [.github/, policies/, deploy/, agent.yaml]   # the line must not change these
+  policy:
+    max_changed_files: 30
+    max_changed_lines: 1500
+    dependency_files: [package.json, package-lock.json, pyproject.toml, uv.lock, requirements.txt, go.mod, Cargo.toml]
+    dependencies: block   # block: a changed dependency file stops the merge; allow
+  ci_timeout: 1800        # seconds; checks still running after this count as red, no checks at all too
+  fix_rounds: 1           # fix sessions per gate (review agent, CI) before the pull request waits for a person
+  breaker:                # pauses the line and asks at the Leitstand; a green merge resets the counts
+    red_ci: 3
+    rejected_reviews: 2
+  report_at: "18:00"      # daily report, local time of the container (TZ)
