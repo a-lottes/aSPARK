@@ -17,7 +17,7 @@ documented `partial`.
 
 Adoption figures and their source: [`docs/status.md` § Adoption](docs/status.md#adoption--snapshot-2026-09-30). Public, checkable evidence is the gap now; the [aSPARK reads](https://aspark.lottes.dev/en/blog/aspark-reads-flask/) series is one way it gets closed, field reports are the other. The lens layer was dogfooded on aSPARK itself and dry-run on two
 sample apps, but its own spec defines success as a UI lens firing and being QA-verified on a real
-`website` **and** a Review lens firing and being Review-verified on a real `api`. Neither is demonstrated by a public, checkable run yet.
+`website` **and** a Review lens firing and being Review-verified on a real `api`. Neither was demonstrated by a public, checkable run. **Update, 2026-10-26:** the `api` half now has one: a Review-only run on spring-petclinic-rest PR #329 (`7690a61`), trail in [`.spark/api-lens-public-run/`](.spark/api-lens-public-run/evidence.md). It is partial: the lens text was passed by hand and a per-item trace was requested, so lens *activation* from a constitution and an unprompted firing rate are not shown; the target was not built, so two checks stay not-verified-live. The `website` / QA-verified UI half is still open.
 
 There is a standing caveat behind it: lens compliance is instruction-driven. **No test enforces that a
 lens actually fired** — only a person running the loop can tell us whether it did, and whether it was
