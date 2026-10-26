@@ -201,3 +201,29 @@ Which one do you want? I won't invoke `/charter` myself.
 - `claude plugin validate .` → `✔ Validation passed with warnings` (the one warning is the same `CLAUDE.md` at the plugin root as in T1).
 - `git ls-files '*.py' | wc -l` → `0`.
 - `grep -n -i "anti-generosity"` over README, ROADMAP, `docs/status.md` → no hits. The planned standard appears there as "Stricter verdict rules for review and QA", `planned, not built`.
+
+## Increment 2: anti-generosity standard (issue #13, factory #87)
+
+**Maturity, stated first:** the standard is prompt material. It makes a stricter verdict *likely*, never certain, and its effect is **unmeasured**. No rate below is a forecast.
+
+**Negative case first (AC-1.5 / NFR-2 analogue).** Before the edit, `grep -rn "anti-generosity\|standards/" skills agents` over the base (`659382a`) was empty, so no run passed a standard. Where the standard is absent (a checkout at the base), `/peer-review` and `/demo-day` dispatch exactly as before: the only behavioural change is the added "Always pass" sentence. Dry-run status: **`⚠ not-verified-live`**. The `claude` CLI is not installed in this environment (`claude: command not found`), so no real session was run, base or branch. Reasoning about what the file would make an agent do closes nothing, so this is not recorded as a pass.
+
+**Structural checks (performed):**
+
+| Check | Observed | Result |
+|---|---|---|
+| AC-2.5 one file, ≤ ~40 lines | `wc -l standards/anti-generosity.md` = 35 | ✅ pass |
+| AC-2.5 no `agents/` change; AC-2.7 no template change; no constitution change | `git diff --stat -- agents templates lenses .spark/constitution.md` empty | ✅ pass |
+| AC-2.6 / AC-2.8 dispatch and activation, per claimed phase | `grep -rn "standards/" skills agents templates lenses` hits exactly `skills/peer-review/SKILL.md:56` and `skills/demo-day/SKILL.md:89`. Neither `/charter`, the facilitator, `templates/constitution.md` nor `lenses/README.md` declares or gates it. Each path is literal, with no constitution read and no flag | ✅ pass |
+| NFR-1 added lines per `SKILL.md` ≤ 12 cumulative | `git diff --numstat -- skills`: 5 added in each of the two (Inc 1 added none) | ✅ pass |
+| NFR-6 no executable code | `git ls-files '*.py'` empty | ✅ pass |
+| `claude plugin validate .` | CLI not installed | ⚠ not-verified-live |
+
+**AC-2.9 grounding.** E3 and E4 (the two `verdict-rounded-up` entries) ground rules 4 and 7 and are cited there. Rules 1, 2, 3, 5, 6, 8 and 9 are labelled "not grounded in the corpus" where they are written (rules 1 and 2) or derive from the spec's ACs (AC-2.2 to AC-2.4); they are not corpus-derived.
+
+**Not performed (disclosed, not passed):**
+- T13's dispatch run, k=6 per skill: the rate at which a report names the standard is **unknown**. Rate, not measured.
+- T14's planted-fixture verdict-behaviour runs, k=3 per skill: the rates for banned phrases, exact `⚠ not-verified-live` cells, the evaluation-mode statement and a finding kept are **unknown**.
+- AC-2.8's "an agent was handed it" and AC-2.1 to AC-2.4 are agent-followed and unmeasured. The step-3/4 line makes an omission visible to the user, so it is a detection aid, not enforcement.
+- The `not-verified-live` cell is defined only by this standard for consumers (R6, Q2); the spec's word "existing" is true only for this repo's constitution.
+- A second independent reviewer remains not built.

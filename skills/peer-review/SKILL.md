@@ -53,11 +53,15 @@ Optional argument: the feature name. Resolve as usual.
    If a tool resolved as available in step 1, pass
    `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md` the same way — one more path
    alongside the lens paths, nothing else.
+   Always pass `${CLAUDE_PLUGIN_ROOT}/standards/anti-generosity.md` too, with no
+   constitution read and no flag, and tell the agent to read it in full before
+   writing any verdict and to name it as applied in the report.
    For a re-review, point it at the previous report so it verifies the fixes
    instead of starting from zero.
 3. **Present the report.** Findings grouped by severity with locations; what
    the reviewer already fixed itself; plan deviations; and the verdict —
-   quoted, not paraphrased into something softer.
+   quoted, not paraphrased into something softer. If the report does not name
+   the anti-generosity standard as applied, tell the user.
 4. **Route the findings** with the user:
    - open Blockers/Majors → **`/increment`** (fix-mode), then re-run
      `/peer-review`;
