@@ -2,8 +2,18 @@
 
 | | |
 |---|---|
-| Status | `approved` |
-| Ticket | #89 (tracks #15) |
+| **Phase** | Specify |
+| **Owner** | Product Owner (`/story-time`) |
+| **Status** | `approved` |
+| **Date** | 2026-10-26 |
+| **Ticket** | #89 (tracks #15) |
+
+**Handoff**
+- **Status:** `approved` (mirrors the header table). The issue's acceptance criteria were adopted as the approved spec in dark mode; Design Review N/A (no UI).
+- **Summary:** add `lenses/observability.md` for deployed `api` services, silent elsewhere.
+- **Open:** `none`
+- **Binding ruling:** the AC list below.
+- **On conflict:** the numbered body wins for everything except `Status`.
 
 Source: issue #89, "Add an observability lens (lenses/observability.md)". Prompt-material caveat, stated up front: AC-3/AC-4 are dry runs and the lens firing is likely, never certain.
 

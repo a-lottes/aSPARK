@@ -2,7 +2,10 @@
 
 | | |
 |---|---|
-| Status | `approved` |
+| **Phase** | Plan |
+| **Owner** | Engineering Manager (`/sprint-plan`) |
+| **Status** | `approved` |
+| **Date** | 2026-10-26 |
 
 | # | Task | Covers | Status |
 |---|---|---|---|
