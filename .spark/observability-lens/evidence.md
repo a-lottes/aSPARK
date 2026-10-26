@@ -21,6 +21,7 @@ The lens frontmatter claims `phases: [specify, review]`, `applies-to: [api]` (`l
 | `templates/constitution.md:27` | activation | **Gap found, fixed:** same closed list. Added `observability`←`api`. |
 | `lenses/README.md` Available-lenses table | registry | Row added. |
 | `README.md`, `docs/status.md`, `docs/workflow.md` prose copies | docs | Count "Nine"→"Ten", status row, non-UI lens list updated. |
+| `docs/workflow.md:77`, `docs/family.md:16`, `agents/qa-tester.md:192` | docs / qa note | **Missed by T2, found and fixed at review** (review F2): closed type→lens list, "9 lenses" count, non-`qa` lens example list. |
 
 Residual, disclosed: `.spark/constitution.md` still says 9 lenses and has no `observability` row. Amending it is `/charter`'s alone; this repo's `api` row is already Off, so behaviour is unaffected. Flag for the next `/charter`.
 
@@ -42,4 +43,4 @@ Sample, not a real repo: a FastAPI service with route handlers and an OpenAPI fi
 
 ## E4 — Version (AC-6)
 
-A new lens file is additive: nothing existing is removed or changed in behaviour for projects that don't declare `api`. Per the `library` lens's semver rule (`lenses/library.md:37`) that is **minor**: `0.14.3` → `0.15.0` (`.claude-plugin/plugin.json`). Note: `CONTRIBUTING.md:189` says contributors don't bump; AC-6 of the issue overrides for this change, and the maintainer can revert that one line.
+A new lens file is additive: nothing existing is removed or changed in behaviour for projects that don't declare `api`. Per the `library` lens's semver rule (`lenses/library.md:37-39`) that is **minor**: `0.14.3` → `0.15.0` (`.claude-plugin/plugin.json`). Note: `CONTRIBUTING.md:189` says contributors don't bump; AC-6 of the issue overrides for this change, and the maintainer can revert that one line.

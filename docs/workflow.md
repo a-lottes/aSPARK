@@ -74,8 +74,8 @@ roles or ceremonies, through two pieces:
   project can be several types and carry several characteristics.
 - **Lenses.** A lens (`lenses/<name>.md` in the plugin) is a situational
   checklist for one concern. It activates two ways: from the **type**
-  (`seo`←`website`, `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`,
-  `library`←`library`) or from a **characteristic** (`security`←auth/public/
+  (`seo`←`website`, `ux`←`web-app`/`website`, `api`←`api`, `observability`←`api` (deployed
+  services), `cli`←`cli`, `library`←`library`) or from a **characteristic** (`security`←auth/public/
   payments/PII, `i18n`←multilingual, `data`←database) — because a concern like
   security is a property of what the software does with data, not its shape. A
   lens is **knowledge, not a role**: it gives the *existing* agents extra checks

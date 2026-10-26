@@ -15,13 +15,13 @@ It does not re-run the Reviewer's generic correctness hunt.
 
 **Stays silent for:** `library` (no process of its own to operate), `cli`
 (the user's terminal is the diagnostic surface; `cli.md` owns stderr and exit
-codes), static `website` (no server runtime) and `web-app` frontends. A `api`
+codes), static `website` (no server runtime) and `web-app` frontends. An `api`
 that is a throwaway local script or never deployed: the Facilitator leaves the
 lens off at `/charter`, with the reason in the profile's "Why it's active (or
 off)" column.
 
 **Boundary with `security`.** What must **never** be logged (credentials, PII
-in the clear) is `security.md` §1 and §5 — this lens does not restate it. This
+in the clear) is `security.md` §2 and §5 — this lens does not restate it. This
 lens asks only whether the logs, metrics and signals that *should* exist do.
 Where a check touches both, cite the finding once, under `security` for the
 leak and under this lens for the missing signal.
@@ -53,7 +53,7 @@ Like every lens, it flags concerns and proposes NFRs; it never invents scope.
 - [ ] The ID is propagated on outbound calls to other services, queues and jobs the request triggers.
 
 ### 3. Health & readiness *(Review)*
-- [ ] A liveness and a readiness (or one honest health) endpoint exists, unauthenticated or on an internal port, and readiness reflects real dependencies (database, queue), not a constant `200`.
+- [ ] A liveness and a readiness (or one honest health) endpoint exists, unauthenticated (stated as deliberately public, per `api` §4) or on an internal port, and readiness reflects real dependencies (database, queue), not a constant `200`.
 - [ ] Startup failure from missing config or an unreachable required dependency is loud (non-zero exit with a logged reason), not a process that starts and fails every request.
 
 ### 4. Metrics & alertable signals *(Review)*
