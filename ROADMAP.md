@@ -57,10 +57,10 @@ would be unmeasured. The gates stay prompt-enforced; code enforcement belongs to
 re-open only on a new argument or observation, such as a recorded single-reviewer miss.
 
 **An observability lens** · [#15](https://github.com/a-lottes/aSPARK/issues/15)
-Between the `api` lens (the contract) and the `security` lens (what must never be logged) sits a concern
+Shipped in 0.15.0 as [`lenses/observability.md`](lenses/observability.md), dry-run only: it fires in Review on a sample `api` and stays silent on this `library` repo ([evidence](.spark/observability-lens/evidence.md)). No public run on a real `api` yet. Between the `api` lens (the contract) and the `security` lens (what must never be logged) sits a concern
 nobody owns: whether a correct, secure, well-specified service can be diagnosed once it is running.
-Alongside the accessibility ([#6](https://github.com/a-lottes/aSPARK/issues/6)) and performance
-([#7](https://github.com/a-lottes/aSPARK/issues/7)) lens proposals.
+Alongside the performance ([#7](https://github.com/a-lottes/aSPARK/issues/7)) lens proposal; the
+accessibility lens (formerly #6) already shipped.
 
 **In-flight doubt inside `/increment`** · [#14](https://github.com/a-lottes/aSPARK/issues/14)
 Doubt is currently a *phase*: `/peer-review` runs after the build. So a wrong premise adopted in task 2

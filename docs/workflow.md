@@ -83,7 +83,7 @@ roles or ceremonies, through two pieces:
   exactly like accessibility does — written as a measurable NFR in Specify,
   design-checked, verified in Review and (where it has a browser surface) QA
   under the same `NFR-n` ID. Nothing is asserted in one phase and never verified.
-  Non-UI lenses (`api`, `cli`, `library`, `data`) have no `/demo-day` surface;
+  Non-UI lenses (`api`, `observability`, `cli`, `library`, `data`) have no `/demo-day` surface;
   their verification is carried by Specify, Review and the increment's own tests.
 
 How a concern travels the loop, using `seo` on a `website` as the example:

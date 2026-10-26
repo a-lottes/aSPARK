@@ -43,7 +43,7 @@ website, a web-app or an api alike, as soon as it handles auth or PII). The
 profile records both, so:
 
 - **Type-triggered lenses** declare `applies-to: [<type>]` — `seo`←`website`,
-  `ux`←`web-app`/`website`, `api`←`api`, `cli`←`cli`, `library`←`library`.
+  `ux`←`web-app`/`website`, `api`←`api`, `observability`←`api`, `cli`←`cli`, `library`←`library`.
 - **Characteristic-triggered lenses** declare `triggers: [<characteristic>]` —
   see the *Characteristics* detection-signals table's `Activates` column below
   for the current mapping; it is the single declaration of this fact, not
@@ -99,6 +99,7 @@ and carries any number of characteristics.
 | [`seo.md`](seo.md) | type `website` | Discoverability, rendering/indexability, metadata, Core Web Vitals, structured data |
 | [`ux.md`](ux.md) | type `web-app`, `website` | Interaction depth beyond base heuristics: flows, forms, responsive/mobile, feedback & motion |
 | [`api.md`](api.md) | type `api` | Resource/method design, error-envelope consistency, versioning & breaking-change detection, auth surface |
+| [`observability.md`](observability.md) | type `api` (deployed services; silent for `library`, `cli`, `website`) | Diagnosability: structured logs, correlation IDs, health/readiness, metrics and alertable failure signals; logging hygiene stays in `security` |
 | [`cli.md`](cli.md) | type `cli` | Help/discoverability, stdout/stderr & scriptability, exit codes, safety flags |
 | [`library.md`](library.md) | type `library` | Public API surface, semver/deprecation discipline, packaging & footprint, contract clarity |
 | [`security.md`](security.md) | char. `handles-auth`, `is-public`, `handles-payments`, `handles-pii` | Depth beyond the Reviewer baseline: header/transport hardening, auth lifecycle, authz matrix, supply chain, PII/privacy |
