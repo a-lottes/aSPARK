@@ -32,7 +32,7 @@ Adopters deciding whether to trust the UI lens; the aSPARK author reading the ro
 | # | Assumption / Question | Resolution |
 |---|---|---|
 | A1 | The target has no `.spark/` trail. Its profile (`website` + `must-be-accessible`) is declared by the line in `target-constitution.md`, a scratch copy of which sits in the clone so the skills read it from there. | Accepted. Disclosed: the target's maintainers declared nothing. |
-| A2 | The container browser reaches localhost only. The page's CDN scripts and fonts cannot load. Bootstrap's bundle is replaced by the same npm version served locally; fonts and Font Awesome stay missing. | Accepted; evidence lists the deviation. Anything depending on them is `not-verified-live`. |
+| A2 | The container browser reaches localhost only. The page's CDN scripts and fonts cannot load. Bootstrap's bundle is replaced by the same npm version (`bootstrap@5.2.3`, served locally); Google Fonts, Font Awesome and `https://cdn.startbootstrap.com/sb-forms-latest.js` (the contact form's submit/feedback script, `dist/index.html:608`) stay missing, so fonts, icons and the form's submit and validation feedback cannot be observed. | Accepted; evidence lists the deviation. Anything depending on them is `not-verified-live`. |
 | A3 | Lens firing is instruction-driven. One run gives one observation. | Accepted; AC-3 states n=1 and no rate. |
 | A4 | The target is not changed. Review reviews the existing files as a whole-file diff against the empty tree (no real increment exists). | Accepted; disclosed. |
 

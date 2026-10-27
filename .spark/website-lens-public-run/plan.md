@@ -32,6 +32,8 @@
 
 - **Consequences:** Fonts and Font Awesome do not load; the real site's look is not verified. One run, one model.
 
+**Serve steps (T1, recorded after review F12):** `cp -r dist /tmp/site`; copy `bootstrap.bundle.min.js` from `npm pack bootstrap@5.2.3` into `/tmp/site/js/`; `sed -i 's#https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js#js/bootstrap.bundle.min.js#' /tmp/site/index.html` (the only edit, line 601); `cd /tmp/site && python3 -m http.server 8766`. QA URL: `http://127.0.0.1:8766/`. An earlier unpatched server on :8765 was stopped. Empty-tree hash for diffs: `$(git hash-object -t tree /dev/null)` = `4b825dc642cb6eb9a060e54bf8d69288fbee4904`. Plugin build used: the installed `/opt/aspark` (it has no `standards/` directory; the standard was read from this repo's `standards/anti-generosity.md`).
+
 ## 2. Affected Components
 
 `.spark/website-lens-public-run/*`, `README.md`, `ROADMAP.md`, `docs/status.md`. Scratch: `/tmp/target/startbootstrap-agency`, `/tmp/site`, `/tmp/vendor`.
@@ -41,7 +43,7 @@
 | # | Task | Story | Status | Definition of Done | Covers (AC / NFR) | Depends on |
 |---|---|---|---|---|---|---|
 | T1 | Pin target, write constitution, serve site | US-1, US-2 | done | commit, serve steps, deviations recorded; page responds on localhost | AC-1.1, AC-2.1 | none |
-| T2 | `/peer-review` with dispatch-resolved lens, no trace request | US-2, US-3 | todo | `review.md` written by the `reviewer` agent | AC-2.1, AC-3.1, NFR-3 | T1 |
+| T2 | `/peer-review` with dispatch-resolved lens, no trace request | US-2, US-3 | done | `review.md` written by the `reviewer` agent | AC-2.1, AC-3.1, NFR-3 | T1 |
 | T3 | `/demo-day` in the browser | US-4 | todo | `qa.md` written by the `qa-tester` agent; every lens item binary | AC-4.1, NFR-1, NFR-2 | T2 |
 | T4 | Compile `evidence.md` | US-1, US-3, US-5 | todo | citations re-resolved; not-shown list | AC-1.1, AC-3.1, AC-5.1, NFR-3 | T3 |
 | T5 | Update ROADMAP, docs/status, README | US-5 | todo | wording matches evidence | AC-5.1, AC-6.1, NFR-4 | T4 |
