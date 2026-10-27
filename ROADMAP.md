@@ -65,9 +65,12 @@ phase longer; if it cannot be kept cheap and rare, it should not ship.
 ## Blocked
 
 **A template version handshake** · `template-version-marker`
-Artifacts shaped by `templates/` are parsed outside this repo by two consumers:
+Artifacts shaped by `templates/` are parsed outside this repo by two consumers, on a contract with
+three repos in all (Core plus both):
 [`aspark-graph`](https://github.com/a-lottes/aSPARK-graph), which pins `SUPPORTED_TEMPLATE`, and
-[`aspark-guard`](https://github.com/a-lottes/aSPARK-guard), which re-encodes the same structures.
+[`aspark-guard`](https://github.com/a-lottes/aSPARK-guard), which re-encodes the same structures a
+second time (story heading, AC line, findings-table columns, `Status` header row) and checks them at
+write time. That write-time check is a second structural guess, not a handshake.
 **Core's side is shipped:** every template carries `<!-- aspark-template: aspark/0.1.0 -->`. Still open,
 in the consuming repos: `aspark-graph` asserting it (replacing its structural guess with a named version
 conflict) and `aspark-guard` reading it instead of its own copy. Until both do, the marker is read by
