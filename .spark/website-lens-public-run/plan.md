@@ -44,8 +44,8 @@
 |---|---|---|---|---|---|---|
 | T1 | Pin target, write constitution, serve site | US-1, US-2 | done | commit, serve steps, deviations recorded; page responds on localhost | AC-1.1, AC-2.1 | none |
 | T2 | `/peer-review` with dispatch-resolved lens, no trace request | US-2, US-3 | done | `review.md` written by the `reviewer` agent | AC-2.1, AC-3.1, NFR-3 | T1 |
-| T3 | `/demo-day` in the browser | US-4 | todo | `qa.md` written by the `qa-tester` agent; every lens item binary | AC-4.1, NFR-1, NFR-2 | T2 |
-| T4 | Compile `evidence.md` | US-1, US-3, US-5 | todo | citations re-resolved; not-shown list | AC-1.1, AC-3.1, AC-5.1, NFR-3 | T3 |
+| T3 | `/demo-day` in the browser | US-4 | done | `qa.md` written by the `qa-tester` agent; every lens item binary | AC-4.1, NFR-1, NFR-2 | T2 |
+| T4 | Compile `evidence.md` | US-1, US-3, US-5 | done | citations re-resolved; not-shown list | AC-1.1, AC-3.1, AC-5.1, NFR-3 | T3 |
 | T5 | Update ROADMAP, docs/status, README | US-5 | todo | wording matches evidence | AC-5.1, AC-6.1, NFR-4 | T4 |
 
 ## 4. Test Strategy
