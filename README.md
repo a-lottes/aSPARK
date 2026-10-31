@@ -134,6 +134,12 @@ Every `/peer-review` and `/demo-day` run hands the Reviewer or QA Tester [`stand
 - **Prompt material only, effect unmeasured.** It makes a strict verdict likely, not certain; the skill tells you if a report does not name the standard. The live dry runs could not be performed in the build environment, so no observed rate is claimed ([`evidence.md`](.spark/adversarial-gates-standard/evidence.md)). Code enforcement is [`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)'s concern; a second, independent reviewer is not built.
 - Silent in every other ceremony; `/go-live` is unaffected.
 
+### Visual QA review and binding design directions (prompt-enforced, unmeasured)
+
+For a feature with a browser-observable surface, `/demo-day` now asks the QA Tester to screenshot every UI state at a wide desktop and a phone viewport, look at each image and record one row per screenshot in the report's *Visual Review* table. A deviation from a direction the spec's Design Review labels `binding` is at least `Major` and cannot be marked accepted by QA unless the spec or plan records it as a decision. The `ux` lens gains a start-up robustness item (storage that throws, reload mid-use, resize while running; a failed start is a `Blocker`), and the Designer's visual craft check names scale and space use.
+- **This changes QA verdicts for installed web projects**: expect more Majors and more screenshot rows. Browser-less projects (cli, library, api) are unchanged.
+- **Prompt-enforced, unmeasured.** It makes the effect likely, not certain; no hold rate is claimed. In the one dry run of the changed tester only 2 of 6 rows had a real screenshot; after a follow-up rule (rows without one stay open), one re-run had 4 of 4. One session each, no rate. Dry-run record: [`evidence.md`](.spark/visual-qa-review/evidence.md).
+
 ### Campaigns: one measurable goal instead of one story (experimental)
 
 A campaign is a second way of working, next to the feature loop: one machine-decidable goal, one budget, run in iterations until the goal is reached or a stop rule halts it. You approve the goal; the agent only iterates inside it. One kind ships today, [`migration-campaign`](campaigns/migration-campaign.md): a migration in reversible slices, with a fresh Parity Verifier per slice. A new kind is one file in [`campaigns/`](campaigns/README.md), the same way a lens is.

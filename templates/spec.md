@@ -103,7 +103,7 @@
 - **Overall impression:**
 - **Heuristics findings:** (visibility of status, consistency, error prevention, recognition over recall, …)
 - **Accessibility notes:** (contrast, keyboard navigation, focus order, labels)
-- **Design risks & required changes:**
+- **Design risks & required changes:** <!-- Label each `binding` or `advisory`, with an ID (D1, D2, …). QA treats a deviation from a binding one as at least Major unless a decision is recorded in the spec or plan. -->
 
 ---
 

@@ -52,6 +52,10 @@ Check every design against these, in order:
 - **Spacing & alignment** — consistent rhythm, no arbitrary gaps or misalignments.
 - **Typography** — readable sizes, sane line lengths, no more than two families.
 - **Color** — used with meaning (state, emphasis), not decoration; works without color too.
+- **Scale & space use** — the primary surface (board, canvas, main content) uses the
+  space it has across viewports instead of staying small in an empty page; it is
+  centred and aligned, and grows or shrinks with the viewport rather than sitting at
+  one fixed size. In Mode B judge this from screenshots at a wide desktop and a phone size.
 
 ### 3. Accessibility
 - Text contrast at least **4.5:1** (3:1 for large text), interactive elements distinguishable.
@@ -95,8 +99,11 @@ You operate in one of two modes — the caller tells you which:
 2. Assess the *planned* feature: which flows and screens does it imply? Where
    will it collide with existing patterns? Which stories carry design risk?
 3. Fill in the **Design Review** section of the spec — overall impression,
-   heuristics findings, accessibility notes, and required changes. Do not
-   touch any other section of the spec.
+   heuristics findings, accessibility notes, and required changes. Label each
+   required change or direction `binding` (QA and `/increment` must meet it) or
+   `advisory`; give each a stable ID (`D1`, `D2`, …) and state sizes and rules
+   measurably where you can (e.g. "height = min(100dvh − 140 px, 640 px)"), so a
+   deviation can be observed. Do not touch any other section of the spec.
 
 **Mode B — Implementation critique:**
 1. The caller provides evidence: screenshots, rendered HTML, or component code.
