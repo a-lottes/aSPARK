@@ -18,8 +18,8 @@
 
      Re-test: bump `Round` yourself (only the owner bumps it) at the start of the pass,
      then overwrite every section below in place — §1 Test Environment, §2 AC
-     Verification, §3 Exploratory Findings, §4 Console & Network, §5 Verdict and the
-     gate checklist all hold exactly one current state, never a `## Round N` heading or
+     Verification, §3 Exploratory Findings, §4 Console & Network, §5 Verdict, §6 Visual
+     Review and the gate checklist all hold exactly one current state, never a `## Round N` heading or
      a second gate. History lives in git, not in this file. -->
 
 **Handoff**
@@ -29,7 +29,7 @@
 - **Binding ruling:** §5 Verdict and the gate checklist below — the only binding location; there is no other round to point to
 - **On conflict:** the numbered body below wins for everything except `Status`; log the mismatch as a finding at the next `/demo-day` and proceed — don't stop on it.
 
-<!-- Budget: ~130 lines. Five sections, prose-heavier than review-report.md's (Steps/Expected/
+<!-- Budget: ~130 lines. Five sections (plus §6 Visual Review for browser-observable features), prose-heavier than review-report.md's (Steps/Expected/
      Observed columns carry real test narrative) — a few more lines per section, not a different
      shape. Exploratory findings are rows, not essays, same discipline as §3 Findings elsewhere. -->
 
@@ -88,6 +88,18 @@
 <!-- Would you demo this to a stakeholder right now? If not, it fails. Re-test: overwrite this
      paragraph to the current round's verdict — it is the one binding verdict, always. -->
 
+## 6. Visual Review
+
+<!-- Browser-observable features only; delete this section for cli/library/api projects. One row
+     per screenshot: every UI state (start, running, empty, error, finished) at one wide desktop
+     and one phone viewport. "Seen" is what you looked at in the image, not DOM numbers. A binding
+     design deviation is at least Major in §3 (never accepted by QA) unless spec/plan records it as a decision.
+     Re-test: overwrite in place. -->
+
+| State | Viewport | Seen | Wrong |
+|---|---|---|---|
+| start | 1280x800 | | none / <what is wrong> |
+
 ---
 
 ## ✅ QA GATE
@@ -97,7 +109,8 @@
 
 - [ ] Every Must-story acceptance criterion verified in the real browser and passed
 - [ ] Every browser-observable NFR verified and passed
-- [ ] No open Blocker or Major bugs (Minor bugs listed and accepted by the user)
+- [ ] No open Blocker or Major bugs (Minor bugs listed and accepted by the user); a deviation from a binding design direction counts as Major
+- [ ] Visual Review: one row per UI state and viewport, each with an observation, no row `⚠ not-verified-live` (any such row keeps this box unchecked), or N/A: no browser-observable surface
 - [ ] Browser console free of errors on the tested flows
 - [ ] Tested on all agreed viewports
 - [ ] Line budget respected: Ist _N_ / Soll ~130 (excluding HTML comments) — self-reported, no linter checks this; an overage is recorded here with a reason or explicitly waived by the user

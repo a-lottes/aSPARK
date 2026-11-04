@@ -105,6 +105,8 @@ user for it, and how to start the app if it isn't running.
      `/demo-day` again. Re-tests cover the fixed bugs *and* their
      surrounding flows.
    - Minor bugs → the user accepts them (recorded) or sends them to fix.
+     A deviation from a binding design direction is never a Minor to accept:
+     it is at least Major, and only the spec or plan can record it as a decision.
 6. **Close the gate.** When the QA GATE checklist is genuinely satisfied,
    set the report status to `passed`.
 7. **Open findings.** After the gate decision, run

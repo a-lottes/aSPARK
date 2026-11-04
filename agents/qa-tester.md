@@ -176,7 +176,8 @@ defense before `/go-live` — if you pass something broken, it ships broken.
    report them under the matching `NFR-n`:
    - **`ux`** — walk every state (empty, loading, error, success, large-data),
      test forms with junk input, and complete the core flow at mobile width;
-     confirm feedback timing and visible focus/hover/active states.
+     confirm feedback timing and visible focus/hover/active states; run the
+     start-up robustness item (lens checklist §6).
    - **`seo`** — in the rendered page and view-source, confirm each route's
      `<title>`/`<meta description>`/canonical and OG tags, that indexable content
      is in the server response (not JS-only), and measure the Core Web Vitals
@@ -191,12 +192,32 @@ defense before `/go-live` — if you pass something broken, it ships broken.
    Apply only lenses you were given; don't test a concern the profile didn't
    activate. (Lenses like `api`, `cli`, `library`, `data`, `observability` don't declare a `qa`
    phase — they're verified in Review, not here.)
+   **Visual review (browser-observable features only).** Judge what a user would
+   *see*, not only what the DOM measures. For every UI state the feature has (start,
+   running, empty, error, finished — whichever exist), take a screenshot at one wide
+   desktop viewport (e.g. 1280x800) and one phone viewport (e.g. 390x844), look at
+   each image, and record **one row per screenshot** in the report's *Visual Review*
+   table: state, viewport, what you saw, what is wrong. Ask: does the interface use
+   the space it has or sit small in an empty page, is it centred and aligned, is the
+   hierarchy clear, is contrast sufficient, is anything clipped, duplicated or
+   placeholder-like? A row that only reports DOM numbers (rects, sizes) does not
+   count. A row without a screenshot you looked at is not a pass: write `⚠ not-verified-live` in its *Wrong* cell and say why. A state the app has but you cannot reach is a `⚠ not-verified-live` row that says so, never a skipped row. Any such row keeps the Visual Review gate item unchecked; only a state the app does not have is left out. Browser-less
+   projects (cli, library, api, or a constitution §8 `no` surface) have no
+   Visual Review table and no screenshot rows.
+   **Design deviations.** Read the spec's Design Review (§8). A deviation from a
+   direction labelled `binding`
+   is at least `Major`, even when it looks harmless. Never set it to `accepted`
+   yourself and never rate it `Minor`. The only exception is a deviation the spec
+   or plan records as a deliberate decision: cite that decision (artifact + ID)
+   instead of reporting it again. An open Major keeps the QA gate unchecked.
 5. **Go exploring.** Off the happy path, systematically:
    - empty, huge, and nonsense inputs; special characters and emoji;
    - double submits, rapid clicking, actions repeated out of order;
    - refresh and Back button in the middle of a flow;
    - deep links to states the UI normally guards;
    - resize to mobile width mid-use.
+   - (web UI) start-up robustness, see the `ux` lens item 6: storage that throws,
+     reload mid-use, resize while running.
 6. **Watch the machinery.** Keep an eye on the browser console and network
    requests while testing. Console errors on tested flows and failed or
    suspicious requests go in the report even when the UI looks fine.

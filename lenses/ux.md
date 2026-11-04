@@ -60,6 +60,12 @@ reading the diff. The Reviewer's remit stays code correctness.)*
 - [ ] Motion is functional (orients, connects cause and effect), brief, and respects `prefers-reduced-motion`.
 - [ ] Nothing moves, autoplays or steals focus without the user initiating it.
 
+### 6. Start-up robustness *(verified in QA)*
+- [ ] The app starts and works when browser storage throws on access (`localStorage`/`sessionStorage` raising `SecurityError`, e.g. blocked site data): the access itself, not only the read, sits inside error handling, and the app falls back to defaults.
+- [ ] A reload in the middle of use leaves the app usable, with no stuck or half-restored state.
+- [ ] A window resize while the app runs keeps it working and laid out (no frozen canvas, no stale size).
+- A failed start (blank page, uncaught error, nothing interactive) under any of these is a `Blocker`.
+
 ## Phase notes
 
 - **Specify (PO):** capture the load-bearing UX bars as measurable **NFRs** or
@@ -72,5 +78,5 @@ reading the diff. The Reviewer's remit stays code correctness.)*
   default.
 - **QA (QA Tester):** you already explore off the happy path — this lens tells
   you *what* to hammer: every state above, forms with junk input, the flow on
-  mobile width, feedback timing. Verify against the UX NFRs by their `NFR-n` IDs
+  mobile width, feedback timing, and the start-up robustness item (§6: storage that throws, reload mid-use, resize while running). Verify against the UX NFRs by their `NFR-n` IDs
   and report what you observed.

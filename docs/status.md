@@ -275,6 +275,14 @@ was an explicit, informed shipping decision, not an oversight.
 | **Evidence** | [`.spark/adversarial-gates-standard/evidence.md`](../.spark/adversarial-gates-standard/evidence.md): negative baseline (no `standards/` reference before the edit), structural checks (line counts, diffs, grep of activation sites). **Live dry runs of both skills: `⚠ not-verified-live`** — no `claude` CLI in the build environment. |
 | **State** | **Shipped, unproven live.** Prompt material: likely, not certain; effect unmeasured, no rate observed. It changes verdict behaviour for installed projects (partial checks become `⚠ not-verified-live`). Gates remain prompt-enforced; code enforcement is `aspark-guard`'s. A second, independent reviewer is not built. |
 
+## Visual QA review and binding design directions
+
+| | |
+|---|---|
+| **Scope** | `agents/qa-tester.md` (Visual Review rows, binding deviation = at least Major), `templates/qa-report.md` (§6 Visual Review, two gate items), `lenses/ux.md` §6 start-up robustness, `agents/designer.md` (scale and space use; `binding`/`advisory` labels), `templates/spec.md` §8 comment, `skills/demo-day/SKILL.md`. No protected template structure changed; marker unchanged. |
+| **Evidence** | [`.spark/visual-qa-review/evidence.md`](../.spark/visual-qa-review/evidence.md): negative case first (previous QA Tester, scratch app), then the changed one; one session each, not a rate. In the one run of the changed tester only 2 of 6 Visual Review rows had a screenshot; after the rule added in response (a row without one is `⚠ not-verified-live` and keeps the gate item open), one re-run had 4 of 4 imaged. One session each, no rate; the in-page storage simulation was marked `⚠ not-verified-live`. |
+| **State** | **Shipped, prompt-enforced, unmeasured.** Likely, not certain; no hold rate is claimed. Changes QA verdicts for installed web projects. Not built: code enforcement (`aspark-guard`'s), new lenses or agents. |
+
 ## Browser backends for `/demo-day`
 
 | | |
