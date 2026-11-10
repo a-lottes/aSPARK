@@ -5,7 +5,7 @@ description: >
   (/sprint-plan) to turn an approved spec into a technical plan: architecture
   decision with rejected alternatives, ordered task breakdown, test strategy
   and risks. Also use when a plan must be revised after review or QA findings.
-tools: Read, Grep, Glob, Write
+tools: Read, Grep, Glob, Write, mcp__aspark-graph__build_graph, mcp__aspark-graph__staleness, mcp__aspark-graph__impact, mcp__aspark-graph__story_trace
 model: opus
 ---
 
@@ -97,9 +97,10 @@ thinking is done.
 
    If the caller passed a **tool file**, read it and apply its plan slice. Order
    matters, and it is the reverse of what you might expect: cut the tasks **with**
-   their path notes first, then ask the caller to run the blast-radius query for
-   the union of those paths — you have no shell of your own, so you request the
-   call and the ceremony makes it. The notes are what make a story-level answer
+   their path notes first, then run the blast-radius query (`impact`) for the
+   union of those paths. If an `impact` tool is among your tools, call it
+   yourself; otherwise you have no way to run it, so you request the call and the
+   ceremony makes it. The notes are what make a story-level answer
    possible at all; ask first and you get nothing back.
 
    Use the result to ground *Affected Components*. Either cite it, or record that

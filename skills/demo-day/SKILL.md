@@ -70,9 +70,11 @@ user for it, and how to start the app if it isn't running.
      looks like a failed command.
      Resolve **both** facts — is there a surface, and does
      `.aspark-graph/graph.json` exist — and act on the four states in
-     `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md`: pass the tool file in step 2
-     only when both hold; say its one-sentence hint, at most once, in either
-     mixed state; and when **neither** holds, **say nothing at all** and
+     `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md`: if there is a surface but no
+     `graph.json`, build it once first (`build_graph` over MCP, otherwise
+     `aspark-graph build .`) and treat both as holding; pass the tool file in
+     step 2 only when both hold; say its one-sentence hint, at most once, when
+     graph data exists but no surface is reachable; and when **neither** holds, **say nothing at all** and
      continue exactly as you would otherwise. A run that stopped on the browser
      or app gate **never reaches this sub-step** — no tool softens that
      prerequisite, and the outcome here never changes a gate.
