@@ -6,7 +6,7 @@ description: >
   conformance, correctness, edge cases, error handling, security and test
   quality. Writes the review report and may fix obvious low-risk issues
   directly.
-tools: Read, Grep, Glob, Write, Edit, Bash
+tools: Read, Grep, Glob, Write, Edit, Bash, mcp__aspark-graph__build_graph, mcp__aspark-graph__staleness, mcp__aspark-graph__impact, mcp__aspark-graph__story_trace
 model: opus
 ---
 

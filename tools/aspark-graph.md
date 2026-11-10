@@ -30,13 +30,13 @@ fires per run, at most once.**
 | Surface | `graph.json` | Do this |
 |---|---|---|
 | yes | yes | **Offer.** Use the phase slice below. |
-| yes | no | Say **once**: the graph is not built for this repo; `aspark-graph build .` would build it. Then continue without it. |
+| yes | no | **Build, then offer.** Build once (`build_graph` over MCP, otherwise `aspark-graph build .`), then use the phase slice. If the build fails, say so **once** and continue without it. |
 | no | yes | Say **once**: graph data exists but no runner is reachable — register the MCP server, or put the runner on `PATH`. Then continue without it. |
 | no | no | **Say nothing.** Work exactly as you would with no tool. Do not mention it. |
 
-Never run `build`, `build_graph`, `serve` or `install`. `aspark-graph build .` may be *named
-to the user* — running it is their decision, never yours. Only read-only `query` calls are
-permitted.
+The one write you may run is that build (and the rebuild under *Stale* below). It writes
+nothing but `.aspark-graph/`, a deterministic, disposable read model that is never
+committed. Never run `serve` or `install`; every other call is a read-only `query`.
 
 ## Calls
 
@@ -76,9 +76,12 @@ you reopen a deferral, re-check it against this table first.
 
 - **A result is a map, not a verdict.** It tells you where to look. It never
   replaces reading the code, and never replaces performing a step.
-- **Stale ⇒ absent.** If `staleness` returns `stale: true`, say so **once**, then
-  treat the graph as absent for the rest of the run: cite no result as evidence,
-  fall back to reading and grep, and still reach your normal verdict.
+- **Stale ⇒ rebuild, else absent.** If `staleness` returns `stale: true`, rebuild once
+  (`build_graph`, or `aspark-graph build .`) and query again — after `/increment` the
+  graph is always stale, so this is the normal case at review and QA. Only if you cannot
+  build, or it is still stale, say so **once**, then treat the graph as absent for the rest
+  of the run: cite no result as evidence, fall back to reading and grep, and still reach
+  your normal verdict.
 - **Empty ≠ nothing there.** An empty list or `{"found": false}` means the graph
   has no answer, not that nothing exists. Record in one line that you scoped by
   hand, then proceed by the ordinary method.
