@@ -67,6 +67,12 @@ Optional argument: the feature name. Resolve as usual.
 4. **Route the findings** with the user:
    - open Blockers/Majors → **`/increment`** (fix-mode), then re-run
      `/peer-review`;
+   - **round cap (E2b experiment branch):** at most **two** reviewer rounds
+     per feature, the first review plus one re-review. A Major still open
+     after the second round is not sent back again: record it in the report as
+     waived under the round cap, with its finding id, and close the gate. A
+     Blocker still open after round two stops the loop instead; report it and
+     do not set `passed`;
    - the user may waive a Major — record the waiver and reason in the
      report; Blockers cannot be waived;
    - Minors/Nits → user decides: fix now or accept.
