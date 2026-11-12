@@ -1,4 +1,4 @@
-# Evidence: trail-closing-and-cost-controls (0.18.0)
+# Evidence: trail-closing-and-cost-controls
 
 Prompt material only: every rule here makes a behaviour likely, not certain. **No rate was
 observed.** One session per case, one model (`sonnet`), 2026-11-12. This change was made
