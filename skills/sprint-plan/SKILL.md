@@ -42,8 +42,11 @@ Optional argument: the feature name. Resolve as usual (single feature in
      mixed state; and when **neither** holds, **say nothing at all** and
      continue exactly as you would otherwise. Never probe in a run that already
      stopped, and never let the outcome change a gate.
-2. **Delegate to the Engineering Manager.** Invoke the `engineering-manager`
-   agent with the feature paths and the plan template from
+2. **Delegate to the Engineering Manager.** Pick the model first: if
+   `.spark/constitution.md` §11 names a model for `engineering-manager`, pass
+   exactly that as the agent call's `model`; if it names none, or there is no
+   constitution or no §11, pass no model, so the agent's own default
+   (`sonnet`) applies. Then invoke the `engineering-manager` agent with the feature paths and the plan template from
    `${CLAUDE_PLUGIN_ROOT}/templates/plan.md`. Point it at
    `.spark/constitution.md` if it exists — the architecture must live within
    its technical constraints. If a tool resolved as available in step 1, pass

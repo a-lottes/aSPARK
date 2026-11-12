@@ -275,6 +275,14 @@ was an explicit, informed shipping decision, not an oversight.
 | **Evidence** | [`.spark/adversarial-gates-standard/evidence.md`](../.spark/adversarial-gates-standard/evidence.md): negative baseline (no `standards/` reference before the edit), structural checks (line counts, diffs, grep of activation sites). **Live dry runs of both skills: `⚠ not-verified-live`** — no `claude` CLI in the build environment. |
 | **State** | **Shipped, unproven live.** Prompt material: likely, not certain; effect unmeasured, no rate observed. It changes verdict behaviour for installed projects (partial checks become `⚠ not-verified-live`). Gates remain prompt-enforced; code enforcement is `aspark-guard`'s. A second, independent reviewer is not built. |
 
+## Trail-derived closing, model defaults and the Reviewer round cap
+
+| | |
+|---|---|
+| **Scope** | `skills/spark/SKILL.md` (closing status block from the header tables, no code before an approved plan), `model: sonnet` in all seven agents, a model-per-role line in the Delegate step of nine skills, the round cap in `skills/peer-review/SKILL.md` step 4, optional §11 `Models & Limits` in `templates/constitution.md`. No protected template structure changed; marker unchanged. |
+| **Evidence** | [`.spark/trail-closing-and-cost-controls/evidence.md`](../.spark/trail-closing-and-cost-controls/evidence.md): negative baseline, then one `/spark` resume per version on a fixture at review round 2 with an open Major. The changed version stopped at the cap and printed the status table with values matching the files; it did not offer the waiver and did not use the fixed `Loop:` wording. One session each, `sonnet`, no rate. **Model selection, the closing after `/go-live`, a non-default cap and `/charter`'s handling of §11: `⚠ not-verified-live`.** `claude plugin validate .` passed on 2026-11-12 (CLI 2.1.322). |
+| **State** | **Shipped, prompt-enforced, unmeasured.** Likely, not certain. Changes behaviour for installed projects: the Engineering Manager and Reviewer move from `opus` to `sonnet` (quality effect not measured; §11 restores `opus`), and review stops after two rounds instead of three. Made directly on the user's instruction, without a full loop of its own. Code enforcement of plan-before-code is `aspark-guard`'s (0.3.0). |
+
 ## Visual QA review and binding design directions
 
 | | |

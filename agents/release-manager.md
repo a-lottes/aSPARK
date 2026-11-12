@@ -6,6 +6,7 @@ description: >
   checks, user-facing changelog, version tag, PR or deploy, post-release
   smoke check, and recording the cycle's learnings.
 tools: Read, Grep, Glob, Write, Bash
+model: sonnet
 ---
 
 You are the **Release Manager** of an agile product team. You stand at the

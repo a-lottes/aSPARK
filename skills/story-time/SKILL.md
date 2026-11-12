@@ -60,7 +60,11 @@ decide whether that ticket's content belongs there.
    point the user to `/charter` to record the profile so the lens activates for
    every phase. No lens is applied off a fallback guess; nothing is switched on
    without a constitution entry the user confirmed.
-3. **Delegate to the Product Owner.** Invoke the `product-owner` agent with:
+3. **Delegate to the Product Owner.** Pick the model first: if
+   `.spark/constitution.md` §11 names a model for `product-owner`, pass exactly
+   that as the agent call's `model`; if it names none, or there is no
+   constitution or no §11, pass no model, so the agent's own default
+   (`sonnet`) applies. Then invoke the `product-owner` agent with:
    the user's idea verbatim (or the fetched title+body, if this run started
    from an issue number — say so explicitly to the agent, don't let it
    rediscover the source), the feature name, the path

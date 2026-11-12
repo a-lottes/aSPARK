@@ -22,7 +22,11 @@ one.
 
 ## Steps
 
-1. **Delegate to the Facilitator.** Invoke the `facilitator` agent with the
+1. **Delegate to the Facilitator.** Pick the model first: if
+   `.spark/constitution.md` §11 names a model for `facilitator`, pass exactly
+   that as the agent call's `model`; if it names none, or there is no
+   constitution or no §11, pass no model, so the agent's own default
+   (`sonnet`) applies. Then invoke the `facilitator` agent with the
    path `.spark/constitution.md`, the template from
    `${CLAUDE_PLUGIN_ROOT}/templates/constitution.md`, and the user's input
    verbatim. Say whether this is a first draft or an amendment if you already

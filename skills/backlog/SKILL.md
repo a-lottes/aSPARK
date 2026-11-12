@@ -41,7 +41,11 @@ other input is needed.
    unauthenticated, the repo is unresolved or a call fails, say once, in one
    line, "Could not see the tickets, proposed items are not checked for
    duplicates", and behave as without this step (every item is `new`).
-3. **Delegate to the Product Owner.** Invoke the `product-owner` agent in its
+3. **Delegate to the Product Owner.** Pick the model first: if
+   `.spark/constitution.md` §11 names a model for `product-owner`, pass exactly
+   that as the agent call's `model`; if it names none, or there is no
+   constitution or no §11, pass no model, so the agent's own default
+   (`sonnet`) applies. Then invoke the `product-owner` agent in its
    *propose backlog* mode (`## Proposing a Backlog` in its definition) with the
    document excerpts (file + section headings), the issues and merged PRs from
    step 2 (or "tickets not visible"), the constitution excerpt or "none", `ROADMAP.md` if present, and the user's steer.

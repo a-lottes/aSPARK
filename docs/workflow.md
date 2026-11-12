@@ -209,9 +209,12 @@ back through the developer, and the finding phase re-runs:
   re-tests the fix *and* the flows around it.
 - **Plan wrong?** `/increment` never improvises architecture. It stops, and
   the loop returns to `/sprint-plan` (revision) or `/story-time`.
-- **Escalation:** `/spark` counts rounds — after three failed rounds of the
-  same phase it stops and puts the situation to the user, because at that
-  point the plan or the spec is the problem, not the code.
+- **Escalation:** rounds are counted from the `Round` row of the report.
+  `/peer-review` stops after two Reviewer rounds by default (the constitution's
+  §11 `Reviewer rounds` can name another number), `/spark` stops QA after three
+  failed rounds. Either way the situation goes to the user, because at that
+  point the plan or the spec is the problem, not the code. The user can waive
+  a Major, grant one more round, or go back to the plan.
 
 ## Who Does What — and What They May Not
 

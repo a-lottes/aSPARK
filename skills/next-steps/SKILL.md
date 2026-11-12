@@ -92,7 +92,11 @@ steer, not a fixed answer.
      open *and closed* issues. A function described there that no issue
      covers is a gap; a function an open issue covers is not (AC-3). Each gap
      carries its source, e.g. `constitution.md §3`.
-2. **Delegate to the Product Owner.** Invoke the `product-owner` agent in its
+2. **Delegate to the Product Owner.** Pick the model first: if
+   `.spark/constitution.md` §11 names a model for `product-owner`, pass exactly
+   that as the agent call's `model`; if it names none, or there is no
+   constitution or no §11, pass no model, so the agent's own default
+   (`sonnet`) applies. Then invoke the `product-owner` agent in its
    *propose* mode (see its `## Proposing the Next Feature` section): give it
    the brief from step 1 verbatim (shipped list, in-flight/stalled features
    with their open points, constitution excerpt or "none", the project
