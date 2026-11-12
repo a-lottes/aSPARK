@@ -96,7 +96,16 @@ Every feature travels through five phases — **S**pecify, **P**lan, **A**ct, **
 | **R**eview | Code review by a senior eye, then hands-on QA in a real browser. | No blocking findings, every AC verified. |
 | **K**eep | Released, or handed off as a PR in a PR-mode project. Learnings recorded. | Released and documented. |
 
-Review or QA findings go back to the Developer and the phase re-runs. After three failed rounds of the same phase the loop stops and asks you whether the plan or the spec is wrong, instead of grinding.
+Review or QA findings go back to the Developer and the phase re-runs. Review stops after two Reviewer rounds by default, QA after three failed rounds; then the loop asks you whether the plan or the spec is wrong, instead of grinding.
+
+### Cost and honesty controls (0.18.0, prompt-enforced)
+
+- **Models.** Every agent runs on `sonnet` unless your constitution's optional §11 `Models & Limits` names another model for a role (`reviewer: opus`, for example). Until 0.17.0 the Engineering Manager and the Reviewer were pinned to `opus`; this changes cost and possibly review depth for installed projects. The Developer in `/increment` is your session, so it runs on whatever model you chose.
+- **Reviewer rounds.** `/peer-review` runs at most two Reviewer rounds per feature, then stops and asks you: waive a Major, grant one more round, or go back to the plan. §11 `Reviewer rounds` changes the number.
+- **Closing from the trail.** `/spark` ends every run, finished or stopped, with a table of the `Status` rows it has just re-read from `spec.md`, `plan.md`, `review.md`, `qa.md` and `release.md`. What the model remembers is not a source.
+- **No code before an approved plan.** `/spark` says so; [aspark-guard](https://github.com/a-lottes/aSPARK-guard) 0.3.0 and later denies the write in code.
+
+All four are instructions: likely, not certain. One dry run and what it missed: [`.spark/trail-closing-and-cost-controls/evidence.md`](.spark/trail-closing-and-cost-controls/evidence.md).
 
 ### The team
 

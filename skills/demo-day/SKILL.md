@@ -76,7 +76,11 @@ user for it, and how to start the app if it isn't running.
      continue exactly as you would otherwise. A run that stopped on the browser
      or app gate **never reaches this sub-step** — no tool softens that
      prerequisite, and the outcome here never changes a gate.
-2. **Delegate to the QA Tester.** Invoke the `qa-tester` agent with the app
+2. **Delegate to the QA Tester.** Pick the model first: if
+   `.spark/constitution.md` §11 names a model for `qa-tester`, pass exactly
+   that as the agent call's `model`; if it names none, or there is no
+   constitution or no §11, pass no model, so the agent's own default
+   (`sonnet`) applies. Then invoke the `qa-tester` agent with the app
    URL, the feature paths, the agreed viewports, any credentials/test data
    the user provided, the report template from
    `${CLAUDE_PLUGIN_ROOT}/templates/qa-report.md`, and the path of every active

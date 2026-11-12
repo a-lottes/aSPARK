@@ -39,7 +39,11 @@ Optional argument: a feature name, a URL, or paths to screenshots/components.
    the likely type in one line (e.g. "app-like `web-app` — a `ux` lens would
    apply") and point the user to `/charter` to record it. No lens is switched
    on without a confirmed constitution entry.
-4. **Delegate to the Designer.** Invoke the `designer` agent with the mode,
+4. **Delegate to the Designer.** Pick the model first: if
+   `.spark/constitution.md` §11 names a model for `designer`, pass exactly
+   that as the agent call's `model`; if it names none, or there is no
+   constitution or no §11, pass no model, so the agent's own default
+   (`sonnet`) applies. Then invoke the `designer` agent with the mode,
    the feature paths, any evidence, and the paths of the design-relevant active
    lenses (`${CLAUDE_PLUGIN_ROOT}/lenses/<name>.md`). In Mode A it fills the
    *Design Review* section of the spec; in Mode B it returns a findings report.

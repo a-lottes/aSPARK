@@ -25,8 +25,11 @@ Optional argument: the feature name. Resolve as usual.
    own context. If not `passed`, STOP and report which gate is red — there
    is no "just this once". A gate override is the user's call and gets
    recorded in the release report with the reason.
-2. **Delegate to the Release Manager — prepare only.** Invoke the
-   `release-manager` agent with the feature paths, the template from
+2. **Delegate to the Release Manager — prepare only.** Pick the model first: if
+   `.spark/constitution.md` §11 names a model for `release-manager`, pass exactly
+   that as the agent call's `model`; if it names none, or there is no
+   constitution or no §11, pass no model, so the agent's own default
+   (`sonnet`) applies. Then invoke the `release-manager` agent with the feature paths, the template from
    `${CLAUDE_PLUGIN_ROOT}/templates/release-notes.md`, and `.spark/constitution.md`
    if it exists — its `Delivery & Handoff` section, when present, declares the
    release mode; absent or partial, the agent defaults silently to direct mode,

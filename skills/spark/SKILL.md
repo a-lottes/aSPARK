@@ -17,7 +17,9 @@ transition.
 
 ## Input
 
-- **With an idea as argument** → start a fresh loop at Specify.
+- **With an idea as argument** → start a fresh loop at Specify. Your first
+  write is `.spark/<feature-name>/spec.md`, through `/story-time`. It is never
+  a source file, however small or obvious the change looks.
 - **Without an argument** → resume: pick the feature (single one in
   `.spark/` → use it; several → ask the user), read its artifacts' statuses,
   and continue at the first phase whose gate is not yet closed (see the
@@ -120,15 +122,48 @@ spends them in the context the rest of the loop still has to fit into.
    the loop is built.
 6. **Handle the feedback loops.** Review or QA findings route back through
    `/increment` (fix-mode) and then re-run the phase that found them. Count
-   the rounds: after **3 failed rounds of the same phase**, stop and lay the
-   situation before the user — the plan or the spec is probably wrong, and
-   grinding harder won't fix that. Offer `/sprint-plan` (revision) or
-   `/story-time`.
+   the rounds from the `Round` row of the report, not from memory. Review
+   has its own cap, **two Reviewer rounds** unless the constitution's §11
+   names another number (`/peer-review` step 4 holds the procedure). For QA:
+   after **3 failed rounds**, stop. In both cases lay the situation before
+   the user — the plan or the spec is probably wrong, and grinding harder
+   won't fix that. Offer `/sprint-plan` (revision) or `/story-time`.
 7. **Keep the narrative.** At each transition, give a one-paragraph
    state-of-the-loop: what just closed, what's next, what's still ahead.
-   The user should never wonder where in the loop they are.
-8. **Close the loop.** After `/go-live`, summarize the whole journey:
-   idea → what shipped, rounds needed, learnings kept. Then offer
+   The user should never wonder where in the loop they are. What "just
+   closed" is what the artifact's `Status` row says now, read again after
+   the ceremony returned, not what the ceremony was meant to achieve.
+8. **Close from the trail, not from memory.** Your **last message** carries
+   the status block below — after `/go-live`, and just the same whenever the
+   loop stops anywhere else: a gate the user did not approve, a round cap, a
+   red pre-flight, a session about to end. Build it at the moment you write
+   that message:
+   - Read again, now, the header table of `spec.md`, `plan.md`, `review.md`,
+     `qa.md` and `release.md` in `.spark/<feature-name>/` (the first lines
+     are enough), the `Open:` line of the Handoff block in the two reports,
+     and the `Status` column of the task table in `plan.md`.
+   - Print this table, one row per artifact, every value copied as it stands
+     in the file. A file that does not exist reads `missing`; a value you
+     cannot find reads `unreadable`. Never fill a cell from what you remember
+     having done.
+
+     | Artifact | Status | Round | Open |
+     |---|---|---|---|
+     | `spec.md` | … | n/a | n/a |
+     | `plan.md` | … (tasks: _d_ of _n_ `done`) | n/a | n/a |
+     | `review.md` | … | … | … |
+     | `qa.md` | … | … | … |
+     | `release.md` | … | n/a | n/a |
+
+   - Under it, one line: `Loop:` followed by `closed, released`, `closed,
+     handed-off`, or `open, next: /<ceremony>`, taken from the phase map
+     applied to those rows.
+   - Every status word in the rest of your message ("review passed", "QA
+     green", "released", "done") must agree with a row of the table. Where
+     your memory of the session and a file disagree, the file wins: say what
+     the file says and name the difference.
+   After the block, and only after `/go-live`, summarize the journey: idea →
+   what shipped, rounds needed (the `Round` rows), learnings kept. Then offer
    `/story-time` for the next idea, or `/next-steps` if the user wants the
    Product Owner to propose one instead of bringing their own.
 
@@ -138,6 +173,13 @@ spends them in the context the rest of the loop still has to fit into.
   including the final go for publishing in `/go-live`. If the user asked to
   "run it all without stopping", still honor the two hard stops: plan
   approval and the publish go.
+- **No code before an approved plan.** Until `plan.md` reads `approved`,
+  write and edit nothing outside `.spark/`. This is an instruction, so it
+  makes the order likely, not certain; the companion `aspark-guard` (0.3.0
+  and later) denies the write in code.
+- **A status you report is a status you just read.** Never state an
+  artifact's status, a round count or an open-findings count from memory —
+  not at a gate, not in the closing message (step 8).
 - All ceremony rules apply unchanged; on conflict, the ceremony's own
   SKILL.md wins for its phase.
 - If the session ends mid-loop, the artifacts *are* the state — any later

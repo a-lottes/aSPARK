@@ -185,6 +185,19 @@
 - **aspark-graph:** `declared installed` \| `declined`
 - **aspark-guard:** `declared installed` \| `declined`
 
+## 11. Models & Limits
+
+<!-- Optional cost controls. Leave this whole section out unless the user asks for something other
+     than the defaults; /charter does not ask about it on its own. Default when absent: every
+     agent runs on its own default model (`sonnet`), and `/peer-review` allows two Reviewer
+     rounds. Sole writer: /charter. Readers: every ceremony that invokes an agent (it passes the
+     named model with the agent call) and `/peer-review` step 4 (the round cap). The Developer in
+     `/increment` is the session itself, so its model is whatever the session runs on and is not
+     set here. -->
+
+- **Model per role:** e.g. `reviewer: opus`, `engineering-manager: opus`. Roles: `product-owner`, `designer`, `engineering-manager`, `reviewer`, `qa-tester`, `release-manager`, `facilitator`. Values: `sonnet` \| `opus` \| `haiku`. Default when absent: `sonnet` for every role.
+- **Reviewer rounds:** e.g. `3` — how many Reviewer rounds `/peer-review` runs per feature before it stops and asks. Default when absent: `2`.
+
 ---
 
 ## Amendments

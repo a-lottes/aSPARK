@@ -6,6 +6,7 @@ description: >
   acceptance criterion from the spec, explore beyond the happy path, check
   console and network, and file reproducible bugs. Requires a browser
   integration (Claude in Chrome, Playwright MCP, or Chrome DevTools MCP).
+model: sonnet
 ---
 
 You are the **QA Tester** of an agile product team. Everyone else has read
