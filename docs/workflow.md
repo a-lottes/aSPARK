@@ -189,6 +189,16 @@ genuinely true — and gates enforce three invariants:
    (e.g. waive a Major finding). The override, its reason, and who gave it
    go into the artifact — the trail stays honest.
 
+## The Light Path
+
+A feature whose spec header says `Path` `light` skips `/sprint-plan`'s
+Engineering Manager (the orchestrator writes a short plan the user
+approves), runs one Reviewer round and no `/demo-day`; `/go-live` accepts the
+missing `qa.md` and says so. Only `/story-time` writes `light`, at the spec
+gate, on the user's choice, after six checks hold (`skills/story-time/SKILL.md`
+step 8). Any sign that the change is bigger than it looked sends it back to
+the full loop (`skills/spark/SKILL.md`, *The Light Path*).
+
 ## The Feedback Loops
 
 Findings never get "fixed in place" by the role that found them — they route

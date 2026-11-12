@@ -9,6 +9,7 @@
 | **Status** | `draft` \| `design-checked` \| `approved` \| `rejected` |
 | **Date** | YYYY-MM-DD |
 | **Ticket** | the constitution's declared format (e.g. `PROJ-123`, `#123`, a URL), or `none` |
+| **Path** | `full` \| `light` — set at the spec gate by `/story-time`, only on the user's yes; absent means `full`. `/spark` reads it to pick the route. |
 | **Gate comment** | URL of the spec-gate question posted to the ticket by `/story-time`, `skipped, <reason>`, or `none` (no ticket / not posted yet). A recorded URL means: never post it again. |
 
 <!-- Handoff: read this block first, the numbered sections below by exception. Whoever

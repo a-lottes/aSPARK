@@ -25,6 +25,14 @@ Optional argument: the feature name. Resolve as usual.
    own context. If not `passed`, STOP and report which gate is red — there
    is no "just this once". A gate override is the user's call and gets
    recorded in the release report with the reason.
+   **Light path.** Read one more row: `Path` in the header table of
+   `spec.md`. Only when it says `light`, a **missing** `qa.md` does not stop
+   the release: `review.md` `passed` is the gate, and you tell the
+   `release-manager` agent in step 2 that QA was not run by design, to say
+   so in the release report's gate line as `QA: not run (light path)`, and
+   to run the full test suite in its pre-flight. A `qa.md` that exists and
+   is not `passed` stops the release on any path. No `Path` row, or `full`:
+   nothing in this paragraph applies.
 2. **Delegate to the Release Manager — prepare only.** Pick the model first: if
    `.spark/constitution.md` §11 names a model for `release-manager`, pass exactly
    that as the agent call's `model`; if it names none, or there is no
