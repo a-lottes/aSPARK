@@ -67,7 +67,7 @@ This section is the single source both read; they do not restate it.
   **and** at least one companion is not `declared installed`. Then record the
   new version, so it fires at most once per version. A user who declared both
   installed is never re-offered.
-- **Companion story last changed in:** `0.17.0`. A release that changes what a
+- **Companion story last changed in:** `0.18.0`. A release that changes what a
   companion buys, or adds one, bumps this marker; a release that does not,
   leaves it, and nobody is re-offered.
 
