@@ -13,3 +13,4 @@
 | v0.14.3 | 2026-10-24 | campaign-notice-line | b2c1921 | https://github.com/a-lottes/aSPARK/pull/80 |
 | v0.16.0 | 2026-10-27 | backlog-seed | 9dc6702 | https://github.com/a-lottes/aSPARK/pull/103 |
 | v0.17.0 | 2026-10-29 | release-0.17.0 | ba85bcb | https://github.com/a-lottes/aSPARK/pull/123 |
+| v0.18.0 | 2026-11-13 | release-0.18.0 | (release commit) | (PR) |
