@@ -104,6 +104,39 @@ decide whether that ticket's content belongs there.
    - If design review is N/A (record why), ask the user for approval. Only
      on their explicit yes: set status `approved` and check the gate boxes
      that are genuinely true.
+   - **Size the route, in the same question as the approval.** A small
+     change does not need the whole loop; a change with an open decision
+     does. Offer the **light path** only when **every** line below holds,
+     each read from the spec or the repo now, not remembered:
+     1. the spec has exactly one story and at most four acceptance criteria;
+     2. §3 *Assumptions & Open Questions* has no row without a resolution,
+        and no assumption that decides behaviour which the user has not
+        confirmed in this conversation;
+     3. design review is N/A: nothing user-visible in a UI changes;
+     4. the change touches no authentication, permission, payment or
+        personal-data behaviour, no stored data format or migration, and
+        nothing callers outside this repository rely on: a published
+        package API, a CLI flag, an HTTP endpoint, a file format;
+     5. no **other** feature's trail names the files this change will touch:
+        `grep -rlF` each file **path** the change will touch (for example
+        `src/greet.py`, never a bare word such as `greet`) across
+        `.spark/*/spec.md` and `.spark/*/plan.md`, leaving out this
+        feature's own folder. A hit means another feature made a promise
+        about that file, so the route is `full`; do not argue a hit away.
+        If the spec names no file yet, find the one or two files by reading
+        the code first;
+     6. `.spark/constitution.md` §11 does not say `Light path: off`.
+     If all six hold, tell the user in two lines what the light path skips
+     (the Engineering Manager's plan, the QA Tester, a second review round)
+     and what it keeps (this spec, a short plan they approve, one review,
+     the release gate), and ask: light or full. Only on their explicit
+     choice of light, write the header row `Path` as `light`, and name
+     `/spark` as the next step: it writes the short plan. `/sprint-plan` run
+     on its own always makes a full plan. In every other
+     case — a line fails, you could not check one, or the user did not
+     choose — write nothing or `full`, and do not mention the light path at
+     all when a line fails. Never choose `light` yourself. This rule is
+     prompt material: it makes the right sizing likely, not certain.
 
 ### Ticket gate question (only when the spec was seeded from a ticket)
 

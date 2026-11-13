@@ -98,6 +98,10 @@ Every feature travels through five phases — **S**pecify, **P**lan, **A**ct, **
 
 Review or QA findings go back to the Developer and the phase re-runs. Review stops after two Reviewer rounds by default, QA after three failed rounds; then the loop asks you whether the plan or the spec is wrong, instead of grinding.
 
+### The light path: not every change needs the whole loop (prompt-enforced)
+
+A small change with no open decision does not need an Engineering Manager, a QA Tester and two review rounds. At the spec gate, `/story-time` offers a **light path** only when six checks all hold: one story with at most four acceptance criteria, no unconfirmed assumption, no UI change, nothing security- or data-format-related or relied on outside the repo, no other feature's trail naming the files to be touched, and the constitution's §11 does not switch it off. You choose; it never chooses for you. On the light path, `/spark` writes a short plan you approve, then build, **one** review, and `/go-live` releases without a QA report, stating `QA: not run (light path)`. The moment the change stops fitting (a design choice, a file outside the plan, an open Major after the review), the feature goes back to the full loop and says why. Measured: five dry runs, no rate, savings not measured: [`.spark/light-path/evidence.md`](.spark/light-path/evidence.md).
+
 ### Cost and honesty controls (prompt-enforced)
 
 - **Models.** Every agent runs on `sonnet` unless your constitution's optional §11 `Models & Limits` names another model for a role (`reviewer: opus`, for example). Up to and including 0.17.0 the Engineering Manager and the Reviewer were pinned to `opus`; this changes cost and possibly review depth for installed projects. The Developer in `/increment` is your session, so it runs on whatever model you chose.

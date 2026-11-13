@@ -77,7 +77,12 @@ Optional argument: the feature name. Resolve as usual.
      the first review plus one re-review. A different number applies only
      when `.spark/constitution.md` §11 `Reviewer rounds` names one. Read the
      current round from the trail, not from memory: the `Round` row in the
-     header table of `review.md`. When `Round` already equals the cap and a
+     header table of `review.md`. A feature on the light path (the header
+     table of its `spec.md` has `Path` `light`) has a cap of **one**: a
+     Blocker or Major open after that round means the feature leaves the
+     light path — set the spec's `Path` row to `full`, tell the user in one
+     line, and route the findings as above under the normal cap. When
+     `Round` already equals the cap and a
      Blocker or Major is still open, do **not** route to `/increment` and do
      **not** invoke the Reviewer again. Stop and lay the open findings before
      the user, who picks one: waive a Major (recorded with its reason, as

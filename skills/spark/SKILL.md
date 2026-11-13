@@ -52,13 +52,63 @@ spends them in the context the rest of the loop still has to fit into.
 | no `spec.md` | `/story-time` |
 | `spec.md` is `draft`, UI-facing, design review empty | `/look-and-feel` |
 | `spec.md` is `draft` otherwise | finish `/story-time` (approval) |
-| `spec.md` `approved`, no/unapproved `plan.md` | `/sprint-plan` |
+| `spec.md` `approved`, no/unapproved `plan.md` | `/sprint-plan` — or, when the spec header says `Path` `light`, the short plan (see *The Light Path*) |
 | `plan.md` `approved`, tasks not all `done` | `/increment` |
 | tasks `done`, `review.md` missing or not `passed` | `/peer-review` |
-| `review.md` `passed`, `qa.md` missing or not `passed` | `/demo-day` |
+| `review.md` `passed`, `qa.md` missing or not `passed` | `/demo-day` — or, when the spec header says `Path` `light`, straight to `/go-live` |
 | `review.md` + `qa.md` `passed`, no `released`/`handed-off` release | `/go-live` |
 | release `released` | loop closed — tell the user |
 | release `handed-off` | loop closed for this team — tell the user it's handed off, not yet approved elsewhere |
+
+## The Light Path
+
+A small change with no open decision takes a shorter route. Which route a
+feature takes is a fact on disk: the `Path` row in the header table of
+`spec.md`. `light` means this section applies; `full`, or no row, means the
+phase map above applies unchanged and you never mention the light path. Only
+`/story-time` writes `light`, at the spec gate, on the user's explicit
+choice. You never set it, and you never talk a user into it.
+
+On `Path` `light`, after the spec is `approved`:
+
+1. **Short plan, written by you, approved by the user.** Do not invoke the
+   Engineering Manager. Write `.spark/<feature-name>/plan.md` from
+   `${CLAUDE_PLUGIN_ROOT}/templates/plan.md` yourself, status `draft`: §1 in
+   one or two sentences saying which existing structure the change follows
+   and that the light path makes no architecture decision; §2 the files; §3
+   at most five tasks, each mapped to its story and ending in an inline
+   `files:` note; §4 one line per acceptance criterion saying which test
+   proves it; §5 `none beyond the spec` or the one risk you see. Then stop
+   for the user's approval exactly as at any plan gate. Only on their yes:
+   status `approved`. This is still the hard stop it always was.
+2. **Build:** `/increment`, unchanged.
+3. **One review:** `/peer-review`, unchanged, but with a cap of **one**
+   Reviewer round, whatever §11 says.
+4. **No QA ceremony.** `/demo-day` is not run and no `qa.md` is written. The
+   proof is the green test suite and the review's traceability table.
+5. **Release:** `/go-live`. Its gate accepts a missing `qa.md` for a spec
+   whose `Path` is `light` and records that in the release report.
+
+**Leave the light path the moment it stops fitting.** Any one of these
+switches the feature to the full loop:
+
+- writing the short plan needs a choice between two designs, or more than
+  five tasks;
+- `/increment` stops because the plan is wrong, has to touch a file the
+  plan's §2 does not name, or meets a question the spec does not answer;
+- the one review round leaves a Blocker or a Major open;
+- the user asks for it.
+
+To switch: change the spec's `Path` row to `full` in the same turn, tell the
+user in one line that the feature left the light path and why, and continue
+from the phase map. A plan you wrote goes to `/sprint-plan` as a revision,
+so the Engineering Manager owns it from here; an open review finding routes
+as usual, now under the normal round cap; `/demo-day` runs before
+`/go-live`. Switching is not a failure and needs no approval. Staying on the
+light path past one of these points is the failure.
+
+This is prompt material: it makes the shorter route likely to be taken and
+left at the right moments, not certain. What it saves is not measured.
 
 ## How You Conduct
 
@@ -155,6 +205,10 @@ spends them in the context the rest of the loop still has to fit into.
      | `qa.md` | … | … | … |
      | `release.md` | … | n/a | n/a |
 
+   - On a spec whose `Path` row says `light`, the `qa.md` row reads
+     `not run (light path)`, and one line above the table says `Path: light`.
+     If the feature left the light path during this run, that line says
+     `Path: full (left the light path: <reason>)`.
    - Under it, one line: `Loop:` followed by `closed, released`, `closed,
      handed-off`, or `open, next: /<ceremony>`, taken from the phase map
      applied to those rows.

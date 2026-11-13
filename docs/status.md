@@ -275,6 +275,14 @@ was an explicit, informed shipping decision, not an oversight.
 | **Evidence** | [`.spark/adversarial-gates-standard/evidence.md`](../.spark/adversarial-gates-standard/evidence.md): negative baseline (no `standards/` reference before the edit), structural checks (line counts, diffs, grep of activation sites). **Live dry runs of both skills: `⚠ not-verified-live`** — no `claude` CLI in the build environment. |
 | **State** | **Shipped, unproven live.** Prompt material: likely, not certain; effect unmeasured, no rate observed. It changes verdict behaviour for installed projects (partial checks become `⚠ not-verified-live`). Gates remain prompt-enforced; code enforcement is `aspark-guard`'s. A second, independent reviewer is not built. |
 
+## Light path
+
+| | |
+|---|---|
+| **Scope** | `templates/spec.md` (`Path` row), `skills/story-time/SKILL.md` step 8 (six sizing checks, offer only, user chooses), `skills/spark/SKILL.md` (*The Light Path*: short plan, one review, no QA, the exits back to the full loop; phase map and closing table), `skills/peer-review/SKILL.md` (cap of one round), `skills/go-live/SKILL.md` and `agents/release-manager.md` (missing `qa.md` accepted only on `light`), `templates/constitution.md` §11 `Light path`. No protected template structure renamed or removed; marker unchanged. |
+| **Evidence** | [`.spark/light-path/evidence.md`](../.spark/light-path/evidence.md): negative case first (no `Path` row: `/spark` went to the Engineering Manager as before), then the short plan, the exit after an open Major, the release gate without `qa.md`, and the sizing offer for an eligible and an ineligible change. One session each, `sonnet`, no rate. **Not shown: a whole light loop end to end, a release, the token saving.** |
+| **State** | **Shipped, prompt-enforced, unmeasured.** Likely, not certain. Default `on`, but nothing changes for a project until a user picks `light` at a spec gate. |
+
 ## Trail-derived closing, model defaults and the Reviewer round cap
 
 | | |

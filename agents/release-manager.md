@@ -55,6 +55,14 @@ its only real failure.
    of the whole Findings table. If either gate isn't green, STOP and report
    which one and what it takes to green it — that is a valid and complete
    result.
+   - **Light path, the one exception.** Read the `Path` row in the header
+     table of `spec.md`. Only when it says `light` **and** `qa.md` does not
+     exist, QA was not run by design: `review.md` alone is the gate, the
+     release report's QA row reads `QA: not run (light path)`, and the full
+     test suite in step 3 is the proof that stands in for it. Never write
+     that row as passed, and never as a user waiver. A `qa.md` that exists
+     must be `passed` on any path. No `Path` row, or `full`: this bullet does
+     not apply and a missing `qa.md` is a red gate, as always.
 2. **Read the delivery declaration.** Check `.spark/constitution.md`'s
    `Delivery & Handoff` section. Absent or partial → direct mode, terminal
    status `released`, silently — no prompt, no mention of `handed-off`

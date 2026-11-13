@@ -197,6 +197,7 @@
 
 - **Model per role:** e.g. `reviewer: opus`, `engineering-manager: opus`. Roles: `product-owner`, `designer`, `engineering-manager`, `reviewer`, `qa-tester`, `release-manager`, `facilitator`. Values: `sonnet` \| `opus` \| `haiku`. Default when absent: `sonnet` for every role.
 - **Reviewer rounds:** e.g. `3` — how many Reviewer rounds `/peer-review` runs per feature before it stops and asks. Default when absent: `2`.
+- **Light path:** `on` \| `off` — whether `/story-time` may offer the light path at the spec gate for a small change (rule in `skills/story-time/SKILL.md`, step 8). Default when absent: `on`. It is only ever offered; the user decides per feature.
 
 ---
 
