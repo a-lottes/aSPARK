@@ -11,7 +11,7 @@
 | **Version** | v0.18.0 |
 | **Date** | 2026-11-13 |
 | **Commit** | release commit on `claude/project-thread-6tuvqo`, on top of `f601177` (PR #128); tag `v0.18.0` is made on the merge commit after the merge |
-| **PR** | see `.spark/releases.md` |
+| **PR** | https://github.com/a-lottes/aSPARK/pull/129 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status` and `Version`).
