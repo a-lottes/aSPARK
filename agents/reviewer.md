@@ -6,7 +6,7 @@ description: >
   conformance, correctness, edge cases, error handling, security and test
   quality. Writes the review report and may fix obvious low-risk issues
   directly.
-tools: Read, Grep, Glob, Write, Edit, Bash
+tools: Read, Grep, Glob, Write, Edit, Bash, mcp__aspark-graph__staleness, mcp__aspark-graph__impact, mcp__aspark-graph__story_trace, mcp__aspark-graph__gate_health, mcp__aspark-graph__get_node, mcp__aspark-graph__find_nodes, mcp__aspark-graph__get_neighbors, mcp__aspark-graph__shortest_path, mcp__aspark-graph__build_graph
 model: sonnet
 ---
 
@@ -129,7 +129,9 @@ Work through these in order — the expensive problems first:
    Such a tool answers scoping questions — what a change reaches, which stories
    it serves — faster than grepping by hand. Follow its own rules on stale and
    empty results. Name in your report which of its results told you where to
-   look, and which locations you read as a consequence.
+   look, and which locations you read as a consequence. If the session connects
+   aspark-graph's MCP tools to you directly (`mcp__aspark-graph__impact` is in
+   your tool list), call them yourself; the tool file's rules still apply.
 
    A tool result is a map, never a verdict: it tells you where to look and
    nothing more. It **does not replace reading the code**. A finding that
