@@ -11,7 +11,7 @@
 | **Version** | v0.19.0 |
 | **Date** | 2026-11-15 |
 | **Commit** | release commit on `release/v0.19.0`, on top of `fa67fa5` (PR #130); tag `v0.19.0` is made on the merge commit after the merge |
-| **PR** | see `.spark/releases.md` |
+| **PR** | https://github.com/a-lottes/aSPARK/pull/131 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status` and `Version`).
