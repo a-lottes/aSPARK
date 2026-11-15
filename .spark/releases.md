@@ -14,3 +14,4 @@
 | v0.16.0 | 2026-10-27 | backlog-seed | 9dc6702 | https://github.com/a-lottes/aSPARK/pull/103 |
 | v0.17.0 | 2026-10-29 | release-0.17.0 | ba85bcb | https://github.com/a-lottes/aSPARK/pull/123 |
 | v0.18.0 | 2026-11-13 | release-0.18.0 | 374fd30 | https://github.com/a-lottes/aSPARK/pull/129 |
+| v0.19.0 | 2026-11-15 | release-0.19.0 | (release commit) | (PR) |
