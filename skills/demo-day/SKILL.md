@@ -70,10 +70,14 @@ user for it, and how to start the app if it isn't running.
      looks like a failed command.
      Resolve **both** facts — is there a surface, and does
      `.aspark-graph/graph.json` exist — and act on the four states in
-     `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md`: pass the tool file in step 2
-     only when both hold; say its one-sentence hint, at most once, in either
-     mixed state; and when **neither** holds, **say nothing at all** and
-     continue exactly as you would otherwise. A run that stopped on the browser
+     `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md`: surface yes, `graph.json`
+     no means **build once** (that file says how; it writes only
+     `.aspark-graph/`), then treat it as yes/yes; a stale graph is rebuilt
+     once, never counted as absent; pass the tool file in step 2 only when a
+     graph exists; say a failed build once, in the closing report, and go on
+     without it; say the one-sentence hint, at most once, in the no-surface
+     state with a graph; and when **neither** holds, **say nothing at all** and
+     continue exactly as you would otherwise. One build per run, shared with the agent. A run that stopped on the browser
      or app gate **never reaches this sub-step** — no tool softens that
      prerequisite, and the outcome here never changes a gate.
 2. **Delegate to the QA Tester.** Pick the model first: if

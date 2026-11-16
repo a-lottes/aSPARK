@@ -183,7 +183,7 @@ Most use beyond the author's projects is on closed-source code, so it can't be l
 Core has no dependencies. Two optional companions hook into the loop if you install them; without them the loop behaves exactly as described above, no warning, no mention.
 
 - [**aspark-guard**](https://github.com/a-lottes/aSPARK-guard) — enforces the gates in code, outside the model: denies a `.spark/` write that violates a phase precondition and records every write with its hash. `/plugin install aspark-guard@aspark`.
-- [**aspark-graph**](https://github.com/a-lottes/aSPARK-graph) — a deterministic graph over your `.spark/` artifacts and code, used by `/sprint-plan`, `/peer-review` and `/demo-day` to scope work. `pip install aspark-graph`.
+- [**aspark-graph**](https://github.com/a-lottes/aSPARK-graph) — a deterministic graph over your `.spark/` artifacts and code, used by `/sprint-plan`, `/peer-review` and `/demo-day` to scope work; a ceremony builds it once when missing or stale and its agents may query it (prompt material, unproven until measured). `pip install aspark-graph`.
 
 Two further siblings, `aspark-insights` and `aspark-policy`, do not touch the loop today. The whole family, with what each one's evidence does and does not cover: [`docs/family.md`](docs/family.md). Site: [aspark.lottes.dev](https://aspark.lottes.dev).
 

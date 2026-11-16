@@ -133,7 +133,7 @@
   - **No hard dependency on a sibling repo** (`aspark-graph`, `aspark-policy`, or
     any external tool). Core is installed into arbitrary projects that have none of
     them.
-  - No vendoring another repo's code, no installer, no auto-build, no auto-execute
+  - No vendoring another repo's code, no installer, no auto-build (one exception: the single `build_graph` / `aspark-graph build .` a ceremony runs when a graph surface is present, writing only `.aspark-graph/`), no auto-execute
     on the user's behalf.
   - No registry or install claim about an external tool that isn't true at the time
     of writing, verified against the registry itself. `aspark-graph` **is** published
@@ -201,7 +201,7 @@
   `aspark-guard` once (`tools/README.md` § The companion offer); no gate may
   mention a missing tool on that precedent.
 - **Nothing is executed or installed on the user's behalf unasked** — no
-  auto-install, no auto-build, no destructive git or deploy action without the
+  auto-install, no auto-build (except the one graph build above: one build or rebuild per run, only `.aspark-graph/` written, only when a graph surface is present), no destructive git or deploy action without the
   user's explicit go in the conversation.
 - **No agent passes its own gate.** `approved`, waivers and the release go are the
   user's, and every override is recorded in the artifact with its reason.
@@ -336,3 +336,4 @@ it.
 | 2026-10-05 | Skill/slash-command count **ten → eleven** at §2 (line 41) and §9 (Shape line 287, Stack & entry points line 300, Module structure line 301). §9 line 300's dispatch claim reworded to the verified form (eight skills delegate to a named agent; `/increment`, `/spark`, `/campaign` name none). Two stale §9 citations corrected: line 300 `.claude-plugin/plugin.json:1-10` → `skills/*/SKILL.md` (11 files) and `docs/repo-layout.md:6`; line 301 `README.md:243-249` → `docs/repo-layout.md:5-12` | `campaign-start` adds the `/campaign` skill (`skills/campaign/SKILL.md`). The loop's ten ceremonies stay ten (`ROADMAP.md:35` and `docs/status.md:181,285` count the loop and are unchanged). Spec `.spark/campaign-start/spec.md` AC-4.2/AC-4.4 and plan T12. Made by `/charter` at the user's instruction. Citations: `README.md` is now 177 lines, so `:243-249` no longer exists, and `plugin.json:1-10` holds only name/version/description, never listing commands; the layout facts live in `docs/repo-layout.md`. Not touched, flagged only: §2's `0.8.0` version text (`plugin.json:4` reads `0.13.1`) |
 | 2026-10-27 | Skill/slash-command count **eleven → twelve** at §2 (line 41) and §9 (Shape line 287, Stack & entry points line 300, Module structure line 301). §9 line 300's dispatch claim corrected: **nine** skills delegate to a named agent (`/backlog` added, delegating to `product-owner`, `skills/backlog/SKILL.md:36`); `/increment`, `/spark` and `/campaign` still name none | The `/backlog` skill (PR #82, issue #81) shipped without a constitution amendment, so the 2026-10-05 counts were stale. Re-verified live: `ls skills` lists 12 directories; `agents/` 7, `templates/` 6 unchanged. Made by `/charter` at the user's request after a release found the file out of date |
 | 2026-10-28 | §6 gains the onboarding-vs-gate boundary for the companion offer | Issue #45: the offer must not read as precedent for a gate-level mention |
+| 2026-11-16 | §3 off-limits and §6 "nothing executed unasked" each allow **one** graph build or rebuild per run, writing only `.aspark-graph/`, and only when an aspark-graph surface is present; install, serve and every other command stay forbidden | In experiment E2 the graph was recommended and no session called it: a fresh checkout never got it (build forbidden) and a stale one counted as absent. Spec A1 of `.spark/graph-build-then-offer/spec.md`, ruling (a) |

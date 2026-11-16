@@ -37,10 +37,14 @@ Optional argument: the feature name. Resolve as usual (single feature in
      looks like a failed command.
      Resolve **both** facts — is there a surface, and does
      `.aspark-graph/graph.json` exist — and act on the four states in
-     `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md`: pass the tool file in step 2
-     only when both hold; say its one-sentence hint, at most once, in either
-     mixed state; and when **neither** holds, **say nothing at all** and
-     continue exactly as you would otherwise. Never probe in a run that already
+     `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md`: surface yes, `graph.json`
+     no means **build once** (that file says how; it writes only
+     `.aspark-graph/`), then treat it as yes/yes; a stale graph is rebuilt
+     once, never counted as absent; pass the tool file in step 2 only when a
+     graph exists; say a failed build once, in the closing report, and go on
+     without it; say the one-sentence hint, at most once, in the no-surface
+     state with a graph; and when **neither** holds, **say nothing at all** and
+     continue exactly as you would otherwise. One build per run, shared with the agent. Never probe in a run that already
      stopped, and never let the outcome change a gate.
 2. **Delegate to the Engineering Manager.** Pick the model first: if
    `.spark/constitution.md` §11 names a model for `engineering-manager`, pass
@@ -59,8 +63,8 @@ Optional argument: the feature name. Resolve as usual (single feature in
    choices), then re-invoke with the answers.
    - The agent may also return a **tool query request** — it has no shell of
      its own. Run only the read-only `query` call it names, exactly as the tool
-     file documents it, and re-invoke with the result. Never run a build, an
-     install, or anything that writes. If the call fails or returns nothing,
+     file documents it, and re-invoke with the result. Never run an
+     install, or anything that writes beyond the one build the tool file allows. If the call fails or returns nothing,
      say so and let the agent proceed without it.
 4. **Present the plan.** Show the user: the architecture decision **with the
    rejected alternatives**, the task table (count, order, walking-skeleton

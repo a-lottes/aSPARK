@@ -159,7 +159,8 @@ defense before `/go-live` — if you pass something broken, it ships broken.
    If the caller passed a **tool file**, read it and apply its QA slice. Such a
    tool can help you *scope*: which criteria belong to which story, which tasks
    claim to implement them, and which code they reach — so you know where to
-   look first and what to probe hardest. Follow its own rules about results it
+   look first and what to probe hardest. You may call `build_graph`, `staleness`, `impact` and `story_trace` when the session exposes them
+   (`build_graph` only while the run's one build is unspent, as the tool file says) — never `gate_health`. Follow its own rules about results it
    tells you not to read, and never report such a gap as a finding.
 
    It scopes; it never verifies. **No `Result` cell may rest on a tool answer** —

@@ -109,10 +109,14 @@ comparable. Change it here and in all three, or nowhere.
   looks like a failed command.
   Resolve **both** facts — is there a surface, and does
   `.aspark-graph/graph.json` exist — and act on the four states in
-  `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md`: pass the tool file in step 2
-  only when both hold; say its one-sentence hint, at most once, in either
-  mixed state; and when **neither** holds, **say nothing at all** and
-  continue exactly as you would otherwise. Never probe in a run that already
+  `${CLAUDE_PLUGIN_ROOT}/tools/aspark-graph.md`: surface yes, `graph.json`
+  no means **build once** (that file says how; it writes only
+  `.aspark-graph/`), then treat it as yes/yes; a stale graph is rebuilt
+  once, never counted as absent; pass the tool file in step 2 only when a
+  graph exists; say a failed build once, in the closing report, and go on
+  without it; say the one-sentence hint, at most once, in the no-surface
+  state with a graph; and when **neither** holds, **say nothing at all** and
+  continue exactly as you would otherwise. One build per run, shared with the agent. Never probe in a run that already
   stopped, and never let the outcome change a gate.
 ```
 
@@ -123,8 +127,8 @@ browser/app clause instead of the generic one. Everything between is identical.
 Three rules the wording exists to enforce:
 
 - **Resolve both facts, not one.** Collapsing this to "available / not available"
-  loses two of the four states, and the two hint sentences then become
-  unreachable. That is a defect, not a simplification.
+  loses two of the four states, and the build step and the hint sentence then
+  become unreachable. That is a defect, not a simplification.
 - **The probe must exit 0.** A red shell result in the normal absent case is the
   most likely thing an agent volunteers a sentence about — and that sentence is
   precisely the regression this design exists to prevent.

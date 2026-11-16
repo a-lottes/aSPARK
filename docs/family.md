@@ -44,8 +44,8 @@ it plugs in, and what its evidence does and does not cover.
 `/sprint-plan` uses it to ground *Affected Components*, `/peer-review` to scope a
 diff, and `/demo-day` to scope a test plan. It is **optional** — published on
 PyPI as `aspark-graph` (`pip install aspark-graph`, or `uvx aspark-graph build .`
-with no install step at all) — and nothing in aSPARK installs, builds or runs it
-on your behalf. A result from it is treated as a map, never a verdict: it says
+with no install step at all) — and nothing in aSPARK installs or serves it; when a graph surface is present a ceremony runs
+one build, writing only `.aspark-graph/`, and queries it. A result from it is treated as a map, never a verdict: it says
 where to look, and the agent still reads the code and still performs the steps.
 
 **[`aspark-guard`](https://github.com/a-lottes/aSPARK-guard)** — it addresses the

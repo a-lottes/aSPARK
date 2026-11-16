@@ -30,13 +30,19 @@ fires per run, at most once.**
 | Surface | `graph.json` | Do this |
 |---|---|---|
 | yes | yes | **Offer.** Use the phase slice below. |
-| yes | no | Say **once**: the graph is not built for this repo; `aspark-graph build .` would build it. Then continue without it. |
+| yes | no | **Build once** (below), then treat as yes/yes and offer. A failed build is said **once**, in the closing report; continue without the graph. |
 | no | yes | Say **once**: graph data exists but no runner is reachable — register the MCP server, or put the runner on `PATH`. Then continue without it. |
 | no | no | **Say nothing.** Work exactly as you would with no tool. Do not mention it. |
 
-Never run `build`, `build_graph`, `serve` or `install`. `aspark-graph build .` may be *named
-to the user* — running it is their decision, never yours. Only read-only `query` calls are
-permitted.
+**The one build.** Build with MCP `build_graph` when the session exposes it, otherwise
+`aspark-graph build .`; if neither can run, say the old hint once instead (the graph is not
+built; `aspark-graph build .` would build it). A build writes only `.aspark-graph/`; check
+`git status` shows nothing else changed. **At most one build or rebuild per run**, shared by
+the ceremony and its agent: whoever builds first spends it, and a fresh build needs no
+`staleness` call. The closing report carries one sentence naming the build or its failure
+(a mid-run remark is rarely spoken). Never run `serve` or `install`; apart from the one
+build, only read-only `query` calls are permitted. Of the calls, only `build_graph`,
+`staleness`, `impact` and `story_trace` may be called — never `gate_health`.
 
 ## Calls
 
@@ -76,9 +82,11 @@ you reopen a deferral, re-check it against this table first.
 
 - **A result is a map, not a verdict.** It tells you where to look. It never
   replaces reading the code, and never replaces performing a step.
-- **Stale ⇒ absent.** If `staleness` returns `stale: true`, say so **once**, then
-  treat the graph as absent for the rest of the run: cite no result as evidence,
-  fall back to reading and grep, and still reach your normal verdict.
+- **Stale ⇒ rebuild once, then query.** If `staleness` returns `stale: true` and the run's
+  build is unspent, rebuild once and query the fresh graph. Only if the rebuild fails, is
+  not allowed (budget spent) or leaves it stale, say so **once** and treat the graph as
+  absent for the rest of the run: cite no result as evidence, fall back to reading and
+  grep, and still reach your normal verdict.
 - **Empty ≠ nothing there.** An empty list or `{"found": false}` means the graph
   has no answer, not that nothing exists. Record in one line that you scoped by
   hand, then proceed by the ordinary method.
@@ -96,7 +104,9 @@ you reopen a deferral, re-check it against this table first.
 
 ## Plan slice
 
-Use `impact` to ground *Affected Components* instead of guessing the blast radius.
+Use `impact` to ground *Affected Components* instead of guessing the blast radius. The
+engineering manager calls it itself when the tools are exposed; the ceremony relays a
+tool query request only when they are not.
 
 Order matters: cut the tasks **with** their `files:` notes first, then ask for the blast
 radius of the union of those paths. The notes make a story-level answer possible at all.
@@ -110,7 +120,7 @@ for it. Architecture is still decided by understanding the system.
 
 ## Review slice
 
-1. `staleness` first. If stale, apply the stale rule above and stop using the graph.
+1. `staleness` first. If stale, apply the stale rule above (rebuild once, else stop using the graph).
 2. `impact` on the changed files (or `--diff <range>`) to see what the diff reaches.
 3. `story_trace <US-n>` for the stories the plan says the diff serves.
 
