@@ -14,7 +14,7 @@ This repo's own profile (`library`, `ux` off): no file under `.spark/` gains a v
 
 ## T6b — Designer dry run on the field project, old lens vs new lens
 
-**Setup.** Two copies of a-lottes/CP-APP at `d7cd8a3` (main after PR #37), outside the repo. In both, the constitution §2 got the same *Expected usage volume* table (customers 4 / 50 / 150; people 4 / 250 / 750; briefing signals per customer 0 / 10 / 50; notes per customer 2 / 30 / 200), as `/charter` would now write it. One `claude -p` session each (`sonnet`, tools Read/Grep/Glob), same prompt: act as `agents/designer.md` in Mode A for `briefing-view` and `quick-capture`, apply the design-phase checks of the given `ux.md`. Arm A got the lens from `main` (v0.19.0), arm B the lens from this branch. The prompt named the two view files and `capture-options.ts`, which hints both arms equally. n = 1 per arm, one model: no rate.
+**Setup.** Two copies of the field project (a private web-app built by an aSPARK line; closed source, so not linked) at the same commit, outside the repo. In both, the constitution §2 got the same *Expected usage volume* table (customers 4 / 50 / 150; people 4 / 250 / 750; briefing signals per customer 0 / 10 / 50; notes per customer 2 / 30 / 200), as `/charter` would now write it. One `claude -p` session each (`sonnet`, tools Read/Grep/Glob), same prompt: act as `agents/designer.md` in Mode A for `briefing-view` and `quick-capture`, apply the design-phase checks of the given `ux.md`. Arm A got the lens from `main` (v0.19.0), arm B the lens from this branch. The prompt named the two view files and the module that builds the picker options, which hints both arms equally. n = 1 per arm, one model: no rate.
 
 **Result.**
 
@@ -28,6 +28,6 @@ This repo's own profile (`library`, `ux` off): no file under `.spark/` gains a v
 | Customer select with 50 to 150 options, no search | not raised | Minor (C2) |
 
 **What this shows, and what it does not.**
-- The load-bearing part is the declared volume. With the numbers in the constitution, the old lens already found the three worst problems in this hinted run. The original trails had no numbers and judged against four fixture customers, and their Design Reviews accepted the long lists ("filters are out of scope, so accept it", `hygiene-list` spec). This supports adding the table, and naming the fixture-size trap in the lens.
+- The load-bearing part is the declared volume. With the numbers in the constitution, the old lens already found the three worst problems in this hinted run. The original trails had no numbers and judged against four fixture customers, and their Design Reviews accepted the long lists (one Design Review noted a long list without a filter and accepted it because filters were out of scope). This supports adding the table, and naming the fixture-size trap in the lens.
 - §7 added what the old lens did not raise here: the undecided cut, the missing volume in the spec, the 50-option select.
 - Not shown: Specify and QA (no `/story-time` or `/demo-day` session was run), an unhinted firing rate, a second model. The QA volume run (AC-3.1) is unexercised.

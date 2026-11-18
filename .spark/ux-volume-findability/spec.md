@@ -6,14 +6,14 @@
 | **Owner** | Product Owner (`/story-time`) |
 | **Status** | `approved` |
 | **Date** | 2026-11-18 |
-| **Ticket** | none (field report from the cp-app line, given in conversation) |
+| **Ticket** | none (field report from a private project, given in conversation) |
 
 **Handoff**
 - **Status:** mirrors the header table above.
 - **Summary:** The `ux` lens judges lists, grouped pages and choice controls against the expected usage volume a project declares, not against fixture size; cutting search/filter/pagination for such a list needs a follow-up or a recorded waiver; QA walks every list screen with an after-one-year dataset.
 - **Open:** `none`
 
-**Field report.** On a real web-app built by an aSPARK line (cp-app, 13 trails, `ux` active), every spec cited the lens, yet at the user's real volume (50 customers) the briefing page, the customer record and the capture form were unusable: a participant picker listing every person of every customer as checkboxes, a "n more not shown" line leading nowhere, no jump list across 50 customer groups. The trails show why: `ux.md` §2 only asks that large data does not *break* layout; scale was specified only as render time; six specs cut search/filter/pagination to *Out of Scope* without anyone deciding it; QA ran only against fixtures with four customers. The user approved this change in conversation (2026-11-18).
+**Field report.** On a real web-app built by an aSPARK line (closed source, 13 trails, `ux` active), every spec cited the lens, yet at the user's real volume (50 customers) the briefing page, the customer record and the capture form were unusable: a participant picker listing every person of every customer as checkboxes, a "n more not shown" line leading nowhere, no jump list across 50 customer groups. The trails show why: `ux.md` §2 only asks that large data does not *break* layout; scale was specified only as render time; six specs cut search/filter/pagination to *Out of Scope* without anyone deciding it; QA ran only against fixtures with four customers. The user approved this change in conversation (2026-11-18).
 
 **Prompt material.** Every check here is an instruction to an agent, not an enforcement: the effect is likely, not certain. No hold rate is claimed.
 
