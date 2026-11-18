@@ -153,6 +153,10 @@ For a feature with a browser-observable surface, `/demo-day` now asks the QA Tes
 - **This changes QA verdicts for installed web projects**: expect more Majors and more screenshot rows. Browser-less projects (cli, library, api) are unchanged.
 - **Prompt-enforced, unmeasured.** It makes the effect likely, not certain; no hold rate is claimed. In the one dry run of the changed tester only 2 of 6 rows had a real screenshot; after a follow-up rule (rows without one stay open), one re-run had 4 of 4. One session each, no rate. Dry-run record: [`evidence.md`](.spark/visual-qa-review/evidence.md).
 
+### Volume & findability in the `ux` lens (prompt-enforced, unmeasured)
+
+A project with `ux` active now declares its expected usage volume in the constitution (today, after one year, upper bound per entity), and the `ux` lens §7 judges every list, grouped page and choice control against the after-one-year numbers, not against fixture size: an item reachable in at most three actions, bounded lists, no "n more not shown" line that leads nowhere, search or a context pre-filter for pickers with more than about 15 options. Cutting search, filter or pagination for such a list needs a follow-up or a recorded waiver, and `/demo-day` walks each list screen with an after-one-year dataset. One hinted Designer dry run per arm on a real web-app; no rate: [`.spark/ux-volume-findability/evidence.md`](.spark/ux-volume-findability/evidence.md).
+
 ### Campaigns: one measurable goal instead of one story (experimental)
 
 A campaign is a second way of working, next to the feature loop: one machine-decidable goal, one budget, run in iterations until the goal is reached or a stop rule halts it. You approve the goal; the agent only iterates inside it. One kind ships today, [`migration-campaign`](campaigns/migration-campaign.md): a migration in reversible slices, with a fresh Parity Verifier per slice. A new kind is one file in [`campaigns/`](campaigns/README.md), the same way a lens is.

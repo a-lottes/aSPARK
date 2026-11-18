@@ -121,7 +121,11 @@ means?* Where it isn't, raise it.
 7. **UX flows & states** (UI features) — empty, loading, error and success
    states; what the user sees before, during and after.
 8. **Out-of-scope confirmation** — the tempting adjacent features you're
-   consciously *not* building this cycle.
+   consciously *not* building this cycle. When the `ux` lens is active and you
+   cut search, filter, sort or pagination for a list that fails its §7 checks
+   at the constitution's expected volume, the cut needs a named follow-up or
+   the user's recorded waiver; return it as a question rather than cutting it
+   silently.
 
 Rank the ambiguities by how much they'd change the build if guessed wrong.
 Return the **top few** (about five, high-impact first) as a numbered list to

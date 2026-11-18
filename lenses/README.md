@@ -97,7 +97,7 @@ and carries any number of characteristics.
 | Lens | Activated by | Adds |
 |---|---|---|
 | [`seo.md`](seo.md) | type `website` | Discoverability, rendering/indexability, metadata, Core Web Vitals, structured data |
-| [`ux.md`](ux.md) | type `web-app`, `website` | Interaction depth beyond base heuristics: flows, forms, responsive/mobile, feedback & motion |
+| [`ux.md`](ux.md) | type `web-app`, `website` | Interaction depth beyond base heuristics: flows, forms, responsive/mobile, feedback & motion, volume & findability at the expected usage volume |
 | [`api.md`](api.md) | type `api` | Resource/method design, error-envelope consistency, versioning & breaking-change detection, auth surface |
 | [`cli.md`](cli.md) | type `cli` | Help/discoverability, stdout/stderr & scriptability, exit codes, safety flags |
 | [`library.md`](library.md) | type `library` | Public API surface, semver/deprecation discipline, packaging & footprint, contract clarity |
