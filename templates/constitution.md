@@ -53,6 +53,16 @@
 - **⚠ elevated load** (only when 4+ lenses are active): several lenses apply in
   each phase — keep specs tight and NFRs few so the agents don't skim.
   <!-- Delete this line when fewer than 4 lenses are active. -->
+- **Expected usage volume** (only when `ux` is active): how much data the user will really have,
+  per main entity. The `ux` lens §7 judges lists, grouped pages and choice controls against the
+  *after one year* column, never against fixture size.
+
+| Entity | Today | After one year | Upper bound |
+|---|---|---|---|
+| e.g. customers | e.g. 20 | e.g. 50 | e.g. 150 |
+| e.g. notes per customer | e.g. 0 | e.g. 30 | e.g. 200 |
+
+  <!-- Delete this bullet and table when `ux` is off. Mark each number `asked` or `inferred from <file>`. -->
 
 
 ## 3. Technical Constraints

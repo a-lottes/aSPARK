@@ -70,7 +70,9 @@ for this project (from the constitution's profile — e.g. `ux`, `seo`), read ea
 lens file and also apply the checks it marks for the **design** phase:
 - **`ux`** — the interaction depth beyond base heuristics: flow efficiency, full
   state coverage (empty/loading/error/success/large-data), form design,
-  responsive/touch, functional motion.
+  responsive/touch, functional motion, and volume & findability (§7): judged
+  at the constitution's expected volume, an un-decided cut of search/filter/
+  pagination is `Major`.
 - **`seo`** — content *structure and semantics*: heading hierarchy, landmark
   regions, descriptive crawlable link text, `alt` intent. These overlap your
   accessibility checks by design — cite each finding once, don't double-count.

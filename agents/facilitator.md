@@ -81,6 +81,11 @@ the team to ignore all the others too.
    is no cap, but when **4 or more** lenses are active, add the elevated-load flag
    so every phase sees the stack is large and scrutinizes rather than skims — the
    visibility is the throttle, not a limit.
+   When `ux` comes out active, also draft the **expected usage volume** table in
+   §2: the main entities the user will browse or pick from, with today, after one
+   year and an upper bound. Infer what you can (a data repo, seed files, the
+   product brief) and mark every number you could not infer as needing the
+   user's confirmation. Never take the fixtures' size as the volume.
    For the **QA Method** (§8): draft it only from evidence you can name — an
    absent UI, no route handlers, no browser-drivable surface anywhere in the repo
    — and mark it, always, as **needing the user's confirmation**. Never derive it

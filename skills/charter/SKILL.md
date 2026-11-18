@@ -59,7 +59,10 @@ one.
    the project handles auth or PII), so confirm it consciously with the user
    rather than letting it ride. Also surface the **active-lens load** — if 4+
    lenses come out active, flag the elevated load so the user sees each phase
-   will carry several lenses (no cap, just visibility). Surface the **QA method**
+   will carry several lenses (no cap, just visibility). When `ux` is active,
+   surface the **expected usage volume** table (§2) in the same round and ask
+   the user to confirm or correct the *after one year* numbers; the `ux` lens
+   judges findability against them. Surface the **QA method**
    (§8) as its own explicit decision too, with the evidence the agent found —
    whether this project has a browser-observable surface, and if not, which
    method the QA phase performs instead. Never let it ride on the profile or the

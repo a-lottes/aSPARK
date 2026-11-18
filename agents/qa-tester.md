@@ -178,7 +178,10 @@ defense before `/go-live` — if you pass something broken, it ships broken.
    - **`ux`** — walk every state (empty, loading, error, success, large-data),
      test forms with junk input, and complete the core flow at mobile width;
      confirm feedback timing and visible focus/hover/active states; run the
-     start-up robustness item (lens checklist §6).
+     start-up robustness item (lens checklist §6) and the volume run (§7):
+     every list, grouped page and choice control walked with the
+     constitution's *after one year* volume, actions-to-item counted and
+     screenshotted. Fixture-only is `⚠ not verified`, not a pass.
    - **`seo`** — in the rendered page and view-source, confirm each route's
      `<title>`/`<meta description>`/canonical and OG tags, that indexable content
      is in the server response (not JS-only), and measure the Core Web Vitals

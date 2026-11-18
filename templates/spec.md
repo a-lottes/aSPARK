@@ -80,7 +80,7 @@
 | NFR-1 | Performance | e.g. dashboard renders within 2s on a mid-range laptop | /demo-day |
 | NFR-2 | Security & privacy | e.g. only the owning user can read their stats | /peer-review |
 | NFR-3 | Accessibility | e.g. WCAG 2.1 AA: contrast, keyboard nav, focus order | /look-and-feel + /demo-day |
-| NFR-4 | Reliability / scale | e.g. handles an empty and a 10k-row dataset without error | /demo-day |
+| NFR-4 | Reliability / scale | e.g. handles an empty and a 10k-row dataset without error; at the constitution's after-one-year volume any item is reachable in ≤ 3 actions | /demo-day |
 | NFR-5 | Observability / ops | e.g. failures are logged with enough context to debug | /peer-review |
 
 ## 6. Out of Scope

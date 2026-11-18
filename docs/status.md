@@ -299,6 +299,14 @@ was an explicit, informed shipping decision, not an oversight.
 | **Evidence** | [`.spark/visual-qa-review/evidence.md`](../.spark/visual-qa-review/evidence.md): negative case first (previous QA Tester, scratch app), then the changed one; one session each, not a rate. In the one run of the changed tester only 2 of 6 Visual Review rows had a screenshot; after the rule added in response (a row without one is `⚠ not-verified-live` and keeps the gate item open), one re-run had 4 of 4 imaged. One session each, no rate; the in-page storage simulation was marked `⚠ not-verified-live`. |
 | **State** | **Shipped, prompt-enforced, unmeasured.** Likely, not certain; no hold rate is claimed. Changes QA verdicts for installed web projects. Not built: code enforcement (`aspark-guard`'s), new lenses or agents. |
 
+## Volume & findability in the `ux` lens
+
+| | |
+|---|---|
+| **Scope** | `lenses/ux.md` §7 and phase notes, `templates/constitution.md` §2 (expected usage volume, only with `ux` active), `agents/facilitator.md`, `skills/charter/SKILL.md`, `agents/product-owner.md` (Clarify item 8), `agents/designer.md`, `agents/qa-tester.md` (volume run), `templates/spec.md` NFR-4 example. No protected structure changed; `ux.md` phases unchanged. |
+| **Evidence** | [`.spark/ux-volume-findability/evidence.md`](../.spark/ux-volume-findability/evidence.md): negative case by reading; one hinted Designer session per arm (old lens vs new, both with the volume table) on a copy of a real web-app. Both found the three worst problems; only the new lens raised the undecided cut and the missing volume. n = 1 per arm, Specify and QA not exercised. |
+| **State** | **Shipped, prompt-enforced, unmeasured.** Likely, not certain. Changes Design and QA verdicts for installed web projects that declare a volume. |
+
 ## Browser backends for `/demo-day`
 
 | | |
