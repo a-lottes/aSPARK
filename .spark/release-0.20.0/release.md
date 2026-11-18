@@ -11,7 +11,7 @@
 | **Version** | v0.20.0 |
 | **Date** | 2026-11-18 |
 | **Commit** | release commit on `release/v0.20.0`, on top of `1e38d12` (PR #134); tag `v0.20.0` is made on the merge commit after the merge |
-| **PR** | pending |
+| **PR** | https://github.com/a-lottes/aSPARK/pull/135 |
 
 **Handoff**
 - **Status:** mirrors the header table above (authoritative for `Status` and `Version`).
