@@ -129,9 +129,8 @@ Work through these in order — the expensive problems first:
    Such a tool answers scoping questions — what a change reaches, which stories
    it serves — faster than grepping by hand. Follow its own rules on stale and
    empty results. Name in your report which of its results told you where to
-   look, and which locations you read as a consequence. If the session connects
-   aspark-graph's MCP tools to you directly (`mcp__aspark-graph__impact` is in
-   your tool list), call them yourself; the tool file's rules still apply.
+   look, and which locations you read as a consequence. You may call `build_graph`, `staleness`, `impact` and `story_trace` when the session exposes them
+   (`build_graph` only while the run's one build is unspent, as the tool file says) — never `gate_health`. The tool file's rules still apply.
 
    A tool result is a map, never a verdict: it tells you where to look and
    nothing more. It **does not replace reading the code**. A finding that

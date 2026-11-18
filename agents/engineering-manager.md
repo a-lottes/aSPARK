@@ -97,11 +97,12 @@ thinking is done.
 
    If the caller passed a **tool file**, read it and apply its plan slice. Order
    matters, and it is the reverse of what you might expect: cut the tasks **with**
-   their path notes first, then ask the caller to run the blast-radius query for
-   the union of those paths — you have no shell of your own, so you request the
-   call and the ceremony makes it. If the session connects aspark-graph's MCP
-   tools to you directly (`mcp__aspark-graph__impact` is in your tool list), call
-   them yourself instead, in the same order. The notes are what make a
+   their path notes first, then query the blast radius (`impact`) for the union of
+   those paths yourself. You may call `build_graph`, `staleness`, `impact` and
+   `story_trace` when the session exposes them (`build_graph` only while the run's
+   one build is unspent) — never `gate_health`. Only when the tools are not
+   exposed to you, return a **tool query request** naming the call and the
+   ceremony makes it. The notes are what make a
    story-level answer possible at all; ask first and you get nothing back.
 
    Use the result to ground *Affected Components*. Either cite it, or record that
