@@ -15,3 +15,4 @@
 | v0.17.0 | 2026-10-29 | release-0.17.0 | ba85bcb | https://github.com/a-lottes/aSPARK/pull/123 |
 | v0.18.0 | 2026-11-13 | release-0.18.0 | 374fd30 | https://github.com/a-lottes/aSPARK/pull/129 |
 | v0.19.0 | 2026-11-15 | release-0.19.0 | ba7b31f | https://github.com/a-lottes/aSPARK/pull/131 |
+| v0.20.0 | 2026-11-18 | release-0.20.0 | dd7d4f0 | https://github.com/a-lottes/aSPARK/pull/135 |
